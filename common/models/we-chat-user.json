@@ -1,0 +1,66 @@
+{
+  "name": "WeChatUser",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "properties": {
+    "uid": {
+      "type": "string",
+      "comments": "微信提供的uid"
+    },
+    "sex": {
+      "type": "number",
+      "comments": "0未知，1男，2女"
+    },
+    "province": {
+      "type": "string",
+      "comments": "省份"
+    },
+    "city": {
+      "type": "string",
+      "comments": "城市"
+    },
+    "country": {
+      "type": "string",
+      "comments": "国家"
+    },
+    "headImgUrl": {
+      "type": "string",
+      "comments": "头像url"
+    },
+    "privilege": {
+      "type": "string",
+      "comments": "权限"
+    },
+    "updatedAt": {
+      "type": "date",
+      "comments": "更新时间"
+    },
+    "university": {
+      "type": "string",
+      "comments": "所在大学"
+    },
+    "studentName": {
+      "type": "string",
+      "comments": "学生姓名"
+    },
+    "studentId": {
+      "type": "number",
+      "comments": "学号"
+    },
+    "verifiedDate": {
+      "type": "date",
+      "comments": "完成学号密码验证的时间"
+    },
+    "history": {
+      "type": [
+        "object"
+      ],
+      "comments": "记录用户更改认证的历史记录"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

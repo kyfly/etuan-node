@@ -1,0 +1,28 @@
+{
+  "name": "FormResult",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "properties": {
+    "weChatUid": {
+      "type": "object",
+      "comments": "用户id"
+    },
+    "ip": {
+      "type": "string"
+    },
+    "answer": {
+      "type": [
+        "object"
+      ]
+    },
+    "formId": {
+      "type": "object",
+      "comments": "对应的表单id"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

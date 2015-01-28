@@ -1,0 +1,49 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ]
+  },
+  "User": {
+    "dataSource": "db"
+  },
+  "AccessToken": {
+    "dataSource": "db",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "OrganizationUser": {
+    "dataSource": "db",
+    "public": true
+  },
+  "WeChatUser": {
+    "dataSource": "db",
+    "public": true
+  },
+  "weChatMP": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Form": {
+    "dataSource": "db",
+    "public": true
+  },
+  "FormResult": {
+    "dataSource": "db",
+    "public": true
+  }
+}

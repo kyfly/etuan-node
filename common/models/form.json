@@ -1,0 +1,32 @@
+{
+  "name": "Form",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "properties": {
+    "startTime": {
+      "type": "date"
+    },
+    "stopTime": {
+      "type": "date"
+    },
+    "verifyRule": {
+      "type": "object"
+    },
+    "organizationUid": {
+      "type": "object"
+    },
+    "question": {
+      "type": [
+        "object"
+      ]
+    },
+    "updatedAt": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

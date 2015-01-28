@@ -1,0 +1,46 @@
+{
+  "name": "weChatMP",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "properties": {
+    "organizationUid": {
+      "type": "object"
+    },
+    "mpOriginId": {
+      "type": "string",
+      "comments": "公众号原始id"
+    },
+    "interfaceUrl": {
+      "type": "string"
+    },
+    "interfaceToken": {
+      "type": "string"
+    },
+    "appId": {
+      "type": "string"
+    },
+    "appSecret": {
+      "type": "string"
+    },
+    "redirectUri": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "date"
+    },
+    "autoReply": {
+      "type": [
+        "object"
+      ]
+    },
+    "interfaceKey": {
+      "type": "string",
+      "comments": "用于AES加密的key"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

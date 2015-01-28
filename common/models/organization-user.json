@@ -1,0 +1,64 @@
+{
+  "name": "OrganizationUser",
+  "base": "User",
+  "strict": false,
+  "idInjection": false,
+  "properties": {
+    "phone": {
+      "type": "number",
+      "comments": "联系人手机号码"
+    },
+    "name": {
+      "type": "string",
+      "comments": "组织名称"
+    },
+    "type": {
+      "type": "string",
+      "comments": "组织类型（'校级组织','职能社团','院级组织','校级社团','院级社团'）"
+    },
+    "school": {
+      "type": "string",
+      "comments": "大学内部的学院"
+    },
+    "university": {
+      "type": "string",
+      "comments": "大学（为了支持后期多个大学使用）"
+    },
+    "logoUrl": {
+      "type": "string",
+      "comments": "logo图片地址"
+    },
+    "description": {
+      "type": "string",
+      "comments": "组织介绍 200字以内"
+    },
+    "internalOrder": {
+      "type": "number",
+      "comments": "内部顺序,默认1000,000"
+    },
+    "photoUrl": {
+      "type": [
+        "string"
+      ],
+      "comments": "组织展示图片，0-3张可选"
+    },
+    "weChat": {
+      "type": "string",
+      "comments": "组织微信号"
+    },
+    "updatedAt": {
+      "type": "date",
+      "comments": "更新时间"
+    },
+    "department": {
+      "type": [
+        "object"
+      ],
+      "comments": "部门"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}
