@@ -1,8 +1,8 @@
 {
   "name": "Form",
   "base": "PersistedModel",
-  "strict": false,
-  "idInjection": false,
+  "strict": true,
+  "idInjection": true,
   "properties": {
     "startTime": {
       "type": "date"
@@ -15,11 +15,6 @@
     },
     "organizationUid": {
       "type": "object"
-    },
-    "question": {
-      "type": [
-        "object"
-      ]
     },
     "updatedAt": {
       "type": "date"

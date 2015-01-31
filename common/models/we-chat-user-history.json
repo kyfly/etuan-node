@@ -1,0 +1,34 @@
+{
+  "name": "WeChatUserHistory",
+  "base": "PersistedModel",
+  "strict": true,
+  "idInjection": true,
+  "properties": {
+    "university": {
+      "type": "string",
+      "required": true
+    },
+    "studentId": {
+      "type": "number",
+      "required": true
+    },
+    "studentName": {
+      "type": "string",
+      "required": true
+    },
+    "verifiedDate": {
+      "type": "string",
+      "required": true,
+      "comments": "完成改学号密码验证的数据"
+    },
+    "updatedAt": {
+      "type": "string",
+      "required": true,
+      "comments": "更改认证信息的时间"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

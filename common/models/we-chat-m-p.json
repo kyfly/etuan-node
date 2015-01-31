@@ -1,8 +1,8 @@
 {
-  "name": "weChatMP",
+  "name": "WeChatMP",
   "base": "PersistedModel",
-  "strict": false,
-  "idInjection": false,
+  "strict": true,
+  "idInjection": true,
   "properties": {
     "organizationUid": {
       "type": "object"
@@ -28,11 +28,6 @@
     },
     "updatedAt": {
       "type": "date"
-    },
-    "autoReply": {
-      "type": [
-        "object"
-      ]
     },
     "interfaceKey": {
       "type": "string",

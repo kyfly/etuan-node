@@ -1,0 +1,25 @@
+{
+  "name": "FormQuestion",
+  "base": "PersistedModel",
+  "strict": true,
+  "idInjection": true,
+  "properties": {
+    "type": {
+      "type": "number",
+      "required": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": [
+        "string"
+      ]
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

@@ -1,0 +1,17 @@
+{
+  "name": "FormResultAnswer",
+  "base": "PersistedModel",
+  "strict": true,
+  "idInjection": true,
+  "properties": {
+    "string": {
+      "type": "string",
+      "required": false,
+      "comments": "填写的内容"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

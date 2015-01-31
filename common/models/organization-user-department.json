@@ -1,0 +1,20 @@
+{
+  "name": "OrganizationUserDepartment",
+  "base": "PersistedModel",
+  "strict": true,
+  "idInjection": true,
+  "properties": {
+    "updateAt": {
+      "type": "date",
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "comments": "部门介绍"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

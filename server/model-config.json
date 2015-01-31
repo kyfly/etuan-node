@@ -8,7 +8,8 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "db",
+    "public": false
   },
   "AccessToken": {
     "dataSource": "db",
@@ -34,7 +35,7 @@
     "dataSource": "db",
     "public": true
   },
-  "weChatMP": {
+  "WeChatMP": {
     "dataSource": "db",
     "public": true
   },
@@ -45,5 +46,29 @@
   "FormResult": {
     "dataSource": "db",
     "public": true
+  },
+  "OrganizationUserDepartment": {
+    "dataSource": "db",
+    "public": false
+  },
+  "WeChatUserHistory": {
+    "dataSource": "db",
+    "public": false
+  },
+  "WeChatMPAutoReply": {
+    "dataSource": "db",
+    "public": false
+  },
+  "WeChatMPNews": {
+    "dataSource": "db",
+    "public": false
+  },
+  "FormQuestion": {
+    "dataSource": "db",
+    "public": false
+  },
+  "FormResultAnswer": {
+    "dataSource": "db",
+    "public": false
   }
 }

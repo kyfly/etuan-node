@@ -1,8 +1,8 @@
 {
   "name": "OrganizationUser",
   "base": "User",
-  "strict": false,
-  "idInjection": false,
+  "strict": true,
+  "idInjection": true,
   "properties": {
     "phone": {
       "type": "number",
@@ -49,12 +49,6 @@
     "updatedAt": {
       "type": "date",
       "comments": "更新时间"
-    },
-    "department": {
-      "type": [
-        "object"
-      ],
-      "comments": "部门"
     }
   },
   "validations": [],

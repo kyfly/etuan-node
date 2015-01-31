@@ -1,8 +1,8 @@
 {
   "name": "WeChatUser",
   "base": "PersistedModel",
-  "strict": false,
-  "idInjection": false,
+  "strict": true,
+  "idInjection": true,
   "properties": {
     "uid": {
       "type": "string",
@@ -51,12 +51,6 @@
     "verifiedDate": {
       "type": "date",
       "comments": "完成学号密码验证的时间"
-    },
-    "history": {
-      "type": [
-        "object"
-      ],
-      "comments": "记录用户更改认证的历史记录"
     }
   },
   "validations": [],

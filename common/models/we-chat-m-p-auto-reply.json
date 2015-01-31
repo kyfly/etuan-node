@@ -1,0 +1,38 @@
+{
+  "name": "WeChatMPAutoReply",
+  "base": "PersistedModel",
+  "strict": true,
+  "idInjection": true,
+  "properties": {
+    "type": {
+      "type": "string",
+      "required": true,
+      "comments": "自动回复类型，内容为\"text\" or \"news\""
+    },
+    "text": {
+      "type": "string",
+      "comments": "文字内容，只有文字回复才有"
+    },
+    "keyword": {
+      "type": [
+        "string"
+      ],
+      "required": true,
+      "comments": "关键字"
+    },
+    "news": {
+      "type": [
+        "WeChatMPNews"
+      ],
+      "comments": "图文回复"
+    },
+    "updatedAt": {
+      "type": "date",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

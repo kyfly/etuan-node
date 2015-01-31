@@ -1,8 +1,8 @@
 {
   "name": "FormResult",
   "base": "PersistedModel",
-  "strict": false,
-  "idInjection": false,
+  "strict": true,
+  "idInjection": true,
   "properties": {
     "weChatUid": {
       "type": "object",
