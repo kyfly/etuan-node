@@ -1,0 +1,112 @@
+@charset "UTF-8";
+$menu-bgColor: #A6AAC2 !default;
+$menu-chosen: #CBCEE0 !default;
+$menu-height: 65px !default;
+
+html {
+  min-height: 100%;
+  height: 100%;
+}
+
+body{
+  font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
+  min-height: 100%;
+  height: 100%;
+}
+
+.menu-list {
+  margin-top: -20px;
+  min-height: 100%;
+  height: 100%;
+  background-color: $menu-bgColor;
+
+  .menu-head {
+    padding: 10px;
+    height: $menu-height;
+    line-height: $menu-height - 20px;
+    cursor: pointer;
+    background-color: $menu-bgColor;
+    position: relative;
+
+    .chosenColor {
+      width: 95%;
+      position: absolute;
+      left: 2.5%;
+      top: 10px;
+      padding-left: 50px;
+
+      &:hover {
+        background-color: $menu-chosen;
+      }
+
+      span {
+        color: #ffffff;
+        font-size: 18px;
+      }
+
+    }
+
+    .active-menu {
+      background-color: $menu-chosen;
+    }
+  }
+}
+
+#mainHeight {
+  margin-top: -20px;
+  padding: 0;
+  background-color: #F0F1F6;
+
+  footer {
+    height: 50px;
+  }
+}
+
+.countBox {
+  padding: 20px 80px;
+
+  .icon {
+    height: 100px;
+  }
+
+  .number {
+    background-color: #ffffff;
+    height: 100px;
+    color: #C5C9D5;
+
+    .numberLine {
+      font-size: 50px;
+      font-weight: bold;
+    }
+
+    .textLine {
+      font-size: 15px;
+    }
+  }
+}
+
+$countBoxColor: #FF6C60 #F7D24B #57C7F0 !default;
+@for $i from 1 through 3 {
+  #countBox#{$i} {
+    background-color: nth($countBoxColor,$i);
+  }
+}
+
+.noticeBox {
+  padding: 15px 50px;
+
+  .insideBox {
+    background-color: #ffffff;
+    height: 300px;
+    padding: 15px 50px;
+
+    h3 {
+      color: #A7D86E;
+    }
+
+    p {
+      color: #858585;
+      font-size: 18px;
+    }
+  }
+}
