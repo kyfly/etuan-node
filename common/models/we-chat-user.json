@@ -54,7 +54,16 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "histories": {
+      "type": "embedsMany",
+      "model": "WeChatUserHistory",
+      "option": {
+        "validate": true,
+        "autoId": true
+      }
+    }
+  },
   "acls": [],
   "methods": []
 }

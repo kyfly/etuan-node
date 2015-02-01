@@ -22,7 +22,26 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "form": {
+      "type": "belongsTo",
+      "model": "Form",
+      "foreignKey": "formId"
+    },
+    "weChatUser": {
+      "type": "belongsTo",
+      "model": "WeChatUser",
+      "foreignKey": "weChatUid"
+    },
+    "answers": {
+      "type": "embedsMany",
+      "model": "FormResultAnswer",
+      "option": {
+        "validate": true,
+        "autoId": true
+      }
+    }
+  },
   "acls": [],
   "methods": []
 }

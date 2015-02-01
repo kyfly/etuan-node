@@ -35,7 +35,21 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "organization": {
+      "type": "belongsTo",
+      "model": "OrganizationUser",
+      "foreignKey": "organizationUid"
+    },
+    "autoReplies": {
+      "type": "embedsMany",
+      "model": "WeChatMPAutoReply",
+      "option": {
+        "validate": true,
+        "autoId": true
+      }
+    }
+  },
   "acls": [],
   "methods": []
 }

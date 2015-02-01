@@ -4,6 +4,11 @@
   "strict": true,
   "idInjection": true,
   "properties": {
+    "order": {
+      "type": "number",
+      "required": false,
+      "comments": "图文消息的顺序"
+    },
     "title": {
       "type": "string",
       "required": false,

@@ -52,7 +52,26 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "departments": {
+      "type": "embedsMany",
+      "model": "OrganizationUserDepartment",
+      "option": {
+        "validate": true,
+        "autoId": true
+      }
+    },
+    "forms": {
+      "type": "hasMany",
+      "model": "Form",
+      "foreignKey": "organizationUid"
+    },
+    "weChatMPs": {
+      "type": "hasMany",
+      "model": "WeChatMP",
+      "foreignKey": "organizationUid"
+    }
+  },
   "acls": [],
   "methods": []
 }

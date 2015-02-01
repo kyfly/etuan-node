@@ -11,17 +11,33 @@
       "type": "date"
     },
     "verifyRule": {
-      "type": "object"
-    },
-    "organizationUid": {
-      "type": "object"
+      "type": "string"
     },
     "updatedAt": {
       "type": "date"
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "results": {
+      "type": "hasMany",
+      "model": "FormResult",
+      "foreignKey": "formId"
+    },
+    "organization": {
+      "type": "belongsTo",
+      "model": "OrganizationUser",
+      "foreignKey": "organizationUid"
+    },
+    "questions": {
+      "type": "embedsMany",
+      "model": "FormQuestion",
+      "option": {
+        "validate": true,
+        "autoId": true
+      }
+    }
+  },
   "acls": [],
   "methods": []
 }
