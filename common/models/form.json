@@ -10,6 +10,14 @@
     "stopTime": {
       "type": "date"
     },
+    "adPicture": {
+      "type": "string",
+      "comments": "广告图片地址"
+    },
+    "adUrl": {
+      "type": "string",
+      "comments": "广告指向的地址"
+    },
     "verifyRule": {
       "type": "string"
     },
