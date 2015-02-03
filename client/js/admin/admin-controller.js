@@ -46,21 +46,71 @@ function SidebarCtrl ($scope,$window) {
   }
 }
 
-function ListCtrl ($window,$scope,$routeParams) {
+function ListCtrl ($window,$scope,$routeParams,$resource) {
+  var ListProperty = {
+    form:'/api/Forms/:id',
+    seckill:'/api/Seckills/:id',
+    vote:'/api/Votes/:id',
+    luck:'/api/Lucks/:id'
+  }
+  var List = $resource(ListProperty[$routeParams.type]);
+  $scope.listItems = [
+    {
+      'name':'项目一号',
+      'id':'1',
+      'startTime':'1970-00-00 00:00:00',
+      'stopTime':'1990-00-00 00:00:00'
+    },
+    {
+      'name':'项目二号',
+      'id':'2',
+      'startTime':'1970-00-00 00:00:00',
+      'stopTime':'1990-00-00 00:00:00'
+    },
+    {
+      'name':'项目三号',
+      'id':'3',
+      'startTime':'1970-00-00 00:00:00',
+      'stopTime':'1990-00-00 00:00:00'
+    }
+  ];//List.query();
+
   $scope.edit = function (id) {
     $window.location.href = '#/'+$routeParams.type+'/edit/'+id;
   };
   $scope.result = function (id) {
     $window.location.href = '#/'+$routeParams.type+'/result/'+id;
   };
+  $scope.delete = function (index,id) {
+    $scope.listItems.splice(index,1);
+    List.delete({'id':id});
+  }
 }
 
-function EditCtrl ($scope,$routeParams) {
+function EditCtrl ($scope,$routeParams,$resource) {
   console.log($routeParams);
 }
 
-function ResultCtrl ($scope,$routeParams) {
+function ResultCtrl ($scope,$routeParams,$resource) {
   console.log($routeParams);
+  var ResultProperty = {
+    form:{
+      downloadAsExcel:true,
+      downloadAsPdf:true
+    },
+    seckill:{
+      downloadAsExcel:true,
+      downloadAsPdf:false
+    },
+    vote:{
+      downloadAsExcel:true,
+      downloadAsPdf:false
+    },
+    luck:{
+      downloadAsExcel:true,
+      downloadAsPdf:false
+    }
+  };
 }
 
 function HomeCtrl () {}
