@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css"/>
+  <script src="/lib/angular/angular.js"></script>
+  <script src="/lib/angular-ui-bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>
+  <script src="/lib/angular-components/angular-animate.js"></script>
+  <script src="/lib/angular-components/angular-touch.js"></script>
+  <script src="/lib/angular-components/angular-resource.js"></script>
+  <script src="/lib/angular-components/angular-route.js"></script>
+  <script src="/js/admin/admin-controller.js"></script>
+  <script src="/js/admin/admin-route.js"></script>
+  <script src="/js/admin/admin-configure.js"></script>
+</head>
+<body>
+
+<div class="col-sm-3" ng-controller="SidebarCtrl">
+  <tabset vertical="true" type="pills">
+    <tab ng-repeat="sidebar in sidebars" heading="{{sidebar.display_name}}" id="{{sidebar.id}}" select="redirect(sidebar.url)">
+    </tab>
+  </tabset>
+</div>
+
+<div class="col-sm-9" ng-view>
+</div>
+
+</body>
+</html>
