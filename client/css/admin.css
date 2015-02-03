@@ -48,7 +48,7 @@ body {
 
 #mainHeight {
   margin-top: -20px;
-  padding: 0;
+  padding: 0 50px;
   background-color: #F0F1F6;
   overflow: auto;
 }
@@ -57,7 +57,7 @@ body {
 }
 
 .countBox {
-  padding: 3%;
+  padding: 1.5% 3% 3% 3%;
 }
 .countBox .icon {
   height: 90px;
@@ -94,18 +94,18 @@ body {
 }
 
 .noticeBox {
-  padding: 15px 50px;
+  padding: 15px 16px;
 }
 .noticeBox .insideBox {
   background-color: #ffffff;
-  height: 300px;
-  padding: 10%;
+  height: 200px;
+  padding: 0 16%;
   word-break: break-all;
   overflow: hidden;
+  line-height: 20px;
 }
 .noticeBox .insideBox h3 {
   color: #A7D86E;
-  margin-top: -3%;
 }
 .noticeBox .insideBox p {
   color: #858585;
@@ -136,5 +136,6 @@ body {
 
   #mainHeight {
     overflow: auto;
+    padding: 0;
   }
 }
