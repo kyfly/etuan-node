@@ -49,22 +49,21 @@ function SidebarCtrl ($scope,$window) {
 function ListCtrl ($window,$scope,$routeParams) {
   $scope.edit = function (id) {
     $window.location.href = '#/'+$routeParams.type+'/edit/'+id;
-    console.log($routeParams);
   };
   $scope.result = function (id) {
-    $window.location.href = '#/'+$routeParams.type+'/result'+id;
-    console.log($routeParams);
+    $window.location.href = '#/'+$routeParams.type+'/result/'+id;
   };
 }
 
-function EditCtrl ($scope) {
-
+function EditCtrl ($scope,$routeParams) {
+  console.log($routeParams);
 }
 
-function ResultCtrl ($scope) {
-
+function ResultCtrl ($scope,$routeParams) {
+  console.log($routeParams);
 }
 
+function HomeCtrl () {}
 function WechatCtrl () {}
 function SettingCtrl () {}
 function HelpCtrl () {}
