@@ -11,11 +11,6 @@
     "ip": {
       "type": "string"
     },
-    "answer": {
-      "type": [
-        "object"
-      ]
-    },
     "formId": {
       "type": "object",
       "comments": "对应的表单id"
