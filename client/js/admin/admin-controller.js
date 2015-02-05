@@ -89,6 +89,64 @@ function ListCtrl ($window,$scope,$routeParams,$resource) {
 
 function EditCtrl ($scope,$routeParams,$resource) {
   console.log($routeParams);
+
+  $scope.format = 'yyyy-MM-dd';
+  $scope.dateOptions = {
+    formatYear: 'yy',
+    startingDay: 1
+  };
+  $scope.disabled = function(date, mode) {
+    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+  };
+  $scope.today = function() {
+    $scope.dt = new Date();
+  };
+  $scope.clear = function () {
+    $scope.dt = null;
+  };
+  $scope.open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.opened = true;
+  };
+
+  $scope.forms = [];
+  $scope.addForm = {
+    choice:function () {
+      $scope.forms.push({
+        type:1,
+        label:'请选择你的答案',
+        content:['A-','B-','C-','D-']
+      });
+    },
+    simple:function () {
+      $scope.forms.push({
+        type:2,
+        label:'请简答你的答案',
+        content:[]
+      });
+    },
+    complex:function () {
+      $scope.forms.push({
+        type:3,
+        label:'请陈述你的答案',
+        content:[]
+      });
+    },
+    judge:function () {
+      $scope.forms.push({
+        type:4,
+        label:'请判断你的答案',
+        content:['是','否']
+      });
+    },
+  }
+  $scope.showType = ['','选择题','简答题','陈述题','判断题'];
+  $scope.showContent = ['',true,false,false,false]
+  $scope.removeForm = function (index) {
+    $scope.forms.splice(index,1);
+  }
 }
 
 function ResultCtrl ($scope,$routeParams,$resource) {

@@ -8,5 +8,132 @@
 <br>
 <br>
 <hr>
-<div>
+<form class="form-horizontal">
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">活动标题</label>
+    </div>
+    <div class="col-md-6">
+      <input type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">开始日期</label>
+    </div>
+    <div class="col-md-6">
+      <p class="input-group">
+        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+      </p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">开始时间</label>
+    </div>
+    <div class="col-md-6">
+        <timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">结束日期</label>
+    </div>
+    <div class="col-md-6">
+      <p class="input-group">
+        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+      </p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">结束时间</label></div>
+    <div class="col-md-6">
+      <timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">验证规则</label>
+    </div>
+    <div class="col-md-6">
+      <input type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">表单内容</label>
+    </div>
+    <div class="col-md-6">
+      <div class="well">
+        <div class="btn-group" dropdown is-open="status.isopen">
+          <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+            添加表单项<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href ng-click="addForm.simple()">简答题</a></li>
+            <li><a href ng-click="addForm.complex()">陈述题</a></li>
+            <li><a href ng-click="addForm.choice()">选择题</a></li>
+            <li><a href ng-click="addForm.judge()">判断题</a></li>
+          </ul>
+        </div>
+        <hr>
+        <ol>
+          <li ng-repeat="form in forms">
+            <label>{{showType[form.type]}}</label>
+            <a href ng-click="removeForm($index)"><span class="glyphicon glyphicon-minus-sign"></span></a>
+            <div class="well">
+              <p>{{form.label}}</p>
+              <ul>
+                <li ng-repeat="single in form.content">{{single}}</li>
+              </ul>
+            </div>
+            <label>修改题干</label>
+            <input type="text" ng-model="form.label">
+            <div ng-show="showContent[form.type]">
+              <label>修改选项</label>
+              <a href ng-click><span class="glyphicon glyphicon-plus-sign"></span></a>
+              <div ng-repeat="single in form.content">
+                <a href ng-click><span class="glyphicon glyphicon-minus-sign"></span></a>
+                <input type="text" ng-model="single">
+              </div>
+            </div>
+            <hr>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!--
+
+
+<div class="col-md-2">
+  <label class="control-label">结束日期</label>
 </div>
+<div class="col-md-6">
+  <p class="input-group">
+    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="'2015-01-01'" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+  </p>
+</div>
+<div class="col-md-4">
+  <timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+</div>
+-->
