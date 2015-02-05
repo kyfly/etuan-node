@@ -139,12 +139,18 @@ function EditCtrl ($scope,$routeParams,$resource) {
         label:'请判断你的答案',
         content:['是','否']
       });
-    },
-  }
-  $scope.showType = ['','选择题','简答题','陈述题','判断题'];
-  $scope.showContent = ['',true,false,false,false]
+    }
+  };
   $scope.removeForm = function (index) {
     $scope.forms.splice(index,1);
+  };
+  $scope.showType = ['','选择题','简答题','陈述题','判断题'];
+  $scope.showContent = ['',true,false,false,false];
+  $scope.appendContent = function (index) {
+    $scope.forms[index].content.push('');
+  };
+  $scope.removeContent = function (pindex,index) {
+    $scope.forms[pindex].content.splice(index,1);
   }
 }
 

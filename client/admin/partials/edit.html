@@ -98,17 +98,17 @@
             <div class="well">
               <p>{{form.label}}</p>
               <ul>
-                <li ng-repeat="single in form.content">{{single}}</li>
+                <li ng-repeat="single in form.content track by $index">{{single}}</li>
               </ul>
             </div>
             <label>修改题干</label>
             <input type="text" ng-model="form.label">
             <div ng-show="showContent[form.type]">
               <label>修改选项</label>
-              <a href ng-click><span class="glyphicon glyphicon-plus-sign"></span></a>
-              <div ng-repeat="single in form.content">
-                <a href ng-click><span class="glyphicon glyphicon-minus-sign"></span></a>
-                <input type="text" ng-model="single">
+              <a href ng-click="appendContent($index)"><span class="glyphicon glyphicon-plus-sign"></span></a>
+              <div ng-repeat="single in form.content track by $index">
+                <a href ng-click="removeContent($parent.$index,$index)"><span class="glyphicon glyphicon-minus-sign"></span></a>
+                <input type="text" ng-model="form.content[$index]">
               </div>
             </div>
             <hr>
