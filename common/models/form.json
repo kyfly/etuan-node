@@ -4,6 +4,9 @@
   "strict": true,
   "idInjection": true,
   "properties": {
+    "title": {
+      "type": "string"
+    },
     "startTime": {
       "type": "date"
     },
