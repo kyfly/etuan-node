@@ -47,6 +47,11 @@
         "validate": true,
         "autoId": true
       }
+    },
+    "qrCode": {
+      "type": "hasOne",
+      "model": "WeChatEtuanQR",
+      "foreignKey": "itemId"
     }
   },
   "acls": [],

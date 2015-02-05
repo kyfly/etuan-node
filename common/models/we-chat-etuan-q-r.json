@@ -8,6 +8,12 @@
     },
     "itemId": {
       "type": "object"
+    },
+    "qrNumber": {
+      "type": "number"
+    },
+    "imageUrl": {
+      "type": "string"
     }
   },
   "validations": [],

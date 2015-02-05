@@ -73,6 +73,6 @@
   },
   "WeChatEtuanQR": {
     "dataSource": "db",
-    "public": true
+    "public": false
   }
 }
