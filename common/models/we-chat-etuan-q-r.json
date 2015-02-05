@@ -1,0 +1,17 @@
+{
+  "name": "WeChatEtuanQR",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "properties": {
+    "itemType": {
+      "type": "string"
+    },
+    "itemId": {
+      "type": "object"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

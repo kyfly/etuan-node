@@ -70,5 +70,9 @@
   "FormResultAnswer": {
     "dataSource": "db",
     "public": false
+  },
+  "WeChatEtuanQR": {
+    "dataSource": "db",
+    "public": true
   }
 }
