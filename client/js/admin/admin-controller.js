@@ -95,21 +95,20 @@ function EditCtrl ($scope,$routeParams,$resource) {
     formatYear: 'yy',
     startingDay: 1
   };
-  $scope.disabled = function(date, mode) {
-    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-  };
-  $scope.today = function() {
-    $scope.dt = new Date();
-  };
-  $scope.clear = function () {
-    $scope.dt = null;
-  };
-  $scope.open = function($event) {
+  $scope.startDateOpen = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
-
-    $scope.opened = true;
+    $scope.startDateOpened = true;
   };
+  $scope.stopDateOpen = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    $scope.stopDateOpened = true;
+  };
+
+  $scope.hstep = 1;
+  $scope.mstep = 15;
+
 
   $scope.forms = [];
   $scope.addForm = {
