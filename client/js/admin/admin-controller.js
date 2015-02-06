@@ -47,13 +47,14 @@ function SidebarCtrl ($scope,$window) {
 }
 
 function ListCtrl ($window,$scope,$routeParams,$resource) {
-  var ListProperty = {
-    form:'/api/Forms/:id',
-    seckill:'/api/Seckills/:id',
-    vote:'/api/Votes/:id',
-    luck:'/api/Lucks/:id'
-  }
-  var List = $resource(ListProperty[$routeParams.type]);
+  var listProperty = {
+    form:'/api/OrganizationUsers/:id/forms',
+    seckill:'/api/OrganizationUsers/:id/seckills',
+    vote:'/api/OrganizationUsers/:id/votes',
+    luck:'/api/OrganizationUsers/:id/lucks'
+  };
+  var List = $resource(listProperty[$routeParams.type]);
+  //$scope.listItems = List.query({'id':id});
   $scope.listItems = [
     {
       'name':'项目一号',
@@ -73,15 +74,14 @@ function ListCtrl ($window,$scope,$routeParams,$resource) {
       'startTime':'1970-00-00 00:00:00',
       'stopTime':'1990-00-00 00:00:00'
     }
-  ];//List.query();
-
+  ];
   $scope.edit = function (id) {
     $window.location.href = '#/'+$routeParams.type+'/edit/'+id;
   };
   $scope.result = function (id) {
     $window.location.href = '#/'+$routeParams.type+'/result/'+id;
   };
-  $scope.delete = function (index,id) {
+  $scope.remove = function (index,id) {
     $scope.listItems.splice(index,1);
     List.delete({'id':id});
   }
@@ -89,7 +89,8 @@ function ListCtrl ($window,$scope,$routeParams,$resource) {
 
 function EditCtrl ($scope,$routeParams,$resource) {
   console.log($routeParams);
-
+  //日期选择器配置
+  $scope.createMode = false;
   $scope.format = 'yyyy-MM-dd';
   $scope.dateOptions = {
     formatYear: 'yy',
@@ -105,11 +106,31 @@ function EditCtrl ($scope,$routeParams,$resource) {
     $event.stopPropagation();
     $scope.stopDateOpened = true;
   };
-
+  //时间选择器配置
   $scope.hstep = 1;
   $scope.mstep = 15;
-
-
+  //功能检测区
+  $scope.isForm = function () {
+    return 'form' === $routeParams.type;
+  };
+  $scope.isSkeckill = function () {
+    return 'skeckill' === $routeParams.type;
+  };
+  $scope.isVote = function () {
+    return 'vote' === $routeParams.type;
+  };
+  $scope.isLuck = function () {
+    return 'luck' === $routeParams.type;
+  };
+  //接口资源区
+  var editProperty = {
+    form:'/api/Forms/:id',
+    seckill:'/api/Seckills/:id',
+    vote:'/api/Votes/:id',
+    luck:'/api/Lucks/:id'
+  };
+  var Edit = $resource(editProperty[$routeParams.type]);
+  //表单
   $scope.forms = [];
   $scope.addForm = {
     choice:function () {
@@ -151,12 +172,16 @@ function EditCtrl ($scope,$routeParams,$resource) {
   };
   $scope.removeContent = function (pindex,index) {
     $scope.forms[pindex].content.splice(index,1);
+  };
+  //提交区
+  $scope.submit = function () {
+    Edit.save();
   }
 }
 
 function ResultCtrl ($scope,$routeParams,$resource) {
   console.log($routeParams);
-  var ResultProperty = {
+  var resultProperty = {
     form:{
       downloadAsExcel:true,
       downloadAsPdf:true
