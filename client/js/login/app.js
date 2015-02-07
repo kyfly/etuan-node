@@ -2,11 +2,22 @@ function LoginCtrl ($scope,$resource,$timeout,$window) {
   var Login = $resource('/api/OrganizationUsers/login');
   $scope.loginBtn = function(){
     Login.save({
-      "email":this.email,
-      "password":this.password
-    });
-    alert('模拟登录成功，将在5秒钟后模拟跳转。');
-    $timeout(function(){$window.location='http://www.evilucifero.com'},5000);
+      "email":$scope.email,
+      "password":$scope.password
+      },
+      function(res){
+        console.log(res);
+        $window.localStorage.setItem('accessToken',res.id);
+        $window.localStorage.setItem('userId',res.userId);
+        $window.localStorage.setItem('loginTime',res.created);
+        alert('success!');
+        $timeout(function(){$window.location='/admin/index-sim.html'},5000);
+      },
+      function (res) {
+        console.log(res);
+        alert('error!');
+      }
+    );
   }
 }
 var app = angular.module('app', ['ngResource']);
