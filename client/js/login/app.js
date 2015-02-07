@@ -4,20 +4,17 @@ function LoginCtrl ($scope,$resource,$timeout,$window) {
     Login.save({
       "email":$scope.email,
       "password":$scope.password
-      },
-      function(res){
-        console.log(res);
-        $window.localStorage.setItem('accessToken',res.id);
-        $window.localStorage.setItem('userId',res.userId);
-        $window.localStorage.setItem('loginTime',res.created);
-        alert('模拟登录成功!');
-        $timeout(function(){$window.location='/admin/index-sim.html'},5000);
-      },
-      function (res) {
-        console.log(res);
-        alert('模拟登录失败!');
-      }
-    );
+    },function(res){
+      console.log(res);
+      $window.localStorage.setItem('accessToken',res.id);
+      $window.localStorage.setItem('userId',res.userId);
+      $window.localStorage.setItem('loginTime',res.created);
+      alert('模拟登录成功!');
+      $timeout(function(){$window.location='/admin/index-sim.html'},5000);
+    },function (res) {
+      console.log(res);
+      alert('模拟登录失败!');
+    });
   }
 }
 var app = angular.module('app', ['ngResource']);
