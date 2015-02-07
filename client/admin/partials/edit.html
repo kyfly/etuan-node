@@ -15,7 +15,7 @@
       <label class="control-label">活动标题</label>
     </div>
     <div class="col-md-6">
-      <input type="text" class="form-control">
+      <input type="text" class="form-control" ng-model="title">
     </div>
   </div>
 
@@ -120,7 +120,7 @@
 
   <div class="form-group">
     <div class="col-sm-2 col-md-offset-2">
-      <button class="btn btn-block btn-info">提交</button>
+      <button class="btn btn-block btn-info" ng-click="submit()">提交</button>
     </div>
     <div class="col-sm-2">
       <button class="btn btn-block btn-default">预览</button>

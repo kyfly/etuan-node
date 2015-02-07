@@ -87,7 +87,7 @@ function ListCtrl ($window,$scope,$routeParams,$resource) {
   }
 }
 
-function EditCtrl ($scope,$routeParams,$resource) {
+function EditCtrl ($scope,$routeParams,$resource,$window) {
   console.log($routeParams);
   //日期选择器配置
   $scope.createMode = false;
@@ -175,7 +175,24 @@ function EditCtrl ($scope,$routeParams,$resource) {
   };
   //提交区
   $scope.submit = function () {
-    Edit.save();
+    var formQuestions = [];
+    for(var i=0;i<$scope.forms.length;i++){
+      var formQuestion = {
+        'type': $scope.forms[i].type,
+        'label': $scope.forms[i].label,
+        'content': $scope.forms[i].content
+      };
+      formQuestions.push(formQuestion);
+    };
+    Edit.save({
+      data:{
+        "title": $scope.title,
+        "startTime": '',
+        "stopTime": '',
+        "organizationUid": $window.localStorage.getItem('userId'),
+        "formQuestions": formQuestions
+      }
+    });
   }
 }
 
