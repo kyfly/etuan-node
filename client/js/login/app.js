@@ -10,12 +10,12 @@ function LoginCtrl ($scope,$resource,$timeout,$window) {
         $window.localStorage.setItem('accessToken',res.id);
         $window.localStorage.setItem('userId',res.userId);
         $window.localStorage.setItem('loginTime',res.created);
-        alert('success!');
+        alert('模拟登录成功!');
         $timeout(function(){$window.location='/admin/index-sim.html'},5000);
       },
       function (res) {
         console.log(res);
-        alert('error!');
+        alert('模拟登录失败!');
       }
     );
   }
