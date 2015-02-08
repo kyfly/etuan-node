@@ -93,10 +93,22 @@ function ListCtrl ($window,$scope,$routeParams,$resource) {
   }
 }
 
-function EditCtrl ($scope,$routeParams,$resource,$window) {
+function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   console.log($routeParams);
+  var loadForm = function () {
+
+  }
+  var initMode = function () {
+    if($routeParams.id === 'create'){
+      $scope.mode = '新建'+dict[$routeParams.type];
+    }
+    else{
+      $scope.mode = '编辑'+dict[$routeParams.type]+'  '+$routeParams.id;
+      loadForm();
+    }
+  };
+  initMode();
   //日期选择器配置
-  $scope.createMode = false;
   $scope.format = 'yyyy-MM-dd';
   $scope.dateOptions = {
     formatYear: 'yy',
