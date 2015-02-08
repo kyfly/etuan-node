@@ -10,7 +10,6 @@ function SidebarCtrl ($scope,$window) {
       'display_name':'表单',
       'url':'#/form/list'
     },
-    /*
     {
       'id':'sidebarSeckill',
       'display_name':'疯抢',
@@ -26,7 +25,6 @@ function SidebarCtrl ($scope,$window) {
       'display_name':'抽奖',
       'url':'#/luck/list'
     },
-    */
     {
       'id':'sidebarWechat',
       'display_name':'微信',
@@ -49,38 +47,16 @@ function SidebarCtrl ($scope,$window) {
 }
 
 function ListCtrl ($window,$scope,$routeParams,$resource) {
-  var listProperty = {
-    form:'/api/OrganizationUsers/:id/forms',
-    seckill:'/api/OrganizationUsers/:id/seckills',
-    vote:'/api/OrganizationUsers/:id/votes',
-    luck:'/api/OrganizationUsers/:id/lucks'
-  };
+  //var listProperty = {
+  //  form:'/api/OrganizationUsers/:id/forms',
+  //  seckill:'/api/OrganizationUsers/:id/seckills',
+  //  vote:'/api/OrganizationUsers/:id/votes',
+  //  luck:'/api/OrganizationUsers/:id/lucks'
+  //};
   //var List = $resource(listProperty[$routeParams.type]);
   //$scope.listItems = List.query({'id':$window.localStorage.getItem('userId')});
-  var List = $resource('/api/Forms');
+  var List = $resource('/api/Forms/:id');
   $scope.listItems = List.query();
-  /*
-  $scope.listItems = [
-    {
-      'name':'项目一号',
-      'id':'1',
-      'startTime':'1970-00-00 00:00:00',
-      'stopTime':'1990-00-00 00:00:00'
-    },
-    {
-      'name':'项目二号',
-      'id':'2',
-      'startTime':'1970-00-00 00:00:00',
-      'stopTime':'1990-00-00 00:00:00'
-    },
-    {
-      'name':'项目三号',
-      'id':'3',
-      'startTime':'1970-00-00 00:00:00',
-      'stopTime':'1990-00-00 00:00:00'
-    }
-  ];
-  */
   $scope.edit = function (id) {
     $window.location.href = '#/'+$routeParams.type+'/edit/'+id;
   };
@@ -203,22 +179,23 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
       formQuestions.push(formQuestion);
     };
     Edit.save({data:{
-        "title": 'not title',
-        "startTime": '2015-02-07T15:31:19.591Z',
-        "stopTime": '2015-03-07T15:31:19.591Z',
-        "adPicture": '',
-        "adUrl": '',
-        "verifyRule": '',
-        "updatedAt": '',
-        "organizationUid": $window.localStorage.getItem('userId'),
-        "formQuestions": formQuestions
+        'title': 'not title',
+        'startTime': '2015-02-07T15:31:19.591Z',
+        'stopTime': '2015-03-07T15:31:19.591Z',
+        'adPicture': '',
+        'adUrl': '',
+        'verifyRule': '',
+        'updatedAt': '',
+        'organizationUid': $window.localStorage.getItem('userId'),
+        'formQuestions': formQuestions
       }
     });
   }
 }
 
-function ResultCtrl ($scope,$routeParams,$resource) {
+function ResultCtrl ($scope,$routeParams,$resource,dict) {
   console.log($routeParams);
+  $scope.mode = dict[$routeParams.type]+'结果'+'  '+$routeParams.id;
   var resultProperty = {
     form:{
       downloadAsExcel:true,

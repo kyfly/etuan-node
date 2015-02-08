@@ -34,7 +34,7 @@ function RewriteResourceActions ($resourceProvider) {
 var app = angular.module('app', ['ngResource','ngAnimate','ngRoute','ngTouch','ui.bootstrap']);
 app.value('dict',{
   'form': '表单',
-  'skeckill': '疯抢',
+  'seckill': '疯抢',
   'vote': '投票',
   'luck': '抢票'
 });
