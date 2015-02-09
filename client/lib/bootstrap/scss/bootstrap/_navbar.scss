@@ -9,6 +9,7 @@
 // other navbar variations.
 
 .navbar {
+  padding: 0 10px;
   position: relative;
   min-height: $navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
   margin-bottom: $navbar-margin-bottom;
