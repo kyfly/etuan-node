@@ -4,55 +4,42 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <title>后台</title>
-  <link href="../lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+  <link href="../lib/bootstrap/css/etuan.css" rel="stylesheet">
   <link href="../css/admin.css" rel="stylesheet">
 </head>
 <body>
 <!--头部-->
 <header id="nav">
   <nav class="navbar navbar-default" role="navigation">
-    <div class="container">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
-            <span class="sr-only">导航</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+      <div class="navbar-header">
+        <button id="contentBtn" class="navbar-toggle" type="button">
+          <span class="sr-only">导航</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
 
-          <button id="contentBtn" class="navbar-toggle" type="button">
-            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-          </button>
-          <h5>
-            <a href="index.html">
-              <img src="img/etuan-logo-word.png@60h.png" height="30px" alt="团团一家LOGO">
-            </a>
-          </h5>
+        <!--手机屏幕上的退出登录按钮-->
+        <button id="client" class="navbar-toggle visible-xs" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<a href=''><span class='glyphicon glyphicon-log-out'></span>&nbsp;退出</a>" type="button">
+          <img src="img/logo.jpg">&nbsp;<span>团团一家</span>&nbsp;<b class="caret"></b>
+        </button>
+
+        <!--大屏幕的退出按钮-->
+        <div id="logout" class="hidden-xs">
+          <img src="img/logo.jpg">&nbsp;
+          <span>团团一家</span>
+          <button type="button" class="btn"><span class='glyphicon glyphicon-log-out'></span>退出</button>
         </div>
-        <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a href="index.html">首页</a>
-            </li>
-            <li>
-              <a href="shetuan.html">组织</a>
-            </li>
-            <li>
-              <a href="baoming.html">报名</a>
-            </li>
-            <li>
-              <a href="qiang.html">疯抢</a>
-            </li>
-            <li>
-              <a href="tou.html">投票</a>
-            </li>
-          </ul>
-        </div>
+
+        <h5>
+          <a href="index.html">
+            <img src="img/etuan-logo-word.png@60h.png" height="25px" alt="团团一家LOGO">
+          </a>
+        </h5>
       </div>
-    </div>
   </nav>
 </header>
+
 <!--左侧边栏-->
 <div id="menu" class="menu-list col-sm-2">
   <div class="menu-head">
@@ -121,7 +108,7 @@
 
       <div class="col-md-4 col-xs-12 noticeBox">
         <div class="col-xs-12 insideBox">
-          <h3>招新报名系统上线</h3>
+          <p class="title">招新报名系统上线</p>
           <p>123456!</p>
           <p>123456!!</p>
           <p>123456!!!</p>
@@ -131,7 +118,7 @@
 
       <div class="col-md-4 col-xs-12 noticeBox">
         <div class="col-xs-12 insideBox">
-          <h3>招新报名系统上线</h3>
+          <p class="title">招新报名系统上线</p>
           <p>123456!</p>
           <p>123456!!</p>
           <p>123456!!!</p>
@@ -141,7 +128,7 @@
 
       <div class="col-md-4 col-xs-12 noticeBox">
         <div class="col-xs-12 insideBox">
-          <h3>招新报名系统上线</h3>
+          <p class="title">招新报名系统上线</p>
           <p>123456!</p>
           <p>123456!!</p>
           <p>123456!!!</p>
@@ -151,7 +138,7 @@
 
       <div class="col-md-4 col-xs-12 noticeBox">
         <div class="col-xs-12 insideBox">
-          <h3>招新报名系统上线</h3>
+          <p class="title">招新报名系统上线</p>
           <p>123456!</p>
           <p>123456!!</p>
           <p>123456!!!</p>
