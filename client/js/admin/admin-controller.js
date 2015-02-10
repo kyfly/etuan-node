@@ -124,7 +124,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   };
   var initial = function () {
     $routeParams.id === 'create'?initEdit():loadEdit();
-    $scope.mode = $routeParams.id === 'create'?('新建'+dict[$routeParams.type]):('编辑'+dict[$routeParams.type]+'  '+$routeParams.id);
+    $scope.mode = $routeParams.id === 'create'?('新建'+dict[$routeParams.type]):('编辑'+dict[$routeParams.type]);
     $scope.submitButtonName = $routeParams.id === 'create'?'创建':'更新';
   };
   initial();
