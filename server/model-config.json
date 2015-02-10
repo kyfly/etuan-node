@@ -74,5 +74,13 @@
   "WeChatEtuanQR": {
     "dataSource": "db",
     "public": false
+  },
+  "BaseItem": {
+    "dataSource": "db",
+    "public": false
+  },
+  "BaseResult": {
+    "dataSource": null,
+    "public": false
   }
 }

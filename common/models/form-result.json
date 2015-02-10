@@ -3,30 +3,13 @@
   "base": "PersistedModel",
   "strict": true,
   "idInjection": true,
-  "properties": {
-    "weChatUid": {
-      "type": "object",
-      "comments": "用户id"
-    },
-    "ip": {
-      "type": "string"
-    },
-    "formId": {
-      "type": "object",
-      "comments": "对应的表单id"
-    }
-  },
+  "properties": {},
   "validations": [],
   "relations": {
     "form": {
       "type": "belongsTo",
       "model": "Form",
       "foreignKey": "formId"
-    },
-    "weChatUser": {
-      "type": "belongsTo",
-      "model": "WeChatUser",
-      "foreignKey": "weChatUid"
     },
     "answers": {
       "type": "embedsMany",

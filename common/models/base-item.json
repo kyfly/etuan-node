@@ -1,0 +1,62 @@
+{
+  "name": "BaseItem",
+  "base": "PersistedModel",
+  "strict": true,
+  "idInjection": false,
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "startTime": {
+      "type": "date"
+    },
+    "stopTime": {
+      "type": "date"
+    },
+    "adPicture": {
+      "type": "string",
+      "comments": "广告图片地址"
+    },
+    "adUrl": {
+      "type": "string",
+      "comments": "广告指向的地址"
+    },
+    "verifyRule": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "organization": {
+      "type": "belongsTo",
+      "model": "OrganizationUser",
+      "foreignKey": "organizationUid"
+    },
+    "qrCode": {
+      "type": "hasOne",
+      "model": "WeChatEtuanQR",
+      "foreignKey": "itemId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": []
+}

@@ -1,44 +1,15 @@
 {
   "name": "Form",
-  "base": "PersistedModel",
+  "base": "BaseItem",
   "strict": true,
   "idInjection": true,
-  "properties": {
-    "title": {
-      "type": "string"
-    },
-    "startTime": {
-      "type": "date"
-    },
-    "stopTime": {
-      "type": "date"
-    },
-    "adPicture": {
-      "type": "string",
-      "comments": "广告图片地址"
-    },
-    "adUrl": {
-      "type": "string",
-      "comments": "广告指向的地址"
-    },
-    "verifyRule": {
-      "type": "string"
-    },
-    "updatedAt": {
-      "type": "date"
-    }
-  },
+  "properties": {},
   "validations": [],
   "relations": {
     "results": {
       "type": "hasMany",
       "model": "FormResult",
       "foreignKey": "formId"
-    },
-    "organization": {
-      "type": "belongsTo",
-      "model": "OrganizationUser",
-      "foreignKey": "organizationUid"
     },
     "questions": {
       "type": "embedsMany",
@@ -47,26 +18,8 @@
         "validate": true,
         "autoId": true
       }
-    },
-    "qrCode": {
-      "type": "hasOne",
-      "model": "WeChatEtuanQR",
-      "foreignKey": "itemId"
     }
   },
-  "acls": [
-    {
-      "accessType": "WRITE",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "DENY"
-    },
-    {
-      "accessType": "WRITE",
-      "principalType": "ROLE",
-      "principalId": "$owner",
-      "permission": "ALLOW"
-    }
-  ],
+  "acls": [],
   "methods": []
 }

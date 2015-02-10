@@ -1,0 +1,21 @@
+{
+  "name": "BaseResult",
+  "base": "PersistedModel",
+  "strict": true,
+  "idInjection": false,
+  "properties": {
+    "ip": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "weChatUser": {
+      "type": "belongsTo",
+      "model": "WeChatUser",
+      "foreignKey": "weChatUid"
+    }
+  },
+  "acls": [],
+  "methods": []
+}
