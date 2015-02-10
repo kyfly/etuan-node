@@ -2,7 +2,7 @@
   <h3>{{mode}}</h3>
 </div>
 <div style="display: inline;position: absolute;top: 20px;right: 20px">
-  <button class="btn btn-info" ng-click="submit()">提交</button>
+  <button class="btn btn-primary" ng-click="submit()">{{submitButtonName}}</button>
   <button class="btn btn-default" ng-click="preview()">预览</button>
 </div>
 <br>
@@ -25,14 +25,17 @@
     </div>
     <div class="col-md-5">
       <p class="input-group">
-        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="startTime" is-open="startDateOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
+        <input type="text" class="form-control" datepicker-popup="{{enFormat}}" ng-model="startTime" is-open="startOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
       <span class="input-group-btn">
-        <button type="button" class="btn btn-default" ng-click="startDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+        <button type="button" class="btn btn-default" ng-click="startTimeOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
       </span>
       </p>
     </div>
     <div class="col-md-2">
       <timepicker ng-model="startTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
+    </div>
+    <div class="col-md-3">
+      <p>{{startTime | date:cnFormat}}</p>
     </div>
   </div>
 
@@ -42,20 +45,41 @@
     </div>
     <div class="col-md-5">
       <p class="input-group">
-        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="stopTime" is-open="stopDateOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
+        <input type="text" class="form-control" datepicker-popup="{{enFormat}}" ng-model="stopTime" is-open="stopOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
       <span class="input-group-btn">
-        <button type="button" class="btn btn-default" ng-click="stopDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+        <button type="button" class="btn btn-default" ng-click="stopTimeOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
       </span>
       </p>
     </div>
     <div class="col-md-2">
       <timepicker ng-model="stopTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
     </div>
+    <div class="col-md-3">
+      <p>{{stopTime | date:cnFormat}}</p>
+    </div>
   </div>
 
   <div class="form-group">
     <div class="col-md-2">
       <label class="control-label">验证规则</label>
+    </div>
+    <div class="col-md-7">
+      <input type="text" class="form-control" ng-model="verifyRule">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">广告图片（可选）</label>
+    </div>
+    <div class="col-md-7">
+      <input type="file" class="form-control">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">广告链接（可选）</label>
     </div>
     <div class="col-md-7">
       <input type="text" class="form-control">
@@ -109,7 +133,7 @@
 
   <div class="form-group">
     <div class="col-sm-2 col-md-offset-2">
-      <button class="btn btn-block btn-info" ng-click="submit()">提交</button>
+      <button class="btn btn-block btn-primary" ng-click="submit()">{{submitButtonName}}</button>
     </div>
     <div class="col-sm-2">
       <button class="btn btn-block btn-default" ng-click="preview()">预览</button>

@@ -62,8 +62,15 @@ function ListCtrl ($window,$scope,$routeParams,$resource) {
     $window.location.href = '#/'+$routeParams.type+'/result/'+id;
   };
   $scope.remove = function (index,id) {
-    $scope.listItems.splice(index,1);
-    List.delete({fk:id});
+    List.delete({fk:id},
+      function(res){
+        console.log(res);
+        $scope.listItems.splice(index,1);
+      },
+      function(res){
+        console.log(res);
+      }
+    );
   }
 }
 
@@ -77,37 +84,41 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   };
   var Edit = $resource(editProperty[$routeParams.type],{id:$window.localStorage.getItem('userId')});
   var loadForm = function () {
-    var edit = Edit.get({fk:$routeParams.id});
-    $scope.title = edit.title;
-    $scope.startTime = edit.startTime;
-    $scope.stopTime = edit.stopTime;
-    $scope.$apply();
+    Edit.get({fk:$routeParams.id},
+      function(res){
+        $scope.title = res.title;
+        $scope.startTime = new Date(res.startTime);
+        $scope.stopTime = new Date(res.stopTime);
+        $scope.verifyRule = res.verifyRule;
+      },
+      function(res){
+        console.log(res);
+      }
+    );
   };
   var initMode = function () {
-    if($routeParams.id === 'create'){
-      $scope.mode = '新建'+dict[$routeParams.type];
-    }
-    else{
-      $scope.mode = '编辑'+dict[$routeParams.type]+'  '+$routeParams.id;
-      loadForm();
-    }
+    $routeParams.id === 'create'?null:loadForm();
+    $scope.mode = $routeParams.id === 'create'?('新建'+dict[$routeParams.type]):('编辑'+dict[$routeParams.type]+'  '+$routeParams.id);
+    $scope.submitButtonName = $routeParams.id === 'create'?'创建':'更新';
   };
   initMode();
   //日期选择器配置
-  $scope.format = "EEE MMM dd yyyy HH:mm:ss 'GMT'Z '(CST)'";
+  //$scope.format = 'yyyy-MM-dd';
+  $scope.enFormat = "EEE MMM dd yyyy HH:mm:ss 'GMT'Z '(CST)'";
+  $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
   $scope.dateOptions = {
     formatYear: 'yy',
     startingDay: 1
   };
-  $scope.startDateOpen = function($event) {
+  $scope.startTimeOpen = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
-    $scope.startDateOpened = true;
+    $scope.startOpened = true;
   };
-  $scope.stopDateOpen = function($event) {
+  $scope.stopTimeOpen = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
-    $scope.stopDateOpened = true;
+    $scope.stopOpened = true;
   };
   //时间选择器配置
   $scope.hstep = 1;
@@ -179,15 +190,32 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
       };
       formQuestions.push(formQuestion);
     }
-    Edit.save({
+    var nowTime = new Date();
+    if($routeParams.id === 'create'){
+      Edit.save({
         'title': $scope.title,
-        'startTime': $scope.startTime,
-        'stopTime': $scope.stopTime,
+        'startTime': $scope.startTime.toISOString(),
+        'stopTime': $scope.stopTime.toISOString(),
         'adPicture': '',
         'adUrl': '',
-        'verifyRule': '',
-        'updatedAt': ''
-    });
+        'verifyRule': $scope.verifyRule,
+        'updatedAt': nowTime.toISOString()
+      });
+    }
+    else{
+      Edit.update({
+        'title': $scope.title,
+        'startTime': $scope.startTime.toISOString(),
+        'stopTime': $scope.stopTime.toISOString(),
+        'adPicture': '',
+        'adUrl': '',
+        'verifyRule': $scope.verifyRule,
+        'updatedAt': nowTime.toISOString()
+      });
+    }
+    var mode = $routeParams.id === 'create'?'创建':'更新';
+    alert(mode+dict[$routeParams.type]+'成功！');
+    $window.location.href = '#/'+$routeParams+'/list';
   };
   $scope.preview = function(){
   };
