@@ -24623,7 +24623,7 @@ var NG_HIDE_IN_PROGRESS_CLASS = 'ng-hide-animate';
       </div>
     </file>
     <file name="glyphicons.css">
-      @import url(../../components/bootstrap-3.1.1/css/etuan.css);
+      @import url(../../components/bootstrap-3.1.1/css/bootstrap.css);
     </file>
     <file name="animations.css">
       .animate-show {
@@ -24788,7 +24788,7 @@ var ngShowDirective = ['$animate', function($animate) {
       </div>
     </file>
     <file name="glyphicons.css">
-      @import url(../../components/bootstrap-3.1.1/css/etuan.css);
+      @import url(../../components/bootstrap-3.1.1/css/bootstrap.css);
     </file>
     <file name="animations.css">
       .animate-hide {
