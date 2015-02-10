@@ -83,25 +83,40 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
     luck:'/api/OrganizationUsers/:userId/lucks/:fk'
   };
   var Edit = $resource(editProperty[$routeParams.type],{userId:$window.localStorage.getItem('userId'),fk:'@elementId'});
-  var loadForm = function () {
+  var initEdit = function () {
+    $scope.startTime = new Date();
+    $scope.stopTime = new Date();
+  }
+  var loadEdit = function () {
     Edit.get({fk:$routeParams.id},
       function(res){
         $scope.title = res.title;
         $scope.startTime = new Date(res.startTime);
         $scope.stopTime = new Date(res.stopTime);
         $scope.verifyRule = res.verifyRule;
+        switch ($routeParams.type){
+          case 'form':
+            $scope.forms = res.formQuestions;
+            break;
+          case 'seckill':
+            break;
+          case 'vote':
+            break;
+          case 'luck':
+            break;
+        }
       },
       function(res){
         console.log(res);
       }
     );
   };
-  var initMode = function () {
-    $routeParams.id === 'create'?null:loadForm();
+  var initial = function () {
+    $routeParams.id === 'create'?initEdit():loadEdit();
     $scope.mode = $routeParams.id === 'create'?('新建'+dict[$routeParams.type]):('编辑'+dict[$routeParams.type]+'  '+$routeParams.id);
     $scope.submitButtonName = $routeParams.id === 'create'?'创建':'更新';
   };
-  initMode();
+  initial();
   //日期选择器配置
   $scope.enFormat = "EEE MMM dd yyyy HH:mm:ss 'GMT'Z '(CST)'";
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
@@ -183,6 +198,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
     var formQuestions = [];
     for(var i=0;i<$scope.forms.length;i++){
       var formQuestion = {
+        'id':i,
         'type': $scope.forms[i].type,
         'label': $scope.forms[i].label,
         'content': $scope.forms[i].content
@@ -198,7 +214,8 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
         'adPicture': '',
         'adUrl': '',
         'verifyRule': $scope.verifyRule,
-        'updatedAt': nowTime.toISOString()
+        'updatedAt': nowTime.toISOString(),
+        'formQuestions':formQuestions
       });
     }
     else{
@@ -210,7 +227,8 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
         'adPicture': '',
         'adUrl': '',
         'verifyRule': $scope.verifyRule,
-        'updatedAt': nowTime.toISOString()
+        'updatedAt': nowTime.toISOString(),
+        'formQuestions':formQuestions
       });
     }
     var mode = $routeParams.id === 'create'?'创建':'更新';
