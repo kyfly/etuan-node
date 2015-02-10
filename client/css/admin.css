@@ -12,8 +12,6 @@ body {
 
 .menu-list {
   margin-top: -20px;
-  min-height: 100%;
-  height: 100%;
   background-color: #A6AAC2;
 }
 .menu-list .menu-head {
@@ -99,23 +97,72 @@ body {
 .noticeBox .insideBox {
   background-color: #ffffff;
   height: 200px;
-  padding: 0 16%;
+  padding: 5% 16%;
   word-break: break-all;
   overflow: hidden;
   line-height: 20px;
 }
-.noticeBox .insideBox h3 {
+.noticeBox .insideBox .title {
   color: #A7D86E;
+  font-size: 22px;
 }
 .noticeBox .insideBox p {
   color: #858585;
-  font-size: 18px;
+  font-size: 16px;
+}
+
+#client {
+  position: absolute;
+  right: 10px;
+  display: block;
+  padding: 5px;
+  height: 40px;
+  margin: 5px;
+  color: #555555;
+  font-size: 14px;
+}
+#client img {
+  height: 30px;
+  width: 30px;
+}
+
+#logout {
+  position: absolute;
+  right: 50px;
+  top: 5px;
+  color: #555555;
+  font-size: 16px;
+}
+#logout img {
+  width: 30px;
+  height: 30px;
+}
+#logout button {
+  margin-left: 10px;
+  border-radius: 0;
+  background-color: #ffffff;
+  border: none;
+  font-size: 20px;
+  color: #555555;
+}
+#logout button:hover {
+  background-color: #DDDDDD;
+}
+
+.navbar-header h5 {
+  margin-top: 12px;
+  margin-left: 50px;
 }
 
 @media screen and (max-width: 768px) {
+  .number, .icon {
+    margin: 10px 0;
+  }
+
   #menu {
-    width: 60%;
-    position: absolute;
+    height: auto;
+    width: 100%;
+    position: fixed;
     left: 0;
     top: 70px;
     z-index: 1;
@@ -123,11 +170,10 @@ body {
   }
 
   #contentBtn {
-    float: left;
     display: block;
-    height: 35px;
-    line-height: 17px;
-    color: #888888;
+    float: left;
+    border: none;
+    border-radius: 0;
   }
 
   .noticeBox {
