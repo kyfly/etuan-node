@@ -48,12 +48,12 @@ function SidebarCtrl ($scope,$window) {
 
 function ListCtrl ($window,$scope,$routeParams,$resource) {
   var listProperty = {
-    form:'/api/OrganizationUsers/:id/forms/:fk',
-    seckill:'/api/OrganizationUsers/:id/seckills/:fk',
-    vote:'/api/OrganizationUsers/:id/votes/:fk',
-    luck:'/api/OrganizationUsers/:id/lucks/:fk'
+    form:'/api/OrganizationUsers/:userId/forms/:fk',
+    seckill:'/api/OrganizationUsers/:userId/seckills/:fk',
+    vote:'/api/OrganizationUsers/:userId/votes/:fk',
+    luck:'/api/OrganizationUsers/:userId/lucks/:fk'
   };
-  var List = $resource(listProperty[$routeParams.type],{'id':$window.localStorage.getItem('userId')});
+  var List = $resource(listProperty[$routeParams.type],{userId:$window.localStorage.getItem('userId')});
   $scope.listItems = List.query();
   $scope.edit = function (id) {
     $window.location.href = '#/'+$routeParams.type+'/edit/'+id;
@@ -61,8 +61,8 @@ function ListCtrl ($window,$scope,$routeParams,$resource) {
   $scope.result = function (id) {
     $window.location.href = '#/'+$routeParams.type+'/result/'+id;
   };
-  $scope.remove = function (index,id) {
-    List.delete({fk:id},
+  $scope.remove = function (index,elementId) {
+    List.delete({fk:elementId},
       function(res){
         console.log(res);
         $scope.listItems.splice(index,1);
@@ -77,12 +77,12 @@ function ListCtrl ($window,$scope,$routeParams,$resource) {
 function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   //接口资源区
   var editProperty = {
-    form:'/api/OrganizationUsers/:id/forms/:fk',
-    seckill:'/api/OrganizationUsers/:id/seckills/:fk',
-    vote:'/api/OrganizationUsers/:id/votes/:fk',
-    luck:'/api/OrganizationUsers/:id/lucks/:fk'
+    form:'/api/OrganizationUsers/:userId/forms/:fk',
+    seckill:'/api/OrganizationUsers/:userId/seckills/:fk',
+    vote:'/api/OrganizationUsers/:userId/votes/:fk',
+    luck:'/api/OrganizationUsers/:userId/lucks/:fk'
   };
-  var Edit = $resource(editProperty[$routeParams.type],{id:$window.localStorage.getItem('userId')});
+  var Edit = $resource(editProperty[$routeParams.type],{userId:$window.localStorage.getItem('userId'),fk:'@elementId'});
   var loadForm = function () {
     Edit.get({fk:$routeParams.id},
       function(res){
@@ -103,7 +103,6 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   };
   initMode();
   //日期选择器配置
-  //$scope.format = 'yyyy-MM-dd';
   $scope.enFormat = "EEE MMM dd yyyy HH:mm:ss 'GMT'Z '(CST)'";
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
   $scope.dateOptions = {
@@ -204,6 +203,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
     }
     else{
       Edit.update({
+        'elementId':$routeParams.id,
         'title': $scope.title,
         'startTime': $scope.startTime.toISOString(),
         'stopTime': $scope.stopTime.toISOString(),
@@ -215,7 +215,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
     }
     var mode = $routeParams.id === 'create'?'创建':'更新';
     alert(mode+dict[$routeParams.type]+'成功！');
-    $window.location.href = '#/'+$routeParams+'/list';
+    $window.location.href = '#/'+$routeParams.type+'/list';
   };
   $scope.preview = function(){
   };
