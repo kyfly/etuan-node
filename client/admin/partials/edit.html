@@ -14,22 +14,8 @@
     <div class="col-md-2">
       <label class="control-label">活动标题</label>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-7">
       <input type="text" class="form-control" ng-model="title">
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-md-2">
-      <label class="control-label">开始日期</label>
-    </div>
-    <div class="col-md-6">
-      <p class="input-group">
-        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="startTime" is-open="startDateOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
-      <span class="input-group-btn">
-        <button type="button" class="btn btn-default" ng-click="startDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-      </span>
-      </p>
     </div>
   </div>
 
@@ -37,16 +23,24 @@
     <div class="col-md-2">
       <label class="control-label">开始时间</label>
     </div>
-    <div class="col-md-6">
-        <timepicker ng-model="startTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
+    <div class="col-md-5">
+      <p class="input-group">
+        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="startTime" is-open="startDateOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="startDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+      </p>
+    </div>
+    <div class="col-md-2">
+      <timepicker ng-model="startTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
     </div>
   </div>
 
   <div class="form-group">
     <div class="col-md-2">
-      <label class="control-label">结束日期</label>
+      <label class="control-label">结束时间</label>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
       <p class="input-group">
         <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="stopTime" is-open="stopDateOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
       <span class="input-group-btn">
@@ -54,12 +48,7 @@
       </span>
       </p>
     </div>
-  </div>
-
-  <div class="form-group">
     <div class="col-md-2">
-      <label class="control-label">结束时间</label></div>
-    <div class="col-md-6">
       <timepicker ng-model="stopTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
     </div>
   </div>
@@ -68,7 +57,7 @@
     <div class="col-md-2">
       <label class="control-label">验证规则</label>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-7">
       <input type="text" class="form-control">
     </div>
   </div>
@@ -77,7 +66,7 @@
     <div class="col-md-2">
       <label class="control-label">表单内容</label>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-7">
       <div class="well">
         <div class="btn-group" dropdown is-open="status.isopen">
           <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
