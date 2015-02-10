@@ -82,5 +82,17 @@
   "BaseResult": {
     "dataSource": null,
     "public": false
+  },
+  "Vote": {
+    "dataSource": "db",
+    "public": true
+  },
+  "VoteSubitem": {
+    "dataSource": "db",
+    "public": false
+  },
+  "VoteResult": {
+    "dataSource": "db",
+    "public": true
   }
 }

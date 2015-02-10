@@ -1,0 +1,25 @@
+{
+  "name": "Vote",
+  "base": "BaseItem",
+  "strict": false,
+  "idInjection": false,
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "results": {
+      "type": "hasMany",
+      "model": "VoteResult",
+      "foreignKey": "voteId"
+    },
+    "questions": {
+      "type": "embedsMany",
+      "model": "VoteSubitem",
+      "option": {
+        "validate": true,
+        "autoId": true
+      }
+    }
+  },
+  "acls": [],
+  "methods": []
+}

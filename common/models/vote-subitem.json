@@ -1,0 +1,21 @@
+{
+  "name": "VoteSubitem",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "detailUrl": {
+      "type": "string"
+    },
+    "count": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

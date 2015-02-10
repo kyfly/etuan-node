@@ -66,6 +66,11 @@
       "model": "Form",
       "foreignKey": "organizationUid"
     },
+    "votes": {
+      "type": "hasMany",
+      "model": "Vote",
+      "foreignKey": "organizationUid"
+    },
     "weChatMPs": {
       "type": "hasMany",
       "model": "WeChatMP",
@@ -108,6 +113,42 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "__updateById__forms"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__votes"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__count__votes"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__destroyById__votes"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__findById__votes"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__votes"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__updateById__votes"
     }
   ],
   "methods": []

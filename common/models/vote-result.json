@@ -1,0 +1,23 @@
+{
+  "name": "VoteResult",
+  "base": "BaseResult",
+  "strict": true,
+  "idInjection": false,
+  "properties": {
+    "results": {
+      "type": [
+        "number"
+      ]
+    }
+  },
+  "validations": [],
+  "relations": {
+    "vote": {
+      "type": "belongsTo",
+      "model": "Vote",
+      "foreignKey": "voteId"
+    }
+  },
+  "acls": [],
+  "methods": []
+}
