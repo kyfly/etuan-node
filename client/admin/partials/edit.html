@@ -12,10 +12,19 @@
 
   <div class="form-group">
     <div class="col-md-2">
-      <label class="control-label">活动标题</label>
+      <label class="control-label">{{cnType}}标题</label>
     </div>
     <div class="col-md-7">
       <input type="text" class="form-control" ng-model="title">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">{{cnType}}描述</label>
+    </div>
+    <div class="col-md-7">
+      <textarea type="text" class="form-control" style="resize:none" rows="4" ng-model="description"></textarea>
     </div>
   </div>
 
@@ -124,6 +133,32 @@
                 <input type="text" ng-model="form.content[$index]">
               </div>
             </div>
+            <hr>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group" ng-show="isVote()">
+    <div class="col-md-2">
+      <label class="control-label">投票内容</label>
+    </div>
+    <div class="col-md-7">
+      <div class="well">
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary" ng-click="addVote()">
+            添加投票项
+          </button>
+        </div>
+        <hr>
+        <ol>
+          <li ng-repeat="vote in votes">
+            <label>投票项内容：</label>
+            <input type="text" ng-model="vote.name"><br>
+            <label>详情介绍页面：</label>
+            <input type="text" ng-model="vote.detailUrl"><br>
+            <label>当前该项票数：{{vote.count}}</label>
             <hr>
           </li>
         </ol>

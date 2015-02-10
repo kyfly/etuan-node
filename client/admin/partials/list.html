@@ -3,8 +3,8 @@
 <br><hr>
 <div ng-repeat="listItem in listItems">
   <h4>标题：{{listItem.title}}</h4>
-  <p>开始时间：{{listItem.startTime}}</p>
-  <p>结束时间：{{listItem.stopTime}}</p>
+  <p>开始时间：{{listItem.startTime | date:cnFormat}}</p>
+  <p>结束时间：{{listItem.stopTime | date:cnFormat}}</p>
   <a href ng-click="edit(listItem.id)">edit</a>
   <a href ng-click="result(listItem.id)">result</a>
   <a href ng-click="remove($index,listItem.id)">delete</a>

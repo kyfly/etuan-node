@@ -54,6 +54,7 @@ function ListCtrl ($window,$scope,$routeParams,$resource) {
     luck:'/api/OrganizationUsers/:userId/lucks/:fk'
   };
   var List = $resource(listProperty[$routeParams.type],{userId:$window.localStorage.getItem('userId')});
+  $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
   $scope.listItems = List.query();
   $scope.edit = function (id) {
     $window.location.href = '#/'+$routeParams.type+'/edit/'+id;
@@ -102,6 +103,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
     Edit.get({fk:$routeParams.id},
       function(res){
         $scope.title = res.title;
+        $scope.description = res.description;
         $scope.startTime = new Date(res.startTime);
         $scope.stopTime = new Date(res.stopTime);
         $scope.verifyRule = res.verifyRule;
@@ -112,6 +114,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
           case 'seckill':
             break;
           case 'vote':
+            $scope.votes = res.voteSubitems;
             break;
           case 'luck':
             break;
@@ -124,7 +127,9 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   };
   var initial = function () {
     $routeParams.id === 'create'?initEdit():loadEdit();
-    $scope.mode = $routeParams.id === 'create'?('新建'+dict[$routeParams.type]):('编辑'+dict[$routeParams.type]);
+    $scope.enType = $routeParams.type;
+    $scope.cnType = dict[$routeParams.type];
+    $scope.mode = $routeParams.id === 'create'?('新建'+$scope.cnType):('编辑'+$scope.cnType);
     $scope.submitButtonName = $routeParams.id === 'create'?'创建':'更新';
   };
   initial();
@@ -213,6 +218,16 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   $scope.removeContent = function (pindex,index) {
     $scope.forms[pindex].content.splice(index,1);
   };
+
+  $scope.votes = [];
+  $scope.addVote = function () {
+    $scope.votes.push({
+      'name':'',
+      'detailUrl':'',
+      count:0
+    });
+  }
+
   /* 提交区
    * 用于提交数据，uploadParameter中首先加入通用部分的参数，然后根据switch结构向其中分别添加特定部分的参数
    * 在完成提交后，将转跳至列表页面list.html
@@ -221,6 +236,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
     var nowTime = new Date();
     var uploadParameters = {
       'title': $scope.title,
+      'description':$scope.description,
       'startTime': $scope.startTime.toISOString(),
       'stopTime': $scope.stopTime.toISOString(),
       'adPicture': '',
@@ -245,6 +261,17 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
       case 'seckill':
         break;
       case 'vote':
+        var voteSubitemsTmp = [];
+        for(var i=0;i<$scope.votes.length;i++){
+          var voteSubitem = {
+            'id':i,
+            'name': $scope.votes[i].name,
+            'detailUrl': $scope.votes[i].detailUrl,
+            'count': $scope.votes[i].count
+          };
+          voteSubitemsTmp.push(voteSubitem);
+        }
+        uploadParameters.voteSubitems = voteSubitemsTmp;
         break;
       case 'luck':
         break;
@@ -257,7 +284,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
       Edit.update(uploadParameters);
     }
     var mode = $routeParams.id === 'create'?'创建':'更新';
-    alert(mode+dict[$routeParams.type]+'成功！');
+    alert(mode+$scope.cnType+'成功！');
     $window.location.href = '#/'+$routeParams.type+'/list';
   };
   $scope.preview = function(){
