@@ -1,6 +1,6 @@
 function RewriteResourceActions ($resourceProvider) {
   var commonHeaders = {
-    access_token:window.localStorage.getItem('accessToken')
+    Authorization:window.localStorage.getItem('accessToken')
   };
   $resourceProvider.defaults.actions = {
     'get':{

@@ -47,15 +47,13 @@ function SidebarCtrl ($scope,$window) {
 }
 
 function ListCtrl ($window,$scope,$routeParams,$resource) {
-  //var listProperty = {
-  //  form:'/api/OrganizationUsers/:id/forms',
-  //  seckill:'/api/OrganizationUsers/:id/seckills',
-  //  vote:'/api/OrganizationUsers/:id/votes',
-  //  luck:'/api/OrganizationUsers/:id/lucks'
-  //};
-  //var List = $resource(listProperty[$routeParams.type]);
-  //$scope.listItems = List.query({'id':$window.localStorage.getItem('userId')});
-  var List = $resource('/api/Forms/:id');
+  var listProperty = {
+    form:'/api/OrganizationUsers/:id/forms/:fk',
+    seckill:'/api/OrganizationUsers/:id/seckills/:fk',
+    vote:'/api/OrganizationUsers/:id/votes/:fk',
+    luck:'/api/OrganizationUsers/:id/lucks/:fk'
+  };
+  var List = $resource(listProperty[$routeParams.type],{'id':$window.localStorage.getItem('userId')});
   $scope.listItems = List.query();
   $scope.edit = function (id) {
     $window.location.href = '#/'+$routeParams.type+'/edit/'+id;
@@ -65,15 +63,26 @@ function ListCtrl ($window,$scope,$routeParams,$resource) {
   };
   $scope.remove = function (index,id) {
     $scope.listItems.splice(index,1);
-    List.delete({'id':id});
+    List.delete({fk:id});
   }
 }
 
 function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
-  console.log($routeParams);
+  //接口资源区
+  var editProperty = {
+    form:'/api/OrganizationUsers/:id/forms/:fk',
+    seckill:'/api/OrganizationUsers/:id/seckills/:fk',
+    vote:'/api/OrganizationUsers/:id/votes/:fk',
+    luck:'/api/OrganizationUsers/:id/lucks/:fk'
+  };
+  var Edit = $resource(editProperty[$routeParams.type],{id:$window.localStorage.getItem('userId')});
   var loadForm = function () {
-
-  }
+    var edit = Edit.get({fk:$routeParams.id});
+    $scope.title = edit.title;
+    $scope.startTime = edit.startTime;
+    $scope.stopTime = edit.stopTime;
+    $scope.$apply();
+  };
   var initMode = function () {
     if($routeParams.id === 'create'){
       $scope.mode = '新建'+dict[$routeParams.type];
@@ -85,7 +94,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   };
   initMode();
   //日期选择器配置
-  $scope.format = 'yyyy-MM-dd';
+  $scope.format = "EEE MMM dd yyyy HH:mm:ss 'GMT'Z '(CST)'";
   $scope.dateOptions = {
     formatYear: 'yy',
     startingDay: 1
@@ -116,14 +125,6 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   $scope.isLuck = function () {
     return 'luck' === $routeParams.type;
   };
-  //接口资源区
-  var editProperty = {
-    form:'/api/Forms/:id',
-    seckill:'/api/Seckills/:id',
-    vote:'/api/Votes/:id',
-    luck:'/api/Lucks/:id'
-  };
-  var Edit = $resource(editProperty[$routeParams.type]);
   //表单
   $scope.forms = [];
   $scope.addForm = {
@@ -177,24 +178,22 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
         'content': $scope.forms[i].content
       };
       formQuestions.push(formQuestion);
-    };
-    Edit.save({data:{
-        'title': 'not title',
-        'startTime': '2015-02-07T15:31:19.591Z',
-        'stopTime': '2015-03-07T15:31:19.591Z',
+    }
+    Edit.save({
+        'title': $scope.title,
+        'startTime': $scope.startTime,
+        'stopTime': $scope.stopTime,
         'adPicture': '',
         'adUrl': '',
         'verifyRule': '',
-        'updatedAt': '',
-        'organizationUid': $window.localStorage.getItem('userId'),
-        'formQuestions': formQuestions
-      }
+        'updatedAt': ''
     });
-  }
+  };
+  $scope.preview = function(){
+  };
 }
 
 function ResultCtrl ($scope,$routeParams,$resource,dict) {
-  console.log($routeParams);
   $scope.mode = dict[$routeParams.type]+'结果'+'  '+$routeParams.id;
   var resultProperty = {
     form:{

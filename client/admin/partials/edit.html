@@ -3,7 +3,7 @@
 </div>
 <div style="display: inline;position: absolute;top: 20px;right: 20px">
   <button class="btn btn-info" ng-click="submit()">提交</button>
-  <button class="btn btn-default">预览</button>
+  <button class="btn btn-default" ng-click="preview()">预览</button>
 </div>
 <br>
 <br>
@@ -25,7 +25,7 @@
     </div>
     <div class="col-md-6">
       <p class="input-group">
-        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="startDate" is-open="startDateOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
+        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="startTime" is-open="startDateOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
       <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="startDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
       </span>
@@ -48,7 +48,7 @@
     </div>
     <div class="col-md-6">
       <p class="input-group">
-        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="stopDate" is-open="stopDateOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
+        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="stopTime" is-open="stopDateOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
       <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="stopDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
       </span>
@@ -123,7 +123,7 @@
       <button class="btn btn-block btn-info" ng-click="submit()">提交</button>
     </div>
     <div class="col-sm-2">
-      <button class="btn btn-block btn-default">预览</button>
+      <button class="btn btn-block btn-default" ng-click="preview()">预览</button>
     </div>
   </div>
 </form>
