@@ -2,9 +2,14 @@
   "name": "FormResultAnswer",
   "base": "PersistedModel",
   "strict": true,
-  "idInjection": true,
+  "idInjection": false,
   "properties": {
-    "string": {
+    "questionId": {
+      "type": "number",
+      "id": true,
+      "required": false
+    },
+    "content": {
       "type": "string",
       "required": false,
       "comments": "填写的内容"
