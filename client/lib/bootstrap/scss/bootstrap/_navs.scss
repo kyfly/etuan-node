@@ -11,6 +11,7 @@
   padding-left: 0; // Override default ul/ol
   list-style: none;
   @include clearfix;
+  background-color: #7087A3;
 
   > li {
     position: relative;
@@ -23,7 +24,7 @@
       &:hover,
       &:focus {
         text-decoration: none;
-        background-color: $nav-link-hover-bg;
+        background-color: #ffffff;
       }
     }
 
@@ -74,6 +75,7 @@
 
 // Give the tabs something to sit on
 .nav-tabs {
+  overflow: hidden;
   border-bottom: 0px solid $nav-tabs-border-color;
   > li {
     float: left;
@@ -117,12 +119,21 @@
 // Pills
 // -------------------------
 .nav-pills {
+  background-color: #A6AAC2 !important;
+
   > li {
     float: left;
+    margin: 5px;
 
     // Links rendered as pills
     > a {
-      border-radius: $nav-pills-border-radius;
+      color: #ffffff !important;
+      border-radius: 0;
+      &:hover,
+      &:focus {
+        color: #ffffff !important;
+        background-color: #CBCEE0 !important;
+      }
     }
     + li {
       margin-left: 2px;
@@ -133,8 +144,8 @@
       &,
       &:hover,
       &:focus {
-        color: $nav-pills-active-link-hover-color;
-        background-color: $nav-pills-active-link-hover-bg;
+        color: #ffffff !important;
+        background-color: #CBCEE0 !important;
       }
     }
   }
@@ -147,7 +158,7 @@
     float: none;
     + li {
       margin-top: 2px;
-      margin-left: 0; // no need for this gap between nav items
+      margin-left: 5px; // no need for this gap between nav items
     }
   }
 }
@@ -223,6 +234,9 @@
 
 // Hide tabbable panes to start, show them when `.active`
 .tab-content {
+  background-color: #ffffff;
+  min-height: 40px;
+  padding: 5px;
   > .tab-pane {
     display: none;
     visibility: hidden;
