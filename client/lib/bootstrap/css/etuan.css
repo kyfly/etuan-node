@@ -4350,6 +4350,7 @@ tbody.collapse.in {
   margin-bottom: 0;
   padding-left: 0;
   list-style: none;
+  background-color: #7087A3;
 }
 .nav:before, .nav:after {
   content: " ";
@@ -4369,7 +4370,7 @@ tbody.collapse.in {
 }
 .nav > li > a:hover, .nav > li > a:focus {
   text-decoration: none;
-  background-color: #eeeeee;
+  background-color: #ffffff;
 }
 .nav > li.disabled > a {
   color: #777777;
@@ -4395,6 +4396,7 @@ tbody.collapse.in {
 }
 
 .nav-tabs {
+  overflow: hidden;
   border-bottom: 0px solid #ddd;
 }
 .nav-tabs > li {
@@ -4420,18 +4422,27 @@ tbody.collapse.in {
   cursor: default;
 }
 
+.nav-pills {
+  background-color: #A6AAC2 !important;
+}
 .nav-pills > li {
   float: left;
+  margin: 5px;
 }
 .nav-pills > li > a {
-  border-radius: 4px;
+  color: #ffffff !important;
+  border-radius: 0;
+}
+.nav-pills > li > a:hover, .nav-pills > li > a:focus {
+  color: #ffffff !important;
+  background-color: #CBCEE0 !important;
 }
 .nav-pills > li + li {
   margin-left: 2px;
 }
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
-  color: #fff;
-  background-color: #337ab7;
+  color: #ffffff !important;
+  background-color: #CBCEE0 !important;
 }
 
 .nav-stacked > li {
@@ -4439,7 +4450,7 @@ tbody.collapse.in {
 }
 .nav-stacked > li + li {
   margin-top: 2px;
-  margin-left: 0;
+  margin-left: 5px;
 }
 
 .nav-justified, .nav-tabs.nav-justified {
@@ -4494,6 +4505,11 @@ tbody.collapse.in {
   }
 }
 
+.tab-content {
+  background-color: #ffffff;
+  min-height: 40px;
+  padding: 5px;
+}
 .tab-content > .tab-pane {
   display: none;
   visibility: hidden;
