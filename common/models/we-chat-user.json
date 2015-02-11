@@ -1,6 +1,6 @@
 {
   "name": "WeChatUser",
-  "base": "PersistedModel",
+  "base": "User",
   "strict": true,
   "idInjection": true,
   "properties": {
@@ -62,8 +62,67 @@
         "validate": true,
         "autoId": true
       }
+    },
+    "formResults": {
+      "type": "hasMany",
+      "model": "FormResult",
+      "foreignKey": "weChatUid"
+    },
+    "voteResults": {
+      "type": "hasMany",
+      "model": "voteResult",
+      "foreignKey": "weChatUid"
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__formResults"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__count__formResults"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__findById__formResults"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__formResults"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__voteResults"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__count__voteResults"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__findById__voteResults"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__voteResults"
+    }
+  ],
   "methods": []
 }
