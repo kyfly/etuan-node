@@ -33,17 +33,13 @@
   },
   "validations": [],
   "relations": {
-    "organization": {
-      "type": "belongsTo",
-      "model": "OrganizationUser",
-      "foreignKey": "organizationUid"
-    },
     "qrCode": {
       "type": "hasOne",
       "model": "WeChatEtuanQR",
       "foreignKey": "itemId"
     }
   },
+  "hidden": ["organizationUid"],
   "acls": [
     {
       "accessType": "WRITE",
