@@ -4,13 +4,16 @@
   "strict": true,
   "idInjection": true,
   "properties": {
-    "updateAt": {
-      "type": "date",
-      "required": true
+    "name": {
+      "type": "string"
     },
     "description": {
       "type": "string",
       "comments": "部门介绍"
+    },
+    "updateAt": {
+      "type": "date",
+      "required": true
     }
   },
   "validations": [],
