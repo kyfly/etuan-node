@@ -70,7 +70,7 @@
     },
     "voteResults": {
       "type": "hasMany",
-      "model": "voteResult",
+      "model": "VoteResult",
       "foreignKey": "weChatUid"
     }
   },
