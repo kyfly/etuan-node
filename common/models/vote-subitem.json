@@ -11,7 +11,8 @@
       "type": "string"
     },
     "count": {
-      "type": "number"
+      "type": "number",
+      "default": 0
     }
   },
   "validations": [],
