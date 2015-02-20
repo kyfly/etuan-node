@@ -293,6 +293,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
 
 function ResultCtrl ($scope,$routeParams,$resource,dict) {
   $scope.mode = dict[$routeParams.type]+'结果'+'  '+$routeParams.id;
+  var FormResult = $resource('/api/FormResult');
   var resultProperty = {
     form:{
       downloadAsExcel:true,
@@ -311,6 +312,7 @@ function ResultCtrl ($scope,$routeParams,$resource,dict) {
       downloadAsPdf:false
     }
   };
+  //$scope.
 }
 
 function HomeCtrl () {}
