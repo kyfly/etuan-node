@@ -1,6 +1,6 @@
 {
   "name": "FormResult",
-  "base": "PersistedModel",
+  "base": "BaseResult",
   "strict": true,
   "idInjection": true,
   "properties": {},
