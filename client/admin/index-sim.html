@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html ng-app="app">
-<head lang="en">
+<head>
   <meta charset="UTF-8">
   <title>管理后台</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -17,10 +17,34 @@
   <script src="/js/admin/admin-route.js"></script>
   <script src="/js/admin/admin-configure.js"></script>
 </head>
-<body>
-
+<body ng-controller="AdminCtrl">
+<!--头部-->
+  <header>
+    <nav class="navbar navbar-default">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="" ng-click="sidebarToggle()">
+          <span class="glyphicon glyphicon-menu-hamburger"></span>    
+        </a>
+        <a class="navbar-brand" href="" ng-click="redirectToHomapage()">
+            <img src="/admin/img/etuan-logo-word.png@60h.png" height="25px" alt="团团一家LOGO">
+        </a>
+      </div>
+      <div class="btn-group navbar-right" dropdown>
+         <button type="button" class="btn btn-default navbar-btn dropdown-toggle" dropdown-toggle>
+           <img src="/admin/img/logo.jpg" height="25px">&nbsp;<span>团团一家</span>&nbsp;
+           <span class="caret"></span>
+         </button>
+         <ul class="dropdown-menu" role="menu">
+           <li><a href="#"><span class="glyphicon glyphicon-cog"></span> 设置</a></li>
+           <li class="divider"></li>
+           <li><a href="#"><span class='glyphicon glyphicon-log-out'></span> 退出</a></li>
+         </ul>
+       </div>  
+     </div>
+    </nav>
+  </header>
 <!--左侧边栏-->
-<div class="col-sm-3 sidebar" ng-controller="SidebarCtrl">
+<div class="col-sm-2 sidebar" ng-controller="SidebarCtrl" ng-show="sidebarShow">
   <div>
     <ul class="nav nav-pills nav-stacked sidebar-list">
       <li ng-repeat="sidebar in sidebars" class="sidebar-item" ng-class="{active: sidebar.active}">
@@ -30,7 +54,7 @@
   </div>
 </div>
 <!--主体-->
-<div class="col-sm-9 main" ng-view>
+<div class="col-sm-10 main" ng-class="{'col-sm-10':sidebarShow,'col-sm-12':!sidebarShow}" ng-view>
 </div>
 
 </body>

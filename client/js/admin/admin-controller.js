@@ -1,3 +1,13 @@
+function AdminCtrl ($scope,$window) {
+  $scope.sidebarShow = (document.body.clientWidth >= 768);
+  $scope.sidebarToggle = function () {
+    $scope.sidebarShow = !$scope.sidebarShow;
+  };
+  $scope.redirectToHomapage = function () {
+    $window.location = '/index.html';
+  }
+}
+
 function SidebarCtrl ($scope,$window) {
   $scope.sidebars = [
     {
