@@ -8,39 +8,64 @@
   <script src="/lib/angular/angular.js"></script>
   <script src="/lib/angular-components/angular-resource.js"></script>
   <script src="/js/form/app.js"></script>
+  <style>
+    html {
+      min-height: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
+      background-color: #aadffc;
+      min-height: 100%;
+      height: 100%;
+    }
+
+    .bg_white {
+      background-color: #ffffff;
+      min-height: 100%;
+      height: 100%;
+    }
+
+    .footer {
+      font-size: 20px;
+    }
+  </style>
 </head>
 <body>
-<div class="container" ng-controller="FormCtrl">
-  <h1>{{form.title}}</h1>
-  <h4>{{form.description}}</h4>
-  <p>开始时间：{{startTime | date:cnFormat}}</p>
-  <p>结束时间：{{stopTime | date:cnFormat}}</p>
+<div class="container bg_white" ng-controller="FormCtrl">
+  <h1 class="text-center">{{form.title}}</h1>
+  <h4 class="text-center">{{form.description}}</h4>
+  <p class="text-center">开始时间：{{startTime | date:cnFormat}}</p>
+  <p class="text-center">结束时间：{{stopTime | date:cnFormat}}</p>
+
   <hr>
-  <form class="form-horizontal">
-    <div class="form-group" ng-repeat="question in form.formQuestions">
-      <div class="col-md-2">
-        <label class="control-label">{{question.label}}</label>
-      </div>
-      <div class="col-md-10">
-        <div class="radio" ng-repeat="choiceContent in question.content track by $index" ng-show="questionShow(question.type,1)">
-          <label>
-            <input name="choice-{{$parent.$index}}" type="radio" ng-model="answer[$parent.$index]" value="{{choiceContent}}">{{choiceContent}}
+  <div class="col-md-8 col-md-offset-2">
+    <form>
+      <div class="form-group" ng-repeat="question in form.formQuestions">
+          <label class="control-label">{{question.label}}</label>
+          <div class="radio" ng-repeat="choiceContent in question.content track by $index" ng-show="questionShow(question.type,1)">
+            <label>
+              <input name="choice-{{$parent.$index}}" type="radio" ng-model="answer[$parent.$index]" value="{{choiceContent}}">{{choiceContent}}
+            </label>
+          </div>
+          <input type="text" class="form-control" ng-show="questionShow(question.type,2)" ng-model="answer[$index]">
+          <textarea rows="10" class="form-control" style="resize:none" ng-show="questionShow(question.type,3)" ng-model="answer[$index]"></textarea>
+          <label class="radio-inline" ng-repeat="judgeContent in question.content track by $index" ng-show="questionShow(question.type,4)">
+            <input name="judge-{{$parent.$index}}" type="radio" ng-model="answer[$parent.$index]" value="{{judgeContent}}">{{judgeContent}}
           </label>
-        </div>
-        <input type="text" class="form-control" ng-show="questionShow(question.type,2)" ng-model="answer[$index]">
-        <textarea rows="10" class="form-control" style="resize:none" ng-show="questionShow(question.type,3)" ng-model="answer[$index]"></textarea>
-        <label class="radio-inline" ng-repeat="judgeContent in question.content track by $index" ng-show="questionShow(question.type,4)">
-          <input name="judge-{{$parent.$index}}" type="radio" ng-model="answer[$parent.$index]" value="{{judgeContent}}">{{judgeContent}}
-        </label>
       </div>
-    </div>
-    <div class="form-group">
-      <br>
-      <div class="col-sm-2 col-md-offset-2">
-        <button class="btn btn-block btn-success" ng-click="submit()">提交</button>
+      <div class="form-group">
+        <br>
+        <button class="btn btn-block btn-danger" ng-click="submit()"><span class="glyphicon glyphicon-envelope"></span>&ensp;提交</button>
       </div>
+    </form>
+
+    <hr>
+    <div class="text-center footer">
+      <img src="http://img.kyfly.net/common/logo/etuan-logo-word.png@60h.png" height="30px" alt="团团一家LOGO">&nbsp;提供技术支持
     </div>
-  </form>
+  </div>
 </div>
 </body>
 </html>

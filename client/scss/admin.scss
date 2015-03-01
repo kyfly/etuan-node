@@ -145,7 +145,8 @@ $countBoxColor: #FF6C60 #F7D24B #57C7F0 !default;
   right: 50px;
   top: 5px;
   color: #555555;
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 40px;
 
   img {
     width: 30px;
@@ -157,7 +158,7 @@ $countBoxColor: #FF6C60 #F7D24B #57C7F0 !default;
     border-radius: 0;
     background-color: #ffffff;
     border: none;
-    font-size: 20px;
+    font-size: 14px;
     color: #555555;
     &:hover {
       background-color: #DDDDDD;
