@@ -9,108 +9,90 @@ body {
   min-height: 100%;
   height: 100%;
 }
-
-.menu-list {
-  margin-top: -20px;
+.sidebar {
   background-color: #A6AAC2;
+  min-height: 100%;
 }
-.menu-list .menu-head {
+.sidebar-list {
+}
+.sidebar-list .sidebar-item {
   padding: 10px;
   height: 65px;
   line-height: 45px;
   cursor: pointer;
   background-color: #A6AAC2;
   position: relative;
-}
-.menu-list .menu-head .chosenColor {
-  width: 95%;
-  position: absolute;
-  left: 2.5%;
-  top: 10px;
-  padding-left: 50px;
-}
-.menu-list .menu-head .chosenColor:hover {
-  background-color: #CBCEE0;
-}
-.menu-list .menu-head .chosenColor span {
-  color: #ffffff;
   font-size: 18px;
 }
-.menu-list .menu-head .active-menu {
+.sidebar-list .sidebar-item .active {
   background-color: #CBCEE0;
 }
 
-#contentBtn {
-  display: none;
-}
-
-#mainHeight {
-  margin-top: -20px;
+.main {
   padding: 0 50px;
   background-color: #F0F1F6;
+  min-height: 100%;
   overflow: auto;
 }
-#mainHeight footer {
-  height: 50px;
-}
 
-.countBox {
-  padding: 1.5% 3% 3% 3%;
+
+
+.panel {
+  border: none;
+  box-shadow: none;
+  margin-top: 20px;
 }
-.countBox .icon {
-  height: 90px;
-  line-height: 100px;
-  color: #ffffff;
+.state-overview .red {
+  background: #ff6c60;
+}
+.state-overview .blue {
+  background: #57c8f2;
+}
+.state-overview .yellow {
+  background: #f8d347;
+}
+.state-overview .terques {
+  background: #6ccac9;
+}
+.state-overview .symbol {
+  width: 40%;
+  padding: 25px 15px;
+  border-radius: 4px 0px 0px 4px;
+}
+.state-overview .symbol span {
+  color: #fff;
   font-size: 50px;
 }
-.countBox .number {
+.state-overview .value {
+  width: 58%;
+  padding-top: 21px;
+  float: right;
+}
+.state-overview .symbol, .state-overview .value {
+  display: inline-block;
+  text-align: center;
+}
+.state-overview .value h1 {
+  font-weight: 300;
+}
+.state-overview .value h1, .state-overview .value p {
+  margin: 0;
+  padding: 0;
+  color: #c6cad6;
+}
+
+.notice-area .notice {
+  padding: 5px 15px 30px;
   background-color: #ffffff;
-  height: 90px;
-  color: #C5C9D5;
-  padding-top: 10px;
 }
-.countBox .number .numberLine {
-  font-size: 35px;
-  font-weight: bold;
-  overflow: hidden;
-}
-.countBox .number .textLine {
-  font-size: 15px;
-  overflow: hidden;
-}
-
-#countBox1 {
-  background-color: #FF6C60;
-}
-
-#countBox2 {
-  background-color: #F7D24B;
-}
-
-#countBox3 {
-  background-color: #57C7F0;
-}
-
-.noticeBox {
-  padding: 15px 16px;
-}
-.noticeBox .insideBox {
-  background-color: #ffffff;
-  height: 200px;
-  padding: 5% 16%;
-  word-break: break-all;
-  overflow: hidden;
-  line-height: 20px;
-}
-.noticeBox .insideBox .title {
+.notice-area .notice h3 {
   color: #A7D86E;
-  font-size: 22px;
 }
-.noticeBox .insideBox p {
+.notice-area .notice p {
   color: #858585;
-  font-size: 16px;
 }
 
+/*
 #client {
   position: absolute;
   right: 10px;
@@ -186,3 +168,4 @@ body {
     padding: 0;
   }
 }
+*/

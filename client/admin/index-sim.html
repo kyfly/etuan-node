@@ -2,10 +2,11 @@
 <html ng-app="app">
 <head lang="en">
   <meta charset="UTF-8">
-  <title></title>
+  <title>管理后台</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css"/>
+  <link rel="stylesheet" href="/lib/bootstrap/css/etuan.css"/>
+  <link rel="stylesheet" href="/css/admin.css"/>
   <script src="/lib/angular/angular.js"></script>
   <script src="/lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
   <script src="/lib/angular-components/angular-animate.js"></script>
@@ -18,14 +19,18 @@
 </head>
 <body>
 
-<div class="col-sm-3" ng-controller="SidebarCtrl">
-  <tabset vertical="true" type="pills">
-    <tab ng-repeat="sidebar in sidebars" heading="{{sidebar.display_name}}" id="{{sidebar.id}}" select="redirect(sidebar.url)">
-    </tab>
-  </tabset>
+<!--左侧边栏-->
+<div class="col-sm-3 sidebar" ng-controller="SidebarCtrl">
+  <div>
+    <ul class="nav nav-pills nav-stacked sidebar-list">
+      <li ng-repeat="sidebar in sidebars" class="sidebar-item" ng-class="{active: sidebar.active}">
+        <a href ng-click="redirect($index)">{{sidebar.display_name}}</a>
+      </li>
+    </ul>
+  </div>
 </div>
-
-<div class="col-sm-9" ng-view>
+<!--主体-->
+<div class="col-sm-9 main" ng-view>
 </div>
 
 </body>

@@ -3,46 +3,58 @@ function SidebarCtrl ($scope,$window) {
     {
       'id':'sidebarHome',
       'display_name':'首页',
-      'url':'#/home'
+      'url':'#/home',
+      'active':true
     },
     {
       'id':'sidebarForm',
       'display_name':'表单',
-      'url':'#/form/list'
+      'url':'#/form/list',
+      'active':false
     },
     {
       'id':'sidebarSeckill',
       'display_name':'疯抢',
-      'url':'#/seckill/list'
+      'url':'#/seckill/list',
+      'active':false
     },
     {
       'id':'sidebarVote',
       'display_name':'投票',
-      'url':'#/vote/list'
+      'url':'#/vote/list',
+      'active':false
     },
     {
       'id':'sidebarLuck',
       'display_name':'抽奖',
-      'url':'#/luck/list'
+      'url':'#/luck/list',
+      'active':false
     },
     {
       'id':'sidebarWechat',
       'display_name':'微信',
-      'url':'#/wechat'
+      'url':'#/wechat',
+      'active':false
     },
     {
       'id':'sidebarSetting',
       'display_name':'设置',
-      'url':'#/setting'
+      'url':'#/setting',
+      'active':false
     },
     {
       'id':'sidebarHelp',
       'display_name':'帮助',
-      'url':'#/help'
+      'url':'#/help',
+      'active':false
     }
   ];
-  $scope.redirect = function(href) {
-    $window.location.href = href;
+  $scope.redirect = function(index) {
+    for (var i = 0; i < $scope.sidebars.length; i++) {
+      $scope.sidebars[i].active = false;
+    };
+    $scope.sidebars[index].active = true;
+    $window.location.href = $scope.sidebars[index].url;
   }
 }
 
@@ -315,7 +327,26 @@ function ResultCtrl ($scope,$routeParams,$resource,dict) {
   //$scope.
 }
 
-function HomeCtrl () {}
+function HomeCtrl ($scope) {
+  $scope.notices = [
+    {
+      'title':'招新系统上线啦',
+      'time':'2012年2月12日',
+      'content':'习近平《在中央新疆工作座谈会上的讲话》【典出】子曰：“危者，安其位者也。亡者，保其存者也。乱者，有其治者也。是故君子安而不忘危，存而不忘亡，治而不忘乱，是以身安而国家可保也。” ——《周易?系辞下》'
+    },
+    {
+      'title':'招新系统上线啦',
+      'time':'2012年2月12日',
+      'content':'【解读】《周易》亦称《易经》，儒家重要经典之一。《周易?系辞》是孔子阐释易理的文字，这段的意思是，君子在国家安定的时候要不忘危险，国家存在的时候要不忘败亡，国家大治的时候要不忘变乱。'
+    },
+    {
+      'title':'招新系统上线啦',
+      'time':'2012年2月12日',
+      'content':'这种忧患和责任意识是习近平治国理政的重要思想底色。“全党必须警醒起来”，2012年习近平一上任就为全党敲响了警钟。紧接着，习近平发出“整风”动员令，并从生死存亡的高度来认识和解决腐败问题。在党的群众路线教育实践活动总结大会上，习近平引用《道德经》中的名句“为之于未有，治之于未乱”再次告诫全党要增强忧患意识，学会“下先手棋”，方能立于不败。'
+    }
+  ]
+}
+
 function WechatCtrl () {}
 function SettingCtrl () {}
 function HelpCtrl () {}
