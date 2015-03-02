@@ -55,10 +55,9 @@ body {
   padding: 0 50px;
   background-color: #F0F1F6;
   min-height: 100%;
-  overflow: auto;
+  height: 100%;
+  overflow: scroll;
 }
-
-
 
 .panel {
   border: none;
@@ -104,91 +103,55 @@ body {
   color: #c6cad6;
 }
 
-.notice-area .notice {
+.notice-area .notice,.list-area .list-item {
   padding: 5px 15px 30px;
   background-color: #ffffff;
+  height: 300px;
 }
-.notice-area .notice h3 {
+.notice-area .notice h3,.list-area .list-item h3 {
   color: #A7D86E;
 }
-.notice-area .notice p {
+.notice-area .notice p,.list-area .list-item p {
   color: #858585;
 }
 
-/*
-#client {
-  position: absolute;
-  right: 10px;
+.list-area .panel {
+  margin-bottom: 0;
+}
+.list-area .list-item a {
+  margin-top:5px;
   display: block;
-  padding: 5px;
-  height: 40px;
-  margin: 5px;
-  color: #555555;
-  font-size: 14px;
+  color: #fff;
 }
-#client img {
-  height: 30px;
-  width: 30px;
-}
-
-#logout {
+.list-area .list-item .create {
   position: absolute;
-  right: 50px;
-  top: 5px;
-  color: #555555;
-  font-size: 14px;
-  line-height: 40px;
+  top:calc(50% - 25px);
+  left:calc(50% - 25px);
+  font-size: 50px;
 }
-#logout img {
-  width: 30px;
+.list-area .list-item .edit-btn {
+  position: absolute;
+  top:calc(100% - 30px);
+  left:calc(0% + 15px);
+  width:calc(33.333% - 10px);
+  height:30px;
+  background-color: #6ccac9;
+  border-bottom-left-radius: 4px;
+}
+.list-area .list-item .result-btn {
+  position: absolute;
+  top:calc(100% - 30px);
+  left:calc(33.333% + 5px);
+  width:calc(33.333% - 10px);
+  height:30px;
+  background-color: #57c8f2;
+}
+.list-area .list-item .delete-btn {
+  position: absolute;
+  top:calc(100% - 30px);
+  left:calc(66.667% - 5px);
+  width:calc(33.333% - 10px);
   height: 30px;
+  background-color: #ff6c60;
+  border-bottom-right-radius: 4px;
 }
-#logout button {
-  margin-left: 10px;
-  border-radius: 0;
-  background-color: #ffffff;
-  border: none;
-  font-size: 14px;
-  color: #555555;
-}
-#logout button:hover {
-  background-color: #DDDDDD;
-}
-
-.navbar-header h5 {
-  margin-top: 12px;
-  margin-left: 50px;
-}
-
-@media screen and (max-width: 768px) {
-  .number, .icon {
-    margin: 10px 0;
-  }
-
-  #menu {
-    height: auto;
-    width: 100%;
-    position: fixed;
-    left: 0;
-    top: 70px;
-    z-index: 1;
-    display: none;
-  }
-
-  #contentBtn {
-    display: block;
-    float: left;
-    border: none;
-    border-radius: 0;
-  }
-
-  .noticeBox {
-    padding: 15px;
-  }
-
-  #mainHeight {
-    overflow: auto;
-    padding: 0;
-  }
-}
-*/

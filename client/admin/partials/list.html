@@ -1,12 +1,24 @@
-
-<a href ng-click="edit('create')">create</a>
-<br><hr>
-<div ng-repeat="listItem in listItems">
-  <h4>标题：{{listItem.title}}</h4>
-  <p>开始时间：{{listItem.startTime | date:cnFormat}}</p>
-  <p>结束时间：{{listItem.stopTime | date:cnFormat}}</p>
-  <a href ng-click="edit(listItem.id)">edit</a>
-  <a href ng-click="result(listItem.id)">result</a>
-  <a href ng-click="remove($index,listItem.id)">delete</a>
-  <br><hr>
+<div class="row list-area">
+  <div class="col-lg-3 col-md-4 col-sm-6">
+    <section class="panel list-item">
+      <p class="create"><span class="glyphicon glyphicon-plus"></span></p>
+    </section>
+  </div>
+  <div class="col-lg-3 col-md-4 col-sm-6" ng-repeat="listItem in listItems">
+    <section class="panel list-item">
+      <h3>{{listItem.title}}</h3>
+      <p>开始：{{listItem.startTime | date:'yyyy-MM-dd HH:mm'}}</p>
+      <p>结束：{{listItem.stopTime | date:'yyyy-MM-dd HH:mm'}}</p>
+      <p>简介：{{listItem.description | limitTo:60}}</p>
+      <div class="edit-btn text-center">
+        <a href ng-click="edit(listItem.id)"><span class="glyphicon glyphicon-edit"></span> 编辑</a>
+      </div>
+      <div class="result-btn text-center">
+        <a href ng-click="result(listItem.id)"><span class="glyphicon glyphicon-list"></span> 结果</a>
+      </div>
+      <div class="delete-btn text-center">
+        <a href ng-click="remove($index,listItem.id)"><span class="glyphicon glyphicon-remove"></span> 删除</a>
+      </div>
+    </section>
+  </div>
 </div>
