@@ -10,7 +10,7 @@
           <p>参与人数</p>
         </div>
       </section>
-    </div>  
+    </div>
     <div class="col-md-4">
       <section class="panel">
         <div class="symbol blue">
@@ -21,7 +21,7 @@
           <p>进行活动</p>
         </div>
       </section>
-    </div>  
+    </div>
     <div class="col-md-4">
       <section class="panel">
         <div class="symbol yellow">
@@ -32,7 +32,7 @@
           <p>浏览量</p>
         </div>
       </section>
-    </div>  
+    </div>
   </div>
   <!--通知-->
   <div class="row notice-area">
@@ -40,7 +40,7 @@
       <section class="panel notice">
         <h3>{{notice.title}}</h3>
         <p>{{notice.time}}</p>
-        <p>{{notice.content}}</p>
+        <p>{{notice.content | limitTo:180}}</p>
       </section>
     </div>
   </div>

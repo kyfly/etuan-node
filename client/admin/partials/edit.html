@@ -1,105 +1,95 @@
 <div style="display: block;position: absolute;top: 0;left: 20px">
   <h3>{{mode}}</h3>
 </div>
-<div style="display: inline;position: absolute;top: 20px;right: 20px">
-  <button class="btn btn-primary" ng-click="submit()">{{submitButtonName}}</button>
-  <button class="btn btn-default" ng-click="preview()">预览</button>
-</div>
 <br>
 <br>
 <hr>
 <form class="form-horizontal">
 
   <div class="form-group">
-    <div class="col-md-2">
+    <div class="col-sm-2">
       <label class="control-label">{{cnType}}标题</label>
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-10">
       <input type="text" class="form-control" ng-model="title">
     </div>
   </div>
 
   <div class="form-group">
-    <div class="col-md-2">
+    <div class="col-sm-2">
       <label class="control-label">{{cnType}}描述</label>
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-10">
       <textarea type="text" class="form-control" style="resize:none" rows="4" ng-model="description"></textarea>
     </div>
   </div>
 
   <div class="form-group">
-    <div class="col-md-2">
+    <div class="col-sm-2">
       <label class="control-label">开始时间</label>
     </div>
-    <div class="col-md-5">
+    <div class="col-sm-7">
       <p class="input-group">
-        <input type="text" class="form-control" datepicker-popup="{{enFormat}}" ng-model="startTime" is-open="startOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
+        <input type="text" class="form-control" datepicker-popup="{{cnFormat}}" ng-model="startTime | date: cnFormat" is-open="startOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
       <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="startTimeOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
       </span>
       </p>
     </div>
-    <div class="col-md-2">
+    <div class="col-sm-3">
       <timepicker ng-model="startTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
     </div>
-    <div class="col-md-3">
-      <p>{{startTime | date:cnFormat}}</p>
-    </div>
   </div>
 
   <div class="form-group">
-    <div class="col-md-2">
+    <div class="col-sm-2">
       <label class="control-label">结束时间</label>
     </div>
-    <div class="col-md-5">
+    <div class="col-sm-7">
       <p class="input-group">
-        <input type="text" class="form-control" datepicker-popup="{{enFormat}}" ng-model="stopTime" is-open="stopOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
-      <span class="input-group-btn">
-        <button type="button" class="btn btn-default" ng-click="stopTimeOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-      </span>
+        <input type="text" class="form-control" datepicker-popup="{{cnFormat}}" ng-model="stopTime | date: cnFormat" is-open="stopOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="stopTimeOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
       </p>
     </div>
-    <div class="col-md-2">
+    <div class="col-sm-3 pull-right">
       <timepicker ng-model="stopTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
-    </div>
-    <div class="col-md-3">
-      <p>{{stopTime | date:cnFormat}}</p>
     </div>
   </div>
 
   <div class="form-group">
-    <div class="col-md-2">
+    <div class="col-sm-2">
       <label class="control-label">验证规则</label>
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-10">
       <input type="text" class="form-control" ng-model="verifyRule">
     </div>
   </div>
 
   <div class="form-group">
-    <div class="col-md-2">
-      <label class="control-label">广告图片（可选）</label>
+    <div class="col-sm-2">
+      <label class="control-label">广告图片</label>
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-10">
       <input type="file" class="form-control">
     </div>
   </div>
 
   <div class="form-group">
-    <div class="col-md-2">
-      <label class="control-label">广告链接（可选）</label>
+    <div class="col-sm-2">
+      <label class="control-label">广告链接</label>
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-10">
       <input type="text" class="form-control">
     </div>
   </div>
 
   <div class="form-group" ng-show="isForm()">
-    <div class="col-md-2">
+    <div class="col-sm-2">
       <label class="control-label">表单内容</label>
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-10">
       <div class="well">
         <div class="btn-group" dropdown is-open="status.isopen">
           <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
@@ -141,10 +131,10 @@
   </div>
 
   <div class="form-group" ng-show="isVote()">
-    <div class="col-md-2">
+    <div class="col-sm-2">
       <label class="control-label">投票内容</label>
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-10">
       <div class="well">
         <div class="btn-group">
           <button type="button" class="btn btn-primary" ng-click="addVote()">
@@ -167,7 +157,7 @@
   </div>
 
   <div class="form-group">
-    <div class="col-sm-2 col-md-offset-2">
+    <div class="col-sm-2 col-sm-offset-2">
       <button class="btn btn-block btn-primary" ng-click="submit()">{{submitButtonName}}</button>
     </div>
     <div class="col-sm-2">

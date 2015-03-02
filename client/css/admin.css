@@ -114,7 +114,9 @@ body {
 .notice-area .notice p,.list-area .list-item p {
   color: #858585;
 }
-
+.list-area {
+  margin-bottom: 20px;
+}
 .list-area .panel {
   margin-bottom: 0;
 }
