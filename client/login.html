@@ -4,19 +4,82 @@
   <title>Login原型</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="/lib/bootstrap/css/etuan.css">
   <script src="/lib/angular/angular.js"></script>
   <script src="/lib/angular-components/angular-resource.js"></script>
   <script src="/js/login/app.js"></script>
+  <style>
+    body {
+      font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
+      background-color: #F4F4F4;
+    }
+  </style>
 </head>
 <body>
-<div ng-controller="LoginCtrl">
-  <h2>Login</h2>
-  <hr>
-  <label>email</label>
-  <input ng-model="email">
-  <label>password</label>
-  <input ng-model="password">
-  <button ng-click="loginBtn()">Login</button>
-</div>
+<!--头部-->
+<header id="nav">
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <h5>
+            <a href="index.html">
+              <img src="http://img.kyfly.net/common/logo/etuan-logo-word.png@60h.png" height="30px" alt="团团一家LOGO">
+            </a>
+          </h5>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section style="margin-top: -20px; background-color: #000000;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9" style="margin-left: -15px; margin-right: -15px">
+        <img src="http://i.kyfly.net/pic/sqzbs_min.jpg" alt="十佳歌手总决赛抢票" style="width:100%;height:100%">
+      </div>
+      <div class="col-md-3">
+        <div class="row">
+          <div class="visible-md" style="height: 20px"></div>
+          <div class="visible-lg" style="height: 50px"></div>
+          <div class="well col-sm-12 col-md-11 col-md-offset-1" ng-controller="LoginCtrl">
+            <h4>组织管理员登录</h4><hr>
+            <form>
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-user"></span>
+                  </div>
+                  <input type="text" ng-model="email" name="email" class="form-control" placeholder="用户名">
+                </div>
+              </div>
+              <br>
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-lock"></span>
+                  </div>
+                  <input type="password" ng-model="password" name="password" class="form-control" placeholder="密码">
+                </div>
+              </div>
+              <br>
+              <div class="form-group">
+                <button class="btn btn-primary" ng-click="loginBtn()">登录</button>
+                <button type="button" class="btn btn-info">注册</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="panel-footer">
+  <p class="text-center">©2014&nbsp;杭州电子科技大学麒飞软件团队&nbsp;<br class="visible-xs">
+    <a href="http://www.miibeian.gov.cn/" style="color: rgb(51, 51, 51);">浙ICP备14023518号-1</a>
+  </p>
+</footer>
 </body>
 </html>
