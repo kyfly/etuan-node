@@ -1,1 +1,77 @@
-此处应有设置页。
+<div style="display: block;position: absolute;top: 0;left: 20px">
+  <h3>设置</h3>
+</div>
+<br>
+<br>
+<hr>
+<form class="form-horizontal">
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">社团名称</label>
+    </div>
+    <div class="col-md-7">
+      <input type="text" class="form-control" ng-model="name">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">社团简介</label>
+    </div>
+    <div class="col-md-7">
+      <textarea type="text" rows="10" class="form-control" style="resize:none" ng-model="name"></textarea>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">社团类型</label>
+    </div>
+    <div class="col-md-7">
+      <input type="text" class="form-control" ng-model="school">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">所属学院</label>
+    </div>
+    <div class="col-md-7">
+      <input type="text" class="form-control" ng-model="school">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">微信号</label>
+    </div>
+    <div class="col-md-7">
+      <input type="text" class="form-control" ng-model="weChat">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">电子邮箱</label>
+    </div>
+    <div class="col-md-7">
+      <input type="text" class="form-control" ng-model="email">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">联系电话</label>
+    </div>
+    <div class="col-md-7">
+      <input type="text" class="form-control" ng-model="phone">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-2 col-md-offset-2">
+      <button class="btn btn-block btn-primary" ng-click="submit()">提交</button>
+    </div>
+  </div>
+</form>
