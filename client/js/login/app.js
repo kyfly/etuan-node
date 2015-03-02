@@ -10,7 +10,7 @@ function LoginCtrl ($scope,$resource,$timeout,$window) {
       $window.localStorage.setItem('userId',res.userId);
       $window.localStorage.setItem('loginTime',res.created);
       alert('模拟登录成功!');
-      $timeout(function(){$window.location='/admin/index-sim.html'},5000);
+      $timeout(function(){$window.location='/admin/index.html'},5000);
     },function (res) {
       console.log(res);
       alert('模拟登录失败!');
