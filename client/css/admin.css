@@ -64,18 +64,6 @@ body {
   box-shadow: none;
   margin-top: 20px;
 }
-.state-overview .red {
-  background: #ff6c60;
-}
-.state-overview .blue {
-  background: #57c8f2;
-}
-.state-overview .yellow {
-  background: #f8d347;
-}
-.state-overview .terques {
-  background: #6ccac9;
-}
 .state-overview .symbol {
   width: 40%;
   padding: 25px 15px;
@@ -137,7 +125,6 @@ body {
   left:calc(0% + 15px);
   width:calc(33.333% - 10px);
   height:30px;
-  background-color: #6ccac9;
   border-bottom-left-radius: 4px;
 }
 .list-area .list-item .result-btn {
@@ -146,7 +133,6 @@ body {
   left:calc(33.333% + 5px);
   width:calc(33.333% - 10px);
   height:30px;
-  background-color: #57c8f2;
 }
 .list-area .list-item .delete-btn {
   position: absolute;
@@ -154,6 +140,5 @@ body {
   left:calc(66.667% - 5px);
   width:calc(33.333% - 10px);
   height: 30px;
-  background-color: #ff6c60;
   border-bottom-right-radius: 4px;
 }
