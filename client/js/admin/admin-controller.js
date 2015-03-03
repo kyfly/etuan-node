@@ -151,7 +151,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
     $routeParams.id === 'create'?initEdit():loadEdit();
     $scope.enType = $routeParams.type;
     $scope.cnType = dict[$routeParams.type];
-    $scope.mode = $routeParams.id === 'create'?('新建'+$scope.cnType):('编辑'+$scope.cnType);
+    $scope.mode = $routeParams.id === 'create'?('新建'+$scope.cnType+' '):('编辑'+$scope.cnType+' ');
     $scope.submitButtonName = $routeParams.id === 'create'?'创建':'更新';
   };
   initial();
@@ -313,10 +313,8 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   };
 }
 
-function ResultCtrl ($scope,$routeParams,$resource,dict) {
-  $scope.mode = dict[$routeParams.type]+'结果'+'  '+$routeParams.id;
-  var FormResult = $resource('/api/FormResult');
-  var resultProperty = {
+function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
+  var resultConfig = {
     form:{
       downloadAsExcel:true,
       downloadAsPdf:true
@@ -334,7 +332,73 @@ function ResultCtrl ($scope,$routeParams,$resource,dict) {
       downloadAsPdf:false
     }
   };
-  //$scope.
+  var resultProperty = {
+    form:'/api/Forms/:id/results',
+    seckill:'',
+    vote:'/api/Votes/:id/results',
+    luck:''
+  };
+  var infoProperty = {
+    form:'/api/OrganizationUsers/:userId/forms/:fk',
+    seckill:'/api/OrganizationUsers/:userId/seckills/:fk',
+    vote:'/api/OrganizationUsers/:userId/votes/:fk',
+    luck:'/api/OrganizationUsers/:userId/lucks/:fk'
+  };
+  var Result = $resource(resultProperty[$routeParams.type],{id:$routeParams.id});
+  var Info = $resource(infoProperty[$routeParams.type],{userId:$window.localStorage.getItem('userId'),fk:$routeParams.id});
+  $scope.mode = dict[$routeParams.type]+'结果 ';
+  $scope.title = '';
+  $scope.currentResultConfig = resultConfig[$routeParams.type];
+  $scope.results = [];
+  $scope.resultHeaders = ['序号'];
+  $scope.info = {};
+  $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
+  var resultsProcess = function (res) {
+    switch ($routeParams.type) {
+      case 'form':
+        for (var i = 0; i < res.length; i++) {
+          var resultTmp = [];
+          var answersTmp = res[i].formResultAnswers;
+          for (var j = 0; j < answersTmp.length; j++) {
+            resultTmp.push(answersTmp[j].content);
+          }
+          $scope.results.push(resultTmp);
+        }
+        break;
+      case 'seckill':break;
+      case 'vote':break;
+      case 'luck':break;
+    };
+  };
+  var infoProcess = function (res) {
+    switch ($routeParams.type) {
+      case 'form':
+        $scope.title = res.title;
+        $scope.startTime = res.startTime;
+        $scope.stopTime = res.stopTime;
+        for (var i = 0; i < res.formQuestions.length; i++) {
+          $scope.resultHeaders.push(res.formQuestions[i].label);
+        };
+        break;
+      case 'seckill':break;
+      case 'vote':break;
+      case 'luck':break;
+    };
+  }
+  Info.get(
+    {},
+    function (res) {
+      infoProcess(res);
+    },
+    function (res) {}
+  );
+  Result.query(
+    {},
+    function (res) {
+      resultsProcess(res);
+    },
+    function (res) {}
+  );
 }
 
 function HomeCtrl ($scope) {
@@ -348,6 +412,11 @@ function HomeCtrl ($scope) {
       'title':'招新系统上线啦',
       'time':'2012年2月12日',
       'content':'【解读】《周易》亦称《易经》，儒家重要经典之一。《周易?系辞》是孔子阐释易理的文字，这段的意思是，君子在国家安定的时候要不忘危险，国家存在的时候要不忘败亡，国家大治的时候要不忘变乱。'
+    },
+    {
+      'title':'招新系统上线啦',
+      'time':'2012年2月12日',
+      'content':'这种忧患和责任意识是习近平治国理政的重要思想底色。“全党必须警醒起来”，2012年习近平一上任就为全党敲响了警钟。紧接着，习近平发出“整风”动员令，并从生死存亡的高度来认识和解决腐败问题。在党的群众路线教育实践活动总结大会上，习近平引用《道德经》中的名句“为之于未有，治之于未乱”再次告诫全党要增强忧患意识，学会“下先手棋”，方能立于不败。'
     },
     {
       'title':'招新系统上线啦',
