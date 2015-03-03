@@ -12,7 +12,7 @@ body {
 
 .sidebar {
   margin-top: -20px;
-  background-color: #A6AAC2;
+  background-color: #2a3542;
   min-height: 100%;
 }
 .sidebar-list .sidebar-item {
@@ -20,12 +20,12 @@ body {
   height: 50px;
   line-height: 30px;
   cursor: pointer;
-  background-color: #A6AAC2;
+  background-color: #2a3542;
   position: relative;
   font-size: 16px;
 }
 .sidebar-list .sidebar-item .active {
-  background-color: #CBCEE0;
+  background-color: #35404d;
 }
 @media screen and (max-width: 768px) {
   .sidebar {
