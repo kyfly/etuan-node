@@ -4423,7 +4423,7 @@ tbody.collapse.in {
 }
 
 .nav-pills {
-  background-color: #A6AAC2 !important;
+  background-color: #2a3542 !important;
 }
 .nav-pills > li {
   float: left;
@@ -4435,14 +4435,14 @@ tbody.collapse.in {
 }
 .nav-pills > li > a:hover, .nav-pills > li > a:focus {
   color: #ffffff !important;
-  background-color: #CBCEE0 !important;
+  background-color: #35404d !important;
 }
 .nav-pills > li + li {
   margin-left: 2px;
 }
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
   color: #ffffff !important;
-  background-color: #CBCEE0 !important;
+  background-color: #35404d !important;
 }
 
 .nav-stacked > li {
