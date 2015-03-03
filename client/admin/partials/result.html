@@ -1,47 +1,28 @@
-<div style="display: block;position: absolute;top: 0;left: 20px">
-  <h3>{{mode}}</h3>
+<div style="display: block;position: absolute;top: 0;left: 50px">
+  <h3><small>{{mode}}</small>&nbsp;&nbsp;<big><strong>{{title}}</strong></big></h3>
 </div>
-<div style="display: inline;position: absolute;top: 20px;right: 20px">
-  <button class="btn btn-danger">.pdf</button>
-  <button class="btn btn-success">.xls</button>
+<div style="display: inline;position: absolute;top: 20px;right: 50px">
+  <button class="btn btn-danger" ng-show="currentResultConfig['downloadAsPdf']">PDF下载</button>
+  <button class="btn btn-success" ng-show="currentResultConfig['downloadAsExcel']">Excel下载</button>
 </div>
 <br>
 <br>
 <hr>
 <div class="well">
-  <p>总参加人数是多少应该要被显示在这里的，具体数目你们自己感受一下就好了。</p>
+  <p>开始时间：{{startTime | date:cnFormat}}</p>
+  <p>结束时间：{{stopTime | date:cnFormat}}</p>
+  <p>参加人数：{{results.length}}</p>
 </div>
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>项目1</th>
-      <th>项目2</th>
-      <th>项目3</th>
-      <th>项目4</th>
-      <th>项目5</th>
+      <th ng-repeat="resultHeader in resultHeaders">{{resultHeader}}</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-      <td>4</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-      <td>4</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-      <td>4</td>
-      <td>5</td>
+    <tr ng-repeat="result in results">
+      <td>{{$index+1}}</td>
+      <td ng-repeat="resultDetail in result">{{resultDetail}}</td>
     </tr>
   </tbody>
 </table>
