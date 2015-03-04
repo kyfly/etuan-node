@@ -90,8 +90,8 @@ function ListCtrl ($window,$scope,$routeParams,$resource) {
   $scope.result = function (id) {
     $window.location.hash = '#/'+$routeParams.type+'/result/'+id;
   };
-  $scope.remove = function (index,elementId) {
-    List.delete({fk:elementId},
+  $scope.remove = function (index,id) {
+    List.delete({fk:id},
       function(res){
         $scope.listItems.splice(index,1);
       },
@@ -114,7 +114,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
     vote:'/api/OrganizationUsers/:userId/votes/:fk',
     luck:'/api/OrganizationUsers/:userId/lucks/:fk'
   };
-  var Edit = $resource(editProperty[$routeParams.type],{userId:$window.localStorage.getItem('userId'),fk:'@elementId'});
+  var Edit = $resource(editProperty[$routeParams.type],{userId:$window.localStorage.getItem('userId')});
   /* 初始化区
    * initEdit()为新建页面时初始化通用部分的函数
    * loadEdit()为编辑页面时对于已有信息的加载
@@ -305,8 +305,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
       Edit.save(uploadParameters);
     }
     else{
-      uploadParameters.elementId = $routeParams.id;
-      Edit.update(uploadParameters);
+      Edit.update({fk:$routeParams.id},uploadParameters);
     }
     var mode = $routeParams.id === 'create'?'创建':'更新';
     alert(mode+$scope.cnType+'成功！');
