@@ -103,25 +103,56 @@
         <hr>
         <ol>
           <li ng-repeat="form in forms">
-            <label>{{showType[form.type]}}</label>
-            <a href ng-click="removeForm($index)"><span class="glyphicon glyphicon-minus-sign"></span></a>
-            <div class="well">
-              <p>{{form.label}}</p>
-              <ul>
-                <li ng-repeat="single in form.content track by $index">{{single}}</li>
-              </ul>
-            </div>
-            <label>修改题干</label>
-            <input type="text" ng-model="form.label">
-            <div ng-show="showContent[form.type]">
-              <label>修改选项</label>
-              <a href ng-click="appendContent($index)"><span class="glyphicon glyphicon-plus-sign"></span></a>
-              <div ng-repeat="single in form.content track by $index">
-                <a href ng-click="removeContent($parent.$index,$index)"><span class="glyphicon glyphicon-minus-sign"></span></a>
-                <input type="text" ng-model="form.content[$index]">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">{{showType[form.type]}}</label>
+                <div class="col-sm-10">
+                  <button class="btn btn-primary" type="button" ng-click="moveUpForm($index)">
+                    <span class="glyphicon glyphicon-arrow-up"></span> 上移
+                  </button>
+                  <button class="btn btn-primary" type="button" ng-click="moveDownForm($index)">
+                    <span class="glyphicon glyphicon-arrow-down"></span> 下移
+                  </button>
+                  <button class="btn btn-danger" type="button" ng-click="removeForm($index)">
+                    <span class="glyphicon glyphicon-remove"></span> 删除
+                  </button>
+                </div>
               </div>
-            </div>
-            <hr>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label">题干：</label>
+                <div class="col-sm-10">
+                  <input class="form-control" type="text" ng-model="form.label">
+                </div>
+              </div>
+
+
+              <div ng-show="showContent[form.type]">
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">选项：</label>
+                  <div class="col-sm-10">
+                    <button class="btn btn-primary" type="button" ng-click="appendContent($index)">
+                      <span class="glyphicon glyphicon-plus"></span> 增加选项
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-10 col-sm-offset-2">
+                    <div class="input-group" ng-repeat="single in form.content track by $index">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" ng-click="removeContent($parent.$index,$index)">
+                          <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                      </span>
+                      <input type="text" class="form-control" ng-model="form.content[$index]">
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </form>
           </li>
         </ol>
       </div>
@@ -156,7 +187,7 @@
 
   <div class="form-group">
     <div class="col-sm-2 col-sm-offset-2">
-      <button class="btn btn-block btn-primary" ng-click="submit()">{{submitButtonName}}</button>
+      <button class="btn btn-block btn-success" ng-click="submit()">{{submitButtonName}}</button>
     </div>
     <div class="col-sm-2">
       <button class="btn btn-block btn-default" ng-click="preview()">预览</button>

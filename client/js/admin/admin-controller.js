@@ -242,6 +242,16 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   $scope.removeForm = function (index) {
     $scope.forms.splice(index,1);
   };
+  $scope.moveUpForm = function (index) {
+    if (index > 0) {
+      $scope.forms.splice(index-1,0,$scope.forms.splice(index,1)[0]);
+    };
+  };
+  $scope.moveDownForm = function (index) {
+    if (index < $scope.forms.length) {
+      $scope.forms.splice(index+1,0,$scope.forms.splice(index,1)[0]);
+    };
+  };
   $scope.showType = ['','选择题','简答题','陈述题','判断题'];
   $scope.showContent = ['',true,false,false,false];
   $scope.appendContent = function (index) {
