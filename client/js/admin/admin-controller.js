@@ -14,55 +14,55 @@ function AdminCtrl ($scope,$window) {
   }
 }
 
-function SidebarCtrl ($scope,$window) {
+function SidebarCtrl ($scope,$window,$routeParams) {
   $scope.sidebars = [
     {
       'id':'sidebarHome',
       'display_name':'首页',
       'url':'#/home',
-      'active':true
+      'active':$window.location.hash==='#/home'||true
     },
     {
       'id':'sidebarForm',
       'display_name':'表单',
       'url':'#/form/list',
-      'active':false
+      'active':$window.location.hash==='#/form/list'
     },
     {
       'id':'sidebarSeckill',
       'display_name':'疯抢',
       'url':'#/seckill/list',
-      'active':false
+      'active':$window.location.hash==='#/seckill/list'
     },
     {
       'id':'sidebarVote',
       'display_name':'投票',
       'url':'#/vote/list',
-      'active':false
+      'active':$window.location.hash==='#/vote/list'
     },
     {
       'id':'sidebarLuck',
       'display_name':'抽奖',
       'url':'#/luck/list',
-      'active':false
+      'active':$window.location.hash==='#/luck/list'
     },
     {
       'id':'sidebarWechat',
       'display_name':'微信',
       'url':'#/wechat',
-      'active':false
+      'active':$window.location.hash==='#/wechat'
     },
     {
       'id':'sidebarSetting',
       'display_name':'设置',
       'url':'#/setting',
-      'active':false
+      'active':$window.location.hash==='#/setting'
     },
     {
       'id':'sidebarHelp',
       'display_name':'帮助',
       'url':'#/help',
-      'active':false
+      'active':$window.location.hash==='#/help'
     }
   ];
   $scope.redirect = function(index) {
@@ -70,8 +70,8 @@ function SidebarCtrl ($scope,$window) {
       $scope.sidebars[i].active = false;
     };
     $scope.sidebars[index].active = true;
-    $window.location.href = $scope.sidebars[index].url;
-  }
+    $window.location.hash = $scope.sidebars[index].url;
+  };
 }
 
 function ListCtrl ($window,$scope,$routeParams,$resource) {
@@ -85,19 +85,17 @@ function ListCtrl ($window,$scope,$routeParams,$resource) {
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
   $scope.listItems = List.query();
   $scope.edit = function (id) {
-    $window.location.href = '#/'+$routeParams.type+'/edit/'+id;
+    $window.location.hash = '#/'+$routeParams.type+'/edit/'+id;
   };
   $scope.result = function (id) {
-    $window.location.href = '#/'+$routeParams.type+'/result/'+id;
+    $window.location.hash = '#/'+$routeParams.type+'/result/'+id;
   };
   $scope.remove = function (index,elementId) {
     List.delete({fk:elementId},
       function(res){
-        console.log(res);
         $scope.listItems.splice(index,1);
       },
       function(res){
-        console.log(res);
       }
     );
   }
@@ -149,7 +147,6 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
         }
       },
       function(res){
-        console.log(res);
       }
     );
   };
@@ -313,7 +310,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
     }
     var mode = $routeParams.id === 'create'?'创建':'更新';
     alert(mode+$scope.cnType+'成功！');
-    $window.location.href = '#/'+$routeParams.type+'/list';
+    $window.location.hash = '#/'+$routeParams.type+'/list';
   };
   $scope.preview = function(){
   };
