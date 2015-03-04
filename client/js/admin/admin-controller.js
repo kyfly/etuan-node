@@ -121,17 +121,21 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
    * 在函数中其中分成两部分，顺序结构部分用于初始化通用部分，switch结构用于初始化功能特定的部分
    * intial()决定将edit页面初始化为“新建”还是编辑“编辑”，以及实现对初始化函数的调用
    */
-  var initEdit = function () {
-    $scope.startTime = new Date();
-    $scope.stopTime = new Date();
-  }
   var loadEdit = function () {
     Edit.get({fk:$routeParams.id},
       function(res){
         $scope.title = res.title;
         $scope.description = res.description;
         $scope.startTime = new Date(res.startTime);
+        $scope.startDate = new Date(res.startTime);
+        $scope.startDate.toString = function(){
+          return this.getFullYear()+'年'+(this.getMonth()+1)+'月'+this.getDate()+'日 ';
+        };
         $scope.stopTime = new Date(res.stopTime);
+        $scope.stopDate = new Date(res.stopTime);
+        $scope.stopDate.toString = function(){
+          return this.getFullYear()+'年'+(this.getMonth()+1)+'月'+this.getDate()+'日 ';
+        };
         $scope.verifyRule = res.verifyRule;
         switch ($routeParams.type){
           case 'form':
@@ -163,16 +167,19 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
    */
   $scope.enFormat = "EEE MMM dd yyyy HH:mm:ss 'GMT'Z '(CST)'";
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
+  $scope.unFormat = "yyyy-MM-dd HH:mm";  
+  $scope.cnDateFormat = "yyyy'年'M'月'd'日";
+
   $scope.dateOptions = {
     formatYear: 'yy',
     startingDay: 1
   };
-  $scope.startTimeOpen = function($event) {
+  $scope.startDateOpen = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
     $scope.startOpened = true;
   };
-  $scope.stopTimeOpen = function($event) {
+  $scope.stopDateOpen = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
     $scope.stopOpened = true;
@@ -259,11 +266,13 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
    */
   $scope.submit = function () {
     var nowTime = new Date();
+    var startTmp = new Date($scope.startDate.getFullYear(),$scope.startDate.getMonth(),$scope.startDate.getDate(),$scope.startTime.getHours(),$scope.startTime.getMinutes());
+    var stopTmp = new Date($scope.stopDate.getFullYear(),$scope.stopDate.getMonth(),$scope.stopDate.getDate(),$scope.stopTime.getHours(),$scope.stopTime.getMinutes());
     var uploadParameters = {
       'title': $scope.title,
       'description':$scope.description,
-      'startTime': $scope.startTime.toISOString(),
-      'stopTime': $scope.stopTime.toISOString(),
+      'startTime': startTmp.toISOString(),
+      'stopTime': stopTmp.toISOString(),
       'adPicture': '',
       'adUrl': '',
       'verifyRule': $scope.verifyRule,

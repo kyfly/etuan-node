@@ -28,9 +28,9 @@
     </div>
     <div class="col-sm-7">
       <p class="input-group">
-        <input type="text" class="form-control" datepicker-popup="{{cnFormat}}" ng-model="startTime | date: cnFormat" is-open="startOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
+        <input type="text" class="form-control" datepicker-popup="{{cnDateFormat}}" ng-model="startDate" is-open="startOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
       <span class="input-group-btn">
-        <button type="button" class="btn btn-default" ng-click="startTimeOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+        <button type="button" class="btn btn-default" ng-click="startDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
       </span>
       </p>
     </div>
@@ -45,9 +45,9 @@
     </div>
     <div class="col-sm-7">
       <p class="input-group">
-        <input type="text" class="form-control" datepicker-popup="{{cnFormat}}" ng-model="stopTime | date: cnFormat" is-open="stopOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
+        <input type="text" class="form-control" datepicker-popup="{{cnDateFormat}}" ng-model="stopDate" is-open="stopOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
         <span class="input-group-btn">
-          <button type="button" class="btn btn-default" ng-click="stopTimeOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+          <button type="button" class="btn btn-default" ng-click="stopDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
         </span>
       </p>
     </div>
