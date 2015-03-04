@@ -65,9 +65,12 @@
 
     <hr>
     <div class="text-center footer">
-      <img src="http://img.kyfly.net/common/logo/etuan-logo-word.png@60h.png" height="30px" alt="团团一家LOGO">&nbsp;提供技术支持
+      <img src="/img/full-logo.png" height="25px" alt="团团一家LOGO">&nbsp;提供技术支持
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  if (!window.localStorage.getItem('weChatAccessToken')||!window.localStorage.getItem('weChatUid')||!window.localStorage.getItem('weChatLoginTime')){window.localStorage.removeItem('weChatAccessToken');window.localStorage.removeItem('weChatUid');window.localStorage.removeItem('weChatLoginTime');window.location = '/wechat-login.html';}
+</script>
 </body>
 </html>

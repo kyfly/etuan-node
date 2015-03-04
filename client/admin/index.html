@@ -63,6 +63,8 @@
 <!--主体-->
 <div class="main" ng-class="{'col-sm-10':sidebarShow,'col-sm-12':!sidebarShow}" ng-view>
 </div>
-
+<script type="text/javascript">
+  if (!window.localStorage.getItem('accessToken')||!window.localStorage.getItem('userId')||!window.localStorage.getItem('loginTime')){window.localStorage.removeItem('accessToken');window.localStorage.removeItem('userId');window.localStorage.removeItem('loginTime');window.location = '/login.html';}
+</script>
 </body>
 </html>
