@@ -6,6 +6,12 @@ function AdminCtrl ($scope,$window) {
   $scope.redirectToHomapage = function () {
     $window.location = '/index.html';
   }
+  $scope.logOut = function () {
+    $window.localStorage.removeItem('accessToken');
+    $window.localStorage.removeItem('userId');
+    $window.localStorage.removeItem('loginTime');
+    $window.location = '/login.html';
+  }
 }
 
 function SidebarCtrl ($scope,$window) {
@@ -350,7 +356,7 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
   $scope.title = '';
   $scope.currentResultConfig = resultConfig[$routeParams.type];
   $scope.results = [];
-  $scope.resultHeaders = ['序号'];
+  $scope.resultHeaders = [];
   $scope.info = {};
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
   var resultsProcess = function (res) {
@@ -376,12 +382,17 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
         $scope.title = res.title;
         $scope.startTime = res.startTime;
         $scope.stopTime = res.stopTime;
+        $scope.resultHeaders.push('序号');
         for (var i = 0; i < res.formQuestions.length; i++) {
           $scope.resultHeaders.push(res.formQuestions[i].label);
         };
         break;
       case 'seckill':break;
-      case 'vote':break;
+      case 'vote':
+        $scope.title = res.title;
+        $scope.startTime = res.startTime;
+        $scope.stopTime = res.stopTime;
+        break;
       case 'luck':break;
     };
   }
