@@ -20,7 +20,7 @@ function SidebarCtrl ($scope,$window,$routeParams) {
       'id':'sidebarHome',
       'display_name':'首页',
       'url':'#/home',
-      'active':$window.location.hash==='#/home'||true
+      'active':$window.location.hash==='#/home' || !($window.location.hash==='#/form/list' || $window.location.hash==='#/seckill/list' || $window.location.hash==='#/vote/list' || $window.location.hash==='#/luck/list' || $window.location.hash==='#/wechat' || $window.location.hash==='#/setting' || $window.location.hash==='#/help')
     },
     {
       'id':'sidebarForm',
