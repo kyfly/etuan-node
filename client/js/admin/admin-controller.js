@@ -317,6 +317,9 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
 }
 
 function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
+  /* 结果页面配置区 
+   * 用于设置结果页面的各项显示上的差异化配置。
+   */
   var resultConfig = {
     form:{
       downloadAsExcel:true,
@@ -335,6 +338,9 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
       downloadAsPdf:false
     }
   };
+  /* 接口区
+   * 结果页面上的各项接口。
+   */
   var resultProperty = {
     form:'/api/Forms/:id/results',
     seckill:'',
@@ -349,6 +355,10 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
   };
   var Result = $resource(resultProperty[$routeParams.type],{id:$routeParams.id});
   var Info = $resource(infoProperty[$routeParams.type],{userId:$window.localStorage.getItem('userId'),fk:$routeParams.id});
+  
+  /* 页面ViewModel区
+   * 用于直接和页面上绑定的各项变量
+   */
   $scope.mode = dict[$routeParams.type]+'结果 ';
   $scope.title = '';
   $scope.currentResultConfig = resultConfig[$routeParams.type];
@@ -356,6 +366,9 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
   $scope.resultHeaders = [];
   $scope.info = {};
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
+  /* 结果处理区
+   * 将各种不同的结果显示到同一张表格中，处理收到的各类不同的json。
+   */
   var resultsProcess = function (res) {
     switch ($routeParams.type) {
       case 'form':
@@ -393,6 +406,9 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
       case 'luck':break;
     };
   }
+  /* 结果页面的获取区
+   * 在这个区域中包括了所有的请求。
+   */
   Info.get(
     {},
     function (res) {
