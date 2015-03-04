@@ -7,15 +7,13 @@ function LoginCtrl ($scope,$resource,$timeout,$window) {
         'password':$scope.password
       },
       function(res){
-        console.log(res);
         $window.localStorage.setItem('accessToken',res.id);
         $window.localStorage.setItem('userId',res.userId);
         $window.localStorage.setItem('loginTime',res.created);
         alert('模拟登录成功，将在1秒钟后跳转!');
         $timeout(function(){$window.location='/admin/index.html'},1000);
       },
-      function (res) {
-        console.log(res);
+      function(res){
         alert('模拟登录失败!');
       }
     );

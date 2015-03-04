@@ -8,14 +8,11 @@ function VoteCtrl ($scope,$resource,$location,$window) {
       "id":voteUrlSearchObj.id
     },
     function(res){
-      console.log(res);
       $scope.vote = res;
       $scope.startTime = new Date($scope.vote.startTime);
       $scope.stopTime = new Date($scope.vote.stopTime);
     },
-    function (res) {
-      console.log(res);
-    }
+    function(res){}
   );
   $scope.questionShow = function (questionType,showType) {
     return questionType === showType;
@@ -31,12 +28,8 @@ function VoteCtrl ($scope,$resource,$location,$window) {
         'voteId':voteUrlSearchObj.id,
         'results':resultTmp
       },
-      function(res){
-        console.log(res);
-      },
-      function (res) {
-        console.log(res);
-      }
+      function(res){},
+      function(res){}
     );
   };
 }

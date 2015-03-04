@@ -7,15 +7,13 @@ function LoginCtrl ($scope,$resource,$timeout,$window) {
         'password':$scope.password
       },
       function(res){
-        console.log(res);
         $window.localStorage.setItem('weChatAccessToken',res.id);
         $window.localStorage.setItem('weChatUid',res.userId);
         $window.localStorage.setItem('weChatLoginTime',res.created);
         alert('模拟微信登录成功，将在1秒钟后跳转!');
         $timeout(function(){$window.location='/list-tmp.html'},1000);
       },
-      function (res) {
-        console.log(res);
+      function(res){
         alert('模拟模拟登录失败!');
       }
     );

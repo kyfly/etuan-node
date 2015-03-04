@@ -8,14 +8,11 @@ function FormCtrl ($scope,$resource,$location,$window) {
       "id":formUrlSearchObj.id
     },
     function(res){
-      console.log(res);
       $scope.form = res;
       $scope.startTime = new Date($scope.form.startTime);
       $scope.stopTime = new Date($scope.form.stopTime);
     },
-    function (res) {
-      console.log(res);
-    }
+    function(res){}
   );
   $scope.questionShow = function (questionType,showType) {
     return questionType === showType;
@@ -32,12 +29,8 @@ function FormCtrl ($scope,$resource,$location,$window) {
         'formId':formUrlSearchObj.id,
         'formResultAnswers':resultTmp
       },
-      function(res){
-        console.log(res);
-      },
-      function (res) {
-        console.log(res);
-      }
+      function(res){},
+      function(res){}
     );
   };
 }
