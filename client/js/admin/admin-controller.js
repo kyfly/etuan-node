@@ -260,16 +260,27 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   $scope.removeContent = function (pindex,index) {
     $scope.forms[pindex].content.splice(index,1);
   };
-
   $scope.votes = [];
   $scope.addVote = function () {
     $scope.votes.push({
-      'name':'',
+      'name':'这是一个投票项',
       'detailUrl':'',
       count:0
     });
   }
-
+  $scope.removeVote = function (index) {
+    $scope.votes.splice(index,1);
+  };
+  $scope.moveUpVote = function (index) {
+    if (index > 0) {
+      $scope.votes.splice(index-1,0,$scope.votes.splice(index,1)[0]);
+    };
+  };
+  $scope.moveDownVote = function (index) {
+    if (index < $scope.votes.length) {
+      $scope.votes.splice(index+1,0,$scope.votes.splice(index,1)[0]);
+    };
+  };
   /* 提交区
    * 用于提交数据，uploadParameter中首先加入通用部分的参数，然后根据switch结构向其中分别添加特定部分的参数
    * 在完成提交后，将转跳至列表页面list.html

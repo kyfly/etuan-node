@@ -118,39 +118,31 @@
                   </button>
                 </div>
               </div>
-
               <div class="form-group">
                 <label class="col-sm-2 control-label">题干：</label>
                 <div class="col-sm-10">
                   <input class="form-control" type="text" ng-model="form.label">
                 </div>
               </div>
-
-
-              <div ng-show="showContent[form.type]">
-
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">选项：</label>
-                  <div class="col-sm-10">
-                    <button class="btn btn-primary" type="button" ng-click="appendContent($index)">
-                      <span class="glyphicon glyphicon-plus"></span> 增加选项
-                    </button>
+              <div class="form-group" ng-show="showContent[form.type]">
+                <label class="col-sm-2 control-label">选项：</label>
+                <div class="col-sm-10">
+                  <button class="btn btn-primary" type="button" ng-click="appendContent($index)">
+                    <span class="glyphicon glyphicon-plus"></span> 增加选项
+                  </button>
+                </div>
+              </div>
+              <div class="form-group" ng-show="showContent[form.type]">
+                <div class="col-sm-10 col-sm-offset-2">
+                  <div class="input-group" ng-repeat="single in form.content track by $index">
+                    <span class="input-group-btn">
+                      <button class="btn btn-primary" type="button" ng-click="removeContent($parent.$index,$index)">
+                        <span class="glyphicon glyphicon-minus"></span>
+                      </button>
+                    </span>
+                    <input type="text" class="form-control" ng-model="form.content[$index]">
                   </div>
                 </div>
-
-                <div class="form-group">
-                  <div class="col-sm-10 col-sm-offset-2">
-                    <div class="input-group" ng-repeat="single in form.content track by $index">
-                      <span class="input-group-btn">
-                        <button class="btn btn-primary" type="button" ng-click="removeContent($parent.$index,$index)">
-                          <span class="glyphicon glyphicon-minus"></span>
-                        </button>
-                      </span>
-                      <input type="text" class="form-control" ng-model="form.content[$index]">
-                    </div>
-                  </div>
-                </div>
-
               </div>
             </form>
           </li>
@@ -173,12 +165,34 @@
         <hr>
         <ol>
           <li ng-repeat="vote in votes">
-            <label>投票项内容：</label>
-            <input type="text" ng-model="vote.name"><br>
-            <label>详情介绍页面：</label>
-            <input type="text" ng-model="vote.detailUrl"><br>
-            <label>当前该项票数：{{vote.count}}</label>
-            <hr>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">{{showType[form.type]}}</label>
+                <div class="col-sm-10">
+                  <button class="btn btn-primary" type="button" ng-click="moveUpVote($index)">
+                    <span class="glyphicon glyphicon-arrow-up"></span> 上移
+                  </button>
+                  <button class="btn btn-primary" type="button" ng-click="moveDownVote($index)">
+                    <span class="glyphicon glyphicon-arrow-down"></span> 下移
+                  </button>
+                  <button class="btn btn-danger" type="button" ng-click="removeVote($index)">
+                    <span class="glyphicon glyphicon-remove"></span> 删除
+                  </button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-2">项目名：</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="vote.name">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-2">详情介绍：</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="vote.detailUrl">
+                </div>
+              </div>
+            </form>
           </li>
         </ol>
       </div>
