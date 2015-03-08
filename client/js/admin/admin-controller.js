@@ -3,15 +3,25 @@ function AdminCtrl ($scope,$window) {
   $scope.sidebarToggle = function () {
     $scope.sidebarShow = !$scope.sidebarShow;
   };
+}
+
+function NavbarCtrl ($scope,$window) {
+  $scope.etuanLogo = "/img/full-logo.png";
+  $scope.organizationName = "啦啦啦啦";
+  $scope.organizationLogo = "/img/logo.jpg";
   $scope.redirectToHomapage = function () {
     $window.location = '/index.html';
+  };
+  $scope.redirectToSetting = function () {
+    $window.location.hash = "#/setting"
   }
   $scope.logOut = function () {
     $window.localStorage.removeItem('accessToken');
     $window.localStorage.removeItem('userId');
     $window.localStorage.removeItem('loginTime');
     $window.location = '/login.html';
-  }
+  };
+
 }
 
 function SidebarCtrl ($scope,$window,$routeParams) {
