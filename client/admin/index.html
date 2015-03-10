@@ -19,33 +19,33 @@
 </head>
 <body ng-controller="AdminCtrl">
 <!--头部-->
-  <header>
+  <header ng-controller="NavbarCtrl">
     <nav class="navbar navbar-default">
       <div class="navbar-header">
-        <a class="navbar-brand" href="" ng-click="sidebarToggle()">
+        <a class="navbar-brand" href ng-click="sidebarToggle()">
           <span class="glyphicon glyphicon-menu-hamburger"></span>
         </a>
-        <a class="navbar-brand" href="" ng-click="redirectToHomapage()">
-          <img src="/img/full-logo.png" height="20px" alt="团团一家LOGO">
+        <a class="navbar-brand" href ng-click="redirectToHomapage()">
+          <img ng-src="{{etuanLogo}}" height="20px" alt="团团一家LOGO">
         </a>
       </div>
       <div class="top-nav-right visible-xs">
         <div class="btn-group" dropdown>
           <button type="button" class="btn btn-default navbar-btn dropdown-toggle" dropdown-toggle>
-            <img src="/img/logo.jpg" height="20px">
+            <img ng-src="{{organizationLogo}}" height="20px">
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu">
-            <li><a href=""><span class="glyphicon glyphicon-user"></span>&nbsp;团团一家</a></li>
+            <li><a href ng-click="redirectToSetting()"><span class="glyphicon glyphicon-user"></span>&nbsp;{{organizationName}}</a></li>
             <li class="divider"></li>
-            <li><a href="" ng-click="logOut()"><span class='glyphicon glyphicon-log-out'></span>&nbsp;退出</a></li>
+            <li><a href ng-click="logOut()"><span class='glyphicon glyphicon-log-out'></span>&nbsp;退出</a></li>
           </ul>
         </div>
       </div>
       <div class="top-nav-right hidden-xs">
-        <img src="/img/logo.jpg" height="20px">&nbsp;&nbsp;团团一家&nbsp;&nbsp;
+        <img ng-src="{{organizationLogo}}" height="20px">&emsp;<a href ng-click="redirectToSetting()">{{organizationName}}</a>&emsp;
         <button class="btn btn-default navbar-btn" ng-click="logOut()">
-          <span class='glyphicon glyphicon-log-out'></span>退出
+          <span class='glyphicon glyphicon-log-out'></span>&nbsp;退出
         </button>
       </div>
     </nav>
@@ -54,7 +54,7 @@
 <div class="col-sm-2 sidebar" ng-controller="SidebarCtrl" ng-show="sidebarShow">
   <div>
     <ul class="nav nav-pills nav-stacked sidebar-list">
-      <li ng-repeat="sidebar in sidebars" class="sidebar-item" ng-class="{active: sidebar.active}">
+      <li id="{{sidebar.id}}" ng-repeat="sidebar in sidebars" class="sidebar-item" ng-class="{active: sidebar.active}">
         <a href ng-click="redirect($index)">{{sidebar.display_name}}</a>
       </li>
     </ul>
