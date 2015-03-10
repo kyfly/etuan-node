@@ -1,0 +1,27 @@
+{
+  "name": "LoginCache",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "properties": {
+    "createAt": {
+      "type": "date",
+      "required": true
+    },
+    "state": {
+      "type": "string",
+      "required": true
+    },
+    "openid": {
+      "type": "string",
+      "required": true
+    },
+    "isConfirm": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

@@ -94,5 +94,9 @@
   "VoteResult": {
     "dataSource": "db",
     "public": true
+  },
+  "LoginCache": {
+    "dataSource": "db",
+    "public": false
   }
 }
