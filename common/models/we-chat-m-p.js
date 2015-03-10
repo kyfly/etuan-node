@@ -1,5 +1,5 @@
 var config = require('../../server/config');
-var weixin = require('weixin');
+var weixin = require('../modules/weixin.js');
 var crypto = require('crypto');
 //var wechat = require('wechat');
 // var api = new WXAPI(config.appid, config.appsecret);
