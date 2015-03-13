@@ -3,7 +3,11 @@
   "base": "BaseItem",
   "strict": false,
   "idInjection": false,
-  "properties": {},
+  "properties": {
+    "maxVote": {
+      "type": "number"
+    }
+  },
   "validations": [],
   "relations": {
     "results": {
@@ -11,7 +15,7 @@
       "model": "VoteResult",
       "foreignKey": "voteId"
     },
-    "questions": {
+    "subitems": {
       "type": "embedsMany",
       "model": "VoteSubitem",
       "option": {

@@ -4,9 +4,6 @@
   "strict": true,
   "idInjection": true,
   "properties": {
-    "organizationUid": {
-      "type": "object"
-    },
     "mpOriginId": {
       "type": "string",
       "comments": "公众号原始id"
