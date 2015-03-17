@@ -1,8 +1,7 @@
 var config = require('../../server/config');
 var weixin = require('../modules/weixin.js');
 var crypto = require('crypto');
-//var wechat = require('wechat');
-// var api = new WXAPI(config.appid, config.appsecret);
+
 function __randomString(len){
 　　len = len || 32;
 　　var $chars = 'ABCDEFGHJoOLl9gqVvUuI1KMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    
@@ -12,6 +11,17 @@ function __randomString(len){
 　　　　pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
 　　}
 　　return pwd;
+}
+function sinceQR(WeChatMP,sinceId,cb)
+{
+	WeChatMP.app.models.WeChatEtuanQR.findOne({qrNumber:sinceId},function(err,sinceQr){
+		if(err) cb(null);
+		if(sinceQr.length > 0)
+		switch(sinceQr.itemType){
+			case 'form':WeChatMP.app.models.Form.findOne({where:{id:sinceQr.itemId}},cb);break;
+			case 'vote':WeChatMP.app.models.Vote.findOne({where:{id:sinceQr.itemId}},cb);break;
+		}
+	});
 }
 function reply(req,res,WeChatMP){
 	// console.log(req.query.user);
@@ -31,8 +41,42 @@ function reply(req,res,WeChatMP){
 	wechat.getMessage(req,function(reqJson){
 		var toUser = reqJson.ToUserName[0];
 	 	var keyword = reqJson.Content;
+	 	var reqMsg;
+	 	
 	 	switch(reqJson.MsgType){
-			case 'even':break;
+			case 'event':
+			switch(reqJson.Event){
+				case "subscribe":
+					if(reqJson.EventKey === undefined){
+						wechat.reply({},reqJson,function(err,xml){
+							res.send(xml);
+						});
+					}else{
+						sinceQR(WeChatMP,reqJson.EventKey.substr(8),
+							function(err,reqMsg){
+								if(err) reqMsg = {};
+								wechat.reply(reqMsg,reqJson,function(err,xml){
+									res.send(xml);
+								});
+							});
+					}
+					break;
+				case "SCAN": 
+					sinceQR(WeChatMP,reqJson.EventKey,
+							function(err,reqMsg){
+								if(err) reqMsg = {};
+								wechat.reply(reqMsg,reqJson,function(err,xml){
+									res.send(xml);
+								});
+							});
+					break;
+				case "CLICK":
+					var clickMenu = reqJson.EventKey;
+					break;
+				case "VIEW":
+					var url = reqJson.EventKey;
+					break;
+			}
 			default:
 			WeChatMP.findOne({
 		        where: {mpOriginId: toUser, 'weChatMPAutoReplies.keyword': keyword},
@@ -107,40 +151,13 @@ module.exports = function(WeChatMP) {
 			});
 		}
 	}
-	WeChatMP.remoteMethod("find",{
-		http: {path:"",verb: 'get'}
-	});
-	WeChatMP.beforeRemote("find",function(ctx, unused, next){
-	 	WeChatMP.find(ctx.req.query.filter,function(err,result){
-	 		if(!err){
-	 			if(!(result.length > 0))
-	 			{
-	 				var WeChatMPDB = setKey();
-	 				WeChatMPDB.organizationUid = ctx.req.query.filter.where.organizationUid;
-		 			WeChatMP.create(WeChatMPDB,function(err,result){
-		 				if(!err)
-		 					next();
-		 			});
-		 		}
-		 		else{
-		 			next();
-		 		}
-	 		}
-	 	});
-	});
+	
 	WeChatMP.beforeRemote("wechat",function(ctx, unused, next){
 		var req = ctx.req;
 		var res = ctx.res;
 		if(req.method === 'POST'){
-			//next();
-			
 			reply(req,res,WeChatMP);
 		}else{
-			// WeChatMP.app.models.WeChatEtuanQR.getSinceCode("act",31,function(result){
-			// 	console.log(result);
-			// 	res.send(result);
-			// });
-			// return;
 			var query = req.query;
 			var signature = query.signature;
 			var timestamp = query.timestamp;
