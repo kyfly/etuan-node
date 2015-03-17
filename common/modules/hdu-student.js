@@ -14,7 +14,7 @@ function http_get(url,cb)
     });
     req.end();
 }
-function ihdu(id,pwd,cb)
+exports.ihdu = function ihdu(id,pwd,cb)
 {
     var url = 'http://cas.hdu.edu.cn/cas/login?service=http://jxgl.hdu.edu.cn/index.aspx';
     var http = require('http');
@@ -53,49 +53,6 @@ function ihdu(id,pwd,cb)
         });
     });
 }
-module.exports = function(WeChatUser) {
-
-	WeChatUser.disableRemoteMethod('create',true);
-	WeChatUser.xsxx = function(data,referer,cb)
-	{
-    	ihdu(data.stuId,data.stuPwd,function(name){
-    		WeChatUser.upsert({
-    			"name":name,
-    			"stuId":data.stuId,
-    			"stuPwd":data.stuPwd
-    		},function(){
-    			console.log("ok");
-    			cb(null,name);
-    		});
-    	});
-	}
-	WeChatUser.beforeRemote('xsxx', function(ctx, unused, next) {
-		var stuId = JSON.parse(ctx.args.data).stuId;
-		WeChatUser.find({where:{'stuId':stuId}},function(err,result){
-			if(result[0]){
-				console.log('ctx');
-				ctx.res.send("nihao");
-			}
-			else
-				next();
-		});
-	});
-	//学生信息保存
-	WeChatUser.remoteMethod('xsxx',
-		{
-			accepts:[{
-				arg: 'data',
-				type:'object'
-			},{
-				arg: 'referer',
-				type:'string'
-			}],
-			returns:{arg: 'msg', type: 'string'},
-			http: {path: '/xsxx', verb: 'post'}
-		}
-	);
-};
-
 
 var hexcase = 0;  /* hex output format. 0 - lowercase; 1 - uppercase        */
 var b64pad  = ""; /* base-64 pad character. "=" for strict RFC compliance   */
