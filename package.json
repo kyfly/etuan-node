@@ -16,7 +16,8 @@
     "serve-favicon": "^2.0.1",
     "wechat-oauth":"1.0.1",
     "wechat-crypto":"0.0.2",
-    "xml2js":"0.4.5"
+    "xml2js":"0.4.5",
+    "wechat-api": "1.6.0"
   },
   "optionalDependencies": {
     "loopback-explorer": "^1.1.0"
