@@ -3,14 +3,14 @@ var weixin = require('../modules/weixin.js');
 var crypto = require('crypto');
 
 function __randomString(len){
-　　len = len || 32;
-　　var $chars = 'ABCDEFGHJoOLl9gqVvUuI1KMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    
-　　var maxPos = $chars.length;
-　　var pwd = '';
-　　for (i = 0; i < len; i++) {
-　　　　pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
-　　}
-　　return pwd;
+  len = len || 32;
+  var $chars = 'ABCDEFGHJoOLl9gqVvUuI1KMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
+  var maxPos = $chars.length;
+  var pwd = '';
+  for (i = 0; i < len; i++) {
+      pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+  }
+  return pwd;
 }
 function sinceQR(WeChatMP,sinceId,cb)
 {
