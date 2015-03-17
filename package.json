@@ -13,7 +13,10 @@
     "loopback-connector-mongodb": "^1.6.0",
     "loopback-datasource-juggler": "^2.7.0",
     "mongodb": "^1.4.29",
-    "serve-favicon": "^2.0.1"
+    "serve-favicon": "^2.0.1",
+    "wechat-oauth":"1.0.1",
+    "wechat-crypto":"0.0.2",
+    "xml2js":"0.4.5"
   },
   "optionalDependencies": {
     "loopback-explorer": "^1.1.0"
