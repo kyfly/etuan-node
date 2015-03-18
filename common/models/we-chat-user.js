@@ -15,11 +15,11 @@ function __randomString(len){
 }
 module.exports = function(WeChatUser) {
 
-	// WeChatUser.remoteMethod("login",
-	// 	{
-	// 		returns:{arg:"url",type:"string"},
-	// 		http: {path:"/login",verb: 'get'}
-	// 	});
+	WeChatUser.remoteMethod("login",
+		{
+			returns:{arg:"url",type:"string"},
+			http: {path:"/login",verb: 'get'}
+		});
 	WeChatUser.remoteMethod("confirm",
 		{
 			accepts:[{arg:'code',type:'string'},
@@ -34,7 +34,8 @@ module.exports = function(WeChatUser) {
 		});
 	WeChatUser.studentConfim = function(studentId,studentPw,cb)
 	{
-		hduConfim.ihdu(data.stuId,data.stuPwd,function(name){
+		hduConfim.ihdu(data.stuId,data.stuPwd,
+			function(name){
 	    		WeChatUser.upsert({
 	    			"name":name,
 	    			"stuId":data.stuId,
@@ -45,52 +46,51 @@ module.exports = function(WeChatUser) {
 	    		});
 	    	});
 	}
-	// WeChatUser.beforeRemote("login",function(ctx, unused, next){
-	// 	WeChatUser.login({"username":"liu","password":"123","email":"erchuochuo@163.com"},function(err,token){
-	// 		console.log(token);
-	// 	});
-	// 	return;
-	// 	var state = __randomString(40)+ new Date().getTime().toString();
-	// 	var loginCacheObj = {
-	// 		createAt:new Date().getTime(),
-	// 		state:state,
-	// 		isConfirm:0,
-	// 		openid:null
-	// 	};
-	// 	WeChatUser.app.models.LoginCache.create(loginCacheObj,function(err,result){
-	// 		if(err)
-	// 			ctx.res.send(err);
-	// 		var url = client.getAuthorizeURL('http://'+ctx.req.host+':80/api/WeChatUsers/oauth', state, 'snsapi_login');
-	// 		ctx.res.send({state:state,url:url});
-	// 	});
-	// });
+	WeChatUser.beforeRemote("login",function(ctx, unused, next){
+		var state = __randomString(40)+ new Date().getTime().toString();
+		var loginCacheObj = {
+			createAt:new Date().getTime(),
+			state:state,
+			isConfirm:0,
+			code:0
+		};
+		WeChatUser.app.models.LoginCache.create(loginCacheObj,function(err,result){
+			if(err)
+				ctx.res.send(err);
+			var url = client.getAuthorizeURL('http://'+ctx.req.host+':80/api/WeChatUsers/oauth', state, 'snsapi_login');
+			ctx.res.send({state:state,url:url});
+		});
+	});
 	WeChatUser.beforeRemote("confirm",function(ctx, unused, next){
 		var referer = ctx.req.headers.referer;
-		//console.log(ctx.req.headers['user-agent'].indexOf('App'));
 		var query = ctx.req.query;
-		client.getUserByCode(query.code,function(err,wechatUserInfo){
-			if(!err) ctx.res.send(err);
-			WeChatUser.find({where:{uid:wechatUserInfo.openid}},function(err,wechatUser){
-				if(!err) ctx.res.send(err);
-				if(wechatUser.length == 0)
-				{
-					
-					WeChatUser.create(result,function(err,result){
-						if(err)
-							ctx.res.send(err);
-						WeChatUser.app.models.LoginCache.updateAll({where:{state:query.state}},{openid:result.openid},function(err,count){
-							ctx.res.redirect('/waitconfirm.html?state='+query.state);
-						});
-					});
-				}else{
-					WeChatUser.app.models.LoginCache.updateAll({where:{state:query.state}},{openid:result.openid},function(err,count){
-						ctx.res.redirect('/waitconfirm.html?state='+query.state);
-					});
-				}
-			});
+
+		WeChatUser.app.models.LoginCache.find({where:{state:query.state}},function(err,loginCache){
+			if(err) ctx.res.send(err);
+			if(loginCache.length == 0)  ctx.res.send({"msg":"非法的请求"});
+
+			WeChatUser.app.models.LoginCache.updateAll(
+				{where:{state:query.state}},
+				{code:query.code},
+				function(err,count){
+					if(err)
+						ctx.res.send(err);
+					ctx.res.send({"msg":"授权成功,等待获取微信信息","state":query.state});
+				});
 		});
 	});
 };
+
+
+
+
+
+
+
+
+
+
+
 //  {
 //     "organizationUid": "ghfhghgfh",
 //     "mpOriginId": "gh_f53d79a",

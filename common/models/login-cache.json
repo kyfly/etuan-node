@@ -11,7 +11,7 @@
       "type": "string",
       "required": true
     },
-    "openid": {
+    "code": {
       "type": "string",
       "required": true
     },

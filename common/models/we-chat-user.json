@@ -4,7 +4,7 @@
   "strict": true,
   "idInjection": true,
   "properties": {
-    "uid": {
+    "openid": {
       "type": "string",
       "comments": "微信提供的uid"
     },
