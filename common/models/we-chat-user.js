@@ -15,10 +15,10 @@ function __randomString(len){
 }
 module.exports = function(WeChatUser) {
 
-	WeChatUser.remoteMethod("login",
+	WeChatUser.remoteMethod("wechatLogin",
 		{
 			returns:{arg:"url",type:"string"},
-			http: {path:"/login",verb: 'get'}
+			http: {path:"/wechatLogin",verb: 'get'}
 		});
 	WeChatUser.remoteMethod("confirm",
 		{
@@ -46,7 +46,7 @@ module.exports = function(WeChatUser) {
 	    		});
 	    	});
 	}
-	WeChatUser.beforeRemote("login",function(ctx, unused, next){
+	WeChatUser.beforeRemote("wechatLogin",function(ctx, unused, next){
 		var state = __randomString(40)+ new Date().getTime().toString();
 		var loginCacheObj = {
 			createAt:new Date().getTime(),
