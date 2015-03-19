@@ -29,7 +29,7 @@
       "accessType": "READ",
       "principalType": "ROLE",
       "principalId": "$owner",
-      "permission": "DENY"
+      "permission": "ALLOW"
     },
     {
       "accessType": "EXECUTE",
