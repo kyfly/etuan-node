@@ -37,6 +37,11 @@
       "type": "hasOne",
       "model": "WeChatEtuanQR",
       "foreignKey": "itemId"
+    },
+    "organization": {
+      "type": "belongsTo",
+      "model": "OrganizationUser",
+      "foreignKey": "organizationUid"
     }
   },
   "hidden": ["organizationUid"],
@@ -52,6 +57,12 @@
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY",
+      "property": "__get__organization"
     }
   ],
   "methods": []
