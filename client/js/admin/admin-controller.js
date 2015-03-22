@@ -383,7 +383,7 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
   var resultProperty = {
     form:'/api/Forms/:id/results',
     seckill:'',
-    vote:'/api/Votes/:id/results',
+    vote:'/api/Votes/:id/subitems',
     luck:''
   };
   var infoProperty = {
@@ -421,7 +421,14 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
         }
         break;
       case 'seckill':break;
-      case 'vote':break;
+      case 'vote':
+        for (var i = 0; i < res.length; i++) {
+          var resultTmp = [];
+          resultTmp.push(res[i].name);
+          resultTmp.push(res[i].count);
+          $scope.results.push(resultTmp);
+        };
+        break;
       case 'luck':break;
     };
   };
@@ -441,6 +448,8 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
         $scope.title = res.title;
         $scope.startTime = res.startTime;
         $scope.stopTime = res.stopTime;
+        $scope.resultHeaders.push('名称');
+        $scope.resultHeaders.push('数量');
         break;
       case 'luck':break;
     };
