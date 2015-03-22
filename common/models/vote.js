@@ -12,8 +12,9 @@ module.exports = function (Vote) {
     next();
   };
 
-  Vote.beforeUpdate = function (next, model) {
-    resetCount(model);
-    next();
-  }
+  // Vote.beforeUpdate = function (next, model) {
+  //   resetCount(model);
+  //   next();
+  // }
+
 };
