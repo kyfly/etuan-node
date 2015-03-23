@@ -3,18 +3,15 @@
   "base": "PersistedModel",
   "strict": true,
   "idInjection": false,
+  "hidden": [
+    "organizationUid"
+  ],
   "properties": {
     "title": {
       "type": "string"
     },
     "description": {
       "type": "string"
-    },
-    "startTime": {
-      "type": "date"
-    },
-    "stopTime": {
-      "type": "date"
     },
     "adPicture": {
       "type": "string",
@@ -44,7 +41,6 @@
       "foreignKey": "organizationUid"
     }
   },
-  "hidden": ["organizationUid"],
   "acls": [
     {
       "accessType": "WRITE",

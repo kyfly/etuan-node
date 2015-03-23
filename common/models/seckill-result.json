@@ -1,0 +1,23 @@
+{
+  "name": "SeckillResult",
+  "base": "BaseResult",
+  "idInjection": true,
+  "properties": {
+    "arrangementId": {
+      "type": "number",
+      "required": true
+    },
+    "verifyId": {
+      "type": "number",
+      "required": true
+    },
+    "isGet": {
+      "type": "boolean",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

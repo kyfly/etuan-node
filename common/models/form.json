@@ -3,7 +3,14 @@
   "base": "BaseItem",
   "strict": true,
   "idInjection": true,
-  "properties": {},
+  "properties": {
+    "startTime": {
+      "type": "date"
+    },
+    "stopTime": {
+      "type": "date"
+    }
+  },
   "validations": [],
   "relations": {
     "results": {
