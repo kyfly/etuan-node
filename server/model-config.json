@@ -98,5 +98,17 @@
   "LoginCache": {
     "dataSource": "db",
     "public": true
+  },
+  "Seckill": {
+    "dataSource": "db",
+    "public": true
+  },
+  "SeckillArrangement": {
+    "dataSource": "db",
+    "public": false
+  },
+  "SeckillResult": {
+    "dataSource": "db",
+    "public": true
   }
 }
