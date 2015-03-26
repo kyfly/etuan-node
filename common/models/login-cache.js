@@ -5,6 +5,7 @@ module.exports = function(LoginCache) {
 	LoginCache.remoteMethod('confirm',
 		{
 			accepts:{arg:'state',type:'string'},
+			description:"微信登录验证,手机,PC端都用这个接口验证",
 			http:{path:"/confirm",verb: 'get'}
 		});
 	LoginCache.beforeRemote('confirm',function(ctx, unused, next){
@@ -49,7 +50,7 @@ module.exports = function(LoginCache) {
 												{isConfirm:1},
 												function(err,count){
 													if(err) ctx.res.send(err);
-													WeChatUser.login(
+													LoginCache.app.models.WeChatUser.login(
 														{
 															"password":wechatUserInfo.password,
 															"email":wechatUserInfo.email
