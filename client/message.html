@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+  <title>消息 - 团团一家</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="/lib/bootstrap/css/etuan.css">
+  <script src="/lib/angular/angular.js"></script>
+  <script src="/js/message/msapp.js"></script>
+  <style>
+    body {
+      font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
+      background-color: #F4F4F4;
+    }
+    footer {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      margin-left: -72px;
+    }
+  </style>
+</head>
+<body ng-controller="messageCtrl">
+  <header id="nav">
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <h5>
+              <a href="index.html">
+                <img src="/img/full-logo.png" height="30px" alt="团团一家LOGO">
+              </a>
+            </h5>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="container">
+    <div class="text-center col-xs-12 col-sm-6 col-sm-offset-3" style="margin-top:20px;">
+      <span class="glyphicon glyphicon-{{icon}}" style="font-size:10em;color:{{color}}"></span>
+      <h1>{{title}}</h1>
+      <p style="text-align:left;word-break:break-word">{{paragraph}}</p> 
+      <br>
+      <button ng-show="btnShow" ng-click="btnClick()" type="button" class="btn btn-{{btnType}} btn-lg" style="width:50%">{{btnText}}</button>
+    </div>
+  </div>
+  <footer>
+    <br>
+    <p class="text-center">
+      &copy;2015&nbsp;团团一家工作室&nbsp;<br>
+      <a href="http://www.miibeian.gov.cn/" style="color: rgb(51, 51, 51);">浙ICP备14023518号-1</a>
+    </p>
+  </footer>
+</body>
+</html>

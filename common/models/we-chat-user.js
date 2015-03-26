@@ -1,5 +1,6 @@
 var OAuth = require('wechat-oauth');
 var config = require('../../server/config');
+var QRcode = require('qrcode');
 var hduConfim = require('../modules/hdu-student.js');
 var client = new OAuth(config.appid, config.appsecret);
 
@@ -14,11 +15,11 @@ function __randomString(len){
   return pwd;
 }
 module.exports = function(WeChatUser) {
-
 	WeChatUser.remoteMethod("wechatLogin",
 		{
-			returns:{arg:"url",type:"string"},
-			http: {path:"/wechatLogin",verb: 'get'}
+			returns:{arg:"data",type:"object"},
+			description:"获取微信登录链接,返回{state:state,url:url}",
+			http: {path:"/wechatlogin",verb: 'get'}
 		});
 	WeChatUser.remoteMethod("confirm",
 		{
@@ -26,27 +27,60 @@ module.exports = function(WeChatUser) {
 				{arg:'state',type:'string'}],
 			http: {path:"/oauth",verb: 'get'}
 		});
+	
 	WeChatUser.remoteMethod('studentConfim',
 		{
-			accepts:[{arg:'studentId',type:'string'},
-				{arg:'studentPw',type:'string'}],
+			accepts:[{arg:"studentId",type:"string"},
+				{arg:"studentPw",type:"string"},
+				{arg:"userId",type:"string"}],
+			description:"学生学号密码验证",
 			http: {path:"/student",verb: 'get'}
 		});
-	WeChatUser.studentConfim = function(studentId,studentPw,cb)
+	
+	WeChatUser.studentConfim = function(studentId,studentPw,userId,cb)
 	{
-		hduConfim.ihdu(data.stuId,data.stuPwd,
-			function(name){
-	    		WeChatUser.upsert({
-	    			"name":name,
-	    			"stuId":data.stuId,
-	    			"stuPwd":data.stuPwd
-	    		},function(){
-	    			console.log("ok");
-	    			cb(null,name);
-	    		});
-	    	});
+		hduConfim.ihdu(studentId,studentPw,function(name){
+    	// 	WeChatUser.findOne({id:userId},function(err,wechatUserInfo){
+    	// 		if(err)
+    	// 			cb(err);
+    	// 		else if(wechatUserInfo.email === undefined)
+    	// 			cb({err:{msg:"非法的请求"}});
+    	// 		else
+    	// 			console.log(wechatUserInfo);return
+    	// 			wechatUserInfo = wechatUserInfo.__data;
+					// // if(wechatUserInfo["weChatUserHistories"].length === 0)
+					// // 	wechatUserInfo.__data["weChatUserHistories"] = [];
+					// // else
+					// // 	wechatUserInfo["weChatUserHistories"] = wechatUserInfo.__data["weChatUserHistories"][0].__data;
+
+					// var updatedAt = wechatUserInfo["updatedAt"];
+					// if(updatedAt === undefined)
+					// 	updatedAt = new Date().getTime();
+					
+    	// 			var studentInfo = {
+					// 	"studentName":name,
+		   //  			"studentId":studentId,
+		   //  			"university":'杭州电技大学',
+		   //  			"verifiedDate":updatedAt,
+		   //  			"updatedAt":new Date().getTime()
+					// };
+					// wechatUserInfo["studentId"]    = studentId;
+					// wechatUserInfo["university"]   = '杭州电子科技大学';
+					// wechatUserInfo["verifiedDate"] = updatedAt;
+					// wechatUserInfo["studentName"]  = name;
+					// wechatUserInfo["updatedAt"]  = new Date().getTime();
+    	// 			wechatUserInfo["weChatUserHistories"].push(studentInfo);
+    			
+    	// 			//cb(wechatUserInfo.weChatUserHistories);return;
+	    // 			WeChatUser.update({id:userId},wechatUserInfo,function(err,count){
+	    // 				if(err) cb(err);
+	    // 				cb(count);
+	    // 			});
+    	// 	});
+    	});
 	}
 	WeChatUser.beforeRemote("wechatLogin",function(ctx, unused, next){
+		
 		var state = __randomString(40)+ new Date().getTime().toString();
 		var loginCacheObj = {
 			createAt:new Date().getTime(),
@@ -58,7 +92,9 @@ module.exports = function(WeChatUser) {
 			if(err)
 				ctx.res.send(err);
 			var url = client.getAuthorizeURL('http://'+ctx.req.host+':80/api/WeChatUsers/oauth', state, 'snsapi_login');
-			ctx.res.send({state:state,url:url});
+			QRcode.toDataURL(url,function(err,qrcode){
+				ctx.res.render('./sign-in.ejs',{state:state,loginImg:qrcode});
+			});
 		});
 	});
 	WeChatUser.beforeRemote("confirm",function(ctx, unused, next){
@@ -75,7 +111,7 @@ module.exports = function(WeChatUser) {
 				function(err,count){
 					if(err)
 						ctx.res.send(err);
-					ctx.res.send({"msg":"授权成功,等待获取微信信息","state":query.state});
+					ctx.res.redirect("/oauth.html?state="+query.state);
 				});
 		});
 	});
@@ -88,37 +124,3 @@ module.exports = function(WeChatUser) {
 
 
 
-
-
-
-//  {
-//     "organizationUid": "ghfhghgfh",
-//     "mpOriginId": "gh_f53d79a",
-//     "interfaceUrl": "/api/WeChatMPs/wechat?user=gh_f53d79a8e7ce",
-//     "interfaceToken": "68Ac9CXgud7xc7jaSEU21PSEch8qyUJZtsivcZ4J",
-//     "appId": "wx5d92b3c192f993e7",
-//     "appSecret": "d5d284eb92f6d96554aeb92d679640e7",
-//     "updatedAt": "2015-03-07T04:52:42.749Z",
-//     "interfaceKey": "WoZHDU8JD6C5khyCjLs3nwtoPLgkU75rKlFYcCKz1k5",
-//     "id": "jkhk",
-//     "weChatMPAutoReplies": [
-//       {
-//         "type": "news",
-//         "keyword": [
-//           "xddf",
-//           "df"
-//         ],
-//          "news":
-// 		    [{
-// 		    		      "order": 0,
-// 		    		      "title": "tdgdg",
-// 		    		      "description": "fdgfdg",
-// 		    		      "cover": "ff",
-// 		    		      "url": "fff",
-// 		    		      "id": "objectid"
-// 		    		    }],
-//         "updatedAt": "2015-03-07T04:52:42.749Z",
-//         "id": 3
-//       }
-//     ]
-// }

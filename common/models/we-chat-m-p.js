@@ -113,6 +113,7 @@ module.exports = function(WeChatMP) {
 			{arg:'appsecret',type:"string"},
 			{arg:'reset',type:"string"}
 		],
+		description:"微信公众号信息初始化",
 		returns:{arg:'userApiinfo',type:"object"},
 		http: {path: '/init', verb: 'get'}
 	});
