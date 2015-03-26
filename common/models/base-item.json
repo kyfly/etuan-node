@@ -3,18 +3,15 @@
   "base": "PersistedModel",
   "strict": true,
   "idInjection": false,
+  "hidden": [
+    "organizationUid"
+  ],
   "properties": {
     "title": {
       "type": "string"
     },
     "description": {
       "type": "string"
-    },
-    "startTime": {
-      "type": "date"
-    },
-    "stopTime": {
-      "type": "date"
     },
     "adPicture": {
       "type": "string",
@@ -37,9 +34,13 @@
       "type": "hasOne",
       "model": "WeChatEtuanQR",
       "foreignKey": "itemId"
+    },
+    "organization": {
+      "type": "belongsTo",
+      "model": "OrganizationUser",
+      "foreignKey": "organizationUid"
     }
   },
-  "hidden": ["organizationUid"],
   "acls": [
     {
       "accessType": "WRITE",
@@ -52,6 +53,12 @@
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY",
+      "property": "__get__organization"
     }
   ],
   "methods": []

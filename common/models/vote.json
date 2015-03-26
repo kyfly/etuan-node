@@ -6,15 +6,16 @@
   "properties": {
     "maxVote": {
       "type": "number"
+    },
+    "startTime": {
+      "type": "date"
+    },
+    "stopTime": {
+      "type": "date"
     }
   },
   "validations": [],
   "relations": {
-    "results": {
-      "type": "hasMany",
-      "model": "VoteResult",
-      "foreignKey": "voteId"
-    },
     "subitems": {
       "type": "embedsMany",
       "model": "VoteSubitem",

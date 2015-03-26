@@ -1,0 +1,24 @@
+{
+  "name": "Seckill",
+  "base": "BaseItem",
+  "idInjection": true,
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "results": {
+      "type": "hasMany",
+      "model": "SeckillResult",
+      "foreignKey": "seckillId"
+    },
+    "arrangements": {
+      "type": "embedsMany",
+      "model": "SeckillArrangement",
+      "option": {
+        "validate": true,
+        "autoId": true
+      }
+    }
+  },
+  "acls": [],
+  "methods": []
+}
