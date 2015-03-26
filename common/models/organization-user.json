@@ -71,6 +71,11 @@
       "model": "Vote",
       "foreignKey": "organizationUid"
     },
+    "seckills": {
+      "type": "hasMany",
+      "model": "Seckill",
+      "foreignKey": "organizationUid"
+    },
     "weChatMPs": {
       "type": "hasMany",
       "model": "WeChatMP",
@@ -149,6 +154,42 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "__updateById__votes"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__seckills"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__count__seckills"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__destroyById__seckills"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__findById__seckills"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__seckills"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__updateById__seckills"
     },
     {
       "principalType": "ROLE",
