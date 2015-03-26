@@ -122,6 +122,10 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
    * 在函数中其中分成两部分，顺序结构部分用于初始化通用部分，switch结构用于初始化功能特定的部分
    * intial()决定将edit页面初始化为“新建”还是编辑“编辑”，以及实现对初始化函数的调用
    */
+  var initEdit = function () {
+    $scope.startTime = new Date();
+    $scope.stopTime = new Date();
+  }; 
   var loadEdit = function () {
     Edit.get({fk:$routeParams.id},
       function(res){
@@ -363,12 +367,7 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
   var resultProperty = {
     form:'/api/Forms/:id/results',
     seckill:'',
-<<<<<<< HEAD
     vote:'/api/Votes/:id/subitems',
-    luck:''
-=======
-    vote:'/api/Votes/:id/results'
->>>>>>> develop
   };
   var infoProperty = {
     form:'/api/OrganizationUsers/:userId/forms/:fk',
@@ -404,7 +403,6 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
         }
         break;
       case 'seckill':break;
-<<<<<<< HEAD
       case 'vote':
         for (var i = 0; i < res.length; i++) {
           var resultTmp = [];
@@ -413,10 +411,6 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
           $scope.results.push(resultTmp);
         };
         break;
-      case 'luck':break;
-=======
-      case 'vote':break;
->>>>>>> develop
     };
   };
   var infoProcess = function (res) {
