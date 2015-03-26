@@ -39,7 +39,7 @@
                     <div class="normlDesc loginTip pngBackground" style="position:relative;">
                         <div class="loginTipL pngBackground"></div>
                         <div class="loginTipR pngBackground"></div>
-                        <p>请使用微信扫描二维码以登录</p>
+                        <p id="logstatus">请使用微信扫描二维码以登录</p>
                         <div id="tipTrigger" style="position:absolute;z-index:9999;width:100%;height:100%;left:0px;top:0px;"></div>
                     </div>
                     <img class="guide pngImg" style="z-index:9999;" src="/img/login_guide.png" alt="微信扫一扫" >
@@ -94,8 +94,13 @@
     function checkStatus()
     {
         $.get("/api/LoginCaches/confirm", {state : token}, function (data, status) {
-            if (data != "false" && status == "success")
-                window.location.href = data;
+            if (data.msg === "success" && status == "success")
+            //      {"msg":"success","url":ctx.req.headers.referer,"userInfo":userInfo,"token":token}
+            //url为未登录时进入页面，userInfo为登录用户的微信信息，token为该登录用户access_token，userId信息
+                    window.location.href = data.url;
+            else if(status == "success"){
+                    $('#logstatus').html(data.msg)
+            }
         });
     }
 

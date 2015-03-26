@@ -4,16 +4,22 @@
   "idInjection": true,
   "properties": {
     "createAt": {
-      "type": "date",
+      "type": "number",
       "required": true
     },
-    "state": {
+    "randstate": {
       "type": "string",
       "required": true
     },
     "code": {
-      "type": "string",
+      "type": "number",
       "required": true
+    },
+    "ttl": {
+      "type": "number",
+      "ttl": true,
+      "default": 10,
+      "description": "time to live in seconds (2 weeks by default)"
     },
     "isConfirm": {
       "type": "number",

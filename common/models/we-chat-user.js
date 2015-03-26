@@ -21,7 +21,7 @@ module.exports = function(WeChatUser) {
 			description:"获取微信登录链接,返回{state:state,url:url}",
 			http: {path:"/wechatlogin",verb: 'get'}
 		});
-	WeChatUser.remoteMethod("confirm",
+	WeChatUser.remoteMethod("oauth",
 		{
 			accepts:[{arg:'code',type:'string'},
 				{arg:'state',type:'string'}],
@@ -80,38 +80,37 @@ module.exports = function(WeChatUser) {
     	});
 	}
 	WeChatUser.beforeRemote("wechatLogin",function(ctx, unused, next){
-		
 		var state = __randomString(40)+ new Date().getTime().toString();
+		var time = parseInt(new Date().getTime());
 		var loginCacheObj = {
-			createAt:new Date().getTime(),
-			state:state,
+			createAt:time,
+			randstate:state,
 			isConfirm:0,
 			code:0
 		};
 		WeChatUser.app.models.LoginCache.create(loginCacheObj,function(err,result){
 			if(err)
 				ctx.res.send(err);
-			var url = client.getAuthorizeURL('http://'+ctx.req.host+':80/api/WeChatUsers/oauth', state, 'snsapi_login');
+			var url = client.getAuthorizeURL('http://'+ctx.req.hostname+':80/api/WeChatUsers/oauth', state, 'snsapi_login');
 			QRcode.toDataURL(url,function(err,qrcode){
 				ctx.res.render('./sign-in.ejs',{state:state,loginImg:qrcode});
 			});
 		});
 	});
-	WeChatUser.beforeRemote("confirm",function(ctx, unused, next){
+	WeChatUser.beforeRemote("oauth",function(ctx, unused, next){
 		var referer = ctx.req.headers.referer;
 		var query = ctx.req.query;
-
-		WeChatUser.app.models.LoginCache.find({where:{state:query.state}},function(err,loginCache){
-			if(err) ctx.res.send(err);
-			if(loginCache.length == 0)  ctx.res.send({"msg":"非法的请求"});
-
+		var state = query.state;
+		WeChatUser.app.models.LoginCache.find({where:{randstate:query.state}},function(err,loginCache){
+			if(err) ctx.res.render("./student.ejs",{"msg":"出错了,请刷新后登陆"});
+			if(loginCache.length == 0)  ctx.res.render("./student.ejs",{"msg":"非法的请求"});
 			WeChatUser.app.models.LoginCache.updateAll(
-				{where:{state:query.state}},
+				{randstate:state},
 				{code:query.code},
 				function(err,count){
 					if(err)
-						ctx.res.send(err);
-					ctx.res.redirect("/oauth.html?state="+query.state);
+						ctx.res.render("./student.ejs",{"msg":"出错了,请刷新后登陆"});
+					ctx.res.render("./student.ejs",{"msg":"success","state":query.state});
 				});
 		});
 	});

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>团团一家 - 正在登录中...</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            text-align: center;
+            padding-top: 150px;
+        }
+    </style>
+</head>
+<body>
+<h2><img src="http://www.etuan.org/img/waiting.gif">&nbsp;<b>正在登录中...</b></h2>
+<script src="http://cdn.kyfly.net/lib/js/jquery.min.js"></script>
+<script>
+
+
+    function checkStatus(token)
+    {
+        $.get("/api/LoginCaches/confirm", {state : token}, function (data, status) {
+            if (data.status == "err" && status == "success")
+            {
+                $("h2 b").html(data.msg);
+            }else{
+                //成功后关闭微信浏览器,未完成
+                alert(data.msg);
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        if("<%= msg %>" === "success")
+        {
+            setInterval("checkStatus('<%= state %>')", 1000);
+        }else{
+            $("h2 b").html("<%= msg %>");
+        }
+    });
+</script>
+</body>
+</html>
