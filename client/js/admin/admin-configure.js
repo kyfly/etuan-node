@@ -35,8 +35,7 @@ var app = angular.module('app', ['ngResource','ngAnimate','ngRoute','ngTouch','u
 app.value('dict',{
   'form': '表单',
   'seckill': '疯抢',
-  'vote': '投票',
-  'luck': '抢票'
+  'vote': '投票'
 });
 app.config(['$resourceProvider',RewriteResourceActions]);
 app.config(['$routeProvider',RouteConfigure]);
