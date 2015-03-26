@@ -21,7 +21,6 @@ function NavbarCtrl ($scope,$window) {
     $window.localStorage.removeItem('loginTime');
     $window.location = '/login.html';
   };
-
 }
 
 function SidebarCtrl ($scope,$window,$routeParams) {
@@ -30,7 +29,7 @@ function SidebarCtrl ($scope,$window,$routeParams) {
       'id':'sidebarHome',
       'display_name':'首页',
       'url':'#/home',
-      'active':$window.location.hash==='#/home' || !($window.location.hash==='#/form/list' || $window.location.hash==='#/seckill/list' || $window.location.hash==='#/vote/list' || $window.location.hash==='#/luck/list' || $window.location.hash==='#/wechat' || $window.location.hash==='#/setting' || $window.location.hash==='#/help')
+      'active':$window.location.hash==='#/home' || !($window.location.hash==='#/form/list' || $window.location.hash==='#/seckill/list' || $window.location.hash==='#/vote/list' || $window.location.hash==='#/wechat' || $window.location.hash==='#/setting' || $window.location.hash==='#/help')
     },
     {
       'id':'sidebarForm',
@@ -49,12 +48,6 @@ function SidebarCtrl ($scope,$window,$routeParams) {
       'display_name':'投票',
       'url':'#/vote/list',
       'active':$window.location.hash==='#/vote/list'
-    },
-    {
-      'id':'sidebarLuck',
-      'display_name':'抽奖',
-      'url':'#/luck/list',
-      'active':$window.location.hash==='#/luck/list'
     },
     {
       'id':'sidebarWechat',
@@ -88,8 +81,7 @@ function ListCtrl ($window,$scope,$routeParams,$resource) {
   var listProperty = {
     form:'/api/OrganizationUsers/:userId/forms/:fk',
     seckill:'/api/OrganizationUsers/:userId/seckills/:fk',
-    vote:'/api/OrganizationUsers/:userId/votes/:fk',
-    luck:'/api/OrganizationUsers/:userId/lucks/:fk'
+    vote:'/api/OrganizationUsers/:userId/votes/:fk'
   };
   var List = $resource(listProperty[$routeParams.type],{userId:$window.localStorage.getItem('userId')});
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
@@ -121,8 +113,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   var editProperty = {
     form:'/api/OrganizationUsers/:userId/forms/:fk',
     seckill:'/api/OrganizationUsers/:userId/seckills/:fk',
-    vote:'/api/OrganizationUsers/:userId/votes/:fk',
-    luck:'/api/OrganizationUsers/:userId/lucks/:fk'
+    vote:'/api/OrganizationUsers/:userId/votes/:fk'
   };
   var Edit = $resource(editProperty[$routeParams.type],{userId:$window.localStorage.getItem('userId')});
   /* 初始化区
@@ -155,8 +146,6 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
             break;
           case 'vote':
             $scope.votes = res.voteSubitems;
-            break;
-          case 'luck':
             break;
         }
       },
@@ -210,9 +199,6 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   };
   $scope.isVote = function () {
     return 'vote' === $routeParams.type;
-  };
-  $scope.isLuck = function () {
-    return 'luck' === $routeParams.type;
   };
   /* 表单特定功能区
    * 实现了表单项目的CRUD，对于选择题等拥有content[]项目的表单项目，还实现了对具体选项的CRUD操作。
@@ -338,8 +324,6 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
         }
         uploadParameters.voteSubitems = voteSubitemsTmp;
         break;
-      case 'luck':
-        break;
     }
     if($routeParams.id === 'create'){
       Edit.save(uploadParameters);
@@ -371,10 +355,6 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
     vote:{
       downloadAsExcel:true,
       downloadAsPdf:false
-    },
-    luck:{
-      downloadAsExcel:true,
-      downloadAsPdf:false
     }
   };
   /* 接口区
@@ -383,14 +363,12 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
   var resultProperty = {
     form:'/api/Forms/:id/results',
     seckill:'',
-    vote:'/api/Votes/:id/results',
-    luck:''
+    vote:'/api/Votes/:id/results'
   };
   var infoProperty = {
     form:'/api/OrganizationUsers/:userId/forms/:fk',
     seckill:'/api/OrganizationUsers/:userId/seckills/:fk',
-    vote:'/api/OrganizationUsers/:userId/votes/:fk',
-    luck:'/api/OrganizationUsers/:userId/lucks/:fk'
+    vote:'/api/OrganizationUsers/:userId/votes/:fk'
   };
   var Result = $resource(resultProperty[$routeParams.type],{id:$routeParams.id});
   var Info = $resource(infoProperty[$routeParams.type],{userId:$window.localStorage.getItem('userId'),fk:$routeParams.id});
@@ -422,7 +400,6 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
         break;
       case 'seckill':break;
       case 'vote':break;
-      case 'luck':break;
     };
   };
   var infoProcess = function (res) {
@@ -442,7 +419,6 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
         $scope.startTime = res.startTime;
         $scope.stopTime = res.stopTime;
         break;
-      case 'luck':break;
     };
   }
   /* 结果页面的获取区
