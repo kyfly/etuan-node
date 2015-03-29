@@ -4,7 +4,7 @@
   "idInjection": true,
   "properties": {
     "createAt": {
-      "type": "number",
+      "type": "date",
       "required": true
     },
     "randstate": {

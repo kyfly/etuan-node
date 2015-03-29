@@ -95,9 +95,12 @@
     {
         $.get("/api/LoginCaches/confirm", {state : token}, function (data, status) {
             if (data.msg === "success" && status == "success")
-            //      {"msg":"success","url":ctx.req.headers.referer,"userInfo":userInfo,"token":token}
+            //表示登录成功
+            //记得关闭setInterval,不然服务器可能挂
+            //{"msg":"success","url":url,"userInfo":userInfo,"token":token}
             //url为未登录时进入页面，userInfo为登录用户的微信信息，token为该登录用户access_token，userId信息
-                    window.location.href = data.url;
+            alert(data);
+             //window.location.href = data.url;
             else if(status == "success"){
                     $('#logstatus').html(data.msg)
             }
@@ -108,7 +111,7 @@
         setInterval("checkStatus()", 1000);
         setInterval(function() {
             document.location.reload(true);
-        }, 60000);
+        }, 80000);
     });
 </script>
 </body>
