@@ -80,19 +80,66 @@ module.exports = function(WeChatUser) {
 		});
 	});
 
-  //微信用户投票之后检查是否超过最大投票数
-  WeChatUser.beforeRemote('__count__voteResults', function(ctx, instance, next){
-    console.log('fuck');
-    var Vote = VoteResult.app.models.Vote;
-    Vote.findOne({where:{_id:instance.voteId}},function(err,vote){
-      if(instance.results.length > vote.maxVote){
-        //超出最大的投票数
-        ctx.res.end('超出最大投票数');
-      }else{
-        next();
-      }
+  //微信用户投票之前，检查最大投票数，验证规则，是否已经投票
+  WeChatUser.beforeRemote('__count__voteResults', function(ctx, instance, next) {
+    var Vote = WeChatUser.app.models.Vote;
+    var VoteResult = WeChatUser.app.models.VoteResult;
+    VoteResult.findOne({ where: { voteId: instance.voteId, weChatUid: instance.weChatUid }}, function(err, voteResult) {
+    	if(voteResult === null) {
+    		Vote.findOne({ where: { id: instance.voteId }}, function(err, vote) {
+					if(instance.results.length > vote.maxVote) {    			
+	    			if(vote.verifyRule === 'studentId') {
+							WeChatUser.findOne({ where: { id: instance.weChatUid }}, function(err, weChatUser) {
+			    			if(weChatUser.studentId != null) {
+			    				next();
+			    			}
+			    			else {
+			    				ctx.res.end('需要绑定');
+			    			}
+	    				});    		
+	    			}
+	    			else {
+	    				next();
+	    			}
+	    		}
+	    		else {
+	    			ctx.res.end('超过最大投票数');
+	    		}
+    		});
+    	}
+    	else {
+    		ctx.res.end('已经透过票了');
+    	}
     });
-  });  
+  });
+
+  //微信用户报名之前，，验证规则，是否已经报名
+  WeChatUser.beforeRemote('__count__voteResults', function(ctx, instance, next) {
+    var Form = WeChatUser.app.models.Form;
+    var FormResult = WeChatUser.app.models.FormResult;
+    FormResult.findOne({ where: { formId: instance.formId, weChatUid: instance.weChatUid }}, function(err, formResult) {
+    	if(formResult === null) {
+    		Form.findOne({ where: { id: instance.formId }}, function(err, form) {  			
+    			if(form.verifyRule === 'studentId') {
+						WeChatUser.findOne({ where: { id: instance.weChatUid }}, function(err, weChatUser) {
+		    			if(weChatUser.studentId != null) {
+		    				next();
+		    			}
+		    			else {
+		    				ctx.res.end('需要绑定');
+		    			}
+    				});    		
+    			}
+    			else {
+    				next();
+    			}
+    		});
+    	}
+    	else {
+    		ctx.res.end('已经报过名了');
+    	}
+    });
+  });    
 };
 
 

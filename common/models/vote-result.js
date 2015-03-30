@@ -8,7 +8,7 @@ module.exports = function(VoteResult) {
       console.log(instance);
     });
 
-		 Vote.findOne({where:{_id:ctx.instance.voteId}},function(err, vote){
+		Vote.findOne({where:{_id:ctx.instance.voteId}},function(err, vote){
 		 	ctx.instance.results.forEach(function(id){
 
         vote.subitems.findById(id, function(err, instance) {
@@ -23,15 +23,6 @@ module.exports = function(VoteResult) {
             });
           }
         });
-
-                //
-				//vote.subitems.updateById(id, {'$inc': {count: 1}}, function(err,instance) {
-				//	if(err){
-				//		console.error(err);
-				//	}else{
-				//		console.log(instance);
-				//	}
-				//});
 		 	});
 		});
 		next();
