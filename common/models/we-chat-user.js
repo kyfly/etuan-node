@@ -79,6 +79,20 @@ module.exports = function(WeChatUser) {
 				});
 		});
 	});
+
+  //微信用户投票之后检查是否超过最大投票数
+  WeChatUser.beforeRemote('__count__voteResults', function(ctx, instance, next){
+    console.log('fuck');
+    var Vote = VoteResult.app.models.Vote;
+    Vote.findOne({where:{_id:instance.voteId}},function(err,vote){
+      if(instance.results.length > vote.maxVote){
+        //超出最大的投票数
+        ctx.res.end('超出最大投票数');
+      }else{
+        next();
+      }
+    });
+  });  
 };
 
 
