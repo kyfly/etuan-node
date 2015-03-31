@@ -12,11 +12,19 @@
 <div ng-controller="LoginCtrl">
   <h2>WeChat Login</h2>
   <hr>
+  <div id="qrcode"></div>
   <label>email</label>
   <input ng-model="email">
   <label>password</label>
   <input ng-model="password">
   <button ng-click="loginBtn()">Login</button>
 </div>
+<script src="/js/qrcode.min.js"></script>
+<script type="text/javascript">
+  var qr = qrcode(13, 'Q');
+  qr.addData('text');
+  qr.make();
+  document.getElementById('qrcode').innerHTML = qr.createImgTag(4);
+</script>
 </body>
 </html>
