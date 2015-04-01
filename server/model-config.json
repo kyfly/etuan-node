@@ -110,5 +110,9 @@
   "SeckillResult": {
     "dataSource": "db",
     "public": true
+  },
+  "Activity": {
+    "dataSource": "db",
+    "public": true
   }
 }

@@ -1,0 +1,21 @@
+{
+  "name": "Activity",
+  "base": "BaseItem",
+  "idInjection": true,
+  "properties": {
+    "startTime": {
+      "type": "date"
+    },
+    "stopTime": {
+      "type": "date"
+    },
+    "contentUrl": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}
