@@ -1,6 +1,5 @@
 var OAuth = require('wechat-oauth');
 var config = require('../../server/config');
-var QRcode = require('qrcode');
 var wechatLogin = require('../modules/wechatLogin');
 var hduConfim = require('../modules/hdu-student.js');
 var client = new OAuth(config.appid, config.appsecret);
@@ -101,9 +100,7 @@ module.exports = function(WeChatUser) {
 				ctx.res.redirect(client.getAuthorizeURL('http://'+ctx.req.hostname+':3000/api/WeChatUsers/phoneoauth?referer='+referer, state, 'snsapi_userinfo'));
 			else{
 				var url = client.getAuthorizeURL('http://'+ctx.req.hostname+':3000/api/WeChatUsers/oauth?referer='+referer, state, 'snsapi_userinfo');
-				QRcode.toDataURL(url,function(err,qrcode){
-					ctx.res.render('./sign-in.ejs',{state:state,loginImg:qrcode});
-				});
+				ctx.res.render('./sign-in.ejs',{state:state,qrcodeUrl:url});
 			}
 		});
 	});

@@ -91,6 +91,7 @@
     })(jQuery, window);
 
     var token = "<%= state %>";
+    var url = "<%= qrcodeUrl %>";
     function checkStatus()
     {
         $.get("/api/LoginCaches/confirm", {state : token}, function (data, status) {
