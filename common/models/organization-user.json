@@ -76,6 +76,11 @@
       "model": "Seckill",
       "foreignKey": "organizationUid"
     },
+    "activities": {
+      "type": "hasMany",
+      "model": "Activity",
+      "foreignKey": "organizationUid"
+    },
     "weChatMPs": {
       "type": "hasMany",
       "model": "WeChatMP",
@@ -231,7 +236,37 @@
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW",
-      "property": "__updateById__departments"
+      "property": "__create__activities"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__count__activities"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__destroyById__activities"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__findById__activities"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__activities"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__updateById__activities"
     }
   ],
   "methods": []
