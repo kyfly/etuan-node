@@ -1,30 +1,48 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
-  <title>微信登录原型</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <script src="/lib/angular/angular.js"></script>
-  <script src="/lib/angular-components/angular-resource.js"></script>
-  <script src="/js/login/wcapp.js"></script>
+  <title>团团一家 - 用户登录</title>
+  <link rel="stylesheet" href="http://www.etuan.org/css/ewmlogin.css">
 </head>
 <body>
-<div ng-controller="LoginCtrl">
-  <h2>WeChat Login</h2>
-  <hr>
-  <div id="qrcode"></div>
-  <label>email</label>
-  <input ng-model="email">
-  <label>password</label>
-  <input ng-model="password">
-  <button ng-click="loginBtn()">Login</button>
+
+<div id="login_container">
+  <div class="main">
+    <div class="loginPanel normalPanel">
+      <div class="title">
+        <p>微信登录</p>
+      </div>
+      <div class="waiting panelContent">
+        <div class="qrcodeContent" style="position:relative;">
+          <div id="qrcode"></div>
+        </div>
+        </div>
+        <div class="info">
+          <div class="normlDesc loginTip pngBackground" style="position:relative;">
+            <div class="loginTipL pngBackground"></div>
+            <div class="loginTipR pngBackground"></div>
+            <p id="logstatus">请使用微信扫描二维码以登录</p>
+          </div>
+        </div>
+      </div>
+      <div id="mask" class="mask" style="display:none;width:100%;height:100%;" ></div>
+    </div>
+  </div>
 </div>
+
+<div class="footer">
+  <a class="btline"></a>
+  <p class="webwx"><hr style="border:1px solid #242627; opacity: 0.2;">www.etuan.org&nbsp;&nbsp;团团一家</p>
+</div>
+
 <script src="/js/qrcode.min.js"></script>
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/js/login/wcapp.js"></script>
 <script type="text/javascript">
-  var qr = qrcode(13, 'Q');
-  qr.addData('text');
-  qr.make();
-  document.getElementById('qrcode').innerHTML = qr.createImgTag(4);
+  var token = "<%= state %>";
+  var url = "<%= qrcodeUrl %>";
 </script>
 </body>
 </html>

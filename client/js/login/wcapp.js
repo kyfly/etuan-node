@@ -1,3 +1,5 @@
+//旧Angular代码
+/*
 function LoginCtrl ($scope,$resource,$timeout,$window) {
   var Login = $resource('/api/WeChatUsers/login');
   $scope.loginBtn = function(){
@@ -21,3 +23,35 @@ function LoginCtrl ($scope,$resource,$timeout,$window) {
 }
 var app = angular.module('app', ['ngResource']);
 app.controller('LoginCtrl',['$scope','$resource','$timeout','$window',LoginCtrl]);
+*/
+$(document).ready(function () {
+  var checkStatus = function () {
+    $.get("/api/LoginCaches/confirm", {state : token}, function (data, status) {
+      if (data.msg === "success" && status === "success") {
+        alert(data);
+        /*
+        window.localStorage.setItem('weChatUserInfo',data.userInfo);
+        window.localStorage.setItem('weChatAccessToken',data.token);
+        window.localStorage.href = data.url;
+        */
+      }
+      else if (status === "success") {
+        $('#logstatus').html(data.msg);
+      };
+    });
+  };
+  var createQrcode = function (url) {
+    var qr = qrcode(13, 'Q');
+    qr.addData(url);
+    qr.make();
+    document.getElementById('qrcode').innerHTML = qr.createImgTag(4);
+  };
+  createQrcode(url);
+
+  setInterval(checkStatus, 1000);
+  setInterval(function () {        
+    document.location.reload(true);
+    }, 
+    30000
+  );
+});
