@@ -41,9 +41,6 @@ body {
     text-shadow: 0 5px 0 #333;
 	color: #CCD4D7;
 }
-#login_container .loginPanel .panelContent {
-    padding:50px;
-}
 #login_container .loginPanel .panelContent .qrcodeContent{
     height:310px;
 }
@@ -56,28 +53,13 @@ body {
 }
 #login_container .loginPanel .loginTip {
     background:#3F4348;
+    border:2px solid #333737;
     font-size:12px;
     height:48px;
     margin:10px auto;
     width:230px;
-}
-#login_container .loginPanel .loginTipL {
-    background:#3F4348;
-    border-radius: 26px 0 0 26px;
-    display:block;
-    float:left;
-    height:48px;
-    margin-left:-26px;
-    width:26px;
-}
-#login_container .loginPanel .loginTipR {
-	background:#3F4348;
-	border-radius: 0 26px 26px 0;
-    display:block;
-    float:right;
-    height:48px;
-    margin-right:-26px;
-    width:26px;
+    padding:0 24px;
+    border-radius: 26px;
 }
 /*footer*/
 .footer {
