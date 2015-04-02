@@ -81,7 +81,7 @@ module.exports = function(WeChatUser) {
 	});
 
   //微信用户投票之前，检查最大投票数，验证规则，是否已经投票
-  WeChatUser.beforeRemote('__count__voteResults', function(ctx, instance, next) {
+  WeChatUser.beforeRemote('__create__voteResults', function(ctx, instance, next) {
     var Vote = WeChatUser.app.models.Vote;
     var VoteResult = WeChatUser.app.models.VoteResult;
     VoteResult.findOne({ where: { voteId: instance.voteId, weChatUid: instance.weChatUid }}, function(err, voteResult) {
@@ -114,7 +114,7 @@ module.exports = function(WeChatUser) {
   });
 
   //微信用户报名之前，，验证规则，是否已经报名
-  WeChatUser.beforeRemote('__count__voteResults', function(ctx, instance, next) {
+  WeChatUser.beforeRemote('__create__formResults', function(ctx, instance, next) {
     var Form = WeChatUser.app.models.Form;
     var FormResult = WeChatUser.app.models.FormResult;
     FormResult.findOne({ where: { formId: instance.formId, weChatUid: instance.weChatUid }}, function(err, formResult) {
