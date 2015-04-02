@@ -17,7 +17,7 @@
       "required": true
     },
     "verifiedDate": {
-      "type": "string",
+      "type": "date",
       "required": true,
       "comments": "完成改学号密码验证的数据"
     },

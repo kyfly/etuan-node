@@ -1,0 +1,20 @@
+{
+  "name": "SeckillArrangement",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "properties": {
+    "startTime": {
+      "type": "date"
+    },
+    "stopTime": {
+      "type": "date"
+    },
+    "total": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

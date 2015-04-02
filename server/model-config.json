@@ -45,7 +45,7 @@
   },
   "FormResult": {
     "dataSource": "db",
-    "public": true
+    "public": false
   },
   "OrganizationUserDepartment": {
     "dataSource": "db",
@@ -93,9 +93,25 @@
   },
   "VoteResult": {
     "dataSource": "db",
-    "public": true
+    "public": false
   },
   "LoginCache": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Seckill": {
+    "dataSource": "db",
+    "public": true
+  },
+  "SeckillArrangement": {
+    "dataSource": "db",
+    "public": false
+  },
+  "SeckillResult": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Activity": {
     "dataSource": "db",
     "public": true
   }
