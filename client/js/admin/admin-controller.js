@@ -29,7 +29,13 @@ function SidebarCtrl ($scope,$window,$routeParams) {
       'id':'sidebarHome',
       'display_name':'首页',
       'url':'#/home',
-      'active':$window.location.hash==='#/home' || !($window.location.hash==='#/form/list' || $window.location.hash==='#/seckill/list' || $window.location.hash==='#/vote/list' || $window.location.hash==='#/wechat' || $window.location.hash==='#/setting' || $window.location.hash==='#/help')
+      'active':$window.location.hash==='#/home' || !($window.location.hash==='#/activity/list' || $window.location.hash==='#/form/list' || $window.location.hash==='#/seckill/list' || $window.location.hash==='#/vote/list' || $window.location.hash==='#/wechat' || $window.location.hash==='#/setting' || $window.location.hash==='#/help')
+    },
+    {
+      'id':'sidebarForm',
+      'display_name':'活动',
+      'url':'#/activity/list',
+      'active':$window.location.hash==='#/activity/list'
     },
     {
       'id':'sidebarForm',
@@ -79,6 +85,7 @@ function SidebarCtrl ($scope,$window,$routeParams) {
 
 function ListCtrl ($window,$scope,$routeParams,$resource) {
   var listProperty = {
+    activity:'/api/OrganizationUsers/:userId/activities/:fk',
     form:'/api/OrganizationUsers/:userId/forms/:fk',
     seckill:'/api/OrganizationUsers/:userId/seckills/:fk',
     vote:'/api/OrganizationUsers/:userId/votes/:fk'
@@ -111,6 +118,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
    * Edit为一个资源对象，实现所有的CRUD的基础
    */
   var editProperty = {
+    activity:'/api/OrganizationUsers/:userId/activities/:fk',
     form:'/api/OrganizationUsers/:userId/forms/:fk',
     seckill:'/api/OrganizationUsers/:userId/seckills/:fk',
     vote:'/api/OrganizationUsers/:userId/votes/:fk'
@@ -195,6 +203,9 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   /* 功能检测区
    * 将功能类型转化为相应的布尔类型，配合前端view中需要布尔类型的参数调用
    */
+  $scope.isActivity = function () {
+    return 'activity' === $routeParams.type;
+  };
   $scope.isForm = function () {
     return 'form' === $routeParams.type;
   };
@@ -204,6 +215,10 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   $scope.isVote = function () {
     return 'vote' === $routeParams.type;
   };
+  /* 活动特定功能区
+   * 获得编辑器得到的contentUrl
+   */
+  $scope.activityContentUrl = 'http://www.baidu.com';
   /* 表单特定功能区
    * 实现了表单项目的CRUD，对于选择题等拥有content[]项目的表单项目，还实现了对具体选项的CRUD操作。
    * 其实现原理为将表单结构与forms对象实现双向绑定
@@ -260,6 +275,9 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   $scope.removeContent = function (pindex,index) {
     $scope.forms[pindex].content.splice(index,1);
   };
+  /* 投票特定功能区
+   * 实现了表单项目的CRUD，其实现原理为将表单结构与votes对象实现双向绑定
+   */
   $scope.votes = [];
   $scope.addVote = function () {
     $scope.votes.push({
@@ -300,6 +318,9 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
       'updatedAt': nowTime.toISOString()
     }
     switch ($routeParams.type){
+      case 'activity':
+        uploadParameters.contentUrl = $scope.activityContentUrl;
+        break;
       case 'form':
         var formQuestionsTmp = [];
         for(var i=0;i<$scope.forms.length;i++){
@@ -337,7 +358,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
     }
     var mode = $routeParams.id === 'create'?'创建':'更新';
     alert(mode+$scope.cnType+'成功！');
-    $window.location.hash = '#/'+$routeParams.type+'/list';
+    //$window.location.hash = '#/'+$routeParams.type+'/list';
   };
   $scope.preview = function(){
   };
@@ -365,11 +386,13 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
    * 结果页面上的各项接口。
    */
   var resultProperty = {
+    activity:'',
     form:'/api/Forms/:id/results',
     seckill:'',
     vote:'/api/Votes/:id/subitems',
   };
   var infoProperty = {
+    activity:'/api/OrganizationUsers/:userId/activities/:fk',
     form:'/api/OrganizationUsers/:userId/forms/:fk',
     seckill:'/api/OrganizationUsers/:userId/seckills/:fk',
     vote:'/api/OrganizationUsers/:userId/votes/:fk'
@@ -392,6 +415,8 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
    */
   var resultsProcess = function (res) {
     switch ($routeParams.type) {
+      case 'activity':
+        break;
       case 'form':
         for (var i = 0; i < res.length; i++) {
           var resultTmp = [];
@@ -402,7 +427,8 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
           $scope.results.push(resultTmp);
         }
         break;
-      case 'seckill':break;
+      case 'seckill':
+        break;
       case 'vote':
         for (var i = 0; i < res.length; i++) {
           var resultTmp = [];
@@ -415,6 +441,11 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
   };
   var infoProcess = function (res) {
     switch ($routeParams.type) {
+      case 'activity':
+        $scope.title = res.title;
+        $scope.startTime = res.startTime;
+        $scope.stopTime = res.stopTime;
+        break;
       case 'form':
         $scope.title = res.title;
         $scope.startTime = res.startTime;
@@ -424,7 +455,11 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
           $scope.resultHeaders.push(res.formQuestions[i].label);
         };
         break;
-      case 'seckill':break;
+      case 'seckill':
+        $scope.title = res.title;
+        $scope.startTime = res.startTime;
+        $scope.stopTime = res.stopTime;
+        break;
       case 'vote':
         $scope.title = res.title;
         $scope.startTime = res.startTime;
