@@ -5,7 +5,6 @@ var checkStatus = function () {
   ajax.onreadystatechange = function () {
     if (ajax.readyState === 4) {
       var data = JSON.parse(ajax.responseText);
-      console.log(data);
       if (data.msg === "success" && ajax.status === 200) {
         //data expect {"msg":"success","url":url,"userInfo":userInfo,"token":token}
         console.log(data);
@@ -20,10 +19,10 @@ var checkStatus = function () {
   };
 };
 var createQrcode = function (url) {
-  var qr = qrcode(13, 'Q');
+  var qr = qrcode(9, 'Q');
   qr.addData(url);
   qr.make();
-  document.getElementById('qrcode').innerHTML = qr.createImgTag(4);
+  document.getElementById('qrcode').innerHTML = qr.createImgTag(5,15);
 };
 createQrcode(url);
 setInterval(checkStatus, 4000);
