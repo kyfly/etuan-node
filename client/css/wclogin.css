@@ -1,0 +1,91 @@
+html,
+body,
+h1,
+p {
+  margin: 0;
+}
+html,
+body {
+  height: 100%;
+  min-height: 640px;
+  background: #4e5359;
+  color: #666;
+  font: 14px/1.5 Helvetica, "微软雅黑", "黑体", Arial, Tahoma;
+  text-align: center;
+  overflow-y: auto;
+}
+/*登录页*/
+.loginPanel {
+  position: absolute;
+  left: 400px;
+  width: 500px;
+  height: 380px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+}
+.loginPanel .info {
+  margin: 20px 0 0;
+}
+#login_container .loginPanel {
+    border: none;
+    margin:0 auto;
+    padding:17px 0 0;
+    text-align:center;
+    position:static;
+ }
+#login_container .loginPanel .title {
+    font-size: 28px;
+    line-height: 120px;
+    margin: 0 auto 10px;
+    text-shadow: 0 5px 0 #333;
+	color: #CCD4D7;
+}
+#login_container .loginPanel .panelContent {
+    padding:50px;
+}
+#login_container .loginPanel .panelContent .qrcodeContent{
+    height:310px;
+}
+#login_container .loginPanel .normlDesc {
+    color:#B4B7BC;
+    display:inline-block;
+    font-size:16px;
+    line-height:48px;
+    margin-top:21px;
+}
+#login_container .loginPanel .loginTip {
+    background:#3F4348;
+    font-size:12px;
+    height:48px;
+    margin:10px auto;
+    width:230px;
+}
+#login_container .loginPanel .loginTipL {
+    background:#3F4348;
+    border-radius: 26px 0 0 26px;
+    display:block;
+    float:left;
+    height:48px;
+    margin-left:-26px;
+    width:26px;
+}
+#login_container .loginPanel .loginTipR {
+	background:#3F4348;
+	border-radius: 0 26px 26px 0;
+    display:block;
+    float:right;
+    height:48px;
+    margin-right:-26px;
+    width:26px;
+}
+/*footer*/
+.footer {
+  color: #242627;
+  text-shadow: 0 1px 0 #5B5C5E;
+  width: 376px;
+  position: relative;
+  margin-top: 20px;
+  left: 50%;
+  margin-left: -188px;
+}
