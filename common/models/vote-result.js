@@ -1,5 +1,9 @@
 module.exports = function(VoteResult) {
 
+  VoteResult.observe('before save', function (ctx, next) {
+    next({"name":"someError", "status":"422", "message":"A error occurred!"})
+  });
+
 	//vote-result保存之后将投票项的票数加一
 	VoteResult.observe('after save', function(ctx, next) {
 		var Vote = VoteResult.app.models.Vote;

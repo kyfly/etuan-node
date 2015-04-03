@@ -48,7 +48,7 @@ module.exports = function(WeChatUser) {
 			http: {path:"/:id/histories",verb: 'post'}
 		});
 	WeChatUser.beforeRemote('__create__histories',function(ctx, unused, next){
-			
+
 		});
 	//WeChatUser.disableRemoteMethod("__create__histories");
 	WeChatUser.studentConfim = function(studentId,studentPw,userId,cb)
@@ -122,9 +122,9 @@ module.exports = function(WeChatUser) {
 		var query = ctx.req.query;
 		var state = query.state;
 		WeChatUser.app.models.LoginCache.find({where:{randstate:query.state}},function(err,loginCache){
-			if(err) 
+			if(err)
 				ctx.res.render("./student.ejs",{"msg":"出错了,请刷新后登陆"});
-			else if(loginCache.length == 0)  
+			else if(loginCache.length == 0)
 				ctx.res.render("./student.ejs",{"msg":"非法的请求"});
 			else
 			WeChatUser.app.models.LoginCache.updateAll(
@@ -146,7 +146,7 @@ module.exports = function(WeChatUser) {
     VoteResult.findOne({ where: { voteId: instance.voteId, weChatUid: instance.weChatUid }}, function(err, voteResult) {
     	if(voteResult === null) {
     		Vote.findOne({ where: { id: instance.voteId }}, function(err, vote) {
-					if(instance.results.length > vote.maxVote) {    			
+					if(instance.results.length > vote.maxVote) {
 	    			if(vote.verifyRule === 'studentId') {
 							WeChatUser.findOne({ where: { id: instance.weChatUid }}, function(err, weChatUser) {
 			    			if(weChatUser.studentId != null) {
@@ -155,7 +155,7 @@ module.exports = function(WeChatUser) {
 			    			else {
 			    				ctx.res.end('需要绑定');
 			    			}
-	    				});    		
+	    				});
 	    			}
 	    			else {
 	    				next();
@@ -178,7 +178,7 @@ module.exports = function(WeChatUser) {
     var FormResult = WeChatUser.app.models.FormResult;
     FormResult.findOne({ where: { formId: instance.formId, weChatUid: instance.weChatUid }}, function(err, formResult) {
     	if(formResult === null) {
-    		Form.findOne({ where: { id: instance.formId }}, function(err, form) {  			
+    		Form.findOne({ where: { id: instance.formId }}, function(err, form) {
     			if(form.verifyRule === 'studentId') {
 						WeChatUser.findOne({ where: { id: instance.weChatUid }}, function(err, weChatUser) {
 		    			if(weChatUser.studentId != null) {
@@ -187,7 +187,7 @@ module.exports = function(WeChatUser) {
 		    			else {
 		    				ctx.res.end('需要绑定');
 		    			}
-    				});    		
+    				});
     			}
     			else {
     				next();
@@ -198,8 +198,8 @@ module.exports = function(WeChatUser) {
     		ctx.res.end('已经报过名了');
     	}
     });
-  });    
-};
+  });
+
 
 
 
