@@ -83,6 +83,65 @@
     </div>
   </div>
 
+  <div class="form-group" ng-show="isActivity()">
+    <div class="col-sm-2">
+      <label class="control-label">活动文案</label>
+      </div>
+    <div class="col-sm-10">
+      <div class="well">
+        <button class="btn btn-primary">
+          点击编辑
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group" ng-show="isVote()">
+    <div class="col-sm-2">
+      <label class="control-label">投票内容</label>
+    </div>
+    <div class="col-sm-10">
+      <div class="well">
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary" ng-click="addVote()">
+            添加投票项
+          </button>
+        </div>
+        <hr>
+        <ol>
+          <li ng-repeat="vote in votes">
+              <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                  <button class="btn btn-primary" type="button" ng-click="moveUpVote($index)">
+                    <span class="glyphicon glyphicon-arrow-up"></span> 上移
+                  </button>
+                  <button class="btn btn-primary" type="button" ng-click="moveDownVote($index)">
+                    <span class="glyphicon glyphicon-arrow-down"></span> 下移
+                  </button>
+                  <button class="btn btn-danger" type="button" ng-click="removeVote($index)">
+                    <span class="glyphicon glyphicon-remove"></span> 删除
+                  </button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-2">项目名</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="vote.name">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-2">详情介绍</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="vote.detailUrl">
+                </div>
+              </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+
   <div class="form-group" ng-show="isForm()">
     <div class="col-sm-2">
       <label class="control-label">表单内容</label>
@@ -103,7 +162,6 @@
         <hr>
         <ol>
           <li ng-repeat="form in forms">
-            <form class="form-horizontal">
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{showType[form.type]}}</label>
                 <div class="col-sm-10">
@@ -119,13 +177,13 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">题干：</label>
+                <label class="col-sm-2 control-label">题干</label>
                 <div class="col-sm-10">
                   <input class="form-control" type="text" ng-model="form.label">
                 </div>
               </div>
               <div class="form-group" ng-show="showContent[form.type]">
-                <label class="col-sm-2 control-label">选项：</label>
+                <label class="col-sm-2 control-label">选项</label>
                 <div class="col-sm-10">
                   <button class="btn btn-primary" type="button" ng-click="appendContent($index)">
                     <span class="glyphicon glyphicon-plus"></span> 增加选项
@@ -144,55 +202,43 @@
                   </div>
                 </div>
               </div>
-            </form>
           </li>
         </ol>
       </div>
     </div>
   </div>
 
-  <div class="form-group" ng-show="isVote()">
+  <div class="form-group" ng-show="isSeckill()">
     <div class="col-sm-2">
-      <label class="control-label">投票内容</label>
+      <label class="control-label">疯抢设置</label>
     </div>
     <div class="col-sm-10">
       <div class="well">
-        <div class="btn-group">
-          <button type="button" class="btn btn-primary" ng-click="addVote()">
-            添加投票项
-          </button>
-        </div>
+        <button type="button" class="btn btn-primary" ng-click="addSeckill()">
+          增加一轮疯抢
+        </button>
         <hr>
         <ol>
-          <li ng-repeat="vote in votes">
-            <form class="form-horizontal">
+          <li ng-repeat="seckill in seckills">
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{showType[form.type]}}</label>
-                <div class="col-sm-10">
-                  <button class="btn btn-primary" type="button" ng-click="moveUpVote($index)">
-                    <span class="glyphicon glyphicon-arrow-up"></span> 上移
-                  </button>
-                  <button class="btn btn-primary" type="button" ng-click="moveDownVote($index)">
-                    <span class="glyphicon glyphicon-arrow-down"></span> 下移
-                  </button>
-                  <button class="btn btn-danger" type="button" ng-click="removeVote($index)">
+                <div class="col-sm-10 col-sm-offset-2">
+                  <button class="btn btn-danger" type="button" ng-click="removeSeckill($index)">
                     <span class="glyphicon glyphicon-remove"></span> 删除
                   </button>
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label col-sm-2">项目名：</label>
+                <label class="control-label col-sm-2">本轮标题</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" ng-model="vote.name">
+                  <input type="text" class="form-control" ng-model="seckill.title">
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label col-sm-2">详情介绍：</label>
+                <label class="control-label col-sm-2">本轮票数</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" ng-model="vote.detailUrl">
+                  <input type="number" class="form-control" ng-model="seckill.total">
                 </div>
               </div>
-            </form>
           </li>
         </ol>
       </div>

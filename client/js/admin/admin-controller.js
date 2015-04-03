@@ -209,8 +209,8 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   $scope.isForm = function () {
     return 'form' === $routeParams.type;
   };
-  $scope.isSkeckill = function () {
-    return 'skeckill' === $routeParams.type;
+  $scope.isSeckill = function () {
+    return 'seckill' === $routeParams.type;
   };
   $scope.isVote = function () {
     return 'vote' === $routeParams.type;
@@ -275,15 +275,30 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   $scope.removeContent = function (pindex,index) {
     $scope.forms[pindex].content.splice(index,1);
   };
+  /* 疯抢特定功能区
+   * 实现了疯抢项目的CRUD
+   */
+  $scope.seckills = [];
+  $scope.addSeckill = function () {
+    $scope.seckills.push({
+      'title':'这是一轮新的疯抢',
+      'startTime':'',
+      'stopTime':'',
+      'total':0
+    });
+  };
+  $scope.removeSeckill = function (index) {
+    $scope.seckills.splice(index,1);
+  };
+
   /* 投票特定功能区
-   * 实现了表单项目的CRUD，其实现原理为将表单结构与votes对象实现双向绑定
+   * 实现了表单项目的CRUD
    */
   $scope.votes = [];
   $scope.addVote = function () {
     $scope.votes.push({
       'name':'这是一个投票项',
-      'detailUrl':'',
-      count:0
+      'detailUrl':''
     });
   }
   $scope.removeVote = function (index) {
@@ -513,6 +528,7 @@ function HomeCtrl ($scope) {
   ]
 }
 
+function EditorCtrl () {}
 function WechatCtrl () {}
 function SettingCtrl () {}
 function HelpCtrl () {}
