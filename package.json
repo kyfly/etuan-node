@@ -6,6 +6,7 @@
     "pretest": "jshint ."
   },
   "dependencies": {
+    "body-parser": "^1.12.2",
     "compression": "^1.0.3",
     "errorhandler": "^1.1.1",
     "loopback": "^2.8.0",
@@ -13,7 +14,9 @@
     "loopback-connector-mongodb": "^1.6.0",
     "loopback-datasource-juggler": "^2.7.0",
     "mongodb": "^1.4.29",
+    "oss": "0.0.1",
     "serve-favicon": "^2.0.1",
+    "ueditor": "^1.1.1",
     "wechat-api": "1.6.0",
     "wechat-crypto": "0.0.2",
     "wechat-oauth": "1.0.1",
