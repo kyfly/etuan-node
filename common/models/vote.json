@@ -6,12 +6,6 @@
   "properties": {
     "maxVote": {
       "type": "number"
-    },
-    "startTime": {
-      "type": "date"
-    },
-    "stopTime": {
-      "type": "date"
     }
   },
   "validations": [],

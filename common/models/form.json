@@ -4,12 +4,6 @@
   "strict": true,
   "idInjection": true,
   "properties": {
-    "startTime": {
-      "type": "date"
-    },
-    "stopTime": {
-      "type": "date"
-    }
   },
   "validations": [],
   "relations": {
