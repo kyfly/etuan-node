@@ -16,6 +16,11 @@
       "type": "belongsTo",
       "model": "Vote",
       "foreignKey": "voteId"
+    },
+    "WeChatUser": {
+      "type": "belongsTo",
+      "model": "WeChatUser",
+      "foreignKey": "weChatUid"
     }
   },
   "acls": [
