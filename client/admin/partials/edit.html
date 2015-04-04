@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group" ng-show="!isSeckill()">
     <div class="col-sm-2">
       <label class="control-label">开始时间</label>
     </div>
@@ -39,7 +39,7 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group" ng-show="!isSeckill()">
     <div class="col-sm-2">
       <label class="control-label">结束时间</label>
     </div>
@@ -89,7 +89,7 @@
       </div>
     <div class="col-sm-10">
       <div class="well">
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" ng-click="openActivity()">
           点击编辑
         </button>
       </div>
@@ -237,6 +237,34 @@
                 <label class="control-label col-sm-2">本轮票数</label>
                 <div class="col-sm-10">
                   <input type="number" class="form-control" ng-model="seckill.total">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-2">开始时间</label>
+                <div class="col-sm-7">
+                  <p class="input-group">
+                    <input type="text" class="form-control" datepicker-popup="{{cnDateFormat}}" ng-model="seckill.startDate" is-open="seckill.seckillStartOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="seckill.seckillStartDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                  </p>
+                </div>
+                <div class="col-sm-3">
+                  <timepicker ng-model="seckill.startTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-2">结束时间</label>
+                <div class="col-sm-7">
+                  <p class="input-group">
+                    <input type="text" class="form-control" datepicker-popup="{{cnDateFormat}}" ng-model="seckill.stopDate" is-open="seckill.seckillStopOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="seckill.seckillStopDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
+                </div>
+                <div class="col-sm-3">
+                  <timepicker ng-model="seckill.stopTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
                 </div>
               </div>
           </li>

@@ -110,7 +110,7 @@ function ListCtrl ($window,$scope,$routeParams,$resource) {
   }
 }
 
-function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
+function EditCtrl ($scope,$routeParams,$resource,$window,$modal,dict) {
   /* 接口资源区
    * 在editProperty中定义了所有需要编辑的功能的但页面编辑时所调用的接口名（字符串类型）
    * 其中:userId用于占位用户的ID，fk为外键，占位具体页面的ID
@@ -218,6 +218,13 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   /* 活动特定功能区
    * 获得编辑器得到的contentUrl
    */
+  $scope.openActivity = function () {
+    var modalInstance = $modal.open({
+      templateUrl:'/editor/index.html',
+      controller:EditorCtrl,
+      size:'lg'
+    });
+  };
   $scope.activityContentUrl = 'http://www.baidu.com';
   /* 表单特定功能区
    * 实现了表单项目的CRUD，对于选择题等拥有content[]项目的表单项目，还实现了对具体选项的CRUD操作。
@@ -281,10 +288,22 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
   $scope.seckills = [];
   $scope.addSeckill = function () {
     $scope.seckills.push({
-      'title':'这是一轮新的疯抢',
-      'startTime':'',
-      'stopTime':'',
-      'total':0
+      title:'这是一轮新的疯抢',
+      startTime:'',
+      stopTime:'',
+      total:0,
+      seckillStartDateOpen: function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        this.seckillStartOpened = true;
+      },
+      seckillStopDateOpen: function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        this.seckillStopOpened = true;
+      },
+      startTime: new Date(),
+      stopTime: new Date()
     });
   };
   $scope.removeSeckill = function (index) {
@@ -320,13 +339,15 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
    */
   $scope.submit = function () {
     var nowTime = new Date();
-    var startTmp = new Date($scope.startDate.getFullYear(),$scope.startDate.getMonth(),$scope.startDate.getDate(),$scope.startTime.getHours(),$scope.startTime.getMinutes());
-    var stopTmp = new Date($scope.stopDate.getFullYear(),$scope.stopDate.getMonth(),$scope.stopDate.getDate(),$scope.stopTime.getHours(),$scope.stopTime.getMinutes());
+    var timeUpload = function () {
+      var startTmp = new Date($scope.startDate.getFullYear(),$scope.startDate.getMonth(),$scope.startDate.getDate(),$scope.startTime.getHours(),$scope.startTime.getMinutes());
+      var stopTmp = new Date($scope.stopDate.getFullYear(),$scope.stopDate.getMonth(),$scope.stopDate.getDate(),$scope.stopTime.getHours(),$scope.stopTime.getMinutes());
+      uploadParameters.startTime = startTmp.toISOString();
+      uploadParameters.stopTime = stopTmp.toISOString();
+    }
     var uploadParameters = {
       'title': $scope.title,
       'description':$scope.description,
-      'startTime': startTmp.toISOString(),
-      'stopTime': stopTmp.toISOString(),
       'adPicture': '',
       'adUrl': '',
       'verifyRule': $scope.verifyRule,
@@ -334,7 +355,8 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
     }
     switch ($routeParams.type){
       case 'activity':
-        uploadParameters.contentUrl = $scope.activityContentUrl;
+          timeUpload();
+          uploadParameters.contentUrl = $scope.activityContentUrl;
         break;
       case 'form':
         var formQuestionsTmp = [];
@@ -347,9 +369,24 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
           };
           formQuestionsTmp.push(formQuestion);
         }
+        timeUpload();
         uploadParameters.formQuestions = formQuestionsTmp;
         break;
       case 'seckill':
+        var seckillArrangementsTmp = [];
+        for (var i = 0; i < $scope.seckills.length; i++) {
+          var startTmp = new Date($scope.seckills[i].startDate.getFullYear(),$scope.seckills[i].startDate.getMonth(),$scope.seckills[i].startDate.getDate(),$scope.seckills[i].startTime.getHours(),$scope.seckills[i].startTime.getMinutes());
+          var stopTmp = new Date($scope.seckills[i].stopDate.getFullYear(),$scope.seckills[i].stopDate.getMonth(),$scope.seckills[i].stopDate.getDate(),$scope.seckills[i].stopTime.getHours(),$scope.seckills[i].stopTime.getMinutes());
+          var seckillArrangement = {
+            'id':i,
+            'title':$scope.seckills[i].title,
+            'startTime':$scope.seckills[i].startTime.toISOString(),
+            'stopTime':$scope.seckills[i].stopTime.toISOString(),
+            'total':$scope.seckills[i].total
+          }
+          seckillArrangementsTmp.push(seckillArrangement);
+        }
+        uploadParameters.seckillArrangements = seckillArrangementsTmp;
         break;
       case 'vote':
         var voteSubitemsTmp = [];
@@ -362,6 +399,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
           };
           voteSubitemsTmp.push(voteSubitem);
         }
+        timeUpload();
         uploadParameters.voteSubitems = voteSubitemsTmp;
         break;
     }
@@ -373,7 +411,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,dict) {
     }
     var mode = $routeParams.id === 'create'?'创建':'更新';
     alert(mode+$scope.cnType+'成功！');
-    //$window.location.hash = '#/'+$routeParams.type+'/list';
+    $window.location.hash = '#/'+$routeParams.type+'/list';
   };
   $scope.preview = function(){
   };
