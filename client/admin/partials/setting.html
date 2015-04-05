@@ -9,7 +9,23 @@
       <label class="control-label">名称</label>
     </div>
     <div class="col-md-7">
-      <input type="text" class="form-control" ng-model="name">
+      <input type="text" class="form-control" ng-model="name" id="name">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+      <label class="control-label">LOGO</label>
+    </div>
+    <div class="col-md-7">
+      <input type="file" class="form-control" id="logo">
+      <p class="help-block">如有改变，请先上传LOGO，再保存设置</p>
+    </div>
+    <div class="col-md-3">
+      <button type="button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-upload"></span>
+        上传
+      </button>
     </div>
   </div>
 
@@ -18,7 +34,7 @@
       <label class="control-label">简介</label>
     </div>
     <div class="col-md-7">
-      <textarea type="text" rows="10" class="form-control" style="resize:none" ng-model="name"></textarea>
+      <textarea type="text" rows="10" class="form-control" style="resize:none" ng-model="description" id="description"></textarea>
     </div>
   </div>
 
@@ -27,7 +43,9 @@
       <label class="control-label">类型</label>
     </div>
     <div class="col-md-7">
-      <input type="text" class="form-control" ng-model="school">
+      <select class="form-control" ng-model="type" id="type" ng-change="typeChange()">
+        <option value="{{type}}" ng-repeat="type in types">{{type}}</option>
+      </select>
     </div>
   </div>
 
@@ -36,7 +54,9 @@
       <label class="control-label">所属学院</label>
     </div>
     <div class="col-md-7">
-      <input type="text" class="form-control" ng-model="school">
+      <select class="form-control" ng-model="school" id="school">
+        <option value="{{school}}" ng-repeat="school in schools">{{school}}</option>
+      </select>
     </div>
   </div>
 
@@ -45,16 +65,7 @@
       <label class="control-label">微信号</label>
     </div>
     <div class="col-md-7">
-      <input type="text" class="form-control" ng-model="weChat">
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-md-2">
-      <label class="control-label">电子邮箱</label>
-    </div>
-    <div class="col-md-7">
-      <input type="text" class="form-control" ng-model="email">
+      <input type="text" class="form-control" ng-model="weChat" id="weChat">
     </div>
   </div>
 
@@ -63,13 +74,13 @@
       <label class="control-label">联系电话</label>
     </div>
     <div class="col-md-7">
-      <input type="text" class="form-control" ng-model="phone">
+      <input type="text" class="form-control" ng-model="phone" id="phone">
     </div>
   </div>
 
   <div class="form-group">
     <div class="col-sm-2 col-md-offset-2">
-      <button class="btn btn-block btn-primary" ng-click="submit()">提交</button>
+      <button class="btn btn-block btn-primary" ng-click="submit()">保存</button>
     </div>
   </div>
 </form>

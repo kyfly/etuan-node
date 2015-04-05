@@ -13,13 +13,13 @@ function NavbarCtrl ($scope,$window) {
     $window.location = '/index.html';
   };
   $scope.redirectToSetting = function () {
-    $window.location.hash = "#/setting"
+    $window.location.hash = '#/setting'
   }
   $scope.logOut = function () {
     $window.localStorage.removeItem('accessToken');
     $window.localStorage.removeItem('userId');
     $window.localStorage.removeItem('loginTime');
-    $window.location = '/login.html';
+    $window.location = '/login/';
   };
 }
 
@@ -586,5 +586,47 @@ function HomeCtrl ($scope) {
 
 function EditorCtrl () {}
 function WechatCtrl () {}
-function SettingCtrl () {}
+
+function SettingCtrl ($scope,$resource,$window) {
+  var Setting = $resource('/api/OrganizationUsers/:userId',{userId:$window.localStorage.getItem('userId')});
+  Setting.get({},
+    function (res) {
+      $scope.name = res.name;
+      $scope.description = res.description;
+      $scope.type = res.type || '院级社团';
+      $scope.school = res.school || '计算机学院';
+      $scope.weChat = res.weChat;
+      $scope.phone = res.phone;
+    },
+    function () {}
+  );
+  $scope.types = ['校级社团','校级组织','院级社团','院级组织'];
+  $scope.schools = ($scope.type==='校级社团'||$scope.type==='校级组织')?['全校']:['机械工程学院','电子信息学院','通信工程学院','自动化学院','计算机学院','生命信息与仪器工程学院','材料与环境工程学院','软件工程学院','理学院','经济学院','管理学院','会计学院','外国语学院','数字媒体与艺术设计学院','人文与法学院','马克思主义学院','卓越学院','信息工程学院','国际教育学院','继续教育学院'];
+  $scope.typeChange = function () {
+    $scope.schools = ($scope.type==='校级社团'||$scope.type==='校级组织')?['全校']:['机械工程学院','电子信息学院','通信工程学院','自动化学院','计算机学院','生命信息与仪器工程学院','材料与环境工程学院','软件工程学院','理学院','经济学院','管理学院','会计学院','外国语学院','数字媒体与艺术设计学院','人文与法学院','马克思主义学院','卓越学院','信息工程学院','国际教育学院','继续教育学院'];
+  }
+  $scope.logoUpload = function () {
+    var logoFd = new FormData();
+    var logoFile = document.getElementById('logo').files[0];
+    var logoXhr = new XMLHttpRequest();
+    logoFd.append('logo',logoFile);
+    console.log(logoFd);
+    logoXhr.open('POST','/ue/uploads',true);
+    logoXhr.send();
+  };
+  $scope.submit = function () {
+    Setting.update({
+        name:$scope.name,
+        logoUrl:'',
+        description:$scope.description,
+        type:$scope.type,
+        school:$scope.school,
+        weChat:$scope.weChat,
+        phone:$scope.phone
+      },
+      function () {},
+      function () {}
+    );
+  };
+}
 function HelpCtrl () {}
