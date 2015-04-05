@@ -1,6 +1,10 @@
 var xml2js = require('xml2js');
 var crypto = require('crypto');
+var WXAPI = require('wechat-api');
+var config = require('../../server/config');
 var WXBizMsgCrypt = require('wechat-crypto');
+var api = new WXAPI(config.appid, config.appsecret);
+
 function weixin(options,encrypt_type,cb){
 	this.options = options;
 	this.encrypt_type = encrypt_type;
@@ -9,7 +13,13 @@ function weixin(options,encrypt_type,cb){
 		this.options.appid
 	);
 }
-
+weixin.prototype.isSubscribe = function(openid,cb){
+	api.getUser(openid,function(err,res){
+		if(err) cb(err);
+		else if(res.subscribe === 1) cb(null,true);
+		else cb(null,false);
+	})
+}
 weixin.prototype.getMessage = function (req, cb) {
 	var encrypt_type = this.encrypt_type;
 	var crypto = this.crypto;
