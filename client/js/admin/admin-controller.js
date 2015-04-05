@@ -155,6 +155,22 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,dict) {
             $scope.forms = res.formQuestions;
             break;
           case 'seckill':
+            for (var i = 0; i < res.seckillArrangements.length; i++) {
+              var seckillArrangementsTmp = {};
+              seckillArrangementsTmp.title = res.seckillArrangements[i].title;
+              seckillArrangementsTmp.total = res.seckillArrangements[i].total;
+              seckillArrangementsTmp.startTime = new Date(res.seckillArrangements[i].startTime);
+              seckillArrangementsTmp.startDate = new Date(res.seckillArrangements[i].startTime);
+              seckillArrangementsTmp.startDate.toString = function(){
+                return this.getFullYear()+'年'+(this.getMonth()+1)+'月'+this.getDate()+'日 ';
+              };
+              seckillArrangementsTmp.stopTime = new Date(res.seckillArrangements[i].stopTime);
+              seckillArrangementsTmp.stopDate = new Date(res.seckillArrangements[i].stopTime);
+              seckillArrangementsTmp.stopDate.toString = function(){
+                return this.getFullYear()+'年'+(this.getMonth()+1)+'月'+this.getDate()+'日 ';
+              };    
+              $scope.seckills.push(seckillArrangementsTmp);
+            };
             break;
           case 'vote':
             $scope.votes = res.voteSubitems;
@@ -339,23 +355,20 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,dict) {
    */
   $scope.submit = function () {
     var nowTime = new Date();
-    var timeUpload = function () {
-      var startTmp = new Date($scope.startDate.getFullYear(),$scope.startDate.getMonth(),$scope.startDate.getDate(),$scope.startTime.getHours(),$scope.startTime.getMinutes());
-      var stopTmp = new Date($scope.stopDate.getFullYear(),$scope.stopDate.getMonth(),$scope.stopDate.getDate(),$scope.stopTime.getHours(),$scope.stopTime.getMinutes());
-      uploadParameters.startTime = startTmp.toISOString();
-      uploadParameters.stopTime = stopTmp.toISOString();
-    }
+    var startTmp = new Date($scope.startDate.getFullYear(),$scope.startDate.getMonth(),$scope.startDate.getDate(),$scope.startTime.getHours(),$scope.startTime.getMinutes());
+    var stopTmp = new Date($scope.stopDate.getFullYear(),$scope.stopDate.getMonth(),$scope.stopDate.getDate(),$scope.stopTime.getHours(),$scope.stopTime.getMinutes());
     var uploadParameters = {
       'title': $scope.title,
       'description':$scope.description,
       'adPicture': '',
       'adUrl': '',
+      'startTime': startTmp.toISOString(),
+      'stopTime': stopTmp.toISOString(),
       'verifyRule': $scope.verifyRule,
       'updatedAt': nowTime.toISOString()
     }
     switch ($routeParams.type){
       case 'activity':
-          timeUpload();
           uploadParameters.contentUrl = $scope.activityContentUrl;
         break;
       case 'form':
@@ -369,7 +382,6 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,dict) {
           };
           formQuestionsTmp.push(formQuestion);
         }
-        timeUpload();
         uploadParameters.formQuestions = formQuestionsTmp;
         break;
       case 'seckill':
@@ -399,7 +411,6 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,dict) {
           };
           voteSubitemsTmp.push(voteSubitem);
         }
-        timeUpload();
         uploadParameters.voteSubitems = voteSubitemsTmp;
         break;
     }
