@@ -9,6 +9,7 @@ function VoteCtrl ($scope,$resource,$location,$window) {
     },
     function(res){
       $scope.vote = res;
+      $scope.title = res.title || '投票';
       $scope.startTime = new Date($scope.vote.startTime);
       $scope.stopTime = new Date($scope.vote.stopTime);
     },

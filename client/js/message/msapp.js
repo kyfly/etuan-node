@@ -1,5 +1,5 @@
 function headCtrl ($scope,$location) {
-  $scope.title = $location.search().t;
+  $scope.title = $location.search().t || '消息';
 }
 function messageCtrl ($scope,$location) {
   var searchObj = $location.search();
