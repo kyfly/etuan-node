@@ -134,12 +134,6 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "__get__voteResults"
-    },
-    {
-      "principalType": "ROLE",
-      "principalId": "$owner",
-      "permission": "ALLOW",
-      "property": "__create__histories"
     }
   ],
   "methods": []
