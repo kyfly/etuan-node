@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html ng-app="app" ng-controller="FormCtrl">
 <head>
-  <title>Form原型</title>
+  <title ng-bind-template="{{title}} - 团团一家">表单 - 团团一家</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="/lib/bootstrap/css/etuan.css"/>
@@ -35,7 +35,7 @@
   </style>
 </head>
 <body>
-<div class="container bg_white" ng-controller="FormCtrl">
+<div class="container bg_white">
   <h1 class="text-center">{{form.title}}</h1>
   <div class="col-md-8 col-md-offset-2">
     <h4>{{form.description}}</h4>

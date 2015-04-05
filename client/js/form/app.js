@@ -1,4 +1,5 @@
 function FormCtrl ($scope,$resource,$location,$window) {
+  $scope.title = '表单';
   var formUrlSearchObj = $location.search();
   var Form = $resource('/api/forms/:id');
   var FormResult = $resource('/api/WeChatUsers/:id/formResults',{id:$window.localStorage.getItem('weChatUid')});
@@ -9,6 +10,7 @@ function FormCtrl ($scope,$resource,$location,$window) {
     },
     function(res){
       $scope.form = res;
+      $scope.title = res.title || '表单';
       $scope.startTime = new Date($scope.form.startTime);
       $scope.stopTime = new Date($scope.form.stopTime);
     },
