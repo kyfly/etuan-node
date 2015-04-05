@@ -1,10 +1,5 @@
-var os = require('os');
-var fs = require('fs');
-var path = require('path');
 var loopback = require('loopback');
 var boot = require('loopback-boot');
-var ueditor = require("ueditor");
-var bodyParser = require('body-parser');
 var app = module.exports = loopback();
 
 // Bootstrap the application, configure models, datasources and middleware.
