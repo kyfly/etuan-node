@@ -330,6 +330,13 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,dict) {
    * 实现了表单项目的CRUD
    */
   $scope.votes = [];
+  $scope.editVote = function () {
+    var modalInstance = $modal.open({
+      templateUrl:'/editor/index.html',
+      controller:EditorCtrl,
+      size:'lg'
+    });
+  }
   $scope.addVote = function () {
     $scope.votes.push({
       'name':'这是一个投票项',
