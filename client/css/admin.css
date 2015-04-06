@@ -108,37 +108,53 @@ body {
 .list-area .panel {
   margin-bottom: 0;
 }
-.list-area .list-item a {
+.list-area .create-area {
+  cursor: pointer;
+}
+.list-area .create-area .create {
+  position: absolute;
+  top:50%;
+  margin-top: -25px;
+  left:50%;
+  margin-left: -25px;
+  font-size: 50px;
+  display: block;
+}
+.list-area .btn-area {
+  position: relative;
+  top:-30px;
+  left: 0px;
+  right: 0px;
+  bottom: 0;
+}
+.list-area .btn-area a {
   margin-top:5px;
   display: block;
   color: #fff;
 }
-.list-area .list-item .create {
+.list-area .btn-area .edit-btn {
   position: absolute;
-  top:calc(50% - 25px);
-  left:calc(50% - 25px);
-  font-size: 50px;
-}
-.list-area .list-item .edit-btn {
-  position: absolute;
-  top:calc(100% - 30px);
-  left:calc(0% + 15px);
-  width:calc(33.333% - 10px);
+  top:100%;
+
+  left:0;
+  width:33.333%;
   height:30px;
   border-bottom-left-radius: 4px;
 }
-.list-area .list-item .result-btn {
+.list-area .btn-area .result-btn {
   position: absolute;
-  top:calc(100% - 30px);
-  left:calc(33.333% + 5px);
-  width:calc(33.333% - 10px);
+  top:100%;
+
+  left:33.333%;
+  width:33.333%;
   height:30px;
 }
-.list-area .list-item .delete-btn {
+.list-area .btn-area .delete-btn {
   position: absolute;
-  top:calc(100% - 30px);
-  left:calc(66.667% - 5px);
-  width:calc(33.333% - 10px);
+  top:100%;
+
+  left:66.666%;
+  width:33.333%;
   height: 30px;
   border-bottom-right-radius: 4px;
 }
