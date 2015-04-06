@@ -5,10 +5,16 @@ function AdminCtrl ($scope,$window) {
   };
 }
 
-function NavbarCtrl ($scope,$window) {
+function NavbarCtrl ($scope,$window,$resource) {
   $scope.etuanLogo = "/img/full-logo.png";
-  $scope.organizationName = "啦啦啦啦";
-  $scope.organizationLogo = "/img/logo.jpg";
+  var Organization = $resource('/api/OrganizationUsers/:userId',{userId:$window.localStorage.getItem('userId')});
+  Organization.get({},
+    function (res) {
+      $scope.organizationName = res.name;
+      $scope.organizationLogo = res.logoUrl;
+    },
+    function () {}
+  );
   $scope.redirectToHomapage = function () {
     $window.location = '/index.html';
   };
@@ -584,9 +590,6 @@ function HomeCtrl ($scope) {
   ]
 }
 
-function EditorCtrl () {}
-function WechatCtrl () {}
-
 function SettingCtrl ($scope,$resource,$window) {
   var Setting = $resource('/api/OrganizationUsers/:userId',{userId:$window.localStorage.getItem('userId')});
   Setting.get({},
@@ -617,7 +620,7 @@ function SettingCtrl ($scope,$resource,$window) {
   $scope.submit = function () {
     Setting.update({
         name:$scope.name,
-        logoUrl:'',
+        logoUrl:'/img/logo.jpg',//Temporary Logo File URL
         description:$scope.description,
         type:$scope.type,
         school:$scope.school,
@@ -629,4 +632,7 @@ function SettingCtrl ($scope,$resource,$window) {
     );
   };
 }
+
+function EditorCtrl () {}
+function WechatCtrl () {}
 function HelpCtrl () {}
