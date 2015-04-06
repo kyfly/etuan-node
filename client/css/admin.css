@@ -135,7 +135,6 @@ body {
 .list-area .btn-area .edit-btn {
   position: absolute;
   top:100%;
-
   left:0;
   width:33.333%;
   height:30px;
@@ -144,7 +143,6 @@ body {
 .list-area .btn-area .result-btn {
   position: absolute;
   top:100%;
-
   left:33.333%;
   width:33.333%;
   height:30px;
@@ -152,7 +150,6 @@ body {
 .list-area .btn-area .delete-btn {
   position: absolute;
   top:100%;
-
   left:66.666%;
   width:33.333%;
   height: 30px;
