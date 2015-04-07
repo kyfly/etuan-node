@@ -9,7 +9,7 @@ body {
 .sidebar {
   margin-top: -20px;
   background-color: #2a3542;
-
+  padding-bottom: 60px;
 }
 .sidebar-list .sidebar-item {
   padding: 10px;
@@ -47,6 +47,7 @@ body {
   margin-top: -20px;
   padding: 0 50px;
   background-color: #F0F1F6;
+  padding-bottom: 40px;
 }
 
 .panel {
