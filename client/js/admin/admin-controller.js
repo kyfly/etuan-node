@@ -1,8 +1,13 @@
-function AdminCtrl ($scope,$window) {
+function AdminCtrl ($scope,$window,$timeout) {
   $scope.sidebarShow = (document.body.clientWidth >= 768);
   $scope.sidebarToggle = function () {
     $scope.sidebarShow = !$scope.sidebarShow;
   };
+  $scope.$on('$viewContentLoaded',function(){
+    $timeout(function(){
+      document.getElementById('sidebar').style.height = document.getElementById('main').offsetHeight +'px';
+    },100);
+  });
 }
 
 function NavbarCtrl ($scope,$window,$resource) {
@@ -587,7 +592,7 @@ function HomeCtrl ($scope) {
       'time':'2012年2月12日',
       'content':'这种忧患和责任意识是习近平治国理政的重要思想底色。“全党必须警醒起来”，2012年习近平一上任就为全党敲响了警钟。紧接着，习近平发出“整风”动员令，并从生死存亡的高度来认识和解决腐败问题。在党的群众路线教育实践活动总结大会上，习近平引用《道德经》中的名句“为之于未有，治之于未乱”再次告诫全党要增强忧患意识，学会“下先手棋”，方能立于不败。'
     }
-  ]
+  ];
 }
 
 function SettingCtrl ($scope,$resource,$window) {

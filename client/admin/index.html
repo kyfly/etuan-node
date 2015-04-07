@@ -51,7 +51,7 @@
     </nav>
   </header>
 <!--左侧边栏-->
-<div class="col-sm-2 sidebar" ng-controller="SidebarCtrl" ng-show="sidebarShow">
+<div class="col-sm-2" id="sidebar" ng-controller="SidebarCtrl" ng-show="sidebarShow">
   <div>
     <ul class="nav nav-pills nav-stacked sidebar-list">
       <li id="{{sidebar.id}}" ng-repeat="sidebar in sidebars" class="sidebar-item" ng-class="{active: sidebar.active}">
@@ -61,7 +61,7 @@
   </div>
 </div>
 <!--主体-->
-<div class="main" ng-class="{'col-sm-10':sidebarShow,'col-sm-12':!sidebarShow}" ng-view>
+<div id="main" ng-class="{'col-sm-10':sidebarShow,'col-sm-12':!sidebarShow}" ng-view>
 </div>
 <script type="text/javascript">
   if (!window.localStorage.getItem('accessToken')||!window.localStorage.getItem('userId')||!window.localStorage.getItem('loginTime')){window.localStorage.removeItem('accessToken');window.localStorage.removeItem('userId');window.localStorage.removeItem('loginTime');window.location = '/login.html';}

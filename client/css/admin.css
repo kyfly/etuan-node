@@ -9,7 +9,7 @@ body {
 
 }
 
-.sidebar {
+#sidebar {
   margin-top: -20px;
   background-color: #2a3542;
   padding:20px 15px 60px;
@@ -51,7 +51,7 @@ body {
   left: auto;
 }
 
-.main  {
+#main  {
   padding: 20px 50px 40px;
   background-color: #F0F1F6;
   margin-top: -20px;
