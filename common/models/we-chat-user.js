@@ -41,6 +41,53 @@ module.exports = function(WeChatUser) {
 	 * @param  {String} next){		var referer       [description]
 	 * @return {[type]}              [description]
 	 */
+	WeChatUser.remoteMethod('studentConfim',
+		{
+			accepts:[{arg:"studentId",type:"string"},
+				{arg:"studentPw",type:"string"},
+				{arg:"userId",type:"string"}],
+			description:"学生学号密码验证",
+			http: {path:"/student",verb: 'get'}
+		});
+	WeChatUser.remoteMethod('__create__histories',
+		{
+			accepts:[{arg:"data",type:"WeChatUserHistory"},
+			{arg:"id",type:"string"}],
+			http: {path:"/:id/histories",verb: 'post'}
+		});
+	WeChatUser.beforeRemote('__create__histories',function(ctx, unused, next){
+
+		});
+	//WeChatUser.disableRemoteMethod("__create__histories");
+	WeChatUser.studentConfim = function(studentId,studentPw,userId,cb)
+	{
+		hduConfim.ihdu(studentId,studentPw,function(name){
+			WeChatUser.findOne({where:{id:userId}},function(err,userInfo){
+				var updatedAt = userInfo["updatedAt"];
+				if(updatedAt === undefined)
+					updatedAt = new Date().getTime();
+				userInfo["studentId"]    = studentId;
+				userInfo["university"]   = '杭州电子科技大学';
+				userInfo["verifiedDate"] = updatedAt;
+				userInfo["studentName"]  = name;
+				userInfo["updatedAt"]  = new Date();
+				var studentInfo = {
+							"studentName":name,
+			    			"studentId":studentId,
+			    			"university":'杭电hytdfyhty',
+			    			"verifiedDate":updatedAt,
+			    			"updatedAt":new Date()
+						};
+				userInfo["weChatUserHistories"][userInfo["weChatUserHistories"].length]=studentInfo;
+				console.log(userInfo);
+				WeChatUser.update({id:userId},userInfo,
+					function(err,count){
+		    				if(err) cb(err);
+							cb(userInfo);
+		    		});
+			});
+		});
+	}
 	WeChatUser.beforeRemote("wechatLogin",function(ctx, unused, next){
 		if(ctx.req.headers.referer) 
 			var referer = ctx.req.headers.referer;
@@ -114,66 +161,6 @@ module.exports = function(WeChatUser) {
 		});
 	});
 
-  //微信用户投票之前，检查最大投票数，验证规则，是否已经投票
-  WeChatUser.beforeRemote('__create__voteResults', function(ctx, instance, next) {
-    var Vote = WeChatUser.app.models.Vote;
-    var VoteResult = WeChatUser.app.models.VoteResult;
-    VoteResult.findOne({ where: { voteId: instance.voteId, weChatUid: instance.weChatUid }}, function(err, voteResult) {
-    	if(voteResult === null) {
-    		Vote.findOne({ where: { id: instance.voteId }}, function(err, vote) {
-					if(instance.results.length > vote.maxVote) {
-	    			if(vote.verifyRule === 'studentId') {
-							WeChatUser.findOne({ where: { id: instance.weChatUid }}, function(err, weChatUser) {
-			    			if(weChatUser.studentId != null) {
-			    				next();
-			    			}
-			    			else {
-			    				ctx.res.end('需要绑定');
-			    			}
-	    				});
-	    			}
-	    			else {
-	    				next();
-	    			}
-	    		}
-	    		else {
-	    			ctx.res.end('超过最大投票数');
-	    		}
-    		});
-    	}
-    	else {
-    		ctx.res.end('已经透过票了');
-    	}
-    });
-  });
-
-  //微信用户报名之前，，验证规则，是否已经报名
-  WeChatUser.beforeRemote('__create__formResults', function(ctx, instance, next) {
-    var Form = WeChatUser.app.models.Form;
-    var FormResult = WeChatUser.app.models.FormResult;
-    FormResult.findOne({ where: { formId: instance.formId, weChatUid: instance.weChatUid }}, function(err, formResult) {
-    	if(formResult === null) {
-    		Form.findOne({ where: { id: instance.formId }}, function(err, form) {
-    			if(form.verifyRule === 'studentId') {
-						WeChatUser.findOne({ where: { id: instance.weChatUid }}, function(err, weChatUser) {
-		    			if(weChatUser.studentId != null) {
-		    				next();
-		    			}
-		    			else {
-		    				ctx.res.end('需要绑定');
-		    			}
-    				});
-    			}
-    			else {
-    				next();
-    			}
-    		});
-    	}
-    	else {
-    		ctx.res.end('已经报过名了');
-    	}
-    });
-  });
   /**学号验证
    * url /api/WeChatUsers/:userId
    * put {"studentId":学号,"password":"密码"}
@@ -209,6 +196,7 @@ module.exports = function(WeChatUser) {
 		});
   	});
   });
+
 };
 // {
 //   "id": "67rEETskbq8O084uSzRN01o0EeY8p2FK3Em8YECHhUOwDvExzwJqYml7pxn3fAiX",

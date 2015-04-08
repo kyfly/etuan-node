@@ -22,28 +22,29 @@ module.exports = function(Form) {
     doc.pipe(ctx.res);
     ctx.res.setHeader('Content-disposition', 'attachment; filename=' + 'result.pdf');
     try {
-      FormResult.find({where:{formId:ctx.req.params.id}}, function(err, formResults){
-        Form.findOne({where:{id:ctx.req.params.id}}, function(err, form){
-          if(err){
-            next(err);
-            doc.end();
-          }else{
-            for(var i=0; i<formResults.length; i++){
-              var formResult = formResults[i];
-              for(var j=0; j<formResult.formResultAnswers.length; j++) {
-                var formResultAnswer = formResult.formResultAnswers[j];
-                console.log(__dirname);
-                doc.font('../../client/fonts/font.ttf').text(form.formQuestions[j].label+':', 100, 100*(j+1));
-                doc.font('../../client/fonts/font.ttf').text(formResultAnswer.content, 100, 100*(j+1));
-              }
-            }
-            doc.end();
-          }
-        });
-      });
+       FormResult.find({where:{formId:ctx.req.params.id}}, function(err, formResults){
+         Form.findOne({where:{id:ctx.req.params.id}}, function(err, form){
+           if(err){
+             next(err);
+             doc.end();
+           }else{
+             for(var i=0; i<formResults.length; i++){
+               if (i != 0 )
+                doc.addPage();
+               var formResult = formResults[i];
+               for(var j=0; j<formResult.formResultAnswers.length; j++) {
+                 var formResultAnswer = formResult.formResultAnswers[j];
+                 doc.font('../client/fonts/meng.ttf').text(form.formQuestions[j].label+' : '+formResultAnswer.content);
+                 doc.moveDown();
+               }
+             }
+             doc.end();
+           }
+         });
+       });
     }
     catch(e) {
-      //异常处理
+       //异常处理
     }
 	});
 
