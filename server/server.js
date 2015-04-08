@@ -21,7 +21,10 @@ app.start = function() {
 
 // start the server if `$ node server.js`
 if (require.main === module) {
-  app.start();
+  app.server = app.start();
 }
 
 app.use(loopback.static('../client'));
+
+var socket = require('../common/modules/websocket.js');
+socket.start(app);

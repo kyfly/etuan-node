@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io(window.location.host + '/seckill/1', {query: "access_token=123456"});
+  socket.io.on('error', function(err) {
+    console.log(err);
+  });
+  socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+  });
+</script>
+</body>
+</html>
