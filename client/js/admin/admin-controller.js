@@ -52,19 +52,19 @@ function SidebarCtrl ($scope,$window,$routeParams) {
       'id':'sidebarForm',
       'display_name':'表单',
       'url':'#/form/list',
-      'active':$window.location.hash==='#/form/list'
+      'active':$window.location.hash==='#/form/list'//sidebarShow('form');
     },
     {
       'id':'sidebarSeckill',
       'display_name':'疯抢',
       'url':'#/seckill/list',
-      'active':$window.location.hash==='#/seckill/list'
+      'active':$window.location.hash==='#/seckill/list'//sidebarShow('seckill');
     },
     {
       'id':'sidebarVote',
       'display_name':'投票',
       'url':'#/vote/list',
-      'active':$window.location.hash==='#/vote/list'
+      'active':$window.location.hash==='#/vote/list'//sidebarShow('vote');
     },
     {
       'id':'sidebarWechat',
@@ -91,6 +91,9 @@ function SidebarCtrl ($scope,$window,$routeParams) {
     };
     $scope.sidebars[index].active = true;
     $window.location.hash = $scope.sidebars[index].url;
+  };
+  $scope.sidebarShow = function (type) {
+    
   };
 }
 
