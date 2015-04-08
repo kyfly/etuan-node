@@ -17,9 +17,9 @@
     },
     "ttl": {
       "type": "number",
+      "description": "time to live in seconds (2 weeks by default)",
       "ttl": true,
-      "default": 10,
-      "description": "time to live in seconds (2 weeks by default)"
+      "default": 10
     },
     "isConfirm": {
       "type": "number",

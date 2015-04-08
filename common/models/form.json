@@ -3,10 +3,14 @@
   "base": "BaseItem",
   "strict": true,
   "idInjection": true,
-  "properties": {
-  },
+  "properties": {},
   "validations": [],
   "relations": {
+    "organization": {
+      "type": "belongsTo",
+      "model": "OrganizationUser",
+      "foreignKey": "organizationUid"
+    },
     "results": {
       "type": "hasMany",
       "model": "FormResult",
@@ -93,6 +97,30 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "__updateById__results"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY",
+      "property": "pdf"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "pdf"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY",
+      "property": "excel"
+    },    
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "excel"
     }
   ],
   "methods": []
