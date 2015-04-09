@@ -292,6 +292,97 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,dict) {
         label:'请判断你的答案',
         content:['是','否']
       });
+    },
+    name:function () {
+      $scope.forms.push({
+        type:2,
+        label:'姓名',
+        content:[]
+      });
+    },
+    sex:function () {
+      $scope.forms.push({
+        type:1,
+        label:'性别',
+        content:['男','女']
+      });
+    },
+    personalID:function () {
+      $scope.forms.push({
+        type:2,
+        label:'身份证号',
+        content:[]
+      });
+    },
+    hometown:function () {
+      $scope.forms.push({
+        type:2,
+        label:'籍贯',
+        content:[]
+      });
+    },
+    studentID:function () {
+      $scope.forms.push({
+        type:2,
+        label:'学号',
+        content:[]
+      });
+    },
+    school:function () {
+      $scope.forms.push({
+        type:1,
+        label:'学院',
+        content:['机械工程学院','电子信息学院','通信工程学院','自动化学院','计算机学院','生命信息与仪器工程学院','材料与环境工程学院','软件工程学院','理学院','经济学院','管理学院','会计学院','外国语学院','数字媒体与艺术设计学院','人文与法学院','马克思主义学院','卓越学院','信息工程学院','国际教育学院','继续教育学院']
+      });
+    },
+    major:function () {
+      $scope.forms.push({
+        type:2,
+        label:'专业',
+        content:[]
+      });
+    },
+    email:function () {
+      $scope.forms.push({
+        type:2,
+        label:'电子邮箱',
+        content:[]
+      });
+    },
+    qqNumber:function () {
+      $scope.forms.push({
+        type:2,
+        label:'QQ号',
+        content:[]
+      });
+    },
+    longCellphoneNumber:function () {
+      $scope.forms.push({
+        type:2,
+        label:'手机长号',
+        content:[]
+      });
+    },
+    shortCellphoneNumber:function () {
+      $scope.forms.push({
+        type:2,
+        label:'手机短号',
+        content:[]
+      });
+    },
+    introduction:function () {
+      $scope.forms.push({
+        type:3,
+        label:'个人简介',
+        content:[]
+      });
+    },
+    specials:function () {
+      $scope.forms.push({
+        type:3,
+        label:'特长',
+        content:[]
+      });
     }
   };
   $scope.removeForm = function (index) {
