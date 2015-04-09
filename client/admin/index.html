@@ -10,7 +10,6 @@
   <script src="/lib/angular/angular.js"></script>
   <script src="/lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
   <script src="/lib/angular-components/angular-animate.js"></script>
-  <script src="/lib/angular-components/angular-touch.js"></script>
   <script src="/lib/angular-components/angular-resource.js"></script>
   <script src="/lib/angular-components/angular-route.js"></script>
   <script src="/js/admin/admin-controller.js"></script>
@@ -51,7 +50,7 @@
     </nav>
   </header>
 <!--左侧边栏-->
-<div class="col-sm-2" id="sidebar" ng-controller="SidebarCtrl" ng-show="sidebarShow">
+<div class="col-sm-2 show-item" id="sidebar" ng-controller="SidebarCtrl" ng-show="sidebarShow">
   <div>
     <ul class="nav nav-pills nav-stacked sidebar-list">
       <li id="{{sidebar.id}}" ng-repeat="sidebar in sidebars" class="sidebar-item" ng-class="{active: sidebar.active}">
@@ -64,7 +63,7 @@
 <div id="main" ng-class="{'col-sm-10':sidebarShow,'col-sm-12':!sidebarShow}" ng-view>
 </div>
 <script type="text/javascript">
-  if (!window.localStorage.getItem('accessToken')||!window.localStorage.getItem('userId')||!window.localStorage.getItem('loginTime')){window.localStorage.removeItem('accessToken');window.localStorage.removeItem('userId');window.localStorage.removeItem('loginTime');window.location = '/login.html';}
+  if (!window.localStorage.getItem('accessToken')||!window.localStorage.getItem('userId')||!window.localStorage.getItem('loginTime')){window.localStorage.removeItem('accessToken');window.localStorage.removeItem('userId');window.localStorage.removeItem('loginTime');window.location = '/login';}
 </script>
 </body>
 </html>

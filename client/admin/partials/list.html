@@ -4,7 +4,7 @@
       <p class="create"><span class="glyphicon glyphicon-plus"></span></p>
     </section>
   </div>
-  <div class="col-lg-3 col-md-4 col-sm-6" ng-repeat="listItem in listItems">
+  <div class="col-lg-3 col-md-4 col-sm-6 repeat-item" ng-repeat="listItem in listItems">
     <section class="panel list-item">
       <h3 style="word-break:break-word">{{listItem.title | limitTo:20}}</h3>
       <p>开始：{{listItem.startTime | date:'yyyy-MM-dd HH:mm'}}</p>

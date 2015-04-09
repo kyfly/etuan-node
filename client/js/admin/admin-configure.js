@@ -31,7 +31,7 @@ function RewriteResourceActions ($resourceProvider) {
   };
 }
 
-var app = angular.module('app', ['ngResource','ngAnimate','ngRoute','ngTouch','ui.bootstrap']);
+var app = angular.module('app', ['ngResource','ngAnimate','ngRoute','ui.bootstrap']);
 app.value('dict',{
   'activity':'活动',
   'form': '表单',

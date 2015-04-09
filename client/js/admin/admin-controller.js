@@ -35,7 +35,7 @@ function NavbarCtrl ($scope,$window,$resource) {
 }
 
 function SidebarCtrl ($scope,$window) {
-  var sidebarShow = function (type) {
+  var sidebarItemChosen = function (type) {
     var rx = new RegExp('#\/'+type);
     return rx.test($window.location.hash);
   };
@@ -44,49 +44,49 @@ function SidebarCtrl ($scope,$window) {
       'id':'sidebarHome',
       'display_name':'首页',
       'url':'#/home',
-      'active':sidebarShow('home')
+      'active':sidebarItemChosen('home')
     },
     {
       'id':'sidebarForm',
       'display_name':'活动',
       'url':'#/activity/list',
-      'active':sidebarShow('activity')
+      'active':sidebarItemChosen('activity')
     },
     {
       'id':'sidebarForm',
       'display_name':'表单',
       'url':'#/form/list',
-      'active':sidebarShow('form')
+      'active':sidebarItemChosen('form')
     },
     {
       'id':'sidebarSeckill',
       'display_name':'疯抢',
       'url':'#/seckill/list',
-      'active':sidebarShow('seckill')
+      'active':sidebarItemChosen('seckill')
     },
     {
       'id':'sidebarVote',
       'display_name':'投票',
       'url':'#/vote/list',
-      'active':sidebarShow('vote')
+      'active':sidebarItemChosen('vote')
     },
     {
       'id':'sidebarWechat',
       'display_name':'微信',
       'url':'#/wechat',
-      'active':sidebarShow('wechat')
+      'active':sidebarItemChosen('wechat')
     },
     {
       'id':'sidebarSetting',
       'display_name':'设置',
       'url':'#/setting',
-      'active':sidebarShow('setting')
+      'active':sidebarItemChosen('setting')
     },
     {
       'id':'sidebarHelp',
       'display_name':'帮助',
       'url':'#/help',
-      'active':sidebarShow('help')
+      'active':sidebarItemChosen('help')
     }
   ];
   $scope.redirect = function(index) {
