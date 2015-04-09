@@ -11,7 +11,7 @@ function LoginCtrl ($scope,$resource,$timeout,$window) {
         $window.localStorage.setItem('userId',res.userId);
         $window.localStorage.setItem('loginTime',res.created);
         alert('模拟登录成功，将在1秒钟后跳转!');
-        $timeout(function(){$window.location='/admin/index.html'},1000);
+        $timeout(function(){$window.location='/admin'},1000);
       },
       function(res){
         alert('模拟登录失败!');

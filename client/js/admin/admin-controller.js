@@ -4,9 +4,11 @@ function AdminCtrl ($scope,$window,$timeout) {
     $scope.sidebarShow = !$scope.sidebarShow;
   };
   $scope.$on('$viewContentLoaded',function(){
-    $timeout(function(){
-      document.getElementById('sidebar').style.height = document.getElementById('main').offsetHeight +'px';
-    },100);
+    if (document.body.clientWidth >= 768) {
+      $timeout(function(){
+        document.getElementById('sidebar').style.height = document.getElementById('main').offsetHeight +'px';
+      },100);
+    }
   });
 }
 
