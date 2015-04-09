@@ -34,55 +34,59 @@ function NavbarCtrl ($scope,$window,$resource) {
   };
 }
 
-function SidebarCtrl ($scope,$window,$routeParams) {
+function SidebarCtrl ($scope,$window) {
+  var sidebarShow = function (type) {
+    var rx = new RegExp('#\/'+type);
+    return rx.test($window.location.hash);
+  };
   $scope.sidebars = [
     {
       'id':'sidebarHome',
       'display_name':'首页',
       'url':'#/home',
-      'active':$window.location.hash==='#/home' || !($window.location.hash==='#/activity/list' || $window.location.hash==='#/form/list' || $window.location.hash==='#/seckill/list' || $window.location.hash==='#/vote/list' || $window.location.hash==='#/wechat' || $window.location.hash==='#/setting' || $window.location.hash==='#/help')
+      'active':sidebarShow('home')
     },
     {
       'id':'sidebarForm',
       'display_name':'活动',
       'url':'#/activity/list',
-      'active':$window.location.hash==='#/activity/list'
+      'active':sidebarShow('activity')
     },
     {
       'id':'sidebarForm',
       'display_name':'表单',
       'url':'#/form/list',
-      'active':$window.location.hash==='#/form/list'//sidebarShow('form');
+      'active':sidebarShow('form')
     },
     {
       'id':'sidebarSeckill',
       'display_name':'疯抢',
       'url':'#/seckill/list',
-      'active':$window.location.hash==='#/seckill/list'//sidebarShow('seckill');
+      'active':sidebarShow('seckill')
     },
     {
       'id':'sidebarVote',
       'display_name':'投票',
       'url':'#/vote/list',
-      'active':$window.location.hash==='#/vote/list'//sidebarShow('vote');
+      'active':sidebarShow('vote')
     },
     {
       'id':'sidebarWechat',
       'display_name':'微信',
       'url':'#/wechat',
-      'active':$window.location.hash==='#/wechat'
+      'active':sidebarShow('wechat')
     },
     {
       'id':'sidebarSetting',
       'display_name':'设置',
       'url':'#/setting',
-      'active':$window.location.hash==='#/setting'
+      'active':sidebarShow('setting')
     },
     {
       'id':'sidebarHelp',
       'display_name':'帮助',
       'url':'#/help',
-      'active':$window.location.hash==='#/help'
+      'active':sidebarShow('help')
     }
   ];
   $scope.redirect = function(index) {
@@ -91,9 +95,6 @@ function SidebarCtrl ($scope,$window,$routeParams) {
     };
     $scope.sidebars[index].active = true;
     $window.location.hash = $scope.sidebars[index].url;
-  };
-  $scope.sidebarShow = function (type) {
-    
   };
 }
 
