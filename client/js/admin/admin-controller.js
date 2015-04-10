@@ -697,6 +697,7 @@ function SettingCtrl ($scope,$resource,$window) {
   Setting.get({},
     function (res) {
       $scope.name = res.name;
+      $scope.logoUrl = res.logoUrl;
       $scope.description = res.description;
       $scope.type = res.type || '院级社团';
       $scope.school = res.school || '计算机学院';

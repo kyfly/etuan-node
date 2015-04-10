@@ -17,12 +17,15 @@
     <div class="col-md-2">
       <label class="control-label">LOGO</label>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-1">
+      <img ng-src="{{logoUrl}}" class="img-responsive">
+    </div>
+    <div class="col-md-4">
       <input type="file" class="form-control" id="logo">
       <p class="help-block">如有改变，请先上传LOGO，再保存设置</p>
     </div>
-    <div class="col-md-3">
-      <button type="button" class="btn btn-primary">
+    <div class="col-md-2">
+      <button type="button" class="btn btn-primary btn-block">
         <span class="glyphicon glyphicon-upload"></span>
         上传
       </button>
