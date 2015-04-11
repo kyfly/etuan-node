@@ -1,8 +1,10 @@
 function AdminCtrl ($scope,$window,$timeout) {
+  //768像素为界限决定侧边栏的显示与否
   $scope.sidebarShow = (document.body.clientWidth >= 768);
   $scope.sidebarToggle = function () {
     $scope.sidebarShow = !$scope.sidebarShow;
   };
+  //监听ngView完成事件，延迟100ms用于页面渲染
   $scope.$on('$viewContentLoaded',function(){
     if (document.body.clientWidth >= 768) {
       $timeout(function(){
