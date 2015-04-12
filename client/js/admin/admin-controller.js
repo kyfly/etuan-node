@@ -44,10 +44,12 @@ function NavbarCtrl ($scope,$window,$resource) {
 }
 
 function SidebarCtrl ($scope,$window) {
+  //检测函数，利用路由判断，辅助检测左边的按钮何时应该高亮
   var sidebarItemChosen = function (type) {
     var rx = new RegExp('#\/'+type);
     return rx.test($window.location.hash);
   };
+  //侧边栏显示内容
   $scope.sidebars = [
     {
       'id':'sidebarHome',
@@ -98,6 +100,7 @@ function SidebarCtrl ($scope,$window) {
       'active':sidebarItemChosen('help')
     }
   ];
+  //跳转函数，包括操作侧边栏按钮和跳转至相应页面
   $scope.redirect = function(index) {
     for (var i = 0; i < $scope.sidebars.length; i++) {
       $scope.sidebars[i].active = false;
@@ -108,6 +111,7 @@ function SidebarCtrl ($scope,$window) {
 }
 
 function ListCtrl ($window,$scope,$routeParams,$resource) {
+  //项目的具体接口（resource格式），如需添加新的项目，请修改此项
   var listProperty = {
     activity:'/api/OrganizationUsers/:userId/activities/:fk',
     form:'/api/OrganizationUsers/:userId/forms/:fk',
@@ -115,14 +119,19 @@ function ListCtrl ($window,$scope,$routeParams,$resource) {
     vote:'/api/OrganizationUsers/:userId/votes/:fk'
   };
   var List = $resource(listProperty[$routeParams.type],{userId:$window.localStorage.getItem('userId')});
+  //日期显示格式，标准Angular Date Filter格式
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
+  //请求获取信息
   $scope.listItems = List.query();
+  //编辑按钮操作函数
   $scope.edit = function (id) {
     $window.location.hash = '#/'+$routeParams.type+'/edit/'+id;
   };
+  //结果按钮操作函数
   $scope.result = function (id) {
     $window.location.hash = '#/'+$routeParams.type+'/result/'+id;
   };
+  //删除按钮操作函数
   $scope.remove = function (index,id) {
     List.delete({fk:id},
       function(res){
