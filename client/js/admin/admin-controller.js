@@ -15,7 +15,9 @@ function AdminCtrl ($scope,$window,$timeout) {
 }
 
 function NavbarCtrl ($scope,$window,$resource) {
+  //团团一家LOGO
   $scope.etuanLogo = "/img/full-logo.png";
+  //获取社团基本信息的接口，可以用于显示右上角信息
   var Organization = $resource('/api/OrganizationUsers/:userId',{userId:$window.localStorage.getItem('userId')});
   Organization.get({},
     function (res) {
@@ -24,12 +26,15 @@ function NavbarCtrl ($scope,$window,$resource) {
     },
     function () {}
   );
+  //主页跳转动作（点击团团一家LOGO）
   $scope.redirectToHomapage = function () {
     $window.location = '/index.html';
   };
+  //设置跳转动作（点击右上角信息）
   $scope.redirectToSetting = function () {
     $window.location.hash = '#/setting'
   }
+  //退出动作，包括清楚存储信息，返回至登录页面
   $scope.logOut = function () {
     $window.localStorage.removeItem('accessToken');
     $window.localStorage.removeItem('userId');
