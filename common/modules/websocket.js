@@ -18,9 +18,21 @@ module.exports.start = function (app) {
         io.of('/seckill/' + seckillId)
           .use(authentication)
           .on('connection', function (socket) {
-            socket.emit('news', {hello: seckillId});
-            socket.on('my other event', function (data) {
-              console.log(data);
+            app.models.Seckill.findOne({where: {id: seckillId}}, function (err, info) {
+              app.models.SeckillResult.find({
+                where: {seckillId: seckillId},
+                fields: {arrangementId: true, verifyId: true}
+              }, function (err, result) {
+                if (result) {
+                  var verifyId = '';
+                  for (var i = 0; i < result.length; i++) {
+                    verifyId = result[i].verifyId;
+                    result[i].$verifyId = verifyId.slice(0, 2) + '***' + verifyId.slice(5, verifyId.length);
+                  }
+                }
+                info.serverTime = new Date().getTime();
+                socket.emit('initSeckill', info, result);
+              });
             });
           });
       })();

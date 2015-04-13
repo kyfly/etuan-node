@@ -8,12 +8,11 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
   var socket = io(window.location.host + '/seckill/552b321024b23738196467d4', {query: "access_token=12345"});
-  socket.on('error', function(err) {
+  socket.on('error', function (err) {
     console.log(err);
   });
-  socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
+  socket.once('initSeckill', function (info, result) {
+    console.log(info, result);
   });
 </script>
 </body>
