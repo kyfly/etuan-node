@@ -187,6 +187,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,dict) {
           case 'form':
             $scope.forms = res.formQuestions;
             break;
+          //由于疯抢中每一个子活动都有开始时间和结束时间所以每一个时间都要进行单独
           case 'seckill':
             for (var i = 0; i < res.seckillArrangements.length; i++) {
               var seckillArrangementsTmp = {};
@@ -684,6 +685,7 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
 }
 
 function HomeCtrl ($scope) {
+  //这里写着所有的通知通告，别忘了上面的三个数字的实现也要写在这一块地方
   $scope.notices = [
     {
       'title':'招新系统上线啦',
@@ -723,10 +725,12 @@ function SettingCtrl ($scope,$resource,$window) {
     function () {}
   );
   $scope.types = ['校级社团','校级组织','院级社团','院级组织'];
+  //下面的这个写法是根据社团属性来动态实现下面学院选择的变化，三元表达式的写法是对if/else模形的简写方式
   $scope.schools = ($scope.type==='校级社团'||$scope.type==='校级组织')?['全校']:['机械工程学院','电子信息学院','通信工程学院','自动化学院','计算机学院','生命信息与仪器工程学院','材料与环境工程学院','软件工程学院','理学院','经济学院','管理学院','会计学院','外国语学院','数字媒体与艺术设计学院','人文与法学院','马克思主义学院','卓越学院','信息工程学院','国际教育学院','继续教育学院'];
   $scope.typeChange = function () {
     $scope.schools = ($scope.type==='校级社团'||$scope.type==='校级组织')?['全校']:['机械工程学院','电子信息学院','通信工程学院','自动化学院','计算机学院','生命信息与仪器工程学院','材料与环境工程学院','软件工程学院','理学院','经济学院','管理学院','会计学院','外国语学院','数字媒体与艺术设计学院','人文与法学院','马克思主义学院','卓越学院','信息工程学院','国际教育学院','继续教育学院'];
   }
+  //上传图片至OSS服务
   $scope.logoUpload = function () {
     var logoFd = new FormData();
     var logoFile = document.getElementById('logo').files[0];
@@ -736,6 +740,7 @@ function SettingCtrl ($scope,$resource,$window) {
     logoXhr.open('POST','/ue/uploads',true);
     logoXhr.send();
   };
+  //提交设置按钮
   $scope.submit = function () {
     Setting.update({
         name:$scope.name,
