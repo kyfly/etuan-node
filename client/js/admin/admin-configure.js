@@ -31,7 +31,7 @@ function RewriteResourceActions ($resourceProvider) {
   };
 }
 
-var app = angular.module('app', ['ngResource','ngAnimate','ngRoute','ui.bootstrap']);
+var app = angular.module('app', ['ngResource','ngAnimate','ngRoute','ui.bootstrap','ng.ueditor']);
 app.config(['$resourceProvider',RewriteResourceActions]);
 app.config(['$routeProvider',RouteConfigure]);
 app.controller('SidebarCtrl',['$scope','$window',SidebarCtrl]);

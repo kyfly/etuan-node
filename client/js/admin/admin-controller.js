@@ -265,7 +265,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,etuanAdmin) {
   $scope.openActivity = function () {
     var modalInstance = $modal.open({
       templateUrl:'/editor/index.html',
-      controller:EditorCtrl,
+      controller:['$scope',EditorCtrl],
       size:'lg'
     });
   };
@@ -738,6 +738,9 @@ function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
   };
 }
 
-function EditorCtrl () {}
+function EditorCtrl ($scope) {
+
+}
+
 function WechatCtrl () {}
 function HelpCtrl () {}
