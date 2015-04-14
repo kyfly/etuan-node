@@ -558,20 +558,7 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
   /* 结果页面配置区 
    * 用于设置结果页面的各项显示上的差异化配置。
    */
-  var resultConfig = {
-    form:{
-      downloadAsExcel:true,
-      downloadAsPdf:true
-    },
-    seckill:{
-      downloadAsExcel:true,
-      downloadAsPdf:false
-    },
-    vote:{
-      downloadAsExcel:true,
-      downloadAsPdf:false
-    }
-  };
+  var resultConfig = etuanAdmin.item.resultDownloadType;
   /* 接口区
    * 结果页面上的各项接口。项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的item.infoProperty属性
    */

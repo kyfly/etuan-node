@@ -43,6 +43,24 @@ app.service('etuanAdmin',function(){
         form:'/api/Forms/:id/results',
         seckill:'',
         vote:'/api/Votes/:id/subitems'
+      },
+      resultDownloadType:{
+        activity:{
+          downloadAsExcel:false,
+          downloadAsPdf:false
+        },
+        form:{
+          downloadAsExcel:true,
+          downloadAsPdf:true
+        },
+        seckill:{
+          downloadAsExcel:true,
+          downloadAsPdf:false
+        },
+        vote:{
+          downloadAsExcel:true,
+          downloadAsPdf:false
+        }
       }
     }
   };
