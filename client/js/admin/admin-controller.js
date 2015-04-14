@@ -18,7 +18,11 @@ function NavbarCtrl ($scope,$window,$resource) {
   //团团一家LOGO
   $scope.etuanLogo = "/img/full-logo.png";
   //获取社团基本信息的接口，可以用于显示右上角信息
-  var Organization = $resource('/api/OrganizationUsers/:userId',{userId:$window.localStorage.getItem('userId')});
+  var Organization = $resource(
+    '/api/OrganizationUsers/:userId',{
+      userId:$window.localStorage.getItem('userId')
+    }
+  );
   Organization.get({},
     function (res) {
       $scope.organizationName = res.name;
@@ -110,17 +114,15 @@ function SidebarCtrl ($scope,$window) {
   };
 }
 
-function ListCtrl ($window,$scope,$routeParams,$resource) {
-  //项目的具体接口（resource格式），如需添加新的项目，请修改此项
-  var listProperty = {
-    activity:'/api/OrganizationUsers/:userId/activities/:fk',
-    form:'/api/OrganizationUsers/:userId/forms/:fk',
-    seckill:'/api/OrganizationUsers/:userId/seckills/:fk',
-    vote:'/api/OrganizationUsers/:userId/votes/:fk'
-  };
-  var List = $resource(listProperty[$routeParams.type],{userId:$window.localStorage.getItem('userId')});
-  //日期显示格式，标准Angular Date Filter格式
-  $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
+function ListCtrl ($window,$scope,$routeParams,$resource,etuanAdmin) {
+  //项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的itemProperty属性
+  var List = $resource(
+    etuanAdmin.itemProperty[$routeParams.type],{
+      userId:$window.localStorage.getItem('userId')
+    }
+  );
+  //日期显示格式，标准Angular Date Filter格式,从service-etuanAdmin中去取得
+  $scope.unFormat = etuanAdmin.unFormat;
   //请求获取信息
   $scope.listItems = List.query();
   //编辑按钮操作函数
@@ -143,20 +145,16 @@ function ListCtrl ($window,$scope,$routeParams,$resource) {
   }
 }
 
-function EditCtrl ($scope,$routeParams,$resource,$window,$modal,dict) {
+function EditCtrl ($scope,$routeParams,$resource,$window,$modal,etuanAdmin) {
   /* 接口资源区
-   * 在editProperty中定义了所有需要编辑的功能的但页面编辑时所调用的接口名（字符串类型）
-   * 其中:userId用于占位用户的ID，fk为外键，占位具体页面的ID
-   * 以editProperty[功能类型]的方式进行调用
    * Edit为一个资源对象，实现所有的CRUD的基础
+   * 项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的itemProperty属性
    */
-  var editProperty = {
-    activity:'/api/OrganizationUsers/:userId/activities/:fk',
-    form:'/api/OrganizationUsers/:userId/forms/:fk',
-    seckill:'/api/OrganizationUsers/:userId/seckills/:fk',
-    vote:'/api/OrganizationUsers/:userId/votes/:fk'
-  };
-  var Edit = $resource(editProperty[$routeParams.type],{userId:$window.localStorage.getItem('userId')});
+  var Edit = $resource(
+    etuanAdmin.itemProperty[$routeParams.type],{
+      userId:$window.localStorage.getItem('userId')
+    }
+  );
   /* 初始化区
    * initEdit()为新建页面时初始化通用部分的函数
    * loadEdit()为编辑页面时对于已有信息的加载
@@ -218,7 +216,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,dict) {
   var initial = function () {
     $routeParams.id === 'create'?initEdit():loadEdit();
     $scope.enType = $routeParams.type;
-    $scope.cnType = dict[$routeParams.type];
+    $scope.cnType = etuanAdmin.dict[$routeParams.type];
     $scope.mode = $routeParams.id === 'create'?('新建'+$scope.cnType+' '):('编辑'+$scope.cnType+' ');
     $scope.submitButtonName = $routeParams.id === 'create'?'创建':'更新';
   };
@@ -226,11 +224,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,dict) {
   /* 日期选择器配置
    * DATEPICKER组件调用参数
    */
-  $scope.enFormat = "EEE MMM dd yyyy HH:mm:ss 'GMT'Z '(CST)'";
-  $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
-  $scope.unFormat = "yyyy-MM-dd HH:mm";  
-  $scope.cnDateFormat = "yyyy'年'M'月'd'日";
-
+  $scope.cnDateFormat = etuanAdmin.cnDateFormat;
   $scope.dateOptions = {
     formatYear: 'yy',
     startingDay: 1
@@ -560,7 +554,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,dict) {
   };
 }
 
-function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
+function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
   /* 结果页面配置区 
    * 用于设置结果页面的各项显示上的差异化配置。
    */
@@ -579,33 +573,29 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,dict) {
     }
   };
   /* 接口区
-   * 结果页面上的各项接口。
+   * 结果页面上的各项接口。项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的itemProperty属性
    */
-  var resultProperty = {
-    activity:'',
-    form:'/api/Forms/:id/results',
-    seckill:'',
-    vote:'/api/Votes/:id/subitems',
-  };
-  var infoProperty = {
-    activity:'/api/OrganizationUsers/:userId/activities/:fk',
-    form:'/api/OrganizationUsers/:userId/forms/:fk',
-    seckill:'/api/OrganizationUsers/:userId/seckills/:fk',
-    vote:'/api/OrganizationUsers/:userId/votes/:fk'
-  };
-  var Result = $resource(resultProperty[$routeParams.type],{id:$routeParams.id});
-  var Info = $resource(infoProperty[$routeParams.type],{userId:$window.localStorage.getItem('userId'),fk:$routeParams.id});
-  
+  var Result = $resource(
+    etuanAdmin.resultProperty[$routeParams.type],{
+      id:$routeParams.id
+    }
+  );
+  var Info = $resource(
+    etuanAdmin.itemProperty[$routeParams.type],{
+      userId:$window.localStorage.getItem('userId'),
+      fk:$routeParams.id
+    }
+  );
   /* 页面ViewModel区
    * 用于直接和页面上绑定的各项变量
    */
-  $scope.mode = dict[$routeParams.type]+'结果 ';
+  $scope.mode = etuanAdmin.dict[$routeParams.type]+'结果 ';
   $scope.title = '';
   $scope.currentResultConfig = resultConfig[$routeParams.type];
   $scope.results = [];
   $scope.resultHeaders = [];
   $scope.info = {};
-  $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
+  $scope.cnFormat = etuanAdmin.cnFormat;
   /* 结果处理区
    * 将各种不同的结果显示到同一张表格中，处理收到的各类不同的json。
    */
@@ -710,8 +700,12 @@ function HomeCtrl ($scope) {
   ];
 }
 
-function SettingCtrl ($scope,$resource,$window) {
-  var Setting = $resource('/api/OrganizationUsers/:userId',{userId:$window.localStorage.getItem('userId')});
+function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
+  var Setting = $resource(
+    '/api/OrganizationUsers/:userId',{
+      userId:$window.localStorage.getItem('userId')
+    }
+  );
   Setting.get({},
     function (res) {
       $scope.name = res.name;

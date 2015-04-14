@@ -7,8 +7,8 @@
   <div class="col-lg-3 col-md-4 col-sm-6 repeat-item" ng-repeat="listItem in listItems">
     <section class="panel list-item">
       <h3 style="word-break:break-word">{{listItem.title | limitTo:20}}</h3>
-      <p>开始：{{listItem.startTime | date:'yyyy-MM-dd HH:mm'}}</p>
-      <p>结束：{{listItem.stopTime | date:'yyyy-MM-dd HH:mm'}}</p>
+      <p>开始：{{listItem.startTime | date:unFormat}}</p>
+      <p>结束：{{listItem.stopTime | date:unFormat}}</p>
       <p style="word-break:break-word">简介：{{listItem.description | limitTo:60}}</p>
     </section>
     <div class="btn-area">

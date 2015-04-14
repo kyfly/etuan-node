@@ -32,12 +32,6 @@ function RewriteResourceActions ($resourceProvider) {
 }
 
 var app = angular.module('app', ['ngResource','ngAnimate','ngRoute','ui.bootstrap']);
-app.value('dict',{
-  'activity':'活动',
-  'form': '表单',
-  'seckill': '疯抢',
-  'vote': '投票'
-});
 app.config(['$resourceProvider',RewriteResourceActions]);
 app.config(['$routeProvider',RouteConfigure]);
 app.controller('SidebarCtrl',['$scope','$window',SidebarCtrl]);
