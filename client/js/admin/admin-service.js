@@ -19,6 +19,25 @@ app.service('etuanAdmin',function(){
       seckill: '疯抢',
       vote: '投票'
     },
+    //包含了editor的配置项
+    editor:{
+      config:{
+        toolbars:[[
+            'fullscreen', 'source', '|', 'undo', 'redo', '|',
+            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', '|',
+            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
+            'simpleupload', 'insertimage',
+        ]],
+        zIndex : 900,
+        initialFrameHeight:300,
+        //focus时自动清空初始化时的内容
+        autoClearinitialContent:true,
+        //关闭字数统计
+        wordCount:false,
+        //关闭elementPath
+        elementPathEnabled:false
+      }
+    },
     //包含了所有时间格式中所需要的参数
     datetime:{
       enFormat:"EEE MMM dd yyyy HH:mm:ss 'GMT'Z '(CST)'",

@@ -265,8 +265,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,etuanAdmin) {
   $scope.openActivity = function () {
     var modalInstance = $modal.open({
       templateUrl:'/editor/index.html',
-      controller:['$scope',EditorCtrl],
-      size:'lg'
+      controller:['$scope','etuanAdmin',EditorCtrl]
     });
   };
   $scope.activityContentUrl = 'http://www.baidu.com';
@@ -452,8 +451,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,etuanAdmin) {
   $scope.editVote = function () {
     var modalInstance = $modal.open({
       templateUrl:'/editor/index.html',
-      controller:EditorCtrl,
-      size:'lg'
+      controller:['$scope','etuanAdmin',EditorCtrl]
     });
   }
   $scope.addVote = function () {
@@ -738,8 +736,11 @@ function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
   };
 }
 
-function EditorCtrl ($scope) {
+function EditorCtrl ($scope,etuanAdmin) {
+  $scope.config = etuanAdmin.editor.config;
+  $scope.submit = function () {
 
+  };
 }
 
 function WechatCtrl () {}
