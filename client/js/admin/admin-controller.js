@@ -115,14 +115,14 @@ function SidebarCtrl ($scope,$window) {
 }
 
 function ListCtrl ($window,$scope,$routeParams,$resource,etuanAdmin) {
-  //项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的itemProperty属性
+  //项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的item.infoProperty属性
   var List = $resource(
-    etuanAdmin.itemProperty[$routeParams.type],{
+    etuanAdmin.item.infoProperty[$routeParams.type],{
       userId:$window.localStorage.getItem('userId')
     }
   );
   //日期显示格式，标准Angular Date Filter格式,从service-etuanAdmin中去取得
-  $scope.unFormat = etuanAdmin.unFormat;
+  $scope.unFormat = etuanAdmin.datetime.unFormat;
   //请求获取信息
   $scope.listItems = List.query();
   //编辑按钮操作函数
@@ -148,10 +148,10 @@ function ListCtrl ($window,$scope,$routeParams,$resource,etuanAdmin) {
 function EditCtrl ($scope,$routeParams,$resource,$window,$modal,etuanAdmin) {
   /* 接口资源区
    * Edit为一个资源对象，实现所有的CRUD的基础
-   * 项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的itemProperty属性
+   * 项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的item.infoProperty属性
    */
   var Edit = $resource(
-    etuanAdmin.itemProperty[$routeParams.type],{
+    etuanAdmin.item.infoProperty[$routeParams.type],{
       userId:$window.localStorage.getItem('userId')
     }
   );
@@ -224,7 +224,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,etuanAdmin) {
   /* 日期选择器配置
    * DATEPICKER组件调用参数
    */
-  $scope.cnDateFormat = etuanAdmin.cnDateFormat;
+  $scope.cnDateFormat = etuanAdmin.datetime.cnDateFormat;
   $scope.dateOptions = {
     formatYear: 'yy',
     startingDay: 1
@@ -573,15 +573,15 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
     }
   };
   /* 接口区
-   * 结果页面上的各项接口。项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的itemProperty属性
+   * 结果页面上的各项接口。项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的item.infoProperty属性
    */
   var Result = $resource(
-    etuanAdmin.resultProperty[$routeParams.type],{
+    etuanAdmin.item.resultProperty[$routeParams.type],{
       id:$routeParams.id
     }
   );
   var Info = $resource(
-    etuanAdmin.itemProperty[$routeParams.type],{
+    etuanAdmin.item.infoProperty[$routeParams.type],{
       userId:$window.localStorage.getItem('userId'),
       fk:$routeParams.id
     }
@@ -595,7 +595,7 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
   $scope.results = [];
   $scope.resultHeaders = [];
   $scope.info = {};
-  $scope.cnFormat = etuanAdmin.cnFormat;
+  $scope.cnFormat = etuanAdmin.datetime.cnFormat;
   /* 结果处理区
    * 将各种不同的结果显示到同一张表格中，处理收到的各类不同的json。
    */
