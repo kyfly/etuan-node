@@ -12,10 +12,6 @@ function RouteConfigure ($routeProvider){
       templateUrl:'/admin/partials/help.html',
       controller: HelpCtrl
     })
-    .when('/wechat',{
-      templateUrl:'/admin/partials/wechat.html',
-      controller: WechatCtrl
-    })
     .when('/:type*/list',{
       templateUrl:'/admin/partials/list.html',
       controller: ['$window','$scope','$routeParams','$resource','etuanAdmin',ListCtrl]

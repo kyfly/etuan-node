@@ -86,12 +86,6 @@ function SidebarCtrl ($scope,$window) {
       'active':sidebarItemChosen('vote')
     },
     {
-      'id':'sidebarWechat',
-      'display_name':'微信',
-      'url':'#/wechat',
-      'active':sidebarItemChosen('wechat')
-    },
-    {
       'id':'sidebarSetting',
       'display_name':'设置',
       'url':'#/setting',
@@ -725,5 +719,4 @@ function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
   };
 }
 
-function WechatCtrl () {}
 function HelpCtrl () {}
