@@ -343,7 +343,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,etuanAdmin) {
       $scope.forms.push({
         type:1,
         label:'学院',
-        content:['机械工程学院','电子信息学院','通信工程学院','自动化学院','计算机学院','生命信息与仪器工程学院','材料与环境工程学院','软件工程学院','理学院','经济学院','管理学院','会计学院','外国语学院','数字媒体与艺术设计学院','人文与法学院','马克思主义学院','卓越学院','信息工程学院','国际教育学院','继续教育学院']
+        content:etuanAdmin.org.schools
       });
     },
     major:function () {
@@ -718,11 +718,11 @@ function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
     },
     function () {}
   );
-  $scope.types = ['校级社团','校级组织','院级社团','院级组织'];
+  $scope.types = etuanAdmin.org.types;
   //下面的这个写法是根据社团属性来动态实现下面学院选择的变化，三元表达式的写法是对if/else模形的简写方式
-  $scope.schools = ($scope.type==='校级社团'||$scope.type==='校级组织')?['全校']:['机械工程学院','电子信息学院','通信工程学院','自动化学院','计算机学院','生命信息与仪器工程学院','材料与环境工程学院','软件工程学院','理学院','经济学院','管理学院','会计学院','外国语学院','数字媒体与艺术设计学院','人文与法学院','马克思主义学院','卓越学院','信息工程学院','国际教育学院','继续教育学院'];
+  $scope.schools = ($scope.type==='校级社团'||$scope.type==='校级组织')?['全校']:etuanAdmin.org.schools;
   $scope.typeChange = function () {
-    $scope.schools = ($scope.type==='校级社团'||$scope.type==='校级组织')?['全校']:['机械工程学院','电子信息学院','通信工程学院','自动化学院','计算机学院','生命信息与仪器工程学院','材料与环境工程学院','软件工程学院','理学院','经济学院','管理学院','会计学院','外国语学院','数字媒体与艺术设计学院','人文与法学院','马克思主义学院','卓越学院','信息工程学院','国际教育学院','继续教育学院'];
+    $scope.schools = ($scope.type==='校级社团'||$scope.type==='校级组织')?['全校']:etuanAdmin.org.schools;
   }
   //上传图片至OSS服务
   $scope.logoUpload = function () {
