@@ -22,7 +22,7 @@ function RouteConfigure ($routeProvider){
     })
     .when('/:type*/edit/:id*',{
       templateUrl:'/admin/partials/edit.html',
-      controller: ['$scope','$routeParams','$resource','$window','$modal','etuanAdmin',EditCtrl]
+      controller: ['$scope','$routeParams','$resource','$window','etuanAdmin',EditCtrl]
     })
     .when('/:type*/result/:id*',{
       templateUrl:'/admin/partials/result.html',

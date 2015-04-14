@@ -9,7 +9,7 @@ function AdminCtrl ($scope,$window,$timeout) {
     if (document.body.clientWidth >= 768) {
       $timeout(function(){
         document.getElementById('sidebar').style.height = document.getElementById('main').offsetHeight +'px';
-      },100);
+      },200);
     }
   });
 }
@@ -145,7 +145,7 @@ function ListCtrl ($window,$scope,$routeParams,$resource,etuanAdmin) {
   }
 }
 
-function EditCtrl ($scope,$routeParams,$resource,$window,$modal,etuanAdmin) {
+function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
   /* 接口资源区
    * Edit为一个资源对象，实现所有的CRUD的基础
    * 项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的item.infoProperty属性
@@ -262,12 +262,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,etuanAdmin) {
   /* 活动特定功能区
    * 获得编辑器得到的contentUrl
    */
-  $scope.openActivity = function () {
-    var modalInstance = $modal.open({
-      templateUrl:'/editor/index.html',
-      controller:['$scope','etuanAdmin',EditorCtrl]
-    });
-  };
+  $scope.activityConfig = etuanAdmin.editor.config;
   $scope.activityContentUrl = 'http://www.baidu.com';
   /* 表单特定功能区
    * 实现了表单项目的CRUD，对于选择题等拥有content[]项目的表单项目，还实现了对具体选项的CRUD操作。
@@ -448,12 +443,6 @@ function EditCtrl ($scope,$routeParams,$resource,$window,$modal,etuanAdmin) {
    * 实现了表单项目的CRUD
    */
   $scope.votes = [];
-  $scope.editVote = function () {
-    var modalInstance = $modal.open({
-      templateUrl:'/editor/index.html',
-      controller:['$scope','etuanAdmin',EditorCtrl]
-    });
-  }
   $scope.addVote = function () {
     $scope.votes.push({
       'name':'这是一个投票项',
@@ -733,13 +722,6 @@ function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
       function () {},
       function () {}
     );
-  };
-}
-
-function EditorCtrl ($scope,etuanAdmin) {
-  $scope.config = etuanAdmin.editor.config;
-  $scope.submit = function () {
-
   };
 }
 
