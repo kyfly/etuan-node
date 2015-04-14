@@ -2,11 +2,11 @@ function RouteConfigure ($routeProvider){
   $routeProvider
     .when('/home',{
       templateUrl:'/admin/partials/home.html',
-      controller: HomeCtrl
+      controller: ['$scope',HomeCtrl]
     })
     .when('/setting',{
       templateUrl:'/admin/partials/setting.html',
-      controller: SettingCtrl
+      controller: ['$scope','$resource','$window','etuanAdmin',SettingCtrl]
     })
     .when('/help',{
       templateUrl:'/admin/partials/help.html',
@@ -18,15 +18,15 @@ function RouteConfigure ($routeProvider){
     })
     .when('/:type*/list',{
       templateUrl:'/admin/partials/list.html',
-      controller: ListCtrl
+      controller: ['$window','$scope','$routeParams','$resource','etuanAdmin',ListCtrl]
     })
     .when('/:type*/edit/:id*',{
       templateUrl:'/admin/partials/edit.html',
-      controller: EditCtrl
+      controller: ['$scope','$routeParams','$resource','$window','$modal','etuanAdmin',EditCtrl]
     })
     .when('/:type*/result/:id*',{
       templateUrl:'/admin/partials/result.html',
-      controller: ResultCtrl
+      controller: ['$scope','$routeParams','$resource','$window','etuanAdmin',ResultCtrl]
     })
     .otherwise({redirectTo: '/home'});
 }
