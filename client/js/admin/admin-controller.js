@@ -467,8 +467,6 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
     var uploadParameters = {
       'title': $scope.title,
       'description':$scope.description,
-      'adPicture': '',
-      'adUrl': '',
       'startTime': startTmp.toISOString(),
       'stopTime': stopTmp.toISOString(),
       'verifyRule': $scope.verifyRule,
