@@ -213,6 +213,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
     $scope.cnType = etuanAdmin.dict[$routeParams.type];
     $scope.mode = $routeParams.id === 'create'?('新建'+$scope.cnType+' '):('编辑'+$scope.cnType+' ');
     $scope.submitButtonName = $routeParams.id === 'create'?'创建':'更新';
+    $scope.contentShow = etuanAdmin.item.isBasicContent[$routeParams.type];
   };
   initial();
   /* 日期选择器配置
