@@ -41,6 +41,7 @@ app.service('etuanAdmin',function(){
       cnFormat:"yyyy'年'MM'月'dd'日 'HH'时'mm'分'",
       unFormat:"yyyy-MM-dd HH:mm",  
       cnDateFormat:"yyyy'年'M'月'd'日",
+      unDateFormat:"yyyy-MM-dd"
     },
     /*  在item.infoProperty中定义了所有需要编辑的功能的但页面编辑时所调用的接口名（字符串类型）
     *  其中:userId用于占位用户的ID，fk为外键，占位具体页面的ID

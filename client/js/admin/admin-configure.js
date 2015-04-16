@@ -37,4 +37,3 @@ app.config(['$routeProvider',RouteConfigure]);
 app.controller('SidebarCtrl',['$scope','$window',SidebarCtrl]);
 app.controller('NavbarCtrl',['$scope','$window','$resource',NavbarCtrl]);
 app.controller('AdminCtrl',['$scope','$window','$timeout',AdminCtrl]);
-app.controller('EditorCtrl',['$scope','$window',EditorCtrl]);

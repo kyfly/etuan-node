@@ -215,6 +215,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
    * DATEPICKER组件调用参数
    */
   $scope.cnDateFormat = etuanAdmin.datetime.cnDateFormat;
+  $scope.unDateFormat = etuanAdmin.datetime.unDateFormat;
   $scope.dateOptions = {
     formatYear: 'yy',
     startingDay: 1
@@ -449,6 +450,9 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
    * 在完成提交后，将转跳至列表页面list.html
    */
   $scope.submit = function () {
+    if ($scope.startDate && $scope.stopDate && $scope.startTime && $scope.stopTime) {}
+    else {alert('您输入的时间有误，请重试');return;}
+    
     var nowTime = new Date();
     var startTmp = new Date($scope.startDate.getFullYear(),$scope.startDate.getMonth(),$scope.startDate.getDate(),$scope.startTime.getHours(),$scope.startTime.getMinutes());
     var stopTmp = new Date($scope.stopDate.getFullYear(),$scope.stopDate.getMonth(),$scope.stopDate.getDate(),$scope.stopTime.getHours(),$scope.stopTime.getMinutes());
