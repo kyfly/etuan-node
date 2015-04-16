@@ -189,12 +189,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
               seckillArrangementsTmp.startDate = new Date(res.seckillArrangements[i].startTime);
               seckillArrangementsTmp.startDate.toString = function(){
                 return this.getFullYear()+'年'+(this.getMonth()+1)+'月'+this.getDate()+'日 ';
-              };
-              seckillArrangementsTmp.stopTime = new Date(res.seckillArrangements[i].stopTime);
-              seckillArrangementsTmp.stopDate = new Date(res.seckillArrangements[i].stopTime);
-              seckillArrangementsTmp.stopDate.toString = function(){
-                return this.getFullYear()+'年'+(this.getMonth()+1)+'月'+this.getDate()+'日 ';
-              };    
+              }; 
               $scope.seckills.push(seckillArrangementsTmp);
             };
             break;
@@ -421,11 +416,6 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
         $event.stopPropagation();
         this.seckillStartOpened = true;
       },
-      seckillStopDateOpen: function ($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-        this.seckillStopOpened = true;
-      },
       startTime: new Date(),
       stopTime: new Date()
     });
@@ -494,12 +484,10 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
         var seckillArrangementsTmp = [];
         for (var i = 0; i < $scope.seckills.length; i++) {
           var startTmp = new Date($scope.seckills[i].startDate.getFullYear(),$scope.seckills[i].startDate.getMonth(),$scope.seckills[i].startDate.getDate(),$scope.seckills[i].startTime.getHours(),$scope.seckills[i].startTime.getMinutes());
-          var stopTmp = new Date($scope.seckills[i].stopDate.getFullYear(),$scope.seckills[i].stopDate.getMonth(),$scope.seckills[i].stopDate.getDate(),$scope.seckills[i].stopTime.getHours(),$scope.seckills[i].stopTime.getMinutes());
           var seckillArrangement = {
             'id':i,
             'title':$scope.seckills[i].title,
             'startTime':$scope.seckills[i].startTime.toISOString(),
-            'stopTime':$scope.seckills[i].stopTime.toISOString(),
             'total':$scope.seckills[i].total
           }
           seckillArrangementsTmp.push(seckillArrangement);

@@ -249,7 +249,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label col-sm-2">开始时间</label>
+                <label class="control-label col-sm-2">开抢时间</label>
                 <div class="col-sm-7">
                   <p class="input-group">
                     <input type="text" class="form-control" datepicker-popup="{{cnDateFormat}}" ng-model="seckill.startDate" is-open="seckill.seckillStartOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
@@ -261,21 +261,6 @@
                 </div>
                 <div class="col-sm-3">
                   <timepicker ng-model="seckill.startTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-sm-2">结束时间</label>
-                <div class="col-sm-7">
-                  <p class="input-group">
-                    <input type="text" class="form-control" datepicker-popup="{{cnDateFormat}}" ng-model="seckill.stopDate" is-open="seckill.seckillStopOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
-                    <span class="input-group-btn">
-                      <button type="button" class="btn btn-default" ng-click="seckill.seckillStopDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                  </p>
-                  <p class="help-block">点击日历按钮选择日期，请不要手动输入</p>
-                </div>
-                <div class="col-sm-3">
-                  <timepicker ng-model="seckill.stopTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
                 </div>
               </div>
           </li>
