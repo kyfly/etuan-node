@@ -50,7 +50,7 @@ app.service('etuanAdmin',function(){
     item:{
       isBasicContent:{
         //表示每一个活动是否拥有相应的子项目，对应数组分别为[title,description,startTime,stopTime,verifyRule]
-        activity:[true,false,true,true,false],
+        activity:[true,true,true,true,false],
         form:[true,true,true,true,true],
         seckill:[true,true,true,false,true],
         vote:[true,true,true,true,true]

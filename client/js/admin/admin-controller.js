@@ -407,17 +407,14 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
   $scope.seckills = [];
   $scope.addSeckill = function () {
     $scope.seckills.push({
-      title:'这是一轮新的疯抢',
       startTime:'',
-      stopTime:'',
       total:0,
       seckillStartDateOpen: function ($event) {
         $event.preventDefault();
         $event.stopPropagation();
         this.seckillStartOpened = true;
       },
-      startTime: new Date(),
-      stopTime: new Date()
+      startTime: new Date()
     });
   };
   $scope.removeSeckill = function (index) {
@@ -486,7 +483,6 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
           var startTmp = new Date($scope.seckills[i].startDate.getFullYear(),$scope.seckills[i].startDate.getMonth(),$scope.seckills[i].startDate.getDate(),$scope.seckills[i].startTime.getHours(),$scope.seckills[i].startTime.getMinutes());
           var seckillArrangement = {
             'id':i,
-            'title':$scope.seckills[i].title,
             'startTime':$scope.seckills[i].startTime.toISOString(),
             'total':$scope.seckills[i].total
           }
