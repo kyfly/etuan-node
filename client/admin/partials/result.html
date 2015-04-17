@@ -2,8 +2,8 @@
   <h3><small>{{mode}}</small>&nbsp;&nbsp;<big>{{title}}</big></h3>
 </div>
 <div style="display: inline;position: absolute;top: 20px;right: 50px">
-  <button class="btn btn-danger" ng-show="currentResultConfig['downloadAsPdf']">PDF下载</button>
-  <button class="btn btn-success" ng-show="currentResultConfig['downloadAsExcel']">Excel下载</button>
+  <button class="btn btn-danger" ng-show="currentResultConfig['downloadAsPdf']" ng-click="pdfDownload()">PDF下载</button>
+  <button class="btn btn-success" ng-show="currentResultConfig['downloadAsExcel']" ng-click="excelDownload()">Excel下载</button>
 </div>
 <br>
 <br>

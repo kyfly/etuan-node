@@ -82,7 +82,7 @@ app.service('etuanAdmin',function(){
           downloadAsPdf:false
         },
         vote:{
-          downloadAsExcel:true,
+          downloadAsExcel:false,
           downloadAsPdf:false
         }
       }
