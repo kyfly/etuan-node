@@ -694,9 +694,8 @@ function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
     var logoFile = document.getElementById('logo').files[0];
     var logoXhr = new XMLHttpRequest();
     logoFd.append('logo',logoFile);
-    console.log(logoFd);
-    logoXhr.open('POST','/ue/uploads',true);
-    logoXhr.send();
+    logoXhr.open('POST','/ue/uploads&action=uploadimage',true);
+    logoXhr.send(logoFd);
   };
   //提交设置按钮
   $scope.submit = function () {
