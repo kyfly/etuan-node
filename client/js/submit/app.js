@@ -8,7 +8,7 @@ function SubmitCtrl ($scope,$resource,$timeout,$window) {
       },
       function(res){
         alert('模拟注册成功，5秒后跳至登录页面!');
-        $timeout(function(){$window.location='/login.html'},5000);
+        $timeout(function(){$window.location='/login'},5000);
       },
       function(res){
         alert('模拟注册失败!');

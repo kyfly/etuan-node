@@ -6,9 +6,6 @@
     "startTime": {
       "type": "date"
     },
-    "stopTime": {
-      "type": "date"
-    },
     "total": {
       "type": "number"
     }

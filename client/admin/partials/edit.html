@@ -4,31 +4,31 @@
 <hr>
 <form class="form-horizontal">
 
-  <div class="form-group">
+  <div class="form-group" ng-show="contentShow[0]">
     <div class="col-sm-2">
       <label class="control-label">{{cnType}}标题</label>
     </div>
     <div class="col-sm-10">
-      <input type="text" class="form-control" ng-model="title">
+      <input type="text" class="form-control" ng-model="title" ng-required="true">
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group" ng-show="contentShow[1]">
     <div class="col-sm-2">
       <label class="control-label">{{cnType}}描述</label>
     </div>
     <div class="col-sm-10">
-      <textarea type="text" class="form-control" style="resize:none" rows="4" ng-model="description"></textarea>
+      <textarea type="text" class="form-control" style="resize:none" rows="4" ng-model="description" ng-required="true"></textarea>
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group" ng-show="contentShow[2]">
     <div class="col-sm-2">
       <label class="control-label">开始时间</label>
     </div>
     <div class="col-sm-7">
       <p class="input-group">
-        <input type="text" class="form-control" datepicker-popup="{{cnDateFormat}}" ng-model="startDate" is-open="startOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
+        <input type="text" class="form-control" datepicker-popup="{{unDateFormat}}" ng-model="startDate" is-open="startOpened" ng-click="startDateOpen($event)" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
       <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="startDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
       </span>
@@ -39,48 +39,33 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group" ng-show="contentShow[3]">
     <div class="col-sm-2">
       <label class="control-label">结束时间</label>
     </div>
     <div class="col-sm-7">
       <p class="input-group">
-        <input type="text" class="form-control" datepicker-popup="{{cnDateFormat}}" ng-model="stopDate" is-open="stopOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
+        <input type="text" class="form-control" datepicker-popup="{{unDateFormat}}" ng-model="stopDate" is-open="stopOpened" datepicker-options="dateOptions" ng-click="stopDateOpen($event)" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
         <span class="input-group-btn">
           <button type="button" class="btn btn-default" ng-click="stopDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
         </span>
       </p>
-      <p class="help-block">点击日历按钮选择日期，请不要手动输入</p>
     </div>
     <div class="col-sm-3">
       <timepicker ng-model="stopTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group" ng-show="contentShow[4]" ng-required="true">
     <div class="col-sm-2">
       <label class="control-label">验证规则</label>
     </div>
     <div class="col-sm-10">
-      <input type="text" class="form-control" ng-model="verifyRule">
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-sm-2">
-      <label class="control-label">广告图片</label>
-    </div>
-    <div class="col-sm-10">
-      <input type="file" class="form-control">
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-sm-2">
-      <label class="control-label">广告链接</label>
-    </div>
-    <div class="col-sm-10">
-      <input type="text" class="form-control">
+      <select class="form-control" ng-model="verifyRule">
+        <option value="none">无</option>
+        <option value="studentId">学号</option>
+        <option value="phone">手机号</option>
+      </select>
     </div>
   </div>
 
@@ -90,9 +75,7 @@
       </div>
     <div class="col-sm-10">
       <div class="well">
-        <button class="btn btn-primary" ng-click="openActivity()">
-          点击编辑
-        </button>
+        <div class="ueditor" ng-model="activityContent" config="activityConfig"></div>
       </div>
     </div>
   </div>
@@ -133,9 +116,7 @@
               <div class="form-group">
                 <label class="control-label col-sm-2">详情介绍</label>
                 <div class="col-sm-10">
-                  <button class="btn btn-primary" ng-click="editVote()">
-                    点击编辑
-                  </button>
+                  <div class="ueditor" ng-model="activityContent" config="activityConfig"></div>
                 </div>
               </div>
           </li>
@@ -151,15 +132,38 @@
     </div>
     <div class="col-sm-10">
       <div class="well">
-        <div class="btn-group" dropdown is-open="status.isopen">
+        <div class="btn-group" dropdown is-open="status.addisopen">
           <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
-            添加表单项<span class="caret"></span>
+            添加表单项 <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu">
             <li><a href ng-click="addForm.simple()">简答题</a></li>
             <li><a href ng-click="addForm.complex()">陈述题</a></li>
             <li><a href ng-click="addForm.choice()">选择题</a></li>
             <li><a href ng-click="addForm.judge()">判断题</a></li>
+          </ul>
+        </div>
+        <div class="btn-group" dropdown is-open="status.instantisopen">
+          <button type="button" class="btn btn-danger dropdown-toggle" dropdown-toggle>
+            快速添加 <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href ng-click="addForm.name()">姓名</a></li>
+            <li><a href ng-click="addForm.sex()">性别</a></li>
+            <li><a href ng-click="addForm.personalID()">身份证号</a></li>
+            <li><a href ng-click="addForm.hometown()">籍贯</a></li>
+            <li class="divider"></li>
+            <li><a href ng-click="addForm.studentID()">学号</a></li>
+            <li><a href ng-click="addForm.school()">学院</a></li>
+            <li><a href ng-click="addForm.major()">专业</a></li>
+            <li class="divider"></li>
+            <li><a href ng-click="addForm.email()">电子邮箱</a></li>
+            <li><a href ng-click="addForm.qqNumber()">QQ号</a></li>
+            <li><a href ng-click="addForm.longCellphoneNumber()">手机长号</a></li>
+            <li><a href ng-click="addForm.shortCellphoneNumber()">手机短号</a></li>
+            <li class="divider"></li>
+            <li><a href ng-click="addForm.introduction()">个人简介</a></li>
+            <li><a href ng-click="addForm.specials()">特长</a></li>
           </ul>
         </div>
         <hr>
@@ -231,19 +235,13 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label col-sm-2">本轮标题</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" ng-model="seckill.title">
-                </div>
-              </div>
-              <div class="form-group">
                 <label class="control-label col-sm-2">本轮票数</label>
                 <div class="col-sm-10">
                   <input type="number" class="form-control" ng-model="seckill.total">
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label col-sm-2">开始时间</label>
+                <label class="control-label col-sm-2">开抢时间</label>
                 <div class="col-sm-7">
                   <p class="input-group">
                     <input type="text" class="form-control" datepicker-popup="{{cnDateFormat}}" ng-model="seckill.startDate" is-open="seckill.seckillStartOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
@@ -254,21 +252,6 @@
                 </div>
                 <div class="col-sm-3">
                   <timepicker ng-model="seckill.startTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-sm-2">结束时间</label>
-                <div class="col-sm-7">
-                  <p class="input-group">
-                    <input type="text" class="form-control" datepicker-popup="{{cnDateFormat}}" ng-model="seckill.stopDate" is-open="seckill.seckillStopOpened" datepicker-options="dateOptions" ng-required="true" close-text="完成" current-text="今天" clear-text ="清空" />
-                    <span class="input-group-btn">
-                      <button type="button" class="btn btn-default" ng-click="seckill.seckillStopDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                  </p>
-                  <p class="help-block">点击日历按钮选择日期，请不要手动输入</p>
-                </div>
-                <div class="col-sm-3">
-                  <timepicker ng-model="seckill.stopTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
                 </div>
               </div>
           </li>

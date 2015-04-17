@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io(window.location.host + '/seckill/552b321024b23738196467d4',
+    {query: "accessToken=p8oDbkjV1VeKMQ2kTEqGkjVjUqc2vG6pHHeH7gSGHsKqHtioIGBgXKShVp9N056a"});
+  socket.on('error', function (err) {
+    console.log(err);
+  });
+  socket.once('initSeckill', function (info, result) {
+    console.log(info, result);
+  });
+  socket.on('killFail', function(err){
+    console.log(err);
+      //err是一个字符串
+     //已经抢过票了   'already gotten'
+    //还没有开始      'not started'
+     //没有余票了   'no enough'
+    //写入数据库出错   'database error'
+  });
+  socket.on('killSuccess', function() {
+    console.log('Seckill successfully!');
+  });
+  socket.on('addResult', function(verifyId){
+    console.log(verifyId);
+  });
+</script>
+</body>
+</html>

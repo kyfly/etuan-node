@@ -31,16 +31,9 @@ function RewriteResourceActions ($resourceProvider) {
   };
 }
 
-var app = angular.module('app', ['ngResource','ngAnimate','ngRoute','ngTouch','ui.bootstrap']);
-app.value('dict',{
-  'activity':'活动',
-  'form': '表单',
-  'seckill': '疯抢',
-  'vote': '投票'
-});
+var app = angular.module('app', ['ngResource','ngAnimate','ngRoute','ui.bootstrap','ng.ueditor']);
 app.config(['$resourceProvider',RewriteResourceActions]);
 app.config(['$routeProvider',RouteConfigure]);
 app.controller('SidebarCtrl',['$scope','$window',SidebarCtrl]);
 app.controller('NavbarCtrl',['$scope','$window','$resource',NavbarCtrl]);
 app.controller('AdminCtrl',['$scope','$window','$timeout',AdminCtrl]);
-app.controller('EditorCtrl',['$scope','$window',EditorCtrl]);
