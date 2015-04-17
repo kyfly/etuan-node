@@ -5,22 +5,22 @@ module.exports = function(VoteResult) {
     var Vote = VoteResult.app.models.Vote;
     var WeChatUser = VoteResult.app.models.WeChatUser;
     try {
-      VoteResult.findOne({ where: { voteId: ctx.instance.voteId, weChatUid: ctx.instance.weChatUid }}, function(err, voteResult) {
+      VoteResult.findOne({ where: {weChatUid: ctx.instance.weChatUid }}, function(err, voteResult) {
         if(voteResult === null) {
           Vote.findOne({ where: { id: ctx.instance.voteId }}, function(err, vote) {
             if(ctx.instance.results.length <= vote.maxVote) {
-              if(vote.verifyRule === 'studentId') {
-                WeChatUser.findOne({ where: { id: ctx.instance.weChatUid }}, function(err, weChatUser) {
+              switch(vote.verifyRule){
+                case 'studentId':
                   if(weChatUser.studentId != null) {
                     next();
                   }
                   else {
                     next({'status': '400', 'content': '需要绑定微信'});
                   }
-                });
-              }
-              else {
-                next();
+                  break;
+                default:
+                  next();
+                  break;
               }
             }
             else {
@@ -42,9 +42,8 @@ module.exports = function(VoteResult) {
   VoteResult.observe('after save', function(ctx, next) {
     var Vote = VoteResult.app.models.Vote;
     try {
-      Vote.findOne({where:{_id:ctx.instance.voteId}},function(err, vote){
+      Vote.findOne({where: {_id: ctx.instance.voteId}},function(err, vote) {
         ctx.instance.results.forEach(function(id){
-
           vote.subitems.findById(id, function(err, instance) {
             if(err) {
               next(err);

@@ -29,3 +29,6 @@ node_modules
 
 # JetBrains series config files such as WebStorm and PhpStorm
 .idea
+
+# 忽略字体文件
+client/fonts

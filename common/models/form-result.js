@@ -7,18 +7,20 @@ module.exports = function(FormResult) {
 		FormResult.findOne({ where: { formId: ctx.instance.formId, weChatUid: ctx.instance.weChatUid }}, function(err, formResult) {
 			if(formResult === null) {
 				Form.findOne({ where: { id: ctx.instance.formId }}, function(err, form) {  			
-					if(form.verifyRule === 'studentId') {
-						WeChatUser.findOne({ where: { id: ctx.instance.weChatUid }}, function(err, weChatUser) {
-							if(weChatUser.studentId != null) {
-								next();
-							}
-							else {
-								next({'status': '400', 'content': '需要绑定微信'});
-							}
-						});    		
-					}
-					else {
-						next();
+					switch(form.verifyRule) {
+						case 'studentId':
+							WeChatUser.findOne({ where: { id: ctx.instance.weChatUid }}, function(err, weChatUser) {
+								if(weChatUser.studentId != null) {
+									next();
+								}
+								else {
+									next({'status': '400', 'content': '需要绑定微信'});
+								}
+								break;
+							});    		
+						default:
+							next();
+							break;
 					}
 				});
 			}
