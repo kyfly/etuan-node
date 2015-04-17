@@ -627,6 +627,15 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
     },
     function (res) {}
   );
+  /* 结果下载页面的获取区
+   * 在这个区域中包括了pdf下载和excel下载。
+   */
+  $scope.pdfDownload = function () {
+    window.open('/api/Forms/pdf/'+$routeParams.id,'_blank');
+  }
+  $scope.excelDownload = function () {
+    window.open('/api/Forms/excel/'+$routeParams.id,'_blank');
+  }
 }
 
 function HomeCtrl ($scope) {
@@ -685,9 +694,8 @@ function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
     var logoFile = document.getElementById('logo').files[0];
     var logoXhr = new XMLHttpRequest();
     logoFd.append('logo',logoFile);
-    console.log(logoFd);
-    logoXhr.open('POST','/ue/uploads',true);
-    logoXhr.send();
+    logoXhr.open('POST','/ue/uploads&action=uploadimage',true);
+    logoXhr.send(logoFd);
   };
   //提交设置按钮
   $scope.submit = function () {

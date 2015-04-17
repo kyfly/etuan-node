@@ -9,18 +9,24 @@
     angular.module('app',[]).controller('fltCtrl',['$scope','$http',function($scope,$http){
       $http.get('/api/Forms').success(function(res){$scope.flts=res;});
       $http.get('/api/Votes').success(function(res){$scope.vlts=res;});
+      $http.get('/api/Seckills').success(function(res){$scope.skls=res;});
     }]);
   </script>
 </head>
 <body ng-controller="fltCtrl">
   <h2>Forms</h2>
   <ol>
-    <li ng-repeat="flt in flts"><a href="/form.html#?id={{flt.id}}">{{flt.title}}</a></li>
+    <li ng-repeat="flt in flts"><a href="/form#?id={{flt.id}}">{{flt.title}}</a></li>
   </ol>
   <hr>
   <h2>Votes</h2>
   <ol>
-    <li ng-repeat="vlt in vlts"><a href="/vote.html#?id={{vlt.id}}">{{vlt.title}}</a></li>
+    <li ng-repeat="vlt in vlts"><a href="/vote#?id={{vlt.id}}">{{vlt.title}}</a></li>
+  </ol>
+  <hr>
+  <h2>Seckills</h2>
+  <ol>
+    <li ng-repeat="skl in skls"><a href="/seckill#?id={{skl.id}}">{{skl.title}}</a></li>
   </ol>
 
 <script type="text/javascript">
