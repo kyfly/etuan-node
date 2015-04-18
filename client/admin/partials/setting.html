@@ -3,87 +3,131 @@
 </div>
 <hr>
 <form class="form-horizontal">
-
+<tabset>
+<tab heading="基本信息">
+  <br>
   <div class="form-group">
-    <div class="col-md-2">
+    <div class="col-sm-2">
       <label class="control-label">名称</label>
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-7">
       <input type="text" class="form-control" ng-model="name" id="name">
     </div>
   </div>
-
   <div class="form-group">
-    <div class="col-md-2">
-      <label class="control-label">LOGO</label>
-    </div>
-    <div class="col-md-1">
-      <img ng-src="{{logoUrl}}" class="img-responsive">
-    </div>
-    <div class="col-md-4">
-      <input type="file" class="form-control" id="logo">
-      <p class="help-block">如有改变，请先上传LOGO，再保存设置</p>
-    </div>
-    <div class="col-md-2">
-      <button type="button" class="btn btn-primary btn-block" ng-click="logoUpload()">
-        <span class="glyphicon glyphicon-upload"></span>
-        上传
-      </button>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-md-2">
+    <div class="col-sm-2">
       <label class="control-label">简介</label>
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-7">
       <textarea type="text" rows="10" class="form-control" style="resize:none" ng-model="description" id="description"></textarea>
     </div>
   </div>
-
   <div class="form-group">
-    <div class="col-md-2">
+    <div class="col-sm-2">
       <label class="control-label">类型</label>
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-7">
       <select class="form-control" ng-model="type" id="type" ng-change="typeChange()">
         <option value="{{type}}" ng-repeat="type in types">{{type}}</option>
       </select>
     </div>
   </div>
-
   <div class="form-group">
-    <div class="col-md-2">
+    <div class="col-sm-2">
       <label class="control-label">所属学院</label>
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-7">
       <select class="form-control" ng-model="school" id="school">
         <option value="{{school}}" ng-repeat="school in schools">{{school}}</option>
       </select>
     </div>
   </div>
-
   <div class="form-group">
-    <div class="col-md-2">
+    <div class="col-sm-2">
       <label class="control-label">微信号</label>
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-7">
       <input type="text" class="form-control" ng-model="weChat" id="weChat">
     </div>
   </div>
-
   <div class="form-group">
-    <div class="col-md-2">
+    <div class="col-sm-2">
       <label class="control-label">联系电话</label>
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-7">
       <input type="text" class="form-control" ng-model="phone" id="phone">
     </div>
   </div>
-
   <div class="form-group">
-    <div class="col-sm-2 col-md-offset-2">
-      <button class="btn btn-block btn-primary" ng-click="submit()">保存</button>
+    <div class="col-sm-2 col-sm-offset-2">
+      <button class="btn btn-block btn-primary" ng-click="basicSubmit()">保存</button>
     </div>
   </div>
+</tab>
+<tab heading="LOGO设置">
+  <br>
+  <div class="form-group">
+    <div class="col-md-2 col-sm-4 col-xs-8 col-sm-offset-2">
+      <img ng-src="{{logoUrl}}" class="img-responsive">
+    </div>
+    <div class="col-md-1 col-sm-2 col-xs-4">
+      <img ng-src="{{logoUrl}}" class="img-responsive">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-6 col-sm-offset-2">
+      <input type="file" class="form-control" id="logo">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-2 col-sm-offset-2">
+      <button class="btn btn-block btn-primary" ng-click="logoUpload()">保存</button>
+    </div>
+  </div>
+</tab>
+<tab heading="部门信息">
+  <br>
+  <div class="form-group">
+    <div class="col-sm-10 col-sm-offset-2">
+      <button type="button" class="btn btn-primary" ng-click="addDepartment()">
+        添加部门
+      </button>
+    </div>
+  </div>
+  <div ng-repeat="organizationUserDepartment in organizationUserDepartments">
+    <div class="form-group">
+      <div class="col-sm-10 col-sm-offset-2">
+        <button class="btn btn-primary" type="button" ng-click="moveUpDepartment($index)">
+          <span class="glyphicon glyphicon-arrow-up"></span> 上移
+        </button>
+        <button class="btn btn-primary" type="button" ng-click="moveDownDepartment($index)">
+          <span class="glyphicon glyphicon-arrow-down"></span> 下移
+        </button>
+        <button class="btn btn-danger" type="button" ng-click="removeDepartment($index)">
+          <span class="glyphicon glyphicon-remove"></span> 删除
+        </button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">部门名</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="organizationUserDepartment.name">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">部门介绍</label>
+      <div class="col-sm-10">
+        <textarea type="text" rows="5" class="form-control" style="resize:none" ng-model="organizationUserDepartment.description"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-2 col-sm-offset-2">
+      <button class="btn btn-block btn-primary" ng-click="departmentSubmit()">保存</button>
+    </div>
+  </div>
+</tab>
+</tabset>
+<br>
+  
 </form>
