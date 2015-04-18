@@ -6,7 +6,7 @@ module.exports = function(FormResult) {
 		var WeChatUser = FormResult.app.models.WeChatUser;
 		FormResult.findOne({ where: { formId: ctx.instance.formId, weChatUid: ctx.instance.weChatUid }}, function(err, formResult) {
 			if(formResult === null) {
-				Form.findOne({ where: { id: ctx.instance.formId }}, function(err, form) {  			
+				Form.findOne({ where: { id: ctx.instance.formId }}, function(err, form) {
 					switch(form.verifyRule) {
 						case 'studentId':
 							WeChatUser.findOne({ where: { id: ctx.instance.weChatUid }}, function(err, weChatUser) {
@@ -16,8 +16,8 @@ module.exports = function(FormResult) {
 								else {
 									next({'status': '400', 'content': '需要绑定微信'});
 								}
-								break;
-							});    		
+							});
+              break;
 						default:
 							next();
 							break;
@@ -27,6 +27,6 @@ module.exports = function(FormResult) {
 			else {
 				next({'status': '400', 'content': '已经报过名了'});
 			}
-		});		
+		});
 	});
 };
