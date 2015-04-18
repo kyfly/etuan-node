@@ -30,5 +30,17 @@ node_modules
 # JetBrains series config files such as WebStorm and PhpStorm
 .idea
 
-# 忽略字体文件
+# ignore font files, they are too big
 client/fonts
+
+# ignore robots.txt
+client/robots.txt
+
+# ignore environment config
+server/config.beta.json
+server/config.production.json
+server/datasources.beta.json
+server/datasources.production.json
+
+# ignore Loopback api explorer
+server/boot/explorer.js
