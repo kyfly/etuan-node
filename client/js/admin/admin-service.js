@@ -32,7 +32,9 @@ app.service('etuanAdmin',function(){
         //关闭字数统计
         wordCount:false,
         //关闭elementPath
-        elementPathEnabled:false
+        elementPathEnabled:false,
+        //关闭右键菜单功能
+        enableContextMenu: false
       }
     },
     //包含了所有时间格式中所需要的参数
