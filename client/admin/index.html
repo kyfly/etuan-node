@@ -5,6 +5,9 @@
   <title>管理后台 - 团团一家</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script type="text/javascript">
+    if (!window.localStorage.getItem('accessToken')||!window.localStorage.getItem('userId')||!window.localStorage.getItem('loginTime')){window.localStorage.removeItem('accessToken');window.localStorage.removeItem('userId');window.localStorage.removeItem('loginTime');window.location = '/login';}
+  </script>
   <link rel="stylesheet" href="/lib/bootstrap/css/etuan.css"/>
   <link rel="stylesheet" href="/css/admin.css"/>
   <script src="/lib/angular/angular.js"></script>
@@ -66,8 +69,5 @@
 <!--主体-->
 <div id="main" ng-class="{'col-sm-10':sidebarShow,'col-sm-12':!sidebarShow}" ng-view>
 </div>
-<script type="text/javascript">
-  if (!window.localStorage.getItem('accessToken')||!window.localStorage.getItem('userId')||!window.localStorage.getItem('loginTime')){window.localStorage.removeItem('accessToken');window.localStorage.removeItem('userId');window.localStorage.removeItem('loginTime');window.location = '/login';}
-</script>
 </body>
 </html>
