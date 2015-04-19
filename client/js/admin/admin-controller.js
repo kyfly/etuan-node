@@ -106,7 +106,7 @@ function SidebarCtrl ($scope,$window) {
   };
 }
 
-function ListCtrl ($window,$scope,$routeParams,$resource,etuanAdmin) {
+function ListCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
   //项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的item.infoProperty属性
   var List = $resource(
     etuanAdmin.item.infoProperty[$routeParams.type],{
@@ -662,7 +662,7 @@ function HomeCtrl ($scope) {
   ];
 }
 
-function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
+function SettingCtrl ($scope,$resource,etuanAdmin) {
   var Setting = $resource(
     '/api/OrganizationUsers/:userId',{
       userId:etuanAdmin.cache.userId

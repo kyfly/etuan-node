@@ -6,7 +6,7 @@ function RouteConfigure ($routeProvider){
     })
     .when('/setting',{
       templateUrl:'/admin/partials/setting.html',
-      controller: ['$scope','$resource','$window','etuanAdmin',SettingCtrl]
+      controller: ['$scope','$resource','etuanAdmin',SettingCtrl]
     })
     .when('/help',{
       templateUrl:'/admin/partials/help.html',
@@ -14,7 +14,7 @@ function RouteConfigure ($routeProvider){
     })
     .when('/:type*/list',{
       templateUrl:'/admin/partials/list.html',
-      controller: ['$window','$scope','$routeParams','$resource','etuanAdmin',ListCtrl]
+      controller: ['$scope','$routeParams','$resource','$window','etuanAdmin',ListCtrl]
     })
     .when('/:type*/edit/:id*',{
       templateUrl:'/admin/partials/edit.html',
