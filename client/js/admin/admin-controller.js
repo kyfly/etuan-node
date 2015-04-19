@@ -4,7 +4,7 @@ function AdminCtrl ($scope,$timeout) {
   $scope.sidebarToggle = function () {
     $scope.sidebarShow = !$scope.sidebarShow;
   };
-  //监听ngView完成事件，延迟100ms用于页面渲染
+  //监听ngView完成事件，延迟200ms用于页面渲染
   $scope.$on('$viewContentLoaded',function(){
     if (document.body.clientWidth >= 768) {
       $timeout(function(){
@@ -113,6 +113,7 @@ function ListCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
       userId:etuanAdmin.cache.userId
     }
   );
+  $scope.contentShow = etuanAdmin.item.isBasicContent[$routeParams.type];
   //日期显示格式，标准Angular Date Filter格式,从service-etuanAdmin中去取得
   $scope.unFormat = etuanAdmin.datetime.unFormat;
   //请求获取信息
@@ -153,26 +154,41 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
    * 在函数中其中分成两部分，顺序结构部分用于初始化通用部分，switch结构用于初始化功能特定的部分
    * intial()决定将edit页面初始化为“新建”还是编辑“编辑”，以及实现对初始化函数的调用
    */
+  $scope.contentShow = etuanAdmin.item.isBasicContent[$routeParams.type];
   var initEdit = function () {
-    $scope.startTime = new Date();
-    $scope.stopTime = new Date();
+    if ($scope.contentShow[2]) {
+      $scope.startTime = new Date();
+    }
+    if ($scope.contentShow[3]) {
+      $scope.stopTime = new Date();
+    }
   };
   var loadEdit = function () {
     Edit.get({fk:$routeParams.id},
       function(res){
-        $scope.title = res.title;
-        $scope.description = res.description;
-        $scope.startTime = new Date(res.startTime);
-        $scope.startDate = new Date(res.startTime);
-        $scope.startDate.toString = function(){
-          return this.getFullYear()+'年'+(this.getMonth()+1)+'月'+this.getDate()+'日 ';
-        };
-        $scope.stopTime = new Date(res.stopTime);
-        $scope.stopDate = new Date(res.stopTime);
-        $scope.stopDate.toString = function(){
-          return this.getFullYear()+'年'+(this.getMonth()+1)+'月'+this.getDate()+'日 ';
-        };
-        $scope.verifyRule = res.verifyRule;
+        if ($scope.contentShow[0]) {
+          $scope.title = res.title;
+        }
+        if ($scope.contentShow[1]) {
+          $scope.description = res.description;
+        }
+        if ($scope.contentShow[2]) {
+          $scope.startTime = new Date(res.startTime);
+          $scope.startDate = new Date(res.startTime);
+          $scope.startDate.toString = function () {
+            return this.getFullYear() + '年' + (this.getMonth() + 1) + '月' + this.getDate() + '日';
+          };
+        }
+        if ($scope.contentShow[3]) {
+          $scope.stopTime = new Date(res.stopTime);
+          $scope.stopDate = new Date(res.stopTime);
+          $scope.stopDate.toString = function () {
+            return this.getFullYear() + '年' + (this.getMonth() + 1) + '月' + this.getDate() + '日';
+          };
+        }
+        if ($scope.contentShow[4]) {
+          $scope.verifyRule = res.verifyRule;
+        }
         switch ($routeParams.type){
           case 'form':
             $scope.forms = res.formQuestions;
@@ -181,13 +197,17 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
           case 'seckill':
             for (var i = 0; i < res.seckillArrangements.length; i++) {
               var seckillArrangementsTmp = {};
-              seckillArrangementsTmp.title = res.seckillArrangements[i].title;
               seckillArrangementsTmp.total = res.seckillArrangements[i].total;
               seckillArrangementsTmp.startTime = new Date(res.seckillArrangements[i].startTime);
               seckillArrangementsTmp.startDate = new Date(res.seckillArrangements[i].startTime);
               seckillArrangementsTmp.startDate.toString = function(){
-                return this.getFullYear()+'年'+(this.getMonth()+1)+'月'+this.getDate()+'日 ';
+                return this.getFullYear()+'年'+(this.getMonth()+1)+'月'+this.getDate()+'日';
               };
+              seckillArrangementsTmp.seckillStartDateOpen = function ($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+                this.seckillStartOpened = true;
+              },
               $scope.seckills.push(seckillArrangementsTmp);
             }
             break;
@@ -206,7 +226,6 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
     $scope.cnType = etuanAdmin.dict[$routeParams.type];
     $scope.mode = $routeParams.id === 'create'?('新建'+$scope.cnType+' '):('编辑'+$scope.cnType+' ');
     $scope.submitButtonName = $routeParams.id === 'create'?'创建':'更新';
-    $scope.contentShow = etuanAdmin.item.isBasicContent[$routeParams.type];
   };
   initial();
   /* 日期选择器配置
@@ -448,20 +467,23 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
    * 在完成提交后，将转跳至列表页面list.html
    */
   $scope.submit = function () {
-    if ($scope.startDate && $scope.stopDate && $scope.startTime && $scope.stopTime) {}
-    else {alert('您输入的时间有误，请重试');return;}
-
-    var nowTime = new Date();
-    var startTmp = new Date($scope.startDate.getFullYear(),$scope.startDate.getMonth(),$scope.startDate.getDate(),$scope.startTime.getHours(),$scope.startTime.getMinutes());
-    var stopTmp = new Date($scope.stopDate.getFullYear(),$scope.stopDate.getMonth(),$scope.stopDate.getDate(),$scope.stopTime.getHours(),$scope.stopTime.getMinutes());
-    var uploadParameters = {
-      'title': $scope.title,
-      'description':$scope.description,
-      'startTime': startTmp.toISOString(),
-      'stopTime': stopTmp.toISOString(),
-      'verifyRule': $scope.verifyRule,
-      'updatedAt': nowTime.toISOString()
-    };
+    var uploadParameters = {};
+    uploadParameters.updatedAt = new Date();
+    if ($scope.contentShow[0]) {
+      uploadParameters.title = $scope.title;
+    }
+    if ($scope.contentShow[1]) {
+      uploadParameters.description = $scope.description;
+    }
+    if ($scope.contentShow[2]) {
+      uploadParameters.startTime = new Date($scope.startDate.getFullYear(),$scope.startDate.getMonth(),$scope.startDate.getDate(),$scope.startTime.getHours(),$scope.startTime.getMinutes()).toISOString();
+    }
+    if ($scope.contentShow[3]) {
+      uploadParameters.stopTime = new Date($scope.stopDate.getFullYear(),$scope.stopDate.getMonth(),$scope.stopDate.getDate(),$scope.stopTime.getHours(),$scope.stopTime.getMinutes()).toISOString();
+    }
+    if ($scope.contentShow[4]) {
+      uploadParameters.verifyRule = $scope.verifyRule;
+    }
     switch ($routeParams.type){
       case 'activity':
           uploadParameters.contentUrl = $scope.activityContentUrl;
@@ -481,6 +503,10 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
         break;
       case 'seckill':
         var seckillArrangementsTmp = [];
+        if ($scope.seckills.length === 0) {
+          alert('请至少添加一轮抢票');
+          return;
+        }
         for (var i = 0; i < $scope.seckills.length; i++) {
           var seckillStartTmp = new Date($scope.seckills[i].startDate.getFullYear(),$scope.seckills[i].startDate.getMonth(),$scope.seckills[i].startDate.getDate(),$scope.seckills[i].startTime.getHours(),$scope.seckills[i].startTime.getMinutes());
           var seckillArrangement = {
@@ -489,6 +515,10 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
             'total':$scope.seckills[i].total
           };
           seckillArrangementsTmp.push(seckillArrangement);
+          if (i !== 0 && seckillStartTmp <= new Date(seckillArrangementsTmp[i - 1].startTime) ) {
+            alert('请按时间先后顺序设置各轮开始时间');
+            return;
+          }
         }
         uploadParameters.seckillArrangements = seckillArrangementsTmp;
         break;
@@ -507,14 +537,14 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
         break;
     }
     if($routeParams.id === 'create'){
-      Edit.save(uploadParameters);
+      //Edit.save(uploadParameters);
     }
     else{
       Edit.update({fk:$routeParams.id},uploadParameters);
     }
     var mode = $routeParams.id === 'create'?'创建':'更新';
     alert(mode+$scope.cnType+'成功！');
-    $window.location.hash = '#/'+$routeParams.type+'/list';
+    //$window.location.hash = '#/'+$routeParams.type+'/list';
   };
   $scope.preview = function(){
   };
@@ -596,8 +626,8 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
         break;
       case 'seckill':
         $scope.title = res.title;
-        $scope.startTime = res.startTime;
-        $scope.stopTime = res.stopTime;
+        $scope.startTime = res.seckillArrangements[0].startTime;
+        $scope.stopTime = res.seckillArrangements[res.seckillArrangements.length - 1].startTime;
         break;
       case 'vote':
         $scope.title = res.title;
