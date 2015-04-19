@@ -35,5 +35,5 @@ var app = angular.module('app', ['ngResource','ngAnimate','ngRoute','ui.bootstra
 app.config(['$resourceProvider',RewriteResourceActions]);
 app.config(['$routeProvider',RouteConfigure]);
 app.controller('SidebarCtrl',['$scope','$window',SidebarCtrl]);
-app.controller('NavbarCtrl',['$scope','$window','$resource',NavbarCtrl]);
-app.controller('AdminCtrl',['$scope','$window','$timeout',AdminCtrl]);
+app.controller('NavbarCtrl',['$scope','$window','$resource','etuanAdmin',NavbarCtrl]);
+app.controller('AdminCtrl',['$scope','$timeout',AdminCtrl]);

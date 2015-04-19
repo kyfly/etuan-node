@@ -1,6 +1,7 @@
 //将公共部分写成service依赖注入，实现模块化，摆脱controller
 app.service('etuanAdmin',function(){
   return {
+    cache:JSON.parse(window.localStorage.getItem('b3JnYW5p')),
     //在这包含和社团组织相关的信息，主要用于设置当中，如果需要其他组件需要也可以直接注入
     org:{
       types:['校级社团','校级组织','院级社团','院级组织'],
@@ -41,7 +42,7 @@ app.service('etuanAdmin',function(){
     datetime:{
       enFormat:"EEE MMM dd yyyy HH:mm:ss 'GMT'Z '(CST)'",
       cnFormat:"yyyy'年'MM'月'dd'日 'HH'时'mm'分'",
-      unFormat:"yyyy-MM-dd HH:mm",  
+      unFormat:"yyyy-MM-dd HH:mm",
       cnDateFormat:"yyyy'年'M'月'd'日",
       unDateFormat:"yyyy-MM-dd"
     },

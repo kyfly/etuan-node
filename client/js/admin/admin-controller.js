@@ -1,4 +1,4 @@
-function AdminCtrl ($scope,$window,$timeout) {
+function AdminCtrl ($scope,$timeout) {
   //768像素为界限决定侧边栏的显示与否
   $scope.sidebarShow = (document.body.clientWidth >= 768);
   $scope.sidebarToggle = function () {
@@ -14,13 +14,13 @@ function AdminCtrl ($scope,$window,$timeout) {
   });
 }
 
-function NavbarCtrl ($scope,$window,$resource) {
+function NavbarCtrl ($scope,$window,$resource,etuanAdmin) {
   //团团一家LOGO
   $scope.etuanLogo = "/img/full-logo.png";
   //获取社团基本信息的接口，可以用于显示右上角信息
   var Organization = $resource(
     '/api/OrganizationUsers/:userId',{
-      userId:JSON.parse($window.localStorage.getItem('b3JnYW5p')).userId
+      userId:etuanAdmin.cache.userId
     }
   );
   Organization.get({},
@@ -110,7 +110,7 @@ function ListCtrl ($window,$scope,$routeParams,$resource,etuanAdmin) {
   //项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的item.infoProperty属性
   var List = $resource(
     etuanAdmin.item.infoProperty[$routeParams.type],{
-      userId:JSON.parse($window.localStorage.getItem('b3JnYW5p')).userId
+      userId:etuanAdmin.cache.userId
     }
   );
   //日期显示格式，标准Angular Date Filter格式,从service-etuanAdmin中去取得
@@ -144,7 +144,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
    */
   var Edit = $resource(
     etuanAdmin.item.infoProperty[$routeParams.type],{
-      userId:JSON.parse($window.localStorage.getItem('b3JnYW5p')).userId
+      userId:etuanAdmin.cache.userId
     }
   );
   /* 初始化区
@@ -535,7 +535,7 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
   );
   var Info = $resource(
     etuanAdmin.item.infoProperty[$routeParams.type],{
-      userId:JSON.parse($window.localStorage.getItem('b3JnYW5p')).userId,
+      userId:etuanAdmin.cache.userId,
       fk:$routeParams.id
     }
   );
@@ -665,7 +665,7 @@ function HomeCtrl ($scope) {
 function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
   var Setting = $resource(
     '/api/OrganizationUsers/:userId',{
-      userId:JSON.parse($window.localStorage.getItem('b3JnYW5p')).userId
+      userId:etuanAdmin.cache.userId
     }
   );
   Setting.get({},
