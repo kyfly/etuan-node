@@ -746,7 +746,6 @@ function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
     for (var i = 0; i < $scope.organizationUserDepartments.length; i++) {
       dsTmp.push($scope.organizationUserDepartments[i]);
       dsTmp[i].id = i;
-      dsTmp[i].updatedAt = i;
     };
     Setting.update({
       organizationUserDepartments:dsTmp});
