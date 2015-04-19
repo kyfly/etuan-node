@@ -41,7 +41,7 @@ function FormCtrl ($scope,$resource,$location,$window) {
 
 function RewriteResourceActions ($resourceProvider) {
   var commonHeaders = {
-    Authorization:JSON.parse($window.localStorage.getItem('d2VjaGF0')).accessToken
+    Authorization:JSON.parse(window.localStorage.getItem('d2VjaGF0')).accessToken
   };
   $resourceProvider.defaults.actions = {
     'get':{
