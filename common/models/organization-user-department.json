@@ -5,15 +5,15 @@
   "idInjection": true,
   "properties": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "description": {
       "type": "string",
       "comments": "部门介绍"
     },
     "updateAt": {
-      "type": "date",
-      "required": true
+      "type": "date"
     }
   },
   "validations": [],
