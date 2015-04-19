@@ -20,7 +20,7 @@ function NavbarCtrl ($scope,$window,$resource) {
   //获取社团基本信息的接口，可以用于显示右上角信息
   var Organization = $resource(
     '/api/OrganizationUsers/:userId',{
-      userId:$window.localStorage.getItem('userId')
+      userId:JSON.parse($window.localStorage.getItem('b3JnYW5p')).userId
     }
   );
   Organization.get({},
@@ -37,12 +37,10 @@ function NavbarCtrl ($scope,$window,$resource) {
   //设置跳转动作（点击右上角信息）
   $scope.redirectToSetting = function () {
     $window.location.hash = '#/setting'
-  }
+  };
   //退出动作，包括清楚存储信息，返回至登录页面
   $scope.logOut = function () {
-    $window.localStorage.removeItem('accessToken');
-    $window.localStorage.removeItem('userId');
-    $window.localStorage.removeItem('loginTime');
+    $window.localStorage.removeItem('b3JnYW5p');
     $window.location = '/login/';
   };
 }
@@ -102,7 +100,7 @@ function SidebarCtrl ($scope,$window) {
   $scope.redirect = function(index) {
     for (var i = 0; i < $scope.sidebars.length; i++) {
       $scope.sidebars[i].active = false;
-    };
+    }
     $scope.sidebars[index].active = true;
     $window.location.hash = $scope.sidebars[index].url;
   };
@@ -112,7 +110,7 @@ function ListCtrl ($window,$scope,$routeParams,$resource,etuanAdmin) {
   //项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的item.infoProperty属性
   var List = $resource(
     etuanAdmin.item.infoProperty[$routeParams.type],{
-      userId:$window.localStorage.getItem('userId')
+      userId:JSON.parse($window.localStorage.getItem('b3JnYW5p')).userId
     }
   );
   //日期显示格式，标准Angular Date Filter格式,从service-etuanAdmin中去取得
@@ -146,7 +144,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
    */
   var Edit = $resource(
     etuanAdmin.item.infoProperty[$routeParams.type],{
-      userId:$window.localStorage.getItem('userId')
+      userId:JSON.parse($window.localStorage.getItem('b3JnYW5p')).userId
     }
   );
   /* 初始化区
@@ -158,7 +156,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
   var initEdit = function () {
     $scope.startTime = new Date();
     $scope.stopTime = new Date();
-  }; 
+  };
   var loadEdit = function () {
     Edit.get({fk:$routeParams.id},
       function(res){
@@ -189,9 +187,9 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
               seckillArrangementsTmp.startDate = new Date(res.seckillArrangements[i].startTime);
               seckillArrangementsTmp.startDate.toString = function(){
                 return this.getFullYear()+'年'+(this.getMonth()+1)+'月'+this.getDate()+'日 ';
-              }; 
+              };
               $scope.seckills.push(seckillArrangementsTmp);
-            };
+            }
             break;
           case 'vote':
             $scope.votes = res.voteSubitems;
@@ -387,12 +385,12 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
   $scope.moveUpForm = function (index) {
     if (index > 0) {
       $scope.forms.splice(index-1,0,$scope.forms.splice(index,1)[0]);
-    };
+    }
   };
   $scope.moveDownForm = function (index) {
     if (index < $scope.forms.length) {
       $scope.forms.splice(index+1,0,$scope.forms.splice(index,1)[0]);
-    };
+    }
   };
   $scope.showType = ['','选择题','简答题','陈述题','判断题'];
   $scope.showContent = ['',true,false,false,false];
@@ -408,7 +406,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
   $scope.seckills = [];
   $scope.addSeckill = function () {
     $scope.seckills.push({
-      startTime:'',
+      startDate: '',
       total:0,
       seckillStartDateOpen: function ($event) {
         $event.preventDefault();
@@ -431,19 +429,19 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
       'name':'这是一个投票项',
       'detailUrl':''
     });
-  }
+  };
   $scope.removeVote = function (index) {
     $scope.votes.splice(index,1);
   };
   $scope.moveUpVote = function (index) {
     if (index > 0) {
       $scope.votes.splice(index-1,0,$scope.votes.splice(index,1)[0]);
-    };
+    }
   };
   $scope.moveDownVote = function (index) {
     if (index < $scope.votes.length) {
       $scope.votes.splice(index+1,0,$scope.votes.splice(index,1)[0]);
-    };
+    }
   };
   /* 提交区
    * 用于提交数据，uploadParameter中首先加入通用部分的参数，然后根据switch结构向其中分别添加特定部分的参数
@@ -452,7 +450,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
   $scope.submit = function () {
     if ($scope.startDate && $scope.stopDate && $scope.startTime && $scope.stopTime) {}
     else {alert('您输入的时间有误，请重试');return;}
-    
+
     var nowTime = new Date();
     var startTmp = new Date($scope.startDate.getFullYear(),$scope.startDate.getMonth(),$scope.startDate.getDate(),$scope.startTime.getHours(),$scope.startTime.getMinutes());
     var stopTmp = new Date($scope.stopDate.getFullYear(),$scope.stopDate.getMonth(),$scope.stopDate.getDate(),$scope.stopTime.getHours(),$scope.stopTime.getMinutes());
@@ -463,7 +461,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
       'stopTime': stopTmp.toISOString(),
       'verifyRule': $scope.verifyRule,
       'updatedAt': nowTime.toISOString()
-    }
+    };
     switch ($routeParams.type){
       case 'activity':
           uploadParameters.contentUrl = $scope.activityContentUrl;
@@ -484,12 +482,12 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
       case 'seckill':
         var seckillArrangementsTmp = [];
         for (var i = 0; i < $scope.seckills.length; i++) {
-          var startTmp = new Date($scope.seckills[i].startDate.getFullYear(),$scope.seckills[i].startDate.getMonth(),$scope.seckills[i].startDate.getDate(),$scope.seckills[i].startTime.getHours(),$scope.seckills[i].startTime.getMinutes());
+          var seckillStartTmp = new Date($scope.seckills[i].startDate.getFullYear(),$scope.seckills[i].startDate.getMonth(),$scope.seckills[i].startDate.getDate(),$scope.seckills[i].startTime.getHours(),$scope.seckills[i].startTime.getMinutes());
           var seckillArrangement = {
             'id':i,
-            'startTime':$scope.seckills[i].startTime.toISOString(),
+            'startTime':seckillStartTmp.toISOString(),
             'total':$scope.seckills[i].total
-          }
+          };
           seckillArrangementsTmp.push(seckillArrangement);
         }
         uploadParameters.seckillArrangements = seckillArrangementsTmp;
@@ -523,7 +521,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
 }
 
 function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
-  /* 结果页面配置区 
+  /* 结果页面配置区
    * 用于设置结果页面的各项显示上的差异化配置。
    */
   var resultConfig = etuanAdmin.item.resultDownloadType;
@@ -537,7 +535,7 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
   );
   var Info = $resource(
     etuanAdmin.item.infoProperty[$routeParams.type],{
-      userId:$window.localStorage.getItem('userId'),
+      userId:JSON.parse($window.localStorage.getItem('b3JnYW5p')).userId,
       fk:$routeParams.id
     }
   );
@@ -560,25 +558,25 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
         break;
       case 'form':
         for (var i = 0; i < res.length; i++) {
-          var resultTmp = [];
+          var formResultTmp = [];
           var answersTmp = res[i].formResultAnswers;
           for (var j = 0; j < answersTmp.length; j++) {
-            resultTmp.push(answersTmp[j].content);
+            formResultTmp.push(answersTmp[j].content);
           }
-          $scope.results.push(resultTmp);
+          $scope.results.push(formResultTmp);
         }
         break;
       case 'seckill':
         break;
       case 'vote':
         for (var i = 0; i < res.length; i++) {
-          var resultTmp = [];
-          resultTmp.push(res[i].name);
-          resultTmp.push(res[i].count);
-          $scope.results.push(resultTmp);
-        };
+          var voteResultTmp = [];
+          voteResultTmp.push(res[i].name);
+          voteResultTmp.push(res[i].count);
+          $scope.results.push(voteResultTmp);
+        }
         break;
-    };
+    }
   };
   var infoProcess = function (res) {
     switch ($routeParams.type) {
@@ -594,7 +592,7 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
         $scope.resultHeaders.push('序号');
         for (var i = 0; i < res.formQuestions.length; i++) {
           $scope.resultHeaders.push(res.formQuestions[i].label);
-        };
+        }
         break;
       case 'seckill':
         $scope.title = res.title;
@@ -608,8 +606,8 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
         $scope.resultHeaders.push('名称');
         $scope.resultHeaders.push('数量');
         break;
-    };
-  }
+    }
+  };
   /* 结果页面的获取区
    * 在这个区域中包括了所有的请求。
    */
@@ -632,10 +630,10 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
    */
   $scope.pdfDownload = function () {
     window.open('/api/Forms/pdf/'+$routeParams.id,'_blank');
-  }
+  };
   $scope.excelDownload = function () {
     window.open('/api/Forms/excel/'+$routeParams.id,'_blank');
-  }
+  };
 }
 
 function HomeCtrl ($scope) {
@@ -667,7 +665,7 @@ function HomeCtrl ($scope) {
 function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
   var Setting = $resource(
     '/api/OrganizationUsers/:userId',{
-      userId:$window.localStorage.getItem('userId')
+      userId:JSON.parse($window.localStorage.getItem('b3JnYW5p')).userId
     }
   );
   Setting.get({},
@@ -688,7 +686,7 @@ function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
   $scope.schools = ($scope.type==='校级社团'||$scope.type==='校级组织')?['全校']:etuanAdmin.org.schools;
   $scope.typeChange = function () {
     $scope.schools = ($scope.type==='校级社团'||$scope.type==='校级组织')?['全校']:etuanAdmin.org.schools;
-  }
+  };
   //上传图片至OSS服务
   $scope.logoUpload = function () {
     var logoFd = new FormData();
@@ -701,7 +699,7 @@ function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
           Setting.update({logoUrl:$scope.logoUrl});
         }
       }
-    }
+    };
     logoFd.append('logo',logoFile);
     logoXhr.onreadystatechange = logoReadyHandle;
     logoXhr.open('POST','/ue/uploads?action=uploadimage&dir=logo',true);
@@ -730,12 +728,12 @@ function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
   $scope.moveUpDepartment = function (index) {
     if (index > 0) {
       $scope.organizationUserDepartments.splice(index-1,0,$scope.organizationUserDepartments.splice(index,1)[0]);
-    };
+    }
   };
   $scope.moveDownDepartment = function (index) {
     if (index < $scope.organizationUserDepartments.length) {
       $scope.organizationUserDepartments.splice(index+1,0,$scope.organizationUserDepartments.splice(index,1)[0]);
-    };
+    }
   };
   $scope.removeDepartment = function (index) {
     $scope.organizationUserDepartments.splice(index,1);
@@ -746,7 +744,7 @@ function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
     for (var i = 0; i < $scope.organizationUserDepartments.length; i++) {
       dsTmp.push($scope.organizationUserDepartments[i]);
       dsTmp[i].id = i;
-    };
+    }
     Setting.update({
       organizationUserDepartments:dsTmp});
   };

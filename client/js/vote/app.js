@@ -1,7 +1,9 @@
 function VoteCtrl ($scope,$resource,$location,$window) {
   var voteUrlSearchObj = $location.search();
   var Vote = $resource('/api/votes/:id');
-  var VoteResult = $resource('/api/WeChatUsers/:id/voteResults',{id:$window.localStorage.getItem('weChatUid')});
+  var VoteResult = $resource('/api/WeChatUsers/:id/voteResults',{
+    id:JSON.parse($window.localStorage.getItem('d2VjaGF0')).userId
+  });
   $scope.answer = [];
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
   Vote.get({
@@ -37,7 +39,7 @@ function VoteCtrl ($scope,$resource,$location,$window) {
 
 function RewriteResourceActions ($resourceProvider) {
   var commonHeaders = {
-    Authorization:window.localStorage.getItem('weChatAccessToken')
+    Authorization:JSON.parse($window.localStorage.getItem('d2VjaGF0')).accessToken
   };
   $resourceProvider.defaults.actions = {
     'get':{

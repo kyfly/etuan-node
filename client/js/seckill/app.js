@@ -18,8 +18,11 @@ function SeckillCtrl ($scope,$resource,$location,$window) {
 
 
 
-    var socket = io(window.location.host + '/seckill/' + seckillUrlSearchObj.id,
-      {query:'accessToken='+window.localStorage.getItem('weChatAccessToken')});
+    var socket = io(
+      window.location.host + '/seckill/' + seckillUrlSearchObj.id, {
+        query:'accessToken='+JSON.parse($window.localStorage.getItem('d2VjaGF0')).accessToken
+      }
+    );
     socket.on('error', function (err) {
       console.log(err);
     });
@@ -45,7 +48,7 @@ function SeckillCtrl ($scope,$resource,$location,$window) {
 
 function RewriteResourceActions ($resourceProvider) {
   var commonHeaders = {
-    Authorization:window.localStorage.getItem('weChatAccessToken')
+    Authorization:JSON.parse($window.localStorage.getItem('d2VjaGF0')).accessToken
   };
   $resourceProvider.defaults.actions = {
     'get':{
