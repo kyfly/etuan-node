@@ -679,6 +679,7 @@ function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
       $scope.school = res.school || '计算机学院';
       $scope.weChat = res.weChat;
       $scope.phone = res.phone;
+      $scope.organizationUserDepartments = res.organizationUserDepartments;
     },
     function () {}
   );
@@ -693,15 +694,23 @@ function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
     var logoFd = new FormData();
     var logoFile = document.getElementById('logo').files[0];
     var logoXhr = new XMLHttpRequest();
+    var logoReadyHandle = function () {
+      if (logoXhr.readyState === 4) {
+        if (logoXhr.status === 200) {
+          $scope.logoUrl = JSON.parse(logoXhr.responseText).url;
+          Setting.update({logoUrl:$scope.logoUrl});
+        }
+      }
+    }
     logoFd.append('logo',logoFile);
-    logoXhr.open('POST','/ue/uploads&action=uploadimage',true);
+    logoXhr.onreadystatechange = logoReadyHandle;
+    logoXhr.open('POST','/ue/uploads?action=uploadimage&dir=logo',true);
     logoXhr.send(logoFd);
   };
-  //提交设置按钮
-  $scope.submit = function () {
+  //基本信息提交按钮
+  $scope.basicSubmit = function () {
     Setting.update({
         name:$scope.name,
-        logoUrl:'/img/logo.jpg',//Temporary Logo File URL
         description:$scope.description,
         type:$scope.type,
         school:$scope.school,
@@ -712,6 +721,37 @@ function SettingCtrl ($scope,$resource,$window,etuanAdmin) {
       function () {}
     );
   };
+  $scope.addDepartment = function () {
+    $scope.organizationUserDepartments.push({
+      name:'部门',
+      description:'部门介绍'
+    });
+  };
+  $scope.moveUpDepartment = function (index) {
+    if (index > 0) {
+      $scope.organizationUserDepartments.splice(index-1,0,$scope.organizationUserDepartments.splice(index,1)[0]);
+    };
+  };
+  $scope.moveDownDepartment = function (index) {
+    if (index < $scope.organizationUserDepartments.length) {
+      $scope.organizationUserDepartments.splice(index+1,0,$scope.organizationUserDepartments.splice(index,1)[0]);
+    };
+  };
+  $scope.removeDepartment = function (index) {
+    $scope.organizationUserDepartments.splice(index,1);
+  };
+  //部门信息提交按钮
+  $scope.departmentSubmit = function () {
+    var dsTmp = [];
+    for (var i = 0; i < $scope.organizationUserDepartments.length; i++) {
+      dsTmp.push($scope.organizationUserDepartments[i]);
+      dsTmp[i].id = i;
+      dsTmp[i].updatedAt = i;
+    };
+    Setting.update({
+      organizationUserDepartments:dsTmp});
+  };
+
 }
 
 function HelpCtrl () {}
