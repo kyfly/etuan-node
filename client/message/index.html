@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="/lib/bootstrap/css/etuan.css">
-  <script src="/lib/angular/angular.js"></script>
+  <script src="/lib/angular/angular.min.js"></script>
   <script src="/js/message/msapp.js"></script>
   <style>
     body {
@@ -40,7 +40,7 @@
     <div class="text-center col-xs-12 col-sm-6 col-sm-offset-3" style="margin-top:20px;">
       <span class="glyphicon glyphicon-{{icon}}" style="font-size:10em;color:{{color}}"></span>
       <h1>{{title}}</h1>
-      <p style="text-align:left;word-break:break-word">{{paragraph}}</p> 
+      <p style="text-align:left;word-break:break-word">{{paragraph}}</p>
       <br>
       <button ng-show="btnShow" ng-click="btnClick()" type="button" class="btn btn-{{btnType}} btn-lg" style="width:50%">{{btnText}}</button>
     </div>
