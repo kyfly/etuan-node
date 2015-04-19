@@ -10,7 +10,7 @@ function loginCheck (t) {
         window.location = '/login';
         break;
       case 'd2VjaGF0':
-        window.location = '/wechat-login.html';
+        window.location = '/wx-tmp.html';
         break;
     }
   }

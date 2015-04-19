@@ -4,6 +4,10 @@
   <title>测试用列表</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <script src="/js/login.js"></script>
+  <script type="text/javascript">
+    loginCheck('d2VjaGF0');
+  </script>
   <script src="/lib/angular/angular.min.js"></script>
   <script>
     angular.module('app',[]).controller('fltCtrl',['$scope','$http',function($scope,$http){
@@ -28,9 +32,5 @@
   <ol>
     <li ng-repeat="skl in skls"><a href="/seckill#?id={{skl.id}}">{{skl.title}}</a></li>
   </ol>
-
-<script type="text/javascript">
-  if (!window.localStorage.getItem('weChatAccessToken')||!window.localStorage.getItem('weChatUid')||!window.localStorage.getItem('weChatLoginTime')){window.localStorage.removeItem('weChatAccessToken');window.localStorage.removeItem('weChatUid');window.localStorage.removeItem('weChatLoginTime');window.location = '/wechat-login.html';}
-</script>
 </body>
 </html>
