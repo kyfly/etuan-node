@@ -16,8 +16,8 @@ module.exports = function(FormResult) {
 								else {
 									next({'status': '400', 'content': '需要绑定微信'});
 								}
-							});
-              break;
+							});    		
+								break;
 						default:
 							next();
 							break;
