@@ -197,6 +197,17 @@ module.exports = function(WeChatUser) {
   	});
   });
 
+  //保存更新时间
+  WeChatUser.observe('before save', function(ctx, next) {
+    if(ctx.instance) {
+      ctx.instance.updatedAt = new Date();
+    }
+    else {
+      ctx.data.updatedAt = new Date();
+    }
+    next();
+  });	  
+
 };
 // {
 //   "id": "67rEETskbq8O084uSzRN01o0EeY8p2FK3Em8YECHhUOwDvExzwJqYml7pxn3fAiX",

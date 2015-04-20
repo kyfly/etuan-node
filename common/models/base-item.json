@@ -32,6 +32,10 @@
     },
     "updatedAt": {
       "type": "date"
+    },
+    "viewCount": {
+      "type": "number",
+      "default": 0
     }
   },
   "validations": [],

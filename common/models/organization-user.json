@@ -267,7 +267,26 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "__updateById__activities"
-    }
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "actCount"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "viewCount"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "parCount"
+    }         
+
   ],
   "methods": []
 }
