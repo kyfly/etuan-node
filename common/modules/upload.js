@@ -36,7 +36,7 @@ function __img(req,res,next,callback){
             __oss(path.join(img_url,name),data,function(err,data){
               if(err) return;
               else
-                res.json({
+                res.send({
                     'url': 'http://etuan-node.oss-cn-hangzhou.aliyuncs.com/'+img_url+'/'+name,
                     'title': req.body.pictitle,
                     'original': filename,
@@ -62,7 +62,7 @@ function __oss(path,data,cb){
 }
 function upload(callback) {
   return function(req, res, next) {
-   if (req.query.action === 'uploadimage') {
+    if (req.query.action === 'uploadimage') {
       __img(req,res,next,callback);
       return;
     }else if (req.query.action === 'config') {
@@ -79,9 +79,35 @@ function upload(callback) {
               "state":"SUCCESS"
             });
         });
-        callback(req, res, next);
       }
+      callback(req, res, next);
       return;
+    }else if(req.query.action === 'listimage'){
+      res.image_list = function(path){
+        oss.listObjects({ 
+          Bucket: 'etuan-node',
+          Prefix: path
+        },function(err,data){
+           var prefix = 'http://etuan-node.oss-cn-hangzhou.aliyuncs.com/';
+           var list = [];
+           data.Contents.forEach(function(content){
+              var item = {
+                url:prefix + content.Key,
+                mtime:new Date().getTime()
+              }
+              list.push(item);
+           });
+
+           res.send({
+            state:'SUCCESS',
+            list:list,
+            start:0,
+            total:data.Contents.length
+          });
+        });
+      }
+      callback(req, res, next);
+      return
     }
   };
 };

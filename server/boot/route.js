@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use("/ue/uploads", upload(function(req, res, next) {
+  console.log(req.accessToken);
   var dir = req.query.dir;
   if(dir === undefined)
     dir = 'ue';
@@ -20,9 +21,12 @@ app.use("/ue/uploads", upload(function(req, res, next) {
   }else if(req.query.action === 'uploadtext'){
     var html_url = 'html/'+dir;
     res.up_text(html_url);
-  }else if(req.query.action === 'config')
+  }else if(req.query.action === 'config'){
       //ueditor后台配置文件位置
   	res.send(require('../../client/ueditor/config.json'));
+  }else if(req.query.action === 'listimage'){
+    res.image_list('images/'+dir);
+  }
 }));
 ///上传
 };

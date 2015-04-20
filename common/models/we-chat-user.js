@@ -41,53 +41,6 @@ module.exports = function(WeChatUser) {
 	 * @param  {String} next){		var referer       [description]
 	 * @return {[type]}              [description]
 	 */
-	WeChatUser.remoteMethod('studentConfim',
-		{
-			accepts:[{arg:"studentId",type:"string"},
-				{arg:"studentPw",type:"string"},
-				{arg:"userId",type:"string"}],
-			description:"学生学号密码验证",
-			http: {path:"/student",verb: 'get'}
-		});
-	WeChatUser.remoteMethod('__create__histories',
-		{
-			accepts:[{arg:"data",type:"WeChatUserHistory"},
-			{arg:"id",type:"string"}],
-			http: {path:"/:id/histories",verb: 'post'}
-		});
-	WeChatUser.beforeRemote('__create__histories',function(ctx, unused, next){
-
-		});
-	//WeChatUser.disableRemoteMethod("__create__histories");
-	WeChatUser.studentConfim = function(studentId,studentPw,userId,cb)
-	{
-		hduConfim.ihdu(studentId,studentPw,function(name){
-			WeChatUser.findOne({where:{id:userId}},function(err,userInfo){
-				var updatedAt = userInfo["updatedAt"];
-				if(updatedAt === undefined)
-					updatedAt = new Date().getTime();
-				userInfo["studentId"]    = studentId;
-				userInfo["university"]   = '杭州电子科技大学';
-				userInfo["verifiedDate"] = updatedAt;
-				userInfo["studentName"]  = name;
-				userInfo["updatedAt"]  = new Date();
-				var studentInfo = {
-							"studentName":name,
-			    			"studentId":studentId,
-			    			"university":'杭电hytdfyhty',
-			    			"verifiedDate":updatedAt,
-			    			"updatedAt":new Date()
-						};
-				userInfo["weChatUserHistories"][userInfo["weChatUserHistories"].length]=studentInfo;
-				console.log(userInfo);
-				WeChatUser.update({id:userId},userInfo,
-					function(err,count){
-		    				if(err) cb(err);
-							cb(userInfo);
-		    		});
-			});
-		});
-	}
 	WeChatUser.beforeRemote("wechatLogin",function(ctx, unused, next){
 		if(ctx.req.headers.referer) 
 			var referer = ctx.req.headers.referer;
@@ -145,18 +98,18 @@ module.exports = function(WeChatUser) {
 		var state = query.state;
 		WeChatUser.app.models.LoginCache.find({where:{randstate:query.state}},function(err,loginCache){
 			if(err)
-				ctx.res.render("./student.ejs",{"msg":"出错了,请刷新后登陆"});
+				ctx.res.render("./phone.ejs",{"msg":"出错了,请刷新后登陆"});
 			else if(loginCache.length == 0)
-				ctx.res.render("./student.ejs",{"msg":"非法的请求"});
+				ctx.res.render("./phone.ejs",{"msg":"非法的请求"});
 			else
 			WeChatUser.app.models.LoginCache.updateAll(
 				{randstate:state},
 				{code:query.code},
 				function(err,count){
 					if(err)
-						ctx.res.render("./student.ejs",{"msg":"出错了,请刷新后登陆"});
+						ctx.res.render("./phone.ejs",{"msg":"出错了,请刷新后登陆"});
 					else
-						ctx.res.render("./student.ejs",{"msg":"success","state":state});
+						ctx.res.render("./phone.ejs",{"msg":"success","state":state});
 				});
 		});
 	});
@@ -174,6 +127,7 @@ module.exports = function(WeChatUser) {
   	else
   	hduConfim.ihdu(data.studentId,data.password,function(name){
 		if(!name) ctx.res.send({"err":"获取学生姓名失败"});
+		if(name === 'mistake_notice') ctx.res.send({err:'密码或学号错误'});
 		else
 		WeChatUser.findOne({where:{id:access_token.userId}},function(err,userInfo){
 			updatedAt = userInfo.updatedAt || new Date();
@@ -196,11 +150,10 @@ module.exports = function(WeChatUser) {
 		});
   	});
   });
-
 };
 // {
-//   "id": "67rEETskbq8O084uSzRN01o0EeY8p2FK3Em8YECHhUOwDvExzwJqYml7pxn3fAiX",
+//   "id": "FzSvMzLHvgdrrIK3HDoX7uyya8ysr7QoPt0YuDtDBa9s0AYZ1BsrPaVpELWHwMRX",
 //   "ttl": 1209600,
-//   "created": "2015-04-05T08:03:22.508Z",
-//   "userId": "5520ec387cdeb6841af01610"
+//   "created": "2015-04-20T10:00:31.236Z",
+//   "userId": "5534ce317f6ac78c11054114"
 // }
