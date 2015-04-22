@@ -2,7 +2,7 @@ function RouteConfigure ($routeProvider){
   $routeProvider
     .when('/home',{
       templateUrl:'/admin/partials/home.html',
-      controller: ['$scope',HomeCtrl]
+      controller: ['$scope','$resource',HomeCtrl]
     })
     .when('/setting',{
       templateUrl:'/admin/partials/setting.html',

@@ -666,7 +666,7 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
   };
 }
 
-function HomeCtrl ($scope) {
+function HomeCtrl ($scope,$resource) {
   //这里写着所有的通知通告，别忘了上面的三个数字的实现也要写在这一块地方
   $scope.notices = [
     {
@@ -690,6 +690,10 @@ function HomeCtrl ($scope) {
       'content':'这种忧患和责任意识是习近平治国理政的重要思想底色。“全党必须警醒起来”，2012年习近平一上任就为全党敲响了警钟。紧接着，习近平发出“整风”动员令，并从生死存亡的高度来认识和解决腐败问题。在党的群众路线教育实践活动总结大会上，习近平引用《道德经》中的名句“为之于未有，治之于未乱”再次告诫全党要增强忧患意识，学会“下先手棋”，方能立于不败。'
     }
   ];
+  //获得接口并进行显示
+  $resource('/api/OrganizationUsers/actCount').get({},function(res){console.log(res);$scope.actCount=res.actCount.actCount;},function(){});
+  $resource('/api/OrganizationUsers/viewCount').get({},function(res){console.log(res);$scope.viewCount=res.viewCount.viewCount;},function(){});
+  $resource('/api/OrganizationUsers/parCount').get({},function(res){console.log(res);$scope.parCount=res.parCount.parCount;},function(){});
 }
 
 function SettingCtrl ($scope,$resource,etuanAdmin) {
