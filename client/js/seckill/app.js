@@ -4,6 +4,7 @@ function SeckillCtrl ($scope,$resource,$location,$window) {
     $scope.title = '疯抢';
     $scope.round = 0;
     $scope.description = '描述描述描述描述描述描述描述描述描述描述描述';
+    $scope.hint = '我是提示信息，什么倒计时啊，剩余数量啊';
   	$scope.cnFormat = 'yyyy-MM-dd HH:mm';
     Seckill.get({
         'id':seckillUrlSearchObj.id
@@ -14,7 +15,10 @@ function SeckillCtrl ($scope,$resource,$location,$window) {
       	$scope.seckillArrangements = res.seckillArrangements;
       },
       function(res){}
-    );
+    )
+    for (var i = 0; i < $scope.seckillArrangements; i++) {
+      ;
+    }
 
 
 
