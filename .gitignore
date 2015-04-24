@@ -41,6 +41,3 @@ server/config.beta.json
 server/config.production.json
 server/datasources.beta.json
 server/datasources.production.json
-
-# ignore Loopback api explorer
-server/boot/explorer.js
