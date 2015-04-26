@@ -44,6 +44,10 @@ Verify.prototype.checkToken = function (token, cb) {
   });
 };
 
+Verify.prototype.checkId = function (id) {
+  return true;
+};
+
 Verify.prototype.getStudentId = function (token, cb) {
   tokenModel.findOne({where: {id: token}, fields: {userId: true}}, function (err, tokenData) {
     userModel.findOne({where: {id: tokenData.userId}, fields: {studentId: true}},
