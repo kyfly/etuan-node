@@ -25,21 +25,25 @@ Verify.prototype.idMask = function (verifyId) {
 Verify.prototype.checkToken = function (token, cb) {
   tokenModel.findOne({where: {id: token}}, function (err, tokenData) {
     if (!tokenData)
-      cb(err, false);
+      cb(err, false); //找不到accessToken
     else
       tokenData.validate(function (err, isValid) {
         if (!isValid)
-          cb(err, false);
+          cb(err, false); //accessToken已过期
         else
-          userModel.findOne({where: {id: tokenData.userId}}, function (err, userData) {
-            if (!userData)
-              cb(err, false);
-            else
-              if (verifyRule == 'studentId')
-                cb(err, true, userData.studentId);
+          userModel.findOne({where: {id: tokenData.userId}, fields: {studentId: true}},
+            function (err, userData) {
+              if (!userData)
+                cb(err, false);   //找不到该用户
+              else if (verifyRule == 'studentId') {
+                if (userData.studentId)
+                  cb(err, true, userData.studentId);  //学号验证时返回学号
+                else
+                  cb(err, false);   //学号未绑定
+              }
               else
-                cb(err, true);
-          })
+                cb(err, true);    //验证通过
+            })
       })
   });
 };
