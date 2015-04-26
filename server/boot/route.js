@@ -1,6 +1,3 @@
-var path = require('path');
-//var ueditor = require("ueditor");
-var Busboy = require('busboy');
 var upload = require("../../common/modules/upload.js");
 var bodyParser = require('body-parser');
 module.exports = function(app) {
@@ -11,7 +8,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use("/ue/uploads", upload(function(req, res, next) {
-  console.log(req.accessToken);
+  console.log(req.query);
   var dir = req.query.dir;
   if(dir === undefined)
     dir = 'ue';
