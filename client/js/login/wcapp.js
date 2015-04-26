@@ -19,15 +19,15 @@ var checkStatus = function () {
   };
 };
 var createQrcode = function (url) {
-  var qr = qrcode(9, 'Q');
+  var qr = qrcode(12, 'L');
   qr.addData(url);
   qr.make();
-  document.getElementById('qrcode').innerHTML = qr.createImgTag(5,15);
+  document.getElementById('qrcode').innerHTML = qr.createImgTag(4,12);
 };
 createQrcode(url);
 setInterval(checkStatus, 4000);
-setInterval(function () {        
+setInterval(function () {
   document.location.reload(true);
-  }, 
+  },
   60000
 );
