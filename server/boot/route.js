@@ -1,29 +1,44 @@
-var upload = require("../../common/modules/upload.js");
+var etuan_module = '../../common/modules/';
+var upload = require(etuan_module + "upload.js");
+var Verify = require(etuan_module + "Verify.js");
 var bodyParser = require('body-parser');
 module.exports = function(app) {
-///所有图片,html文本上传都用这个,ueditor修改ueditor.config.js中serverUrl: "/ue/uploads"
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
 
+function inarray(arr, obj) {  
+  var i = arr.length;  
+  while (i--) {  
+    if (arr[i] === obj) {  
+      return true;  
+    }  
+  }  
+  return false;  
+}  
+var verify = new Verify(app.models.AccessToken,app.models.OrganizationUser); 
 app.use("/ue/uploads", upload(function(req, res, next) {
-  console.log(req.query);
-  var dir = req.query.dir;
-  if(dir === undefined)
-    dir = 'ue';
-  if (req.query.action === 'uploadimage') {
-    var img_url = 'images/'+dir;
-    res.up_img(img_url); 
-  }else if(req.query.action === 'uploadtext'){
-    var html_url = 'html/'+dir;
-    res.up_text(html_url);
-  }else if(req.query.action === 'config'){
-      //ueditor后台配置文件位置
-  	res.send(require('../../client/ueditor/config.json'));
-  }else if(req.query.action === 'listimage'){
-    res.image_list('images/'+dir);
-  }
+  var query = req.query;
+  var dirs = ['ue','form','vote','logo'];
+  verify.getUserId(query.access_token,function (err,userId){
+    if(err) return;
+    if(inarray(dirs,query.dir) && userId && query.dir != undefined)
+      var path = query.dir +"/" + app.token.userId;
+    else{
+      //res.send({"state":400,code:"access failed"});
+      return;
+    }
+    switch(query.action){
+      case 'config':
+        res.send(require('../../client/ueditor/config.json'));break;
+      case 'uploadimage':
+        res.up_img('images/' + path);break;
+      case 'uploadtext':
+        res.up_text('html/' + path);
+      case 'listimage':
+        res.image_list('images/'+path);
+      }
+  });
 }));
-///上传
 };

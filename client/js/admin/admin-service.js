@@ -23,7 +23,7 @@ app.service('etuanAdmin',function(){
     //包含了editor的配置项
     editor:{
       config:{
-        serverUrl: "/ue/uploads?access_token="+"fgdfg",
+        serverUrl: "/ue/uploads?access_token="+JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken+"&dir=ue",
         toolbars:[[
             'fullscreen', 'source', '|', 'undo', 'redo', '|',
             'bold', 'italic', 'underline', 'fontborder', 'strikethrough', '|',
