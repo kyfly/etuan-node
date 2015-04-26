@@ -1,11 +1,5 @@
 module.exports.start = function (app) {
 
-  function verifyIdMask(verifyId) {
-    if (typeof(verifyId) != 'string')
-      verifyId += '';
-    return verifyId.slice(0, 2) + '***' + verifyId.slice(5, verifyId.length);
-  }
-
   var io = require('socket.io')(app.server);
   var Verify = require('./verify');
   var Seckill = app.models.Seckill;
@@ -69,7 +63,7 @@ module.exports.start = function (app) {
                   if (socket.handshake.query.verifyId)
                     verifyId = socket.handshake.query.verifyId;
                   else
-                    if (!Verify.checkId(verifyId))
+                    if (!verify.checkId(verifyId))
                     {
                       socket.emit('killFail', 'verifyId wrong');
                       return;

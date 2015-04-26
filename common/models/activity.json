@@ -6,6 +6,12 @@
     "contentUrl": {
       "type": "string",
       "required": true
+    },
+    "startTime": {
+      "type": "date"
+    },
+    "stopTime": {
+      "type": "date"
     }
   },
   "validations": [],
