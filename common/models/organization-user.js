@@ -130,5 +130,11 @@ module.exports = function(OrganizationUser) {
       ctx.data.updatedAt = new Date();
     }
     next();
-  });	
+  });
+
+  //修改accesstoken有效时间
+  OrganizationUser.beforeRemote('login', function(ctx, instance, next) {
+  	ctx.req.body.ttl = 7200;
+  	next();
+  });
 };
