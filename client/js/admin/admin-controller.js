@@ -537,7 +537,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
         break;
     }
     if($routeParams.id === 'create'){
-      //Edit.save(uploadParameters);
+      Edit.save(uploadParameters);
     }
     else{
       Edit.update({fk:$routeParams.id},uploadParameters);
@@ -726,9 +726,9 @@ function SettingCtrl ($scope,$resource,etuanAdmin) {
     var logoFd = new FormData();
     var logoFile = document.getElementById('logo').files[0];
     var logoXhr = new XMLHttpRequest();
-    var fileExt =/\.[^\.]+/.exec(document.getElementById('logo').value);
-    if(!((fileExt == '.png')||(fileExt == '.jpg')||(fileExt == '.jpeg')||(fileExt == '.PNG')||(fileExt == '.JPG')||(fileExt == '.JPEG'))){
-      alert('请确认您上传的logo文件格式是jpg、png或jpeg');
+    var fileExt =/\.[^\.]+/.exec(document.getElementById('logo').value.toLowerCase());
+    if(!((fileExt == '.png')||(fileExt == '.jpg')||(fileExt == '.jpeg')||(fileExt == '.gif'))){
+      alert('请确认您上传的logo文件格式是jpg、png、gif或jpeg');
       return false;
     }
     var logoReadyHandle = function () {
