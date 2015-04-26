@@ -2,10 +2,10 @@ module.exports = Verify;
 
 var tokenModel;
 var userModel;
-var verifyRule;
-var verifyIdRex = {
-  "phone": "",
-  "idCard": ""
+var verifyRule = '';
+var verifyIdRegular = {
+  "phone": /^1[3-8]\d{9}$/,
+  "idCard": /^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/
 };
 
 function Verify(token, user, rule) {
@@ -49,7 +49,14 @@ Verify.prototype.checkToken = function (token, cb) {
 };
 
 Verify.prototype.checkId = function (id) {
-  return true;
+  if (verifyRule == 'studentId')
+    return true;
+  if (verifyIdRegular.hasOwnProperty(verifyRule)) {
+    var reg = new RegExp(verifyIdRegular[verifyRule]);
+    return reg.test(id);
+  }
+  else
+    return false;
 };
 
 Verify.prototype.getStudentId = function (token, cb) {
