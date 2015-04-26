@@ -24,7 +24,7 @@ app.use("/ue/uploads", upload(function(req, res, next) {
   verify.getUserId(query.access_token,function (err,userId){
     if(err) return;
     if(inarray(dirs,query.dir) && userId && query.dir != undefined)
-      var path = query.dir +"/" + app.token.userId;
+      var path = query.dir +"/" + userId;
     else{
       //res.send({"state":400,code:"access failed"});
       return;
