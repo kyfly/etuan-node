@@ -35,10 +35,6 @@
     "dataSource": "db",
     "public": true
   },
-  "WeChatMP": {
-    "dataSource": "db",
-    "public": true
-  },
   "Form": {
     "dataSource": "db",
     "public": true
@@ -55,23 +51,11 @@
     "dataSource": "db",
     "public": false
   },
-  "WeChatMPAutoReply": {
-    "dataSource": "db",
-    "public": false
-  },
-  "WeChatMPNews": {
-    "dataSource": "db",
-    "public": false
-  },
   "FormQuestion": {
     "dataSource": "db",
     "public": false
   },
   "FormResultAnswer": {
-    "dataSource": "db",
-    "public": false
-  },
-  "WeChatEtuanQR": {
     "dataSource": "db",
     "public": false
   },

@@ -1,7 +1,4 @@
-var OAuth = require('wechat-oauth');
-var config = require('../../server/config');
 var wechatLogin = require('../modules/wechatLogin');
-var client = new OAuth(config.appid, config.appsecret);
 module.exports = function(LoginCache) {
 	LoginCache.remoteMethod('confirm',
 		{
