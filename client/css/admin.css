@@ -3,6 +3,10 @@ html {
   height: 100%;
 }
 
+.navbar {
+  z-index: 9999;
+}
+
 body {
   font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
   height: 100%;
@@ -28,15 +32,34 @@ body {
 .sidebar-list .sidebar-item .active {
   background-color: #35404d;
 }
+
 @media screen and (max-width: 768px) {
   .sidebar {
     padding: 0 15px 40px;
   }
+
   .sidebar-list .sidebar-item {
     padding: 5px;
     height: 50px;
     line-height: 30px;
     font-size: 12px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #sidebar {
+    position: fixed;
+    left: 0;
+    z-index: 99;
+  }
+
+  #addPurple {
+    position: fixed;
+    background-color: #2a3542;
+    left: 0;
+    top: 0;
+    height: 200px;
+    z-index: 99;
   }
 }
 

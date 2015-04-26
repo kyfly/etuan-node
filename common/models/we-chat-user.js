@@ -173,7 +173,13 @@ module.exports = function(WeChatUser) {
   WeChatUser.beforeRemote('prototype.__create__formResults', function(ctx, instance, next) {
   	ctx.req.body.ip = getClientIp(ctx.req);
   	next();
-  });  
+  });
+
+  //修改accesstoken有效时间
+  WeChatUser.beforeRemote('login', function(ctx, instance, next) {
+  	ctx.req.body.ttl = 7200;
+  	next();
+  });
 
   function getClientIp(req) {
       return req.headers['x-forwarded-for'] ||

@@ -15,7 +15,7 @@ function SeckillCtrl ($scope,$resource,$location,$window) {
       	$scope.seckillArrangements = res.seckillArrangements;
       },
       function(res){}
-    )
+    );
     for (var i = 0; i < $scope.seckillArrangements; i++) {
       ;
     }

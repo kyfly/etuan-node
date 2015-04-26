@@ -3,7 +3,14 @@
   "base": "BaseItem",
   "strict": true,
   "idInjection": true,
-  "properties": {},
+  "properties": {
+    "startTime": {
+      "type": "date"
+    },
+    "stopTime": {
+      "type": "date"
+    }
+  },
   "validations": [],
   "relations": {
     "organization": {
@@ -115,7 +122,7 @@
       "principalId": "$everyone",
       "permission": "DENY",
       "property": "excel"
-    },    
+    },
     {
       "principalType": "ROLE",
       "principalId": "$owner",
