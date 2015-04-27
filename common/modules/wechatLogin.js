@@ -1,5 +1,6 @@
 var OAuth = require('wechat-oauth');
-var client = new OAuth('wx5d92b3c192f993e7', 'd5d284eb92f6d96554aeb92d679640e7');
+var config = require('../../server/config');
+var client = new OAuth(config.wechat.appid, config.wechat.appsecret);
 module.exports = function(options,cb){
 	client.getUserByCode(options.code,function(err,wechatUserInfo){
 		if(err) cb({"msg":"这个code已经用过了"});

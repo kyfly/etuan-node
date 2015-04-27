@@ -2,8 +2,7 @@ var OAuth = require('wechat-oauth');
 var config = require('../../server/config');
 var wechatLogin = require('../modules/wechatLogin');
 var hduConfim = require('../modules/hdu-student.js');
-var client = new OAuth(config.appid, config.appsecret);
-
+var client = new OAuth(config.wechat.appid, config.wechat.appsecret);
 function __randomString(len){
   len = len || 32;
   var $chars = 'ABCDEFGHJoOLl9gqVvUuI1KMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
