@@ -56,9 +56,9 @@ module.exports = function(WeChatUser) {
 			if(err)
 				ctx.res.send(err);
 			if(ctx.req.headers['user-agent'].indexOf('MicroMessenger') > 0)
-				ctx.res.redirect(client.getAuthorizeURL('http://'+ctx.req.hostname+':3000/api/WeChatUsers/phoneoauth?referer='+referer, state, 'snsapi_userinfo'));
+				ctx.res.redirect(client.getAuthorizeURL('http://'+ctx.req.headers.host+':3000/api/WeChatUsers/phoneoauth?referer='+referer, state, 'snsapi_userinfo'));
 			else{
-				var url = client.getAuthorizeURL('http://'+ctx.req.hostname+':3000/api/WeChatUsers/oauth?referer='+referer, state, 'snsapi_userinfo');
+				var url = client.getAuthorizeURL('http://'+ctx.req.headers.host+':3000/api/WeChatUsers/oauth?referer='+referer, state, 'snsapi_userinfo');
 				ctx.res.render('./sign-in.ejs',{state:state,qrcodeUrl:url});
 			}
 		});
