@@ -81,7 +81,7 @@
   },
   "LoginCache": {
     "dataSource": "db",
-    "public": false
+    "public": true
   },
   "Seckill": {
     "dataSource": "db",
