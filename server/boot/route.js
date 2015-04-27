@@ -1,6 +1,6 @@
 var etuan_module = '../../common/modules/';
 var upload = require(etuan_module + "upload.js");
-var Verify = require(etuan_module + "Verify.js");
+var Verify = require(etuan_module + "verify.js");
 var bodyParser = require('body-parser');
 module.exports = function(app) {
 app.use(bodyParser.urlencoded({
