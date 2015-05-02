@@ -43,7 +43,7 @@
 <div class="container bg_white">
   <div class="col-md-8 col-md-offset-2">
     <h1 ng-bind="title"></h1>
-    <h2 ng-bind-template="第{{round}}场"></h2>
+    <h2 ng-bind-template="第{{current+1}}场"></h2>
     <p ng-bind="description"></p>
     <table class="table table-striped text-center">
       <thead>
@@ -55,19 +55,22 @@
       </thead>
       <tbody>
         <tr ng-repeat="sa in seckillArrangements">
-          <td ng-bind-template="第{{sa.id}}场"></td>
+          <td ng-bind-template="第{{sa.id+1}}场"></td>
           <td ng-bind="sa.startTime | date: cnFormat"></td>
           <td ng-bind="sa.total"></td>
         </tr>
       </tbody>
     </table>
     <br>
-    <p ng-bind="hint"></p>
-    <input class="form-control" type="number" ng-model="verifyId">
+    <div>开始时间：<span ng-bind="startTime | date: cnFormat">载入中...</span></div>
+    <div>倒计时：<span ng-bind="countdownTime">载入中...</span></div>
+    <div>状态：<span ng-bind="status">载入中...</span></div>
+    <div>余量：<span ng-bind="remain">载入中...</span></div>
+    <div>在线人数：<span ng-bind="onlineNumber">载入中...</span></div>
     <br>
-    <button type="button" class="btn btn-primary btn-block" ng-click="">进入</button>
+    <input class="form-control" type="text" ng-model="verifyId" placeholder="请输入学号">
     <br>
-    <button type="button" class="btn btn-danger btn-block" ng-click="">抢</button>
+    <button type="button" class="btn btn-danger btn-block" ng-click="" ng-bind="btnStatus" ng-disabled="disableBtn">载入中...</button>
     <br>
     <hr>
     <div class="text-center footer">
