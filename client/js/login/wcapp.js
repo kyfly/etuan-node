@@ -8,9 +8,16 @@ var checkStatus = function () {
       if (data.msg === "success" && ajax.status === 200) {
         //data expect {"msg":"success","url":url,"userInfo":userInfo,"token":token}
         console.log(data);
-        //window.localStorage.setItem('weChatUserInfo',data.userInfo);
-        //window.localStorage.setItem('weChatAccessToken',data.token);
-        //window.localStorage.href = data.url;
+        /*
+        var lsTmp = {
+          accessToken:data.token,
+          userId:data.userInfo.userId,
+          loginTime:,
+          ttl:data.
+        };
+        window.localStorage.setItem('d2VjaGF0',data);
+        window.localStorage.href = data.url;
+        */
       }
       else if (ajax.status === 200 || ajax.status === 304) {
         document.getElementById('logstatus').innerHTML = data.msg;
