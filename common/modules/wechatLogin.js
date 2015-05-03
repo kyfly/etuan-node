@@ -9,25 +9,14 @@ module.exports = function(options,cb){
 		else
 			responsePhone(options.userModel.app.models.LoginCache,options.state,options.ctx,function(err){
 				if(err) cb(err);
-				isSign_up(options.userModel,wechatUserInfo,function(err,userInfo){
-					if(err) cb(err);
-					else{
-						options.userInfo = userInfo;
-						weLogin(options,cb);
-					}
+				wechatUserInfo.email = wechatUserInfo.openid+"@163.com";
+				wechatUserInfo.password = wechatUserInfo.openid;
+				userModel.create(wechatUserInfo,function(err,userInfo){
+					if(err) cb({"msg":"保存微信信息失败"});
+					options.userInfo = userInfo;
+					weLogin(options,cb);
 				});
 			});
-	});
-}
-function isSign_up(userModel,userInfo,cb){
-  	userModel.findOne({where:{openid:userInfo.openid}},function(err,userinfo){
-		if(userinfo === null)
-			notSign_up(userModel,userInfo,function(err,userinfo){
-				if(err) cb(err);
-				cb(null,userinfo);
-			});
-		else
-			cb(null,userinfo);
 	});
 }
 function responsePhone(loginModel,state,ctx,cb){
@@ -39,14 +28,6 @@ function responsePhone(loginModel,state,ctx,cb){
 		});
 	else
 		cb(null);
-}
-function notSign_up(userModel,userInfo,cb){
-	userInfo.email = userInfo.openid+"@163.com";
-	userInfo.password = userInfo.openid;
-	userModel.create(userInfo,function(err,userInfo){
-		if(err) cb({"msg":"保存微信信息失败"});
-		else cb(null,userInfo);
-	});
 }
 function weLogin(options,cb){
 	options.userModel.login(

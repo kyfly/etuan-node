@@ -81,7 +81,7 @@ module.exports = function(WeChatUser) {
 		};
 		wechatLogin(options,function(signMsg){
 			//需要手机中转页面，未完成
-			ctx.res.send(signMsg);
+			ctx.res.render("phone-login.ejs",signMsg);
 		});
 	});
 	/**
@@ -95,7 +95,6 @@ module.exports = function(WeChatUser) {
 	WeChatUser.beforeRemote("oauth",function(ctx, unused, next){
 		var query = ctx.req.query;
 		var state = query.state;
-console.log(state);
 		WeChatUser.app.models.LoginCache.find({where:{randstate:query.state}},function(err,loginCache){
 			if(err)
 				ctx.res.render("phone.ejs",{"msg":"出错了,请刷新后登陆"});

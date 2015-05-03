@@ -32,6 +32,7 @@
                         //记得关闭setInterval,不然服务器可能挂
                         //表示授权成功
                         alert(data.msg);
+                        WeixinJSBridge.call('closeWindow');
                     }
                 });
             }, 1000);

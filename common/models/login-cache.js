@@ -9,7 +9,7 @@ module.exports = function(LoginCache) {
 	LoginCache.beforeRemote('confirm',function(ctx, unused, next){
 		var state = ctx.req.query.state;
 		var url = ctx.req.headers.referer;
-		if(ctx.req.headers['user-agent'].indexOf('MicroMessenger') > 0){
+		if(ctx.req.headers['user-agent'].indexOf('MicroMessenger') > 0)
 			LoginCache.findOne({where:{randstate:state}},function(err,loginCache){
 				if(err) ctx.res.send({status:"err","msg":"请刷新后再试"});
 				else if(loginCache === null)
@@ -17,20 +17,17 @@ module.exports = function(LoginCache) {
 				else if(loginCache.isConfirm > 0)  
 					ctx.res.send({status:"success","msg":"获取微信信息成功"});
 				else if(new Date() - loginCache.createAt > 80*1000){
-				//	console.log(new Date() - loginCache.createAt,new Date(),loginCache);  
 					ctx.res.send({status:"err","msg":"超过80秒了"});
 				}else
 					ctx.res.send({status:"err","msg":"授权成功,等待获取微信信息"});
 			});
-	}	else
+		else
 			LoginCache.findOne({where:{randstate:state}},function(err,loginInfo){
 				if(err) ctx.res.send({"msg":"请刷新后再试"});
 				else if(loginInfo === null)
 					ctx.res.send({"msg":"非法的请求,请刷新后登陆"});
 				else if(loginInfo.code === 0)
 					ctx.res.send({"msg":"等待微信授权"});
-				// else if(loginInfo.code != 0)
-				// 	ctx.res.send({"msg":"授权成功,等待获取微信信息"});
 				else{
 					var options = {
 						code:loginInfo.code,
@@ -40,9 +37,8 @@ module.exports = function(LoginCache) {
 						state:state
 					};
 					wechatLogin(options,function(signMsg){
-						console.log(signMsg);
-							ctx.res.send(signMsg);
-						});
+						ctx.res.send(signMsg);
+					});
 				}
 			});
 	});
