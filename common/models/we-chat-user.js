@@ -59,7 +59,7 @@ module.exports = function(WeChatUser) {
 				ctx.res.redirect(client.getAuthorizeURL('http://'+ctx.req.headers.host+':3000/api/WeChatUsers/phoneoauth?referer='+referer, state, 'snsapi_userinfo'));
 			else{
 				var url = client.getAuthorizeURL('http://'+ctx.req.headers.host+':3000/api/WeChatUsers/oauth?referer='+referer, state, 'snsapi_userinfo');
-				ctx.res.render('./sign-in.ejs',{state:state,qrcodeUrl:url});
+				ctx.res.render('sign-in.ejs',{state:state,qrcodeUrl:url});
 			}
 		});
 	});
@@ -97,18 +97,18 @@ module.exports = function(WeChatUser) {
 		var state = query.state;
 		WeChatUser.app.models.LoginCache.find({where:{randstate:query.state}},function(err,loginCache){
 			if(err)
-				ctx.res.render("./phone.ejs",{"msg":"出错了,请刷新后登陆"});
+				ctx.res.render("phone.ejs",{"msg":"出错了,请刷新后登陆"});
 			else if(loginCache.length == 0)
-				ctx.res.render("./phone.ejs",{"msg":"非法的请求"});
+				ctx.res.render("phone.ejs",{"msg":"非法的请求"});
 			else
 			WeChatUser.app.models.LoginCache.updateAll(
 				{randstate:state},
 				{code:query.code},
 				function(err,count){
 					if(err)
-						ctx.res.render("./phone.ejs",{"msg":"出错了,请刷新后登陆"});
+						ctx.res.render("phone.ejs",{"msg":"出错了,请刷新后登陆"});
 					else
-						ctx.res.render("./phone.ejs",{"msg":"success","state":state});
+						ctx.res.render("phone.ejs",{"msg":"success","state":state});
 				});
 		});
 	});
