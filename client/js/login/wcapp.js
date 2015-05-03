@@ -8,6 +8,15 @@ var checkStatus = function () {
       if (data.msg === "success" && ajax.status === 200) {
         //data expect {"msg":"success","url":url,"userInfo":userInfo,"token":token}
         console.log(data);
+        var lsTmp = {
+          accessToken:data.token.id,
+          userId:res.userId,
+          loginTime:res.created,
+          ttl:res.ttl
+        };
+        $window.localStorage.setItem('d2VjaGF0',JSON.stringify(lsTmp));
+        if(data.url) $window.location= data.url;
+        else $window.location= '/';
         /*
         var lsTmp = {
           accessToken:data.token,

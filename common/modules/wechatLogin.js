@@ -10,7 +10,6 @@ module.exports = function(options,cb){
 			responsePhone(options.userModel.app.models.LoginCache,options.state,options.ctx,function(err){
 				if(err) cb(err);
 				isSign_up(options.userModel,wechatUserInfo,function(err,userInfo){
-console.log(userInfo);
 					if(err) cb(err);
 					else{
 						options.userInfo = userInfo;
@@ -56,7 +55,6 @@ function weLogin(options,cb){
 		"password":options.userInfo.openid
 	},
 	function(err,token){
-console.log(err,token);
 		cb({"msg":"success","url":options.url,"userInfo":options.userInfo,"token":token});
 	});
 }

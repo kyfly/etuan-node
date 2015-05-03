@@ -16,9 +16,10 @@ module.exports = function(LoginCache) {
 					ctx.res.send({status:"err","msg":"二维码可能过期了"});
 				else if(loginCache.isConfirm > 0)  
 					ctx.res.send({status:"success","msg":"获取微信信息成功"});
-				else if(new Date() - loginCache.createAt > 80*1000)  
+				else if(new Date() - loginCache.createAt > 80*1000){
+					console.log(loginCache);  
 					ctx.res.send({status:"err","msg":"超过80秒了"});
-				else
+				}else
 					ctx.res.send({status:"err","msg":"授权成功,等待获取微信信息"});
 			});
 		else
