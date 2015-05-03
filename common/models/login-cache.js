@@ -10,7 +10,6 @@ module.exports = function(LoginCache) {
 		var state = ctx.req.query.state;
 		var url = ctx.req.headers.referer;
 		if(ctx.req.headers['user-agent'].indexOf('MicroMessenger') > 0){
-console.log(state)
 			LoginCache.findOne({where:{randstate:state}},function(err,loginCache){
 				if(err) ctx.res.send({status:"err","msg":"请刷新后再试"});
 				else if(loginCache === null)

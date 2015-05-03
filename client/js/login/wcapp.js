@@ -14,9 +14,9 @@ var checkStatus = function () {
  //         loginTime:res.created,
    //       ttl:res.ttl
         };
-        $window.localStorage.setItem('d2VjaGF0',JSON.stringify(lsTmp));
-        if(data.url) $window.location= data.url;
-        else $window.location= '/';
+        window.localStorage.setItem('d2VjaGF0',JSON.stringify(lsTmp));
+        if(data.url) window.location= data.url;
+        else window.location= '/';
         /*
         var lsTmp = {
           accessToken:data.token,

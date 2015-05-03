@@ -56,7 +56,7 @@ module.exports = function(WeChatUser) {
 			if(err)
 				ctx.res.send(err);
 			if(ctx.req.headers['user-agent'].indexOf('MicroMessenger') > 0)
-				ctx.res.redirect(client.getAuthorizeURL('http://'+ctx.req.headers.host+':3000/api/WeChatUsers/phoneoauth?referer='+referer, state, 'snsapi_userinfo'));
+				ctx.res.redirect(client.getAuthorizeURL('http://'+'beta.etuan.org'+'/api/WeChatUsers/phoneoauth?referer='+referer, state, 'snsapi_userinfo'));
 			else{
 				var url = client.getAuthorizeURL('http://'+'beta.etuan.org'+'/api/WeChatUsers/oauth?referer='+referer, state, 'snsapi_userinfo');
 				ctx.res.render('sign-in.ejs',{state:state,qrcodeUrl:url});
@@ -95,6 +95,7 @@ module.exports = function(WeChatUser) {
 	WeChatUser.beforeRemote("oauth",function(ctx, unused, next){
 		var query = ctx.req.query;
 		var state = query.state;
+console.log(state);
 		WeChatUser.app.models.LoginCache.find({where:{randstate:query.state}},function(err,loginCache){
 			if(err)
 				ctx.res.render("phone.ejs",{"msg":"出错了,请刷新后登陆"});
