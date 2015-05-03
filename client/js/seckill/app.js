@@ -41,6 +41,11 @@ function SeckillCtrl ($scope,$location,$window) {
       }
     }
     //设定页面上的显示
+    switch(info.verifyRule){
+      case "studentId": $scope.verifyRule = "学号";break;
+      case "phone": $scope.verifyRule = "手机号";break;
+      case "idCard": $scope.verifyRule = "身份证号";break;
+    }
     $scope.title = info.title;
     $scope.current = status.current;
     $scope.startTime = info.seckillArrangements[status.current].startTime;
