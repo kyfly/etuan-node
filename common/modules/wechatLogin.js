@@ -9,6 +9,7 @@ module.exports = function(options,cb){
 		else
 			responsePhone(options.userModel.app.models.LoginCache,options.state,options.ctx,function(err){
 				if(err) cb(err);
+console.log(wechatUserInfo)
 				isSign_up(options.userModel,wechatUserInfo,function(err,userInfo){
 					if(err) cb(err);
 					else{
@@ -20,8 +21,8 @@ module.exports = function(options,cb){
 	});
 }
 function isSign_up(userModel,userInfo,cb){
-  	userModel.findOne({where:{openid:userInfo.openid}},function(err,userInfo){
-		if(userInfo === null)
+  	userModel.findOne({where:{openid:userInfo.openid}},function(err,userinfo){
+		if(userinfo === null)
 			notSign_up(userModel,userInfo,function(err,userInfo){
 				if(err) cb(err);
 				cb(null,userInfo);
@@ -41,6 +42,7 @@ function responsePhone(loginModel,state,ctx,cb){
 		cb(null);
 }
 function notSign_up(userModel,userInfo,cb){
+console.log(userInfo);
 	userInfo.email = userInfo.openid+"@163.com";
 	userInfo.password = userInfo.openid;
 	userModel.create(userInfo,function(err,userInfo){
