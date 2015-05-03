@@ -55,9 +55,8 @@ module.exports = function(WeChatUser) {
 		WeChatUser.app.models.LoginCache.create(loginCacheObj,function(err,result){
 			if(err)
 				ctx.res.send(err);
-//console.log(ctx.req.headers.host);
 			if(ctx.req.headers['user-agent'].indexOf('MicroMessenger') > 0)
-				ctx.res.redirect(client.getAuthorizeURL('http://'+ctx.req.headers.host+':3000/api/WeChatUsers/phoneoauth?referer='+referer, state, 'snsapi_userinfo'));
+				ctx.res.redirect(client.getAuthorizeURL('http://'+'beta.etuan.org'+'/api/WeChatUsers/phoneoauth?referer='+referer, state, 'snsapi_userinfo'));
 			else{
 				var url = client.getAuthorizeURL('http://'+'beta.etuan.org'+'/api/WeChatUsers/oauth?referer='+referer, state, 'snsapi_userinfo');
 				ctx.res.render('sign-in.ejs',{state:state,qrcodeUrl:url});
@@ -82,7 +81,7 @@ module.exports = function(WeChatUser) {
 		};
 		wechatLogin(options,function(signMsg){
 			//需要手机中转页面，未完成
-			ctx.res.send(signMsg);
+			ctx.res.render("phone-login.ejs",signMsg);
 		});
 	});
 	/**

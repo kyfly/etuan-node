@@ -10,7 +10,6 @@ module.exports = function(options,cb){
 			responsePhone(options.userModel.app.models.LoginCache,options.state,options.ctx,function(err){
 				if(err) cb(err);
 				isSign_up(options.userModel,wechatUserInfo,function(err,userInfo){
-console.log(userInfo);
 					if(err) cb(err);
 					else{
 						options.userInfo = userInfo;
@@ -28,7 +27,11 @@ function isSign_up(userModel,userInfo,cb){
 				cb(null,userinfo);
 			});
 		else
-			cb(null,userinfo);
+		userModel.updateAll({openid:userInfo.openid},{headImgUrl:userInfo.headImgUrl},function(err,count){
+				if (err) cb(err);
+				else
+					cb(null,userinfo);
+			});
 	});
 }
 function responsePhone(loginModel,state,ctx,cb){
@@ -56,7 +59,7 @@ function weLogin(options,cb){
 		"password":options.userInfo.openid
 	},
 	function(err,token){
-console.log(err,token);
 		cb({"msg":"success","url":options.url,"userInfo":options.userInfo,"token":token});
 	});
 }
+

@@ -16,9 +16,9 @@ module.exports = function(LoginCache) {
 					ctx.res.send({status:"err","msg":"二维码可能过期了"});
 				else if(loginCache.isConfirm > 0)  
 					ctx.res.send({status:"success","msg":"获取微信信息成功"});
-				else if(new Date() - loginCache.createAt > 80*1000)  
+				else if(new Date() - loginCache.createAt > 80*1000){
 					ctx.res.send({status:"err","msg":"超过80秒了"});
-				else
+				}else
 					ctx.res.send({status:"err","msg":"授权成功,等待获取微信信息"});
 			});
 		else
@@ -28,8 +28,6 @@ module.exports = function(LoginCache) {
 					ctx.res.send({"msg":"非法的请求,请刷新后登陆"});
 				else if(loginInfo.code === 0)
 					ctx.res.send({"msg":"等待微信授权"});
-				// else if(loginInfo.code != 0)
-				// 	ctx.res.send({"msg":"授权成功,等待获取微信信息"});
 				else{
 					var options = {
 						code:loginInfo.code,
@@ -39,9 +37,9 @@ module.exports = function(LoginCache) {
 						state:state
 					};
 					wechatLogin(options,function(signMsg){
-						console.log(signMsg);
-							ctx.res.send(signMsg);
-						});
+						ctx.res.send(signMsg);
+return;
+					});
 				}
 			});
 	});
