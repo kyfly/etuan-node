@@ -1,15 +1,20 @@
-function SeckillCtrl ($scope,$location,$window) {
+var app = angular.module('app', []);
+app.controller('SeckillCtrl', ['$scope', '$location', '$window', SeckillCtrl]);
+
+function SeckillCtrl($scope, $location, $window) {
   var seckillUrlSearchObj = $location.search();
   $scope.cnFormat = 'yyyy-MM-dd HH:mm';
 
   var socket = io(
     window.location.host + '/seckill/' + seckillUrlSearchObj.id, {
-      query:'accessToken='+JSON.parse($window.localStorage.getItem('d2VjaGF0')).accessToken
+      query: 'accessToken=' + JSON.parse($window.localStorage.getItem('d2VjaGF0')).accessToken
     }
   );
   var start = new Date();     //秒杀开始时间
   var deltaTime = 0;         //与服务器的时间差，用于精准计算
   var countdownTimer;       //倒计时定时器
+  var countdownSec;        //用秒表示的倒计时
+  var resultList = [];
 
   socket.on('error', function (err) {
     console.log(err);
@@ -21,31 +26,35 @@ function SeckillCtrl ($scope,$location,$window) {
     start = new Date(info.seckillArrangements[status.current].startTime);
     //判断当前状态，即将开始、正在进行或已经结束
     if (now.getTime() < start.getTime()) {
-        $scope.status = '即将开始';
-        $scope.btnStatus = '即将开始';
-        $scope.disableBtn = true;
-        countdown();
-        countdownTimer = setInterval(countdown, 1000)
+      $scope.status = '即将开始';
+      $scope.btnStatus = '即将开始';
+      countdown();
+      countdownTimer = setInterval(countdown, 1000)
     }
     else {
       $scope.countdownTime = 0;
-      if (status.remain > 0){
+      if (status.remain > 0) {
         $scope.status = '正在进行';
         $scope.btnStatus = '开抢';
-        $scope.disableBtn = false;
       }
-      else{
+      else {
         $scope.status = '已经结束';
         $scope.btnStatus = '已经结束';
-        $scope.disableBtn = true;
       }
     }
     //设定页面上的显示
-    switch(info.verifyRule){
-      case "studentId": $scope.verifyRule = "学号";break;
-      case "phone": $scope.verifyRule = "手机号";break;
-      case "idCard": $scope.verifyRule = "身份证号";break;
+    switch (info.verifyRule) {
+      case "studentId":
+        $scope.verifyRule = "学号";
+        break;
+      case "phone":
+        $scope.verifyRule = "手机号";
+        break;
+      case "idCard":
+        $scope.verifyRule = "身份证号";
+        break;
     }
+
     $scope.title = info.title;
     $scope.current = status.current;
     $scope.startTime = info.seckillArrangements[status.current].startTime;
@@ -53,57 +62,92 @@ function SeckillCtrl ($scope,$location,$window) {
     $scope.seckillArrangements = info.seckillArrangements;
     $scope.remain = status.remain;
     $scope.onlineNumber = status.onlineNumber;
+
+    for (var i = 0; i < result.length; i++) {
+      resultList.push(result[i].verifyId);
+    }
+
+    $scope.resultList = resultList;
     $scope.$apply();
   });
 
-  socket.on('killFail', function(err){
-    console.log(err);
-    //err是一个字符串
-    //认证信息（id）错误  'verifyId wrong'
-    //已经抢过票了   'already gotten'
-    //还没有开始      'not started'
-    //没有余票了   'no enough'
-    //写入数据库出错   'database error'
-  });
-
-  //秒杀时间到，服务器发出广播，触发该事件
-  socket.on('startSeckill', function () {
-    clearInterval(countdownTimer);
-    $scope.countdownTime = 0;
-    $scope.status = '正在进行';
-    $scope.$apply();
-  });
-
-  socket.on('killSuccess', function() {
-    alert('秒杀成功');
-  });
-
-  socket.on('addResult', function(verifyId){
-    console.log(verifyId);
+  socket.on('killFail', function (err) {
+    switch (err) {
+      case "verifyId wrong":
+        alert("请确认您的信息填写正确！");
+        break;
+      case "already gotten":
+        alert("您已经抢过啦！");
+        break;
+      case "not started":
+        alert("还没开始呢！");
+        break;
+      case "no enough":
+        alert("已经被抢完啦！");
+        break;
+      case "database error":
+        alert("写入数据库出错！");
+        break;
+    }
   });
 
   //按下秒杀按钮，把学号发送到服务器
   $scope.goKill = function () {
-    socket.emit('addKiller', $scope.studentId);
+    socket.emit('addKiller', $scope.verifyId);
   };
+
+  socket.on('killSuccess', function () {
+    alert('恭喜你秒杀成功');
+  });
+
+  socket.on('addResult', function (verifyId) {
+    $scope.remain--;
+    $scope.resultList.push(verifyId);
+    if ($scope.remain <= 0)
+      $scope.status = '已经结束';
+    $scope.$apply();
+  });
 
   //倒计时的timer，由服务器发出秒杀开始事件来关闭，更加精准
   function countdown() {
     var countdownTime = start.getTime() - new Date().getTime() + deltaTime;
-    $scope.countdownTime = Math.floor(countdownTime / 1000);
+    countdownSec = Math.floor(countdownTime / 1000);
     $scope.$apply();
-    if($scope.countdownTime == 0){
+    $scope.countdownTime = formatSeconds(countdownSec);
+    if (countdownSec == 0) {
       countdownTimer = window.clearInterval(countdownTimer);
-      $scope.countdownTime = 0;
+      countdownSec = 0;
       $scope.status = '正在进行';
       $scope.btnStatus = '开抢';
-      $scope.disableBtn = false;
       $scope.$apply();
     }
   }
 
+  //把秒转换成时分秒
+  function formatSeconds(value) {
+    var theTime = parseInt(value);// 秒
+    var theTime1 = 0;// 分
+    var theTime2 = 0;// 小时
+    if (theTime > 60) {
+      theTime1 = parseInt(theTime / 60);
+      theTime = parseInt(theTime % 60);
+      if (theTime1 > 60) {
+        theTime2 = parseInt(theTime1 / 60);
+        theTime1 = parseInt(theTime1 % 60);
+      }
+    }
+    if (parseInt(theTime) != 0)
+      var result = "" + parseInt(theTime) - 1 + "秒";
+    else
+      result = "" + 0 + "秒";
+    if (theTime1 > 0) {
+      result = "" + parseInt(theTime1) + "分" + result;
+    }
+    if (theTime2 > 0) {
+      result = "" + parseInt(theTime2) + "小时" + result;
+    }
+    return result;
+  }
+
 }
 
-
-var app = angular.module('app', []);
-app.controller('SeckillCtrl',['$scope','$location','$window',SeckillCtrl]);
