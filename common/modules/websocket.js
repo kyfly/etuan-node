@@ -19,14 +19,15 @@ module.exports.start = function (app) {
           SeckillResult.count({and: [{seckillId: seckillId}, {isGet: true}]}, function (err, resultCount) {
             //找出当前在第几场抢疯抢，以及本场余量（如果下一场已经开始，本场还有余量，继续本场）
             var tempCount = 0;
-            seckillArrangements.forEach(function (arrangement, index) {
-              tempCount += arrangement.total;
+            for (var j = 0; j < seckillArrangements.length; j++)
+            {
+              tempCount += seckillArrangements[j].total;
               if (tempCount > resultCount) {
-                currentArrangementId = index;
+                currentArrangementId = j;
                 seckillRemain = tempCount - resultCount;
-                return;
+                break;
               }
-            });
+            }
 
             io.of('/seckill/' + seckillId)
               .use(function (socket, next) {
