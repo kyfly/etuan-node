@@ -544,7 +544,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
     }
     var mode = $routeParams.id === 'create'?'创建':'更新';
     alert(mode+$scope.cnType+'成功！');
-    //$window.location.hash = '#/'+$routeParams.type+'/list';
+    window.history.back();
   };
   $scope.preview = function(){
   };
