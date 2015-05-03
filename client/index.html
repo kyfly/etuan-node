@@ -1,1 +1,200 @@
-index.html
+<!doctype html>
+<html ng-app="app">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>首页 - 团团一家</title>
+  <link rel="stylesheet" href="lib/bootstrap/css/etuan.css">
+  <style>
+    body {
+      font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
+      background-color: #f1f2f7;
+    }
+
+    header {
+      margin-bottom: -20px;
+    }
+
+    .listHead {
+      margin-bottom: 10px;
+    }
+
+    .listHead > a {
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .thumbnail {
+      border: none;
+      border-radius: 0;
+      padding: 15px;
+      height: 295px;
+    }
+
+    .contentRow {
+      margin-bottom: 20px;
+    }
+
+
+  </style>
+</head>
+<body>
+<!--头部-->
+<header id="nav" ng-controller="headCtrl">
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button class="navbar-toggle" ng-click="isCollapsed = !isCollapsed" type="button">
+            <span class="sr-only">导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <h5>
+            <a href="index.html">
+              <img src="http://img.kyfly.net/common/logo/etuan-logo-word.png@60h.png" height="30px" alt="团团一家LOGO">
+            </a>
+          </h5>
+        </div>
+        <div collapse="isCollapsed" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active">
+              <a href="index.html">首页</a>
+            </li>
+            <li>
+              <a href="">组织</a>
+            </li>
+            <li>
+              <a href="">活动</a>
+            </li>
+            <li>
+              <a href="">表单</a>
+            </li>
+            <li>
+              <a href="">疯抢</a>
+            </li>
+            <li>
+              <a href="">投票</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="jumbotron" style="background-color: #aadffc;color: #ffffff;height: 350px;">
+  <div class="container">
+    <h1 id="hello,-world!">Hello, world!<a class="anchorjs-link" href="#hello,-world!"><span
+            class="anchorjs-icon"></span></a></h1>
+
+    <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or
+      information.</p>
+  </div>
+</div>
+<div class="container">
+  <div class="listHead col-xs-12">
+    <h4 class="col-xs-8 col-sm-10">最新表单</h4>
+    <a class="col-xs-4 col-sm-2" href=""><i>查看更多»</i></a>
+  </div>
+  <div class="contentRow col-xs-12">
+    <div class="col-sm-6 col-md-3">
+      <div class="thumbnail">
+        <div class="text-center">
+          <h3>标题标题</h3>
+          <p>周五20：00抢票</p>
+        </div>
+        <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg" alt="..." height="150px" width="150px">
+        <h4 class="text-success text-right">正在进行</h4>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="thumbnail">
+        <div class="text-center">
+          <h3>标题标题</h3>
+          <p>周五20：00抢票</p>
+        </div>
+        <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg" alt="..." height="150px" width="150px">
+        <h4 class="text-success text-right">正在进行</h4>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="thumbnail">
+        <div class="text-center">
+          <h3>标题标题</h3>
+          <p>周五20：00抢票</p>
+        </div>
+        <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg" alt="..." height="150px" width="150px">
+        <h4 class="text-success text-right">正在进行</h4>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="thumbnail">
+        <div class="text-center">
+          <h3></h3>
+          <p></p>
+        </div>
+        <img class="hidden" src="" height="150px" width="150px">
+        <h4 class="text-success text-right"></h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="listHead col-xs-12">
+    <h4 class="col-xs-8 col-sm-10">最新表单</h4>
+    <a class="col-xs-4 col-sm-2" href=""><i>查看更多»</i></a>
+  </div>
+  <div class="contentRow col-xs-12">
+    <div class="col-sm-6 col-md-3">
+      <div class="thumbnail">
+        <div class="text-center">
+          <h3>标题标题</h3>
+          <p>周五20：00抢票</p>
+        </div>
+        <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg" alt="..." height="150px" width="150px">
+        <h4 class="text-success text-right">正在进行</h4>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="thumbnail">
+        <div class="text-center">
+          <h3>标题标题</h3>
+          <p>周五20：00抢票</p>
+        </div>
+        <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg" alt="..." height="150px" width="150px">
+        <h4 class="text-success text-right">正在进行</h4>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="thumbnail">
+        <div class="text-center">
+          <h3>标题标题</h3>
+          <p>周五20：00抢票</p>
+        </div>
+        <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg" alt="..." height="150px" width="150px">
+        <h4 class="text-success text-right">正在进行</h4>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="thumbnail">
+        <div class="text-center">
+          <h3></h3>
+          <p></p>
+        </div>
+        <img class="hidden" src="" height="150px" width="150px">
+        <h4 class="text-success text-right"></h4>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<script src="lib/angular/angular.min.js"></script>
+<script src="lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>
