@@ -55,7 +55,6 @@ module.exports = function(WeChatUser) {
 		WeChatUser.app.models.LoginCache.create(loginCacheObj,function(err,result){
 			if(err)
 				ctx.res.send(err);
-//console.log(ctx.req.headers.host);
 			if(ctx.req.headers['user-agent'].indexOf('MicroMessenger') > 0)
 				ctx.res.redirect(client.getAuthorizeURL('http://'+ctx.req.headers.host+':3000/api/WeChatUsers/phoneoauth?referer='+referer, state, 'snsapi_userinfo'));
 			else{

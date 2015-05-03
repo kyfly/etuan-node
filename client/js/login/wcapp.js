@@ -10,9 +10,9 @@ var checkStatus = function () {
         console.log(data);
         var lsTmp = {
           accessToken:data.token.id,
-          userId:res.userId,
-          loginTime:res.created,
-          ttl:res.ttl
+//          userId:res.userId,
+ //         loginTime:res.created,
+   //       ttl:res.ttl
         };
         $window.localStorage.setItem('d2VjaGF0',JSON.stringify(lsTmp));
         if(data.url) $window.location= data.url;

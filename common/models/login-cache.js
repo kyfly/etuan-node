@@ -9,7 +9,8 @@ module.exports = function(LoginCache) {
 	LoginCache.beforeRemote('confirm',function(ctx, unused, next){
 		var state = ctx.req.query.state;
 		var url = ctx.req.headers.referer;
-		if(ctx.req.headers['user-agent'].indexOf('MicroMessenger') > 0)
+		if(ctx.req.headers['user-agent'].indexOf('MicroMessenger') > 0){
+console.log(state)
 			LoginCache.findOne({where:{randstate:state}},function(err,loginCache){
 				if(err) ctx.res.send({status:"err","msg":"请刷新后再试"});
 				else if(loginCache === null)
@@ -17,12 +18,12 @@ module.exports = function(LoginCache) {
 				else if(loginCache.isConfirm > 0)  
 					ctx.res.send({status:"success","msg":"获取微信信息成功"});
 				else if(new Date() - loginCache.createAt > 80*1000){
-					console.log(loginCache);  
+				//	console.log(new Date() - loginCache.createAt,new Date(),loginCache);  
 					ctx.res.send({status:"err","msg":"超过80秒了"});
 				}else
 					ctx.res.send({status:"err","msg":"授权成功,等待获取微信信息"});
 			});
-		else
+	}	else
 			LoginCache.findOne({where:{randstate:state}},function(err,loginInfo){
 				if(err) ctx.res.send({"msg":"请刷新后再试"});
 				else if(loginInfo === null)
