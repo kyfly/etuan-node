@@ -38,6 +38,7 @@ module.exports = function(LoginCache) {
 					};
 					wechatLogin(options,function(signMsg){
 						ctx.res.send(signMsg);
+return;
 					});
 				}
 			});
