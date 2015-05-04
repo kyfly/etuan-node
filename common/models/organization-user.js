@@ -4,16 +4,20 @@ module.exports = function(OrganizationUser) {
 	OrganizationUser.actCount = function(token, cb) {
 		var Form = OrganizationUser.app.models.Form;
 		var Vote = OrganizationUser.app.models.Vote;
-		var Seckill = OrganizationUser.app.models.Seckill;		
+		var Seckill = OrganizationUser.app.models.Seckill;
+		var Activity = OrganizationUser.app.models.Activity;	
 		accessTokenCheck(token, cb, function(organizationUser) {
 			var actCount = 0;
-			Form.find({where: {organizationUid: organizationUser.id, stopTime: {gt: Date.now()}}}, {id: 1}, function(err, forms) {
+			Form.find({where: {organizationUid: organizationUser.id, startTime: {lt: Date.now()}, stopTime: {gt: Date.now()}}}, {id: 1}, function(err, forms) {
 				actCount += forms.length;
-				Vote.find({where: {organizationUid: organizationUser.id, stopTime: {gt: Date.now()}}}, {id: 1}, function(err, votes) {
+				Vote.find({where: {organizationUid: organizationUser.id, startTime: {lt: Date.now()}, stopTime: {gt: Date.now()}}}, {id: 1}, function(err, votes) {
 					actCount += votes.length;
-					Seckill.find({where: {organizationUid: organizationUser.id, stopTime: {gt: Date.now()}}}, {id:1}, function(err, seckills) {
+					Seckill.find({where: {organizationUid: organizationUser.id, startTime: {lt: Date.now()}, stopTime: {gt: Date.now()}}}, {id:1}, function(err, seckills) {
 						actCount += seckills.length;
-						cb(null, {status: '200', actCount: actCount});
+						Activity.find({where: {organizationUid: organizationUser.id, startTime: {lt: Date.now()}, stopTime: {gt: Date.now()}}}, {id: 1}, function(err, activities) {
+							actCount += activities.length;
+							cb(null, {status: '200', actCount: actCount});
+						});
 					});
 				});
 			});	

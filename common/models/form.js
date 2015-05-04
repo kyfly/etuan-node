@@ -3,6 +3,20 @@ var xlsx = require('node-xlsx');
 var streamifier = require('streamifier');
 
 module.exports = function(Form) {
+
+  //浏览活动将浏览量加一
+  Form.remoteMethod('view', {
+    accepts: {arg: 'id', type: 'string'},
+    http: {verb: 'GET', path: '/view/:id'}
+  });  
+
+  Form.view = function(id, cb) {
+    Form.update({id: id}, {$inc: {viewCount: 1}}, function(err, result) {
+      cb(null);
+    });       
+  } 
+
+
 	Form.pdf = function(id, cb){
 		cb(null);
 	}
