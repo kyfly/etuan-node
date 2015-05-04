@@ -5,13 +5,13 @@ app.controller('headCtrl', function ($scope) {
 });
 
 app.controller('contentCtrl', ['$scope', '$http', function ($scope, $http) {
-  $http.get('/api/Forms').success(function (res) {
+  $http.get('/api/Forms?filter[order]=id%20DESC').success(function (res) {
     $scope.flts = res;
   });
-  $http.get('/api/Votes').success(function (res) {
+  $http.get('/api/Votes?filter[order]=id%20DESC').success(function (res) {
     $scope.vlts = res;
   });
-  $http.get('/api/Seckills').success(function (res) {
+  $http.get('/api/Seckills?filter[order]=id%20DESC').success(function (res) {
     $scope.skls = res;
   });
 

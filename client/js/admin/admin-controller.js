@@ -487,7 +487,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
     };
     logoFd.append('logo',logoFile);
     logoXhr.onreadystatechange = logoReadyHandle;
-    logoXhr.open('POST','/ue/uploads?action=uploadimage&dir=logo&access_token='+JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken,true);
+    logoXhr.open('POST','/ue/uploads?action=uploadimage&dir=logo&access_token='+JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken,false);
     logoXhr.send(logoFd);
 
     uploadParameters.updatedAt = new Date();
@@ -567,7 +567,6 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
     var mode = $routeParams.id === 'create'?'创建':'更新';
     alert(mode+$scope.cnType+'成功！');
     window.history.back();
-    console.log(uploadParameters);
   };
 
   $scope.preview = function(){
