@@ -21,14 +21,15 @@
 
     .listHead > a {
       cursor: pointer;
-      margin-top: 10px;
+      margin-top: 25px;
+      padding-right: 0;
     }
 
     .thumbnail {
       border: none;
       border-radius: 0;
       padding: 5px 15px 15px 15px;
-      height: 300px;
+      height: 240px;
       position: relative;
     }
 
@@ -42,6 +43,7 @@
 
     .thumbnail > .text-center {
       color: #000000;
+      overflow: hidden;
     }
 
     .statusText {
@@ -115,7 +117,7 @@
 <div class="container" ng-controller="contentCtrl">
 
   <div class="listHead col-xs-12">
-    <h4 class="col-xs-8 col-sm-10">最新表单</h4>
+    <h3 class="col-xs-8 col-sm-10">最新表单</h3>
     <a class="col-xs-4 col-sm-2" href=""><i>查看更多»</i></a>
   </div>
   <div class="contentRow col-xs-12">
@@ -123,9 +125,7 @@
       <a ng-href="/form#?id={{flt.id}}">
         <div class="thumbnail">
           <div class="text-center">
-            <h3 ng-bind="flt.title"></h3>
-
-            <p ng-bind-template="开始时间：{{flt.startTime | date: cnFormat}}"></p>
+            <h4 ng-bind="flt.title"></h4>
           </div>
           <img ng-src="{{flt.logoUrl}}"
                alt="..." height="150px" width="150px">
@@ -137,7 +137,7 @@
   </div>
 
   <div class="listHead col-xs-12">
-    <h4 class="col-xs-8 col-sm-10">最新表单</h4>
+    <h3 class="col-xs-8 col-sm-10">最新投票</h3>
     <a class="col-xs-4 col-sm-2" href=""><i>查看更多»</i></a>
   </div>
   <div class="contentRow col-xs-12">
@@ -146,9 +146,7 @@
       <a ng-href="/form#?id={{vlt.id}}">
         <div class="thumbnail">
           <div class="text-center">
-            <h3 ng-bind="vlt.title"></h3>
-
-            <p ng-bind-template="开始时间：{{vlt.startTime | date: cnFormat}}"></p>
+            <h4 ng-bind="vlt.title"></h4>
           </div>
           <img ng-src="{{vlt.logoUrl}}"
                alt="..." height="150px" width="150px">
@@ -160,7 +158,7 @@
   </div>
 
   <div class="listHead col-xs-12">
-    <h4 class="col-xs-8 col-sm-10">最新表单</h4>
+    <h3 class="col-xs-8 col-sm-10">最新疯抢</h3>
     <a class="col-xs-4 col-sm-2" href=""><i>查看更多»</i></a>
   </div>
   <div class="contentRow col-xs-12">
@@ -168,9 +166,7 @@
       <a ng-href="/form#?id={{skl.id}}">
         <div class="thumbnail">
           <div class="text-center">
-            <h3 ng-bind="skl.title"></h3>
-
-            <p ng-bind-template="开始时间：{{skl.startTime | date: cnFormat}}"></p>
+            <h4 ng-bind="skl.title"></h4>
           </div>
           <img ng-src="{{skl.logoUrl}}"
                alt="..." height="150px" width="150px">
