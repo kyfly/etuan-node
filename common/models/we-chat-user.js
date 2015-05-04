@@ -149,8 +149,6 @@ module.exports = function(WeChatUser) {
 		});
   	});
   });
-
-
   //保存更新时间
   WeChatUser.observe('before save', function(ctx, next) {
     if(ctx.instance) {

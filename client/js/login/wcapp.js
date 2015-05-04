@@ -14,8 +14,8 @@ var checkStatus = function () {
           ttl:data.token.ttl
         };
         window.localStorage.setItem('d2VjaGF0',JSON.stringify(lsTmp));
-        if(data.url) window.location= data.url;
-        else window.location= '/';
+          data.userInfo.studentId? window.location= data.url || '/' : window.location= '/student.html?referer='+ data.url || '/';
+        ;
       }
       else if (ajax.status === 200 || ajax.status === 304) {
         document.getElementById('logstatus').innerHTML = data.msg;

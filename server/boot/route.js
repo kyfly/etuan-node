@@ -24,9 +24,8 @@ app.use("/ue/uploads", upload(function(req, res, next) {
   verify.getUserId(query.access_token,function (err,userId){
     if(err) return;
     if(inarray(dirs,query.dir) && userId && query.dir != undefined)
-      var path = query.dir +"/" + userId;
+      var path = userId + "/" + query.dir;
     else{
-      //res.send({"state":400,code:"access failed"});
       return;
     }
     switch(query.action){
@@ -37,7 +36,7 @@ app.use("/ue/uploads", upload(function(req, res, next) {
       case 'uploadtext':
         res.up_text('html/' + path);
       case 'listimage':
-        res.image_list('images/'+path);
+        res.image_list('images/'+userId);
       }
   });
 }));

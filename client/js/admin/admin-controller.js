@@ -741,7 +741,7 @@ function SettingCtrl ($scope,$resource,etuanAdmin) {
     };
     logoFd.append('logo',logoFile);
     logoXhr.onreadystatechange = logoReadyHandle;
-    logoXhr.open('POST','/ue/uploads?action=uploadimage&dir=logo',true);
+    logoXhr.open('POST','/ue/uploads?action=uploadimage&dir=logo&access_token='+JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken,true);
     logoXhr.send(logoFd);
   };
   //基本信息提交按钮
