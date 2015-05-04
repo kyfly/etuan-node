@@ -1,21 +1,48 @@
-module.exports.start = function (app) {
+module.exports = WebSocket;
 
-  var io = require('socket.io')(app.server);
-  var Verify = require('./verify');
-  var Seckill = app.models.Seckill;
-  var SeckillResult = app.models.SeckillResult;
+var app, server, io, Seckill, SeckillResult;
+var Verify = require('./verify');
+var seckillCache= {};
 
+function seckillHandshake(socket, next) {
+  var handshakeQuery = socket.handshake.query;
+  verify.checkToken(handshakeQuery.accessToken, function (err, pass, studentId) {
+    if (pass) {
+      if (studentId)
+        handshakeQuery.verifyId = studentId;
+      if (handshakeQuery.id)
+      {
+        socket.join(handshakeQuery.id);
+        next();
+      }
+      else
+        next(new Error("Invalid seckill id"));
+    }
+    else
+      next(new Error("Authentication failed"));
+  });
+}
+
+WebSocket = function (application, httpServer) {
+  app = application;
+  server = httpServer;
+  io = require('socket.io')(server);
+  Seckill = app.models.Seckill;
+  SeckillResult = app.models.SeckillResult;
+};
+
+WebSocket.prototype.start = function () {
   Seckill.find({fields: {id: true, verifyRule: true, seckillArrangements: true}},
     function (err, infoData) {
       for (var i = 0; i < infoData.length; i++) {
         (function () {
           var seckillId = infoData[i].id;
           var verifyRule = infoData[i].verifyRule;
-          var verify = new Verify(app.models.AccessToken, app.models.WeChatUser, verifyRule);
+          var verify = new Verify(app.models.AccessToken, app.models.WeChatUser, verifyRule); //needed
           var seckillArrangements = infoData[i].seckillArrangements;
-          var currentArrangementId = 0;
-          var seckillRemain = 0;
-          var onlineNumber = 0;
+          var currentArrangementId = 0; //needed
+          var seckillRemain = 0; //needed
+          var onlineNumber = 0; //needed
           SeckillResult.count({and: [{seckillId: seckillId}, {isGet: true}]}, function (err, resultCount) {
             //找出当前在第几场抢疯抢，以及本场余量（如果下一场已经开始，本场还有余量，继续本场）
             var tempCount = 0;
@@ -30,17 +57,7 @@ module.exports.start = function (app) {
             }
 
             io.of('/seckill/' + seckillId)
-              .use(function (socket, next) {
-                verify.checkToken(socket.handshake.query.accessToken, function (err, pass, studentId) {
-                  if (pass) {
-                    if (studentId)
-                      socket.handshake.query.verifyId = studentId;
-                    next();
-                  }
-                  else
-                    next(new Error("Authentication failed"));
-                });
-              })
+              .use(seckillHandshake)
               .on('connection', function (socket) {
                 onlineNumber++;
                 io.of('/seckill/' + seckillId).emit('changeOnlineNumber', onlineNumber);
