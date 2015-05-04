@@ -467,6 +467,28 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
    * 在完成提交后，将转跳至列表页面list.html
    */
   $scope.submit = function () {
+    //上传图片至OSS服务
+    var logoFd = new FormData();
+    var logoFile = document.getElementById($scope.cnType+'logo').files[0];
+    var logoXhr = new XMLHttpRequest();
+    var fileExt =/\.[^\.]+/.exec(document.getElementById($scope.cnType + 'logo').value.toLowerCase());
+    if(!((fileExt[0] === '.png')||(fileExt[0] === '.jpg')||(fileExt[0] === '.jpeg')||(fileExt[0] === '.gif'))){
+      alert('请确认您上传的logo文件格式是jpg、png、gif或jpeg');
+      return false;
+    }
+    var logoReadyHandle = function () {
+      if (logoXhr.readyState === 4) {
+        if (logoXhr.status === 200) {
+          $scope.logoUrl = JSON.parse(logoXhr.responseText).url;
+          Edit.update({logoUrl:$scope.logoUrl});
+        }
+      }
+    };
+    logoFd.append('logo',logoFile);
+    logoXhr.onreadystatechange = logoReadyHandle;
+    logoXhr.open('POST','/ue/uploads?action=uploadimage&dir=logo&access_token='+JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken,true);
+    logoXhr.send(logoFd);
+
     var uploadParameters = {};
     uploadParameters.updatedAt = new Date();
     if ($scope.contentShow[0]) {
@@ -546,6 +568,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
     alert(mode+$scope.cnType+'成功！');
     window.history.back();
   };
+
   $scope.preview = function(){
   };
 }
