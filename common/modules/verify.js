@@ -49,6 +49,7 @@ Verify.prototype.idMask = function (verifyId) {
  */
 
 Verify.prototype.checkToken = function (token, cb) {
+  if (!tokenData)  cb(null, false);
   tokenModel.findOne({where: {id: token}}, function (err, tokenData) {
     if (!tokenData)
       cb(err, false); //找不到accessToken
@@ -99,6 +100,7 @@ Verify.prototype.checkId = function (id) {
  */
 
 Verify.prototype.getStudentId = function (token, cb) {
+  if (!token)  cb("token can't be null");
   tokenModel.findOne({where: {id: token}, fields: {userId: true}}, function (err, tokenData) {
     userModel.findOne({where: {id: tokenData.userId}, fields: {studentId: true}},
       function (err, userData) {
@@ -114,6 +116,7 @@ Verify.prototype.getStudentId = function (token, cb) {
  */
 
 Verify.prototype.getUserId = function (token, cb) {
+  if (!token)  cb("token can't be null");
   tokenModel.findOne({where: {id: token}}, function (err, tokenData) {
     cb(err, tokenData.userId)
   })
