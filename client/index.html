@@ -27,14 +27,28 @@
     .thumbnail {
       border: none;
       border-radius: 0;
-      padding: 15px;
-      height: 295px;
+      padding: 5px 15px 15px 15px;
+      height: 300px;
+      position: relative;
     }
 
     .contentRow {
       margin-bottom: 20px;
     }
 
+    .thumbnail > .text-center {
+      color: #000000;
+    }
+
+    .statusText {
+      position: absolute;
+      bottom: 10px;
+      right: 15px;
+    }
+
+    .footer {
+      margin-bottom: 15px;
+    }
 
   </style>
 </head>
@@ -93,105 +107,206 @@
       information.</p>
   </div>
 </div>
-<div class="container">
-  <div class="listHead col-xs-12">
-    <h4 class="col-xs-8 col-sm-10">最新表单</h4>
-    <a class="col-xs-4 col-sm-2" href=""><i>查看更多»</i></a>
-  </div>
-  <div class="contentRow col-xs-12">
-    <div class="col-sm-6 col-md-3">
-      <div class="thumbnail">
-        <div class="text-center">
-          <h3>标题标题</h3>
-          <p>周五20：00抢票</p>
-        </div>
-        <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg" alt="..." height="150px" width="150px">
-        <h4 class="text-success text-right">正在进行</h4>
-      </div>
-    </div>
-    <div class="col-sm-6 col-md-3">
-      <div class="thumbnail">
-        <div class="text-center">
-          <h3>标题标题</h3>
-          <p>周五20：00抢票</p>
-        </div>
-        <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg" alt="..." height="150px" width="150px">
-        <h4 class="text-success text-right">正在进行</h4>
-      </div>
-    </div>
-    <div class="col-sm-6 col-md-3">
-      <div class="thumbnail">
-        <div class="text-center">
-          <h3>标题标题</h3>
-          <p>周五20：00抢票</p>
-        </div>
-        <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg" alt="..." height="150px" width="150px">
-        <h4 class="text-success text-right">正在进行</h4>
-      </div>
-    </div>
-    <div class="col-sm-6 col-md-3">
-      <div class="thumbnail">
-        <div class="text-center">
-          <h3></h3>
-          <p></p>
-        </div>
-        <img class="hidden" src="" height="150px" width="150px">
-        <h4 class="text-success text-right"></h4>
-      </div>
-    </div>
-  </div>
+
+<div class="container" ng-controller="contentCtrl">
 
   <div class="listHead col-xs-12">
     <h4 class="col-xs-8 col-sm-10">最新表单</h4>
     <a class="col-xs-4 col-sm-2" href=""><i>查看更多»</i></a>
   </div>
   <div class="contentRow col-xs-12">
-    <div class="col-sm-6 col-md-3">
-      <div class="thumbnail">
-        <div class="text-center">
-          <h3>标题标题</h3>
-          <p>周五20：00抢票</p>
-        </div>
-        <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg" alt="..." height="150px" width="150px">
-        <h4 class="text-success text-right">正在进行</h4>
-      </div>
-    </div>
-    <div class="col-sm-6 col-md-3">
-      <div class="thumbnail">
-        <div class="text-center">
-          <h3>标题标题</h3>
-          <p>周五20：00抢票</p>
-        </div>
-        <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg" alt="..." height="150px" width="150px">
-        <h4 class="text-success text-right">正在进行</h4>
-      </div>
-    </div>
-    <div class="col-sm-6 col-md-3">
-      <div class="thumbnail">
-        <div class="text-center">
-          <h3>标题标题</h3>
-          <p>周五20：00抢票</p>
-        </div>
-        <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg" alt="..." height="150px" width="150px">
-        <h4 class="text-success text-right">正在进行</h4>
-      </div>
-    </div>
-    <div class="col-sm-6 col-md-3">
-      <div class="thumbnail">
-        <div class="text-center">
-          <h3></h3>
-          <p></p>
-        </div>
-        <img class="hidden" src="" height="150px" width="150px">
-        <h4 class="text-success text-right"></h4>
-      </div>
-    </div>
+    <a ng-href="/form#?id={{flts[0].id}}">
+      <div class="col-sm-6 col-md-3">
+        <div class="thumbnail">
+          <div class="text-center">
+            <h3 ng-bind="flts[0].title"></h3>
 
+            <p ng-bind-template="开始时间：{{flts[0].startTime | date: cnFormat}}"></p>
+          </div>
+          <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg"
+               alt="..." height="150px" width="150px">
+          <h4 class="statusText text-success">正在进行</h4>
+        </div>
+      </div>
+    </a>
+    <a ng-href="/form#?id={{flts[1].id}}">
+      <div class="col-sm-6 col-md-3">
+        <div class="thumbnail">
+          <div class="text-center">
+            <h3 ng-bind="flts[1].title"></h3>
+
+            <p ng-bind-template="开始时间：{{flts[1].startTime | date: cnFormat}}"></p>
+          </div>
+          <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg"
+               alt="..." height="150px" width="150px">
+          <h4 class="statusText text-success">正在进行</h4>
+        </div>
+      </div>
+    </a>
+    <a ng-href="/form#?id={{flts[2].id}}">
+      <div class="col-sm-6 col-md-3">
+        <div class="thumbnail">
+          <div class="text-center">
+            <h3 ng-bind="flts[2].title"></h3>
+
+            <p ng-bind-template="开始时间：{{flts[2].startTime | date: cnFormat}}"></p>
+          </div>
+          <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg"
+               alt="..." height="150px" width="150px">
+          <h4 class="statusText text-success">正在进行</h4>
+        </div>
+      </div>
+    </a>
+    <a ng-href="/form#?id={{flts[3].id}}">
+      <div class="col-sm-6 col-md-3">
+        <div class="thumbnail">
+          <div class="text-center">
+            <h3 ng-bind="flts[3].title"></h3>
+
+            <p ng-bind-template="开始时间：{{flts[3].startTime | date: cnFormat}}"></p>
+          </div>
+          <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg"
+               alt="..." height="150px" width="150px">
+          <h4 class="statusText text-success">正在进行</h4>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="listHead col-xs-12">
+    <h4 class="col-xs-8 col-sm-10">最新投票</h4>
+    <a class="col-xs-4 col-sm-2" href=""><i>查看更多»</i></a>
+  </div>
+  <div class="contentRow col-xs-12">
+    <a ng-href="/form#?id={{vlts[0].id}}">
+      <div class="col-sm-6 col-md-3">
+        <div class="thumbnail">
+          <div class="text-center">
+            <h3 ng-bind="vlts[0].title"></h3>
+
+            <p ng-bind-template="开始时间：{{vlts[0].startTime | date: cnFormat}}"></p>
+          </div>
+          <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg"
+               alt="..." height="150px" width="150px">
+          <h4 class="text-success statusText">正在进行</h4>
+        </div>
+      </div>
+    </a>
+    <a ng-href="/form#?id={{vlts[1].id}}">
+      <div class="col-sm-6 col-md-3">
+        <div class="thumbnail">
+          <div class="text-center">
+            <h3 ng-bind="vlts[1].title"></h3>
+
+            <p ng-bind-template="开始时间：{{vlts[1].startTime | date: cnFormat}}"></p>
+          </div>
+          <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg"
+               alt="..." height="150px" width="150px">
+          <h4 class="text-success statusText">正在进行</h4>
+        </div>
+      </div>
+    </a>
+    <a ng-href="/form#?id={{vlts[2].id}}">
+      <div class="col-sm-6 col-md-3">
+        <div class="thumbnail">
+          <div class="text-center">
+            <h3 ng-bind="vlts[2].title"></h3>
+
+            <p ng-bind-template="开始时间：{{vlts[2].startTime | date: cnFormat}}"></p>
+          </div>
+          <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg"
+               alt="..." height="150px" width="150px">
+          <h4 class="text-success statusText">正在进行</h4>
+        </div>
+      </div>
+    </a>
+    <a ng-href="/form#?id={{vlts[3].id}}">
+      <div class="col-sm-6 col-md-3">
+        <div class="thumbnail">
+          <div class="text-center">
+            <h3 ng-bind="vlts[3].title"></h3>
+
+            <p ng-bind-template="开始时间：{{vlts[3].startTime | date: cnFormat}}"></p>
+          </div>
+          <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg"
+               alt="..." height="150px" width="150px">
+          <h4 class="text-success statusText">正在进行</h4>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div class="listHead col-xs-12">
+    <h4 class="col-xs-8 col-sm-10">最新疯抢</h4>
+    <a class="col-xs-4 col-sm-2" href=""><i>查看更多»</i></a>
+  </div>
+  <div class="contentRow col-xs-12">
+    <a ng-href="/form#?id={{skls[0].id}}">
+      <div class="col-sm-6 col-md-3">
+        <div class="thumbnail">
+          <div class="text-center">
+            <h3 ng-bind="skls[0].title"></h3>
+
+            <p ng-bind-template="开始时间：{{skls[0].seckillArrangements[0].startTime | date: cnFormat}}"></p>
+          </div>
+          <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg"
+               alt="..." height="150px" width="150px">
+          <h4 class="text-success statusText">正在进行</h4>
+        </div>
+      </div>
+    </a>
+    <a ng-href="/form#?id={{skls[1].id}}">
+      <div class="col-sm-6 col-md-3">
+        <div class="thumbnail">
+          <div class="text-center">
+            <h3 ng-bind="skls[1].title"></h3>
+
+            <p ng-bind-template="开始时间：{{skls[1].seckillArrangements[0].startTime | date: cnFormat}}"></p>
+          </div>
+          <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg"
+               alt="..." height="150px" width="150px">
+          <h4 class="text-success statusText">正在进行</h4>
+        </div>
+      </div>
+    </a>
+    <a ng-href="/form#?id={{skls[2].id}}">
+      <div class="col-sm-6 col-md-3">
+        <div class="thumbnail">
+          <div class="text-center">
+            <h3 ng-bind="skls[2].title"></h3>
+
+            <p ng-bind-template="开始时间：{{skls[2].seckillArrangements[0].startTime | date: cnFormat}}"></p>
+          </div>
+          <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg"
+               alt="..." height="150px" width="150px">
+          <h4 class="text-success statusText">正在进行</h4>
+        </div>
+      </div>
+    </a>
+    <a ng-href="/form#?id={{skls[3].id}}">
+      <div class="col-sm-6 col-md-3">
+        <div class="thumbnail">
+          <div class="text-center">
+            <h3 ng-bind="skls[3].title"></h3>
+
+            <p ng-bind-template="开始时间：{{skls[3].seckillArrangements[0].startTime | date: cnFormat}}"></p>
+          </div>
+          <img src="http://img.kyfly.net/etuan/shetuan/logo/82WBiX0jpeVFrNcQ3wAFqzdrBeaoFCPYaPZJ1PA4q622EnWkCE.jpeg@300w.jpeg"
+               alt="..." height="150px" width="150px">
+          <h4 class="text-success statusText">正在进行</h4>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <hr>
+  <div class="text-center footer">
+    <img src="/img/full-logo.png" height="25px" alt="团团一家LOGO">&nbsp;提供技术支持
   </div>
 
 
 </div>
-
 
 <script src="lib/angular/angular.min.js"></script>
 <script src="lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>

@@ -467,6 +467,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
    * 在完成提交后，将转跳至列表页面list.html
    */
   $scope.submit = function () {
+    var uploadParameters = {};
     //上传图片至OSS服务
     var logoFd = new FormData();
     var logoFile = document.getElementById($scope.cnType+'logo').files[0];
@@ -480,7 +481,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
       if (logoXhr.readyState === 4) {
         if (logoXhr.status === 200) {
           $scope.logoUrl = JSON.parse(logoXhr.responseText).url;
-          Edit.update({logoUrl:$scope.logoUrl});
+          uploadParameters.logoUrl = $scope.logoUrl;
         }
       }
     };
@@ -489,7 +490,6 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
     logoXhr.open('POST','/ue/uploads?action=uploadimage&dir=logo&access_token='+JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken,true);
     logoXhr.send(logoFd);
 
-    var uploadParameters = {};
     uploadParameters.updatedAt = new Date();
     if ($scope.contentShow[0]) {
       uploadParameters.title = $scope.title;
@@ -567,6 +567,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
     var mode = $routeParams.id === 'create'?'创建':'更新';
     alert(mode+$scope.cnType+'成功！');
     window.history.back();
+    console.log(uploadParameters);
   };
 
   $scope.preview = function(){
