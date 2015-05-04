@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+  <title>WeChat</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+</head>
+<script type="text/javascript">
+  var bindstudentID = function () {
+  var ajax = new XMLHttpRequest();
+  ajax.open('PUT','/api/WeChatUsers/updateAttributes',{studentId: ; password: ;},true);
+  ajax.send();
+  ajax.onreadystatechange = function () {
+    if (ajax.readyState === 4) {
+      var data = JSON.parse(ajax.responseText);
+      if (data.studentId && ajax.status === 200) {
+        window.location = 'smurl';
+      }
+      else if (ajax.status === 200 || ajax.status === 304) {
+        document.getElementById('logstatus').innerHTML = data.msg;
+      };
+    };
+  };
+};
+</script>
+<body>
+<div ng-controller="LoginCtrl">
+  <h2>学号验证</h2>
+  <hr>
+  <label>学号</label>
+  <input ng-model="text">
+  <label>密码</label>
+  <input ng-model="text">
+  <button ng-click="bindstudentID()">绑定</button>
+</div>
+</body>
+</html>

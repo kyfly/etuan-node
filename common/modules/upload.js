@@ -88,6 +88,8 @@ function upload(callback) {
           Bucket: 'etuan-node',
           Prefix: path
         },function(err,data){
+          if(!data)
+            return;
            var prefix = 'http://etuan-node.oss-cn-hangzhou.aliyuncs.com/';
            var list = [];
            data.Contents.forEach(function(content){
