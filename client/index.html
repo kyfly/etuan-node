@@ -1,6 +1,7 @@
 <!doctype html>
 <html ng-app="app">
 <head>
+  <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <title>首页 - 团团一家</title>
@@ -129,7 +130,7 @@
           </div>
           <img ng-src="{{flt.logoUrl}}"
                alt="..." height="150px" width="150px">
-          <h4 class="statusText text-success">正在进行</h4>
+          <h4 class="statusText text-{{flt.textColor}}" ng-bind="flt.activityStatus"></h4>
         </div>
       </a>
     </div>
@@ -150,7 +151,7 @@
           </div>
           <img ng-src="{{vlt.logoUrl}}"
                alt="..." height="150px" width="150px">
-          <h4 class="statusText text-success">正在进行</h4>
+          <h4 class="statusText text-{{vlt.textColor}}" ng-bind="vlt.activityStatus"></h4>
         </div>
       </a>
     </div>
@@ -170,7 +171,7 @@
           </div>
           <img ng-src="{{skl.logoUrl}}"
                alt="..." height="150px" width="150px">
-          <h4 class="statusText text-success">正在进行</h4>
+          <h4 class="statusText text-{{skl.textColor}}" ng-bind="skl.activityStatus"></h4>
         </div>
       </a>
     </div>
