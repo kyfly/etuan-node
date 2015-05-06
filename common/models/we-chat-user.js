@@ -32,6 +32,15 @@ module.exports = function(WeChatUser) {
 				{arg:'state',type:'string'}],
 			http: {path:"/phoneoauth",verb: 'get'}
 		});
+	WeChatUser.remoteMethod('confirm',
+		{
+			accepts:{arg:'state',type:'string'},
+			description:"微信登录验证,手机,PC端都用这个接口验证",
+			http:{path:"/confirm",verb: 'get'}
+		});
+	WeChatUser.beforeRemote('confirm',function(ctx, unused, next){
+		return WeChatUser.app.models.LoginCache.confirm(ctx, unused, next);
+	});
 	/**
 	 * 微信用户获取oauth2.0链接接口
 	 * method get

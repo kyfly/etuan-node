@@ -1,6 +1,6 @@
 var checkStatus = function () {
   var ajax = new XMLHttpRequest();
-  ajax.open('GET','/api/LoginCaches/confirm?state='+token,true);
+  ajax.open('GET','/api/WechatUsers/confirm?state='+token,true);
   ajax.send();
   ajax.onreadystatechange = function () {
     if (ajax.readyState === 4) {
