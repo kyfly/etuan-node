@@ -161,9 +161,10 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
    * 在函数中其中分成两部分，顺序结构部分用于初始化通用部分，switch结构用于初始化功能特定的部分
    * intial()决定将edit页面初始化为“新建”还是编辑“编辑”，以及实现对初始化函数的调用
    */
+
+  $scope.ifEdit = $routeParams.id === 'create';
   $scope.contentShow = etuanAdmin.item.isBasicContent[$routeParams.type];
   var initEdit = function () {
-    $scope.ifEdit = false;
     logoChange = false;
     if ($scope.contentShow[2]) {
       $scope.startTime = new Date();
@@ -173,11 +174,8 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     }
   };
 
-  var ifEdit = false;
   var loadEdit = function () {
     logoChange = false;
-    ifEdit = true;
-    $scope.ifEdit = true;
     Edit.get({fk: $routeParams.id},
       function (res) {
         if ($scope.contentShow[0]) {
@@ -510,19 +508,11 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
       logoXhr.send(logoFd);
     }
 
-    if (ifEdit === false) {
-      console.log(1);
+    if ($routeParams.id === 'create') {
       logoUpload();
     } else {
       if (logoChange === true) {
-        console.log(2);
         logoUpload();
-      } else {
-        console.log(3);
-        Edit.get({fk: $routeParams.id},
-          function (res) {
-            Edit.update({fk: $routeParams.id}, res.logoUrl);
-          })
       }
     }
 
