@@ -7,8 +7,12 @@
 </head>
 <script type="text/javascript">
   var bindstudentID = function () {
-  var ajax = new XMLHttpRequest();
-  ajax.open('PUT','/api/WeChatUsers/updateAttributes',{studentId: ; password: ;},true);
+    var ajax = new XMLHttpRequest();
+    ajax.open('PUT', '/api/WeChatUsers/updateAttributes', {studentId:;
+    password: ;
+  }, true
+  )
+  ;
   ajax.send();
   ajax.onreadystatechange = function () {
     if (ajax.readyState === 4) {
@@ -18,10 +22,13 @@
       }
       else if (ajax.status === 200 || ajax.status === 304) {
         document.getElementById('logstatus').innerHTML = data.msg;
-      };
-    };
+      }
+      ;
+    }
+    ;
   };
-};
+  }
+  ;
 </script>
 <body>
 <div ng-controller="LoginCtrl">

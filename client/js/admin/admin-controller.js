@@ -1,26 +1,32 @@
-function AdminCtrl ($scope,$timeout) {
+var logoChange = false;
+
+function logoChanged() {
+  logoChange = true;
+}
+
+function AdminCtrl($scope, $timeout) {
   //768像素为界限决定侧边栏的显示与否
   $scope.sidebarShow = (document.body.clientWidth >= 768);
   $scope.sidebarToggle = function () {
     $scope.sidebarShow = !$scope.sidebarShow;
   };
   //监听ngView完成事件，延迟200ms用于页面渲染
-  $scope.$on('$viewContentLoaded',function(){
+  $scope.$on('$viewContentLoaded', function () {
     if (document.body.clientWidth >= 768) {
-      $timeout(function(){
-        document.getElementById('sidebar').style.height = document.getElementById('main').offsetHeight +'px';
-      },200);
+      $timeout(function () {
+        document.getElementById('sidebar').style.height = document.getElementById('main').offsetHeight + 'px';
+      }, 200);
     }
   });
 }
 
-function NavbarCtrl ($scope,$window,$resource,etuanAdmin) {
+function NavbarCtrl($scope, $window, $resource, etuanAdmin) {
   //团团一家LOGO
   $scope.etuanLogo = "/img/full-logo.png";
   //获取社团基本信息的接口，可以用于显示右上角信息
   var Organization = $resource(
-    '/api/OrganizationUsers/:userId',{
-      userId:etuanAdmin.cache.userId
+    '/api/OrganizationUsers/:userId', {
+      userId: etuanAdmin.cache.userId
     }
   );
   Organization.get({},
@@ -28,7 +34,8 @@ function NavbarCtrl ($scope,$window,$resource,etuanAdmin) {
       $scope.organizationName = res.name;
       $scope.organizationLogo = res.logoUrl;
     },
-    function () {}
+    function () {
+    }
   );
   //主页跳转动作（点击团团一家LOGO）
   $scope.redirectToHomapage = function () {
@@ -45,59 +52,59 @@ function NavbarCtrl ($scope,$window,$resource,etuanAdmin) {
   };
 }
 
-function SidebarCtrl ($scope,$window) {
+function SidebarCtrl($scope, $window) {
   //检测函数，利用路由判断，辅助检测左边的按钮何时应该高亮
   var sidebarItemChosen = function (type) {
-    var rx = new RegExp('#\/'+type);
+    var rx = new RegExp('#\/' + type);
     return rx.test($window.location.hash);
   };
   //侧边栏显示内容
   $scope.sidebars = [
     {
-      'id':'sidebarHome',
-      'display_name':'首页',
-      'url':'#/home',
-      'active':sidebarItemChosen('home')
+      'id': 'sidebarHome',
+      'display_name': '首页',
+      'url': '#/home',
+      'active': sidebarItemChosen('home')
     },
     {
-      'id':'sidebarForm',
-      'display_name':'活动',
-      'url':'#/activity/list',
-      'active':sidebarItemChosen('activity')
+      'id': 'sidebarForm',
+      'display_name': '活动',
+      'url': '#/activity/list',
+      'active': sidebarItemChosen('activity')
     },
     {
-      'id':'sidebarForm',
-      'display_name':'表单',
-      'url':'#/form/list',
-      'active':sidebarItemChosen('form')
+      'id': 'sidebarForm',
+      'display_name': '表单',
+      'url': '#/form/list',
+      'active': sidebarItemChosen('form')
     },
     {
-      'id':'sidebarSeckill',
-      'display_name':'疯抢',
-      'url':'#/seckill/list',
-      'active':sidebarItemChosen('seckill')
+      'id': 'sidebarSeckill',
+      'display_name': '疯抢',
+      'url': '#/seckill/list',
+      'active': sidebarItemChosen('seckill')
     },
     {
-      'id':'sidebarVote',
-      'display_name':'投票',
-      'url':'#/vote/list',
-      'active':sidebarItemChosen('vote')
+      'id': 'sidebarVote',
+      'display_name': '投票',
+      'url': '#/vote/list',
+      'active': sidebarItemChosen('vote')
     },
     {
-      'id':'sidebarSetting',
-      'display_name':'设置',
-      'url':'#/setting',
-      'active':sidebarItemChosen('setting')
+      'id': 'sidebarSetting',
+      'display_name': '设置',
+      'url': '#/setting',
+      'active': sidebarItemChosen('setting')
     },
     {
-      'id':'sidebarHelp',
-      'display_name':'帮助',
-      'url':'#/help',
-      'active':sidebarItemChosen('help')
+      'id': 'sidebarHelp',
+      'display_name': '帮助',
+      'url': '#/help',
+      'active': sidebarItemChosen('help')
     }
   ];
   //跳转函数，包括操作侧边栏按钮和跳转至相应页面
-  $scope.redirect = function(index) {
+  $scope.redirect = function (index) {
     for (var i = 0; i < $scope.sidebars.length; i++) {
       $scope.sidebars[i].active = false;
     }
@@ -106,11 +113,11 @@ function SidebarCtrl ($scope,$window) {
   };
 }
 
-function ListCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
+function ListCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
   //项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的item.infoProperty属性
   var List = $resource(
-    etuanAdmin.item.infoProperty[$routeParams.type],{
-      userId:etuanAdmin.cache.userId
+    etuanAdmin.item.infoProperty[$routeParams.type], {
+      userId: etuanAdmin.cache.userId
     }
   );
   $scope.contentShow = etuanAdmin.item.isBasicContent[$routeParams.type];
@@ -120,32 +127,32 @@ function ListCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
   $scope.listItems = List.query();
   //编辑按钮操作函数
   $scope.edit = function (id) {
-    $window.location.hash = '#/'+$routeParams.type+'/edit/'+id;
+    $window.location.hash = '#/' + $routeParams.type + '/edit/' + id;
   };
   //结果按钮操作函数
   $scope.result = function (id) {
-    $window.location.hash = '#/'+$routeParams.type+'/result/'+id;
+    $window.location.hash = '#/' + $routeParams.type + '/result/' + id;
   };
   //删除按钮操作函数
-  $scope.remove = function (index,id) {
-    List.delete({fk:id},
-      function(res){
-        $scope.listItems.splice(index,1);
+  $scope.remove = function (index, id) {
+    List.delete({fk: id},
+      function (res) {
+        $scope.listItems.splice(index, 1);
       },
-      function(res){
+      function (res) {
       }
     );
   }
 }
 
-function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
+function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
   /* 接口资源区
    * Edit为一个资源对象，实现所有的CRUD的基础
    * 项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的item.infoProperty属性
    */
   var Edit = $resource(
-    etuanAdmin.item.infoProperty[$routeParams.type],{
-      userId:etuanAdmin.cache.userId
+    etuanAdmin.item.infoProperty[$routeParams.type], {
+      userId: etuanAdmin.cache.userId
     }
   );
   /* 初始化区
@@ -156,6 +163,8 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
    */
   $scope.contentShow = etuanAdmin.item.isBasicContent[$routeParams.type];
   var initEdit = function () {
+    $scope.ifEdit = false;
+    logoChange = false;
     if ($scope.contentShow[2]) {
       $scope.startTime = new Date();
     }
@@ -163,9 +172,14 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
       $scope.stopTime = new Date();
     }
   };
+
+  var ifEdit = false;
   var loadEdit = function () {
-    Edit.get({fk:$routeParams.id},
-      function(res){
+    logoChange = false;
+    ifEdit = true;
+    $scope.ifEdit = true;
+    Edit.get({fk: $routeParams.id},
+      function (res) {
         if ($scope.contentShow[0]) {
           $scope.title = res.title;
         }
@@ -189,7 +203,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
         if ($scope.contentShow[4]) {
           $scope.verifyRule = res.verifyRule;
         }
-        switch ($routeParams.type){
+        switch ($routeParams.type) {
           case 'form':
             $scope.forms = res.formQuestions;
             break;
@@ -200,14 +214,14 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
               seckillArrangementsTmp.total = res.seckillArrangements[i].total;
               seckillArrangementsTmp.startTime = new Date(res.seckillArrangements[i].startTime);
               seckillArrangementsTmp.startDate = new Date(res.seckillArrangements[i].startTime);
-              seckillArrangementsTmp.startDate.toString = function(){
-                return this.getFullYear()+'年'+(this.getMonth()+1)+'月'+this.getDate()+'日';
+              seckillArrangementsTmp.startDate.toString = function () {
+                return this.getFullYear() + '年' + (this.getMonth() + 1) + '月' + this.getDate() + '日';
               };
               seckillArrangementsTmp.seckillStartDateOpen = function ($event) {
                 $event.preventDefault();
                 $event.stopPropagation();
                 this.seckillStartOpened = true;
-              },
+              };
               $scope.seckills.push(seckillArrangementsTmp);
             }
             break;
@@ -216,16 +230,19 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
             break;
         }
       },
-      function(res){
+      function (res) {
       }
     );
+
   };
+
+
   var initial = function () {
-    $routeParams.id === 'create'?initEdit():loadEdit();
+    $routeParams.id === 'create' ? initEdit() : loadEdit();
     $scope.enType = $routeParams.type;
     $scope.cnType = etuanAdmin.dict[$routeParams.type];
-    $scope.mode = $routeParams.id === 'create'?('新建'+$scope.cnType+' '):('编辑'+$scope.cnType+' ');
-    $scope.submitButtonName = $routeParams.id === 'create'?'创建':'更新';
+    $scope.mode = $routeParams.id === 'create' ? ('新建' + $scope.cnType + ' ') : ('编辑' + $scope.cnType + ' ');
+    $scope.submitButtonName = $routeParams.id === 'create' ? '创建' : '更新';
   };
   initial();
   /* 日期选择器配置
@@ -237,12 +254,12 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
     formatYear: 'yy',
     startingDay: 1
   };
-  $scope.startDateOpen = function($event) {
+  $scope.startDateOpen = function ($event) {
     $event.preventDefault();
     $event.stopPropagation();
     $scope.startOpened = true;
   };
-  $scope.stopDateOpen = function($event) {
+  $scope.stopDateOpen = function ($event) {
     $event.preventDefault();
     $event.stopPropagation();
     $scope.stopOpened = true;
@@ -278,146 +295,146 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
    */
   $scope.forms = [];
   $scope.addForm = {
-    choice:function () {
+    choice: function () {
       $scope.forms.push({
-        type:1,
-        label:'请选择你的答案',
-        content:['A-','B-','C-','D-']
+        type: 1,
+        label: '请选择你的答案',
+        content: ['A-', 'B-', 'C-', 'D-']
       });
     },
-    simple:function () {
+    simple: function () {
       $scope.forms.push({
-        type:2,
-        label:'请简答你的答案',
-        content:[]
+        type: 2,
+        label: '请简答你的答案',
+        content: []
       });
     },
-    complex:function () {
+    complex: function () {
       $scope.forms.push({
-        type:3,
-        label:'请陈述你的答案',
-        content:[]
+        type: 3,
+        label: '请陈述你的答案',
+        content: []
       });
     },
-    judge:function () {
+    judge: function () {
       $scope.forms.push({
-        type:4,
-        label:'请判断你的答案',
-        content:['是','否']
+        type: 4,
+        label: '请判断你的答案',
+        content: ['是', '否']
       });
     },
-    name:function () {
+    name: function () {
       $scope.forms.push({
-        type:2,
-        label:'姓名',
-        content:[]
+        type: 2,
+        label: '姓名',
+        content: []
       });
     },
-    sex:function () {
+    sex: function () {
       $scope.forms.push({
-        type:1,
-        label:'性别',
-        content:['男','女']
+        type: 1,
+        label: '性别',
+        content: ['男', '女']
       });
     },
-    personalID:function () {
+    personalID: function () {
       $scope.forms.push({
-        type:2,
-        label:'身份证号',
-        content:[]
+        type: 2,
+        label: '身份证号',
+        content: []
       });
     },
-    hometown:function () {
+    hometown: function () {
       $scope.forms.push({
-        type:2,
-        label:'籍贯',
-        content:[]
+        type: 2,
+        label: '籍贯',
+        content: []
       });
     },
-    studentID:function () {
+    studentID: function () {
       $scope.forms.push({
-        type:2,
-        label:'学号',
-        content:[]
+        type: 2,
+        label: '学号',
+        content: []
       });
     },
-    school:function () {
+    school: function () {
       $scope.forms.push({
-        type:1,
-        label:'学院',
-        content:etuanAdmin.org.schools
+        type: 1,
+        label: '学院',
+        content: etuanAdmin.org.schools
       });
     },
-    major:function () {
+    major: function () {
       $scope.forms.push({
-        type:2,
-        label:'专业',
-        content:[]
+        type: 2,
+        label: '专业',
+        content: []
       });
     },
-    email:function () {
+    email: function () {
       $scope.forms.push({
-        type:2,
-        label:'电子邮箱',
-        content:[]
+        type: 2,
+        label: '电子邮箱',
+        content: []
       });
     },
-    qqNumber:function () {
+    qqNumber: function () {
       $scope.forms.push({
-        type:2,
-        label:'QQ号',
-        content:[]
+        type: 2,
+        label: 'QQ号',
+        content: []
       });
     },
-    longCellphoneNumber:function () {
+    longCellphoneNumber: function () {
       $scope.forms.push({
-        type:2,
-        label:'手机长号',
-        content:[]
+        type: 2,
+        label: '手机长号',
+        content: []
       });
     },
-    shortCellphoneNumber:function () {
+    shortCellphoneNumber: function () {
       $scope.forms.push({
-        type:2,
-        label:'手机短号',
-        content:[]
+        type: 2,
+        label: '手机短号',
+        content: []
       });
     },
-    introduction:function () {
+    introduction: function () {
       $scope.forms.push({
-        type:3,
-        label:'个人简介',
-        content:[]
+        type: 3,
+        label: '个人简介',
+        content: []
       });
     },
-    specials:function () {
+    specials: function () {
       $scope.forms.push({
-        type:3,
-        label:'特长',
-        content:[]
+        type: 3,
+        label: '特长',
+        content: []
       });
     }
   };
   $scope.removeForm = function (index) {
-    $scope.forms.splice(index,1);
+    $scope.forms.splice(index, 1);
   };
   $scope.moveUpForm = function (index) {
     if (index > 0) {
-      $scope.forms.splice(index-1,0,$scope.forms.splice(index,1)[0]);
+      $scope.forms.splice(index - 1, 0, $scope.forms.splice(index, 1)[0]);
     }
   };
   $scope.moveDownForm = function (index) {
     if (index < $scope.forms.length) {
-      $scope.forms.splice(index+1,0,$scope.forms.splice(index,1)[0]);
+      $scope.forms.splice(index + 1, 0, $scope.forms.splice(index, 1)[0]);
     }
   };
-  $scope.showType = ['','选择题','简答题','陈述题','判断题'];
-  $scope.showContent = ['',true,false,false,false];
+  $scope.showType = ['', '选择题', '简答题', '陈述题', '判断题'];
+  $scope.showContent = ['', true, false, false, false];
   $scope.appendContent = function (index) {
     $scope.forms[index].content.push('');
   };
-  $scope.removeContent = function (pindex,index) {
-    $scope.forms[pindex].content.splice(index,1);
+  $scope.removeContent = function (pindex, index) {
+    $scope.forms[pindex].content.splice(index, 1);
   };
   /* 疯抢特定功能区
    * 实现了疯抢项目的CRUD
@@ -426,7 +443,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
   $scope.addSeckill = function () {
     $scope.seckills.push({
       startDate: '',
-      total:0,
+      total: 0,
       seckillStartDateOpen: function ($event) {
         $event.preventDefault();
         $event.stopPropagation();
@@ -436,7 +453,7 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
     });
   };
   $scope.removeSeckill = function (index) {
-    $scope.seckills.splice(index,1);
+    $scope.seckills.splice(index, 1);
   };
 
   /* 投票特定功能区
@@ -445,50 +462,69 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
   $scope.votes = [];
   $scope.addVote = function () {
     $scope.votes.push({
-      'name':'这是一个投票项',
-      'detailUrl':''
+      'name': '这是一个投票项',
+      'detailUrl': ''
     });
   };
   $scope.removeVote = function (index) {
-    $scope.votes.splice(index,1);
+    $scope.votes.splice(index, 1);
   };
   $scope.moveUpVote = function (index) {
     if (index > 0) {
-      $scope.votes.splice(index-1,0,$scope.votes.splice(index,1)[0]);
+      $scope.votes.splice(index - 1, 0, $scope.votes.splice(index, 1)[0]);
     }
   };
   $scope.moveDownVote = function (index) {
     if (index < $scope.votes.length) {
-      $scope.votes.splice(index+1,0,$scope.votes.splice(index,1)[0]);
+      $scope.votes.splice(index + 1, 0, $scope.votes.splice(index, 1)[0]);
     }
   };
   /* 提交区
    * 用于提交数据，uploadParameter中首先加入通用部分的参数，然后根据switch结构向其中分别添加特定部分的参数
    * 在完成提交后，将转跳至列表页面list.html
    */
+
   $scope.submit = function () {
     var uploadParameters = {};
     //上传图片至OSS服务
-    var logoFd = new FormData();
-    var logoFile = document.getElementById($scope.cnType+'logo').files[0];
-    var logoXhr = new XMLHttpRequest();
-    var fileExt =/\.[^\.]+/.exec(document.getElementById($scope.cnType + 'logo').value.toLowerCase());
-    if(!((fileExt[0] === '.png')||(fileExt[0] === '.jpg')||(fileExt[0] === '.jpeg')||(fileExt[0] === '.gif'))){
-      alert('请确认您上传的logo文件格式是jpg、png、gif或jpeg');
-      return false;
-    }
-    var logoReadyHandle = function () {
-      if (logoXhr.readyState === 4) {
-        if (logoXhr.status === 200) {
-          $scope.logoUrl = JSON.parse(logoXhr.responseText).url;
-          uploadParameters.logoUrl = $scope.logoUrl;
-        }
+    function logoUpload() {
+      var logoFd = new FormData();
+      var logoFile = document.getElementById($scope.cnType + 'logo').files[0];
+      var logoXhr = new XMLHttpRequest();
+      var fileExt = /\.[^\.]+/.exec(document.getElementById($scope.cnType + 'logo').value.toLowerCase());
+      if (!((fileExt[0] === '.png') || (fileExt[0] === '.jpg') || (fileExt[0] === '.jpeg') || (fileExt[0] === '.gif'))) {
+        alert('请确认您上传的logo文件格式是jpg、png、gif或jpeg');
+        return false;
       }
-    };
-    logoFd.append('logo',logoFile);
-    logoXhr.onreadystatechange = logoReadyHandle;
-    logoXhr.open('POST','/ue/uploads?action=uploadimage&dir=logo&access_token='+JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken,false);
-    logoXhr.send(logoFd);
+      var logoReadyHandle = function () {
+        if (logoXhr.readyState === 4) {
+          if (logoXhr.status === 200) {
+            $scope.logoUrl = JSON.parse(logoXhr.responseText).url;
+            uploadParameters.logoUrl = $scope.logoUrl;
+          }
+        }
+      };
+      logoFd.append('logo', logoFile);
+      logoXhr.onreadystatechange = logoReadyHandle;
+      logoXhr.open('POST', '/ue/uploads?action=uploadimage&dir=logo&access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, false);
+      logoXhr.send(logoFd);
+    }
+
+    if (ifEdit === false) {
+      console.log(1);
+      logoUpload();
+    } else {
+      if (logoChange === true) {
+        console.log(2);
+        logoUpload();
+      } else {
+        console.log(3);
+        Edit.get({fk: $routeParams.id},
+          function (res) {
+            Edit.update({fk: $routeParams.id}, res.logoUrl);
+          })
+      }
+    }
 
     uploadParameters.updatedAt = new Date();
     if ($scope.contentShow[0]) {
@@ -498,23 +534,23 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
       uploadParameters.description = $scope.description;
     }
     if ($scope.contentShow[2]) {
-      uploadParameters.startTime = new Date($scope.startDate.getFullYear(),$scope.startDate.getMonth(),$scope.startDate.getDate(),$scope.startTime.getHours(),$scope.startTime.getMinutes()).toISOString();
+      uploadParameters.startTime = new Date($scope.startDate.getFullYear(), $scope.startDate.getMonth(), $scope.startDate.getDate(), $scope.startTime.getHours(), $scope.startTime.getMinutes()).toISOString();
     }
     if ($scope.contentShow[3]) {
-      uploadParameters.stopTime = new Date($scope.stopDate.getFullYear(),$scope.stopDate.getMonth(),$scope.stopDate.getDate(),$scope.stopTime.getHours(),$scope.stopTime.getMinutes()).toISOString();
+      uploadParameters.stopTime = new Date($scope.stopDate.getFullYear(), $scope.stopDate.getMonth(), $scope.stopDate.getDate(), $scope.stopTime.getHours(), $scope.stopTime.getMinutes()).toISOString();
     }
     if ($scope.contentShow[4]) {
       uploadParameters.verifyRule = $scope.verifyRule;
     }
-    switch ($routeParams.type){
+    switch ($routeParams.type) {
       case 'activity':
-          uploadParameters.contentUrl = $scope.activityContentUrl;
+        uploadParameters.contentUrl = $scope.activityContentUrl;
         break;
       case 'form':
         var formQuestionsTmp = [];
-        for(var i=0;i<$scope.forms.length;i++){
+        for (var i = 0; i < $scope.forms.length; i++) {
           var formQuestion = {
-            'id':i,
+            'id': i,
             'type': $scope.forms[i].type,
             'label': $scope.forms[i].label,
             'content': $scope.forms[i].content
@@ -530,14 +566,14 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
           return;
         }
         for (var i = 0; i < $scope.seckills.length; i++) {
-          var seckillStartTmp = new Date($scope.seckills[i].startDate.getFullYear(),$scope.seckills[i].startDate.getMonth(),$scope.seckills[i].startDate.getDate(),$scope.seckills[i].startTime.getHours(),$scope.seckills[i].startTime.getMinutes());
+          var seckillStartTmp = new Date($scope.seckills[i].startDate.getFullYear(), $scope.seckills[i].startDate.getMonth(), $scope.seckills[i].startDate.getDate(), $scope.seckills[i].startTime.getHours(), $scope.seckills[i].startTime.getMinutes());
           var seckillArrangement = {
-            'id':i,
-            'startTime':seckillStartTmp.toISOString(),
-            'total':$scope.seckills[i].total
+            'id': i,
+            'startTime': seckillStartTmp.toISOString(),
+            'total': $scope.seckills[i].total
           };
           seckillArrangementsTmp.push(seckillArrangement);
-          if (i !== 0 && seckillStartTmp <= new Date(seckillArrangementsTmp[i - 1].startTime) ) {
+          if (i !== 0 && seckillStartTmp <= new Date(seckillArrangementsTmp[i - 1].startTime)) {
             alert('请按时间先后顺序设置各轮开始时间');
             return;
           }
@@ -546,9 +582,9 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
         break;
       case 'vote':
         var voteSubitemsTmp = [];
-        for(var i=0;i<$scope.votes.length;i++){
+        for (var i = 0; i < $scope.votes.length; i++) {
           var voteSubitem = {
-            'id':i,
+            'id': i,
             'name': $scope.votes[i].name,
             'detailUrl': $scope.votes[i].detailUrl,
             'count': $scope.votes[i].count
@@ -558,22 +594,22 @@ function EditCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
         uploadParameters.voteSubitems = voteSubitemsTmp;
         break;
     }
-    if($routeParams.id === 'create'){
+    if ($routeParams.id === 'create') {
       Edit.save(uploadParameters);
     }
-    else{
-      Edit.update({fk:$routeParams.id},uploadParameters);
+    else {
+      Edit.update({fk: $routeParams.id}, uploadParameters);
     }
-    var mode = $routeParams.id === 'create'?'创建':'更新';
-    alert(mode+$scope.cnType+'成功！');
+    var mode = $routeParams.id === 'create' ? '创建' : '更新';
+    alert(mode + $scope.cnType + '成功！');
     window.history.back();
   };
 
-  $scope.preview = function(){
+  $scope.preview = function () {
   };
 }
 
-function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
+function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
   /* 结果页面配置区
    * 用于设置结果页面的各项显示上的差异化配置。
    */
@@ -582,20 +618,20 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
    * 结果页面上的各项接口。项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的item.infoProperty属性
    */
   var Result = $resource(
-    etuanAdmin.item.resultProperty[$routeParams.type],{
-      id:$routeParams.id
+    etuanAdmin.item.resultProperty[$routeParams.type], {
+      id: $routeParams.id
     }
   );
   var Info = $resource(
-    etuanAdmin.item.infoProperty[$routeParams.type],{
-      userId:etuanAdmin.cache.userId,
-      fk:$routeParams.id
+    etuanAdmin.item.infoProperty[$routeParams.type], {
+      userId: etuanAdmin.cache.userId,
+      fk: $routeParams.id
     }
   );
   /* 页面ViewModel区
    * 用于直接和页面上绑定的各项变量
    */
-  $scope.mode = etuanAdmin.dict[$routeParams.type]+'结果 ';
+  $scope.mode = etuanAdmin.dict[$routeParams.type] + '结果 ';
   $scope.title = '';
   $scope.currentResultConfig = resultConfig[$routeParams.type];
   $scope.results = [];
@@ -669,60 +705,74 @@ function ResultCtrl ($scope,$routeParams,$resource,$window,etuanAdmin) {
     function (res) {
       infoProcess(res);
     },
-    function (res) {}
+    function (res) {
+    }
   );
   Result.query(
     {},
     function (res) {
       resultsProcess(res);
     },
-    function (res) {}
+    function (res) {
+    }
   );
   /* 结果下载页面的获取区
    * 在这个区域中包括了pdf下载和excel下载。
    */
   $scope.pdfDownload = function () {
-    window.open('/api/Forms/pdf/'+$routeParams.id,'_blank');
+    window.open('/api/Forms/pdf/' + $routeParams.id, '_blank');
   };
   $scope.excelDownload = function () {
-    window.open('/api/Forms/excel/'+$routeParams.id,'_blank');
+    window.open('/api/Forms/excel/' + $routeParams.id, '_blank');
   };
 }
 
-function HomeCtrl ($scope,$resource) {
+function HomeCtrl($scope, $resource) {
   //这里写着所有的通知通告，别忘了上面的三个数字的实现也要写在这一块地方
   $scope.notices = [
     {
-      'title':'招新系统上线啦',
-      'time':'2012年2月12日',
-      'content':'习近平《在中央新疆工作座谈会上的讲话》【典出】子曰：“危者，安其位者也。亡者，保其存者也。乱者，有其治者也。是故君子安而不忘危，存而不忘亡，治而不忘乱，是以身安而国家可保也。” ——《周易?系辞下》'
+      'title': '招新系统上线啦',
+      'time': '2012年2月12日',
+      'content': '习近平《在中央新疆工作座谈会上的讲话》【典出】子曰：“危者，安其位者也。亡者，保其存者也。乱者，有其治者也。是故君子安而不忘危，存而不忘亡，治而不忘乱，是以身安而国家可保也。” ——《周易?系辞下》'
     },
     {
-      'title':'招新系统上线啦',
-      'time':'2012年2月12日',
-      'content':'【解读】《周易》亦称《易经》，儒家重要经典之一。《周易?系辞》是孔子阐释易理的文字，这段的意思是，君子在国家安定的时候要不忘危险，国家存在的时候要不忘败亡，国家大治的时候要不忘变乱。'
+      'title': '招新系统上线啦',
+      'time': '2012年2月12日',
+      'content': '【解读】《周易》亦称《易经》，儒家重要经典之一。《周易?系辞》是孔子阐释易理的文字，这段的意思是，君子在国家安定的时候要不忘危险，国家存在的时候要不忘败亡，国家大治的时候要不忘变乱。'
     },
     {
-      'title':'招新系统上线啦',
-      'time':'2012年2月12日',
-      'content':'这种忧患和责任意识是习近平治国理政的重要思想底色。“全党必须警醒起来”，2012年习近平一上任就为全党敲响了警钟。紧接着，习近平发出“整风”动员令，并从生死存亡的高度来认识和解决腐败问题。在党的群众路线教育实践活动总结大会上，习近平引用《道德经》中的名句“为之于未有，治之于未乱”再次告诫全党要增强忧患意识，学会“下先手棋”，方能立于不败。'
+      'title': '招新系统上线啦',
+      'time': '2012年2月12日',
+      'content': '这种忧患和责任意识是习近平治国理政的重要思想底色。“全党必须警醒起来”，2012年习近平一上任就为全党敲响了警钟。紧接着，习近平发出“整风”动员令，并从生死存亡的高度来认识和解决腐败问题。在党的群众路线教育实践活动总结大会上，习近平引用《道德经》中的名句“为之于未有，治之于未乱”再次告诫全党要增强忧患意识，学会“下先手棋”，方能立于不败。'
     },
     {
-      'title':'招新系统上线啦',
-      'time':'2012年2月12日',
-      'content':'这种忧患和责任意识是习近平治国理政的重要思想底色。“全党必须警醒起来”，2012年习近平一上任就为全党敲响了警钟。紧接着，习近平发出“整风”动员令，并从生死存亡的高度来认识和解决腐败问题。在党的群众路线教育实践活动总结大会上，习近平引用《道德经》中的名句“为之于未有，治之于未乱”再次告诫全党要增强忧患意识，学会“下先手棋”，方能立于不败。'
+      'title': '招新系统上线啦',
+      'time': '2012年2月12日',
+      'content': '这种忧患和责任意识是习近平治国理政的重要思想底色。“全党必须警醒起来”，2012年习近平一上任就为全党敲响了警钟。紧接着，习近平发出“整风”动员令，并从生死存亡的高度来认识和解决腐败问题。在党的群众路线教育实践活动总结大会上，习近平引用《道德经》中的名句“为之于未有，治之于未乱”再次告诫全党要增强忧患意识，学会“下先手棋”，方能立于不败。'
     }
   ];
   //获得接口并进行显示
-  $resource('/api/OrganizationUsers/actCount').get({},function(res){console.log(res);$scope.actCount=res.actCount.actCount;},function(){});
-  $resource('/api/OrganizationUsers/viewCount').get({},function(res){console.log(res);$scope.viewCount=res.viewCount.viewCount;},function(){});
-  $resource('/api/OrganizationUsers/parCount').get({},function(res){console.log(res);$scope.parCount=res.parCount.parCount;},function(){});
+  $resource('/api/OrganizationUsers/actCount').get({}, function (res) {
+    console.log(res);
+    $scope.actCount = res.actCount.actCount;
+  }, function () {
+  });
+  $resource('/api/OrganizationUsers/viewCount').get({}, function (res) {
+    console.log(res);
+    $scope.viewCount = res.viewCount.viewCount;
+  }, function () {
+  });
+  $resource('/api/OrganizationUsers/parCount').get({}, function (res) {
+    console.log(res);
+    $scope.parCount = res.parCount.parCount;
+  }, function () {
+  });
 }
 
-function SettingCtrl ($scope,$resource,etuanAdmin) {
+function SettingCtrl($scope, $resource, etuanAdmin) {
   var Setting = $resource(
-    '/api/OrganizationUsers/:userId',{
-      userId:etuanAdmin.cache.userId
+    '/api/OrganizationUsers/:userId', {
+      userId: etuanAdmin.cache.userId
     }
   );
   Setting.get({},
@@ -736,21 +786,22 @@ function SettingCtrl ($scope,$resource,etuanAdmin) {
       $scope.phone = res.phone;
       $scope.organizationUserDepartments = res.organizationUserDepartments;
     },
-    function () {}
+    function () {
+    }
   );
   $scope.types = etuanAdmin.org.types;
   //下面的这个写法是根据社团属性来动态实现下面学院选择的变化，三元表达式的写法是对if/else模形的简写方式
-  $scope.schools = ($scope.type==='校级社团'||$scope.type==='校级组织')?['全校']:etuanAdmin.org.schools;
+  $scope.schools = ($scope.type === '校级社团' || $scope.type === '校级组织') ? ['全校'] : etuanAdmin.org.schools;
   $scope.typeChange = function () {
-    $scope.schools = ($scope.type==='校级社团'||$scope.type==='校级组织')?['全校']:etuanAdmin.org.schools;
+    $scope.schools = ($scope.type === '校级社团' || $scope.type === '校级组织') ? ['全校'] : etuanAdmin.org.schools;
   };
   //上传图片至OSS服务
   $scope.logoUpload = function () {
     var logoFd = new FormData();
     var logoFile = document.getElementById('logo').files[0];
     var logoXhr = new XMLHttpRequest();
-    var fileExt =/\.[^\.]+/.exec(document.getElementById('logo').value.toLowerCase());
-    if(!((fileExt == '.png')||(fileExt == '.jpg')||(fileExt == '.jpeg')||(fileExt == '.gif'))){
+    var fileExt = /\.[^\.]+/.exec(document.getElementById('logo').value.toLowerCase());
+    if (!((fileExt == '.png') || (fileExt == '.jpg') || (fileExt == '.jpeg') || (fileExt == '.gif'))) {
       alert('请确认您上传的logo文件格式是jpg、png、gif或jpeg');
       return false;
     }
@@ -758,47 +809,49 @@ function SettingCtrl ($scope,$resource,etuanAdmin) {
       if (logoXhr.readyState === 4) {
         if (logoXhr.status === 200) {
           $scope.logoUrl = JSON.parse(logoXhr.responseText).url;
-          Setting.update({logoUrl:$scope.logoUrl});
+          Setting.update({logoUrl: $scope.logoUrl});
         }
       }
     };
-    logoFd.append('logo',logoFile);
+    logoFd.append('logo', logoFile);
     logoXhr.onreadystatechange = logoReadyHandle;
-    logoXhr.open('POST','/ue/uploads?action=uploadimage&dir=logo&access_token='+JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken,true);
+    logoXhr.open('POST', '/ue/uploads?action=uploadimage&dir=logo&access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, true);
     logoXhr.send(logoFd);
   };
   //基本信息提交按钮
   $scope.basicSubmit = function () {
     Setting.update({
-        name:$scope.name,
-        description:$scope.description,
-        type:$scope.type,
-        school:$scope.school,
-        weChat:$scope.weChat,
-        phone:$scope.phone
+        name: $scope.name,
+        description: $scope.description,
+        type: $scope.type,
+        school: $scope.school,
+        weChat: $scope.weChat,
+        phone: $scope.phone
       },
-      function () {},
-      function () {}
+      function () {
+      },
+      function () {
+      }
     );
   };
   $scope.addDepartment = function () {
     $scope.organizationUserDepartments.push({
-      name:'部门',
-      description:'部门介绍'
+      name: '部门',
+      description: '部门介绍'
     });
   };
   $scope.moveUpDepartment = function (index) {
     if (index > 0) {
-      $scope.organizationUserDepartments.splice(index-1,0,$scope.organizationUserDepartments.splice(index,1)[0]);
+      $scope.organizationUserDepartments.splice(index - 1, 0, $scope.organizationUserDepartments.splice(index, 1)[0]);
     }
   };
   $scope.moveDownDepartment = function (index) {
     if (index < $scope.organizationUserDepartments.length) {
-      $scope.organizationUserDepartments.splice(index+1,0,$scope.organizationUserDepartments.splice(index,1)[0]);
+      $scope.organizationUserDepartments.splice(index + 1, 0, $scope.organizationUserDepartments.splice(index, 1)[0]);
     }
   };
   $scope.removeDepartment = function (index) {
-    $scope.organizationUserDepartments.splice(index,1);
+    $scope.organizationUserDepartments.splice(index, 1);
   };
   //部门信息提交按钮
   $scope.departmentSubmit = function () {
@@ -808,8 +861,11 @@ function SettingCtrl ($scope,$resource,etuanAdmin) {
       dsTmp[i].id = i;
     }
     Setting.update({
-      organizationUserDepartments:dsTmp});
+      organizationUserDepartments: dsTmp
+    });
   };
 }
 
-function HelpCtrl () {}
+function HelpCtrl() {
+}
+

@@ -74,7 +74,7 @@ function SeckillCtrl($scope, $location, $window) {
   socket.on('killFail', function (err) {
     switch (err) {
       case "verifyId wrong":
-        alert("请确认"+ $scope.verifyRule + "填写正确！");
+        alert("请确认" + $scope.verifyRule + "填写正确！");
         break;
       case "already gotten":
         alert("您已经抢过啦！");

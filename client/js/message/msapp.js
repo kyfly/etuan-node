@@ -1,10 +1,10 @@
-function headCtrl ($scope,$location) {
+function headCtrl($scope, $location) {
   $scope.title = $location.search().t || '消息';
 }
-function messageCtrl ($scope,$location) {
+function messageCtrl($scope, $location) {
   var searchObj = $location.search();
   $scope.icon = searchObj.i;
-  $scope.color = searchObj.c; 
+  $scope.color = searchObj.c;
   $scope.title = searchObj.t;
   $scope.paragraph = searchObj.p;
   switch (searchObj.b) {
@@ -28,7 +28,7 @@ function messageCtrl ($scope,$location) {
       $scope.btnShow = true;
       $scope.btnText = '关 闭';
       $scope.btnType = 'danger'
-      $scope.btnClick = function () {   
+      $scope.btnClick = function () {
         WeixinJSBridge.call('closeWindow');
       };
       break;
@@ -36,10 +36,11 @@ function messageCtrl ($scope,$location) {
       $scope.btnShow = false;
       $scope.btnText = '';
       $scope.btnType = 'primary';
-      $scope.btnClick = function () {};
+      $scope.btnClick = function () {
+      };
       break;
   }
 }
 var app = angular.module('app', []);
-app.controller('messageCtrl',['$scope','$location',messageCtrl]);
-app.controller('headCtrl',['$scope','$location',headCtrl]);
+app.controller('messageCtrl', ['$scope', '$location', messageCtrl]);
+app.controller('headCtrl', ['$scope', '$location', headCtrl]);

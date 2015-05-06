@@ -26,37 +26,39 @@
 </head>
 <body>
 <!--头部-->
-  <header ng-controller="NavbarCtrl">
-    <nav class="navbar navbar-default">
-      <div class="navbar-header">
-        <a class="navbar-brand" href ng-click="sidebarToggle()">
-          <span class="glyphicon glyphicon-menu-hamburger"></span>
-        </a>
-        <a class="navbar-brand" href ng-click="redirectToHomapage()">
-          <img ng-src="{{etuanLogo}}" height="20px" alt="团团一家LOGO">
-        </a>
-      </div>
-      <div class="top-nav-right visible-xs">
-        <div class="btn-group" dropdown>
-          <button type="button" class="btn btn-default navbar-btn dropdown-toggle" dropdown-toggle>
-            <img ng-src="{{organizationLogo}}" height="20px">
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href ng-click="redirectToSetting()"><span class="glyphicon glyphicon-user"></span>&nbsp;{{organizationName}}</a></li>
-            <li class="divider"></li>
-            <li><a href ng-click="logOut()"><span class='glyphicon glyphicon-log-out'></span>&nbsp;退出</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="top-nav-right hidden-xs">
-        <img ng-src="{{organizationLogo}}" height="20px">&emsp;<a href ng-click="redirectToSetting()">{{organizationName}}</a>&emsp;
-        <button class="btn btn-default navbar-btn" ng-click="logOut()">
-          <span class='glyphicon glyphicon-log-out'></span>&nbsp;退出
+<header ng-controller="NavbarCtrl">
+  <nav class="navbar navbar-default">
+    <div class="navbar-header">
+      <a class="navbar-brand" href ng-click="sidebarToggle()">
+        <span class="glyphicon glyphicon-menu-hamburger"></span>
+      </a>
+      <a class="navbar-brand" href ng-click="redirectToHomapage()">
+        <img ng-src="{{etuanLogo}}" height="20px" alt="团团一家LOGO">
+      </a>
+    </div>
+    <div class="top-nav-right visible-xs">
+      <div class="btn-group" dropdown>
+        <button type="button" class="btn btn-default navbar-btn dropdown-toggle" dropdown-toggle>
+          <img ng-src="{{organizationLogo}}" height="20px">
+          <span class="caret"></span>
         </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href ng-click="redirectToSetting()"><span class="glyphicon glyphicon-user"></span>&nbsp;{{organizationName}}</a>
+          </li>
+          <li class="divider"></li>
+          <li><a href ng-click="logOut()"><span class='glyphicon glyphicon-log-out'></span>&nbsp;退出</a></li>
+        </ul>
       </div>
-    </nav>
-  </header>
+    </div>
+    <div class="top-nav-right hidden-xs">
+      <img ng-src="{{organizationLogo}}" height="20px">&emsp;<a href
+                                                                ng-click="redirectToSetting()">{{organizationName}}</a>&emsp;
+      <button class="btn btn-default navbar-btn" ng-click="logOut()">
+        <span class='glyphicon glyphicon-log-out'></span>&nbsp;退出
+      </button>
+    </div>
+  </nav>
+</header>
 <!--左侧边栏-->
 <div class="col-sm-2" id="addPurple" ng-controller="SidebarCtrl" ng-show="sidebarShow"></div>
 <div class="col-sm-2 show-item" id="sidebar" ng-controller="SidebarCtrl" ng-show="sidebarShow">

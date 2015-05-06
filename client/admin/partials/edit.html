@@ -1,5 +1,7 @@
 <div>
-  <h3><small>{{mode}}</small>&nbsp;&nbsp;<big>{{title}}</big></h3>
+  <h3>
+    <small>{{mode}}</small>
+    &nbsp;&nbsp;<big>{{title}}</big></h3>
 </div>
 <hr>
 <form class="form-horizontal">
@@ -9,7 +11,7 @@
       <label class="control-label">{{cnType}}标题</label>
     </div>
     <div class="col-sm-10">
-      <input type="text" class="form-control" ng-model="title">
+      <input type="text" class="form-control" ng-model="title" required>
     </div>
   </div>
 
@@ -18,7 +20,9 @@
       <label class="control-label">{{cnType}}Logo</label>
     </div>
     <div class="col-sm-10">
-      <input type="file" class="form-control" id="{{cnType}}logo" required>
+      <input onchange="logoChanged()" type="file" class="form-control" id="{{cnType}}logo" required>
+
+      <p ng-show="ifEdit" class="help-block">如果未上传新logo默认就是用之前的logo</p>
     </div>
   </div>
 
@@ -37,9 +41,12 @@
     </div>
     <div class="col-sm-7">
       <p class="input-group">
-        <input type="text" class="form-control" datepicker-popup="{{unDateFormat}}" ng-model="startDate" is-open="startOpened" ng-click="startDateOpen($event)" datepicker-options="dateOptions" close-text="完成" current-text="今天" clear-text ="清空" />
+        <input type="text" class="form-control" datepicker-popup="{{unDateFormat}}" ng-model="startDate"
+               is-open="startOpened" ng-click="startDateOpen($event)" datepicker-options="dateOptions" close-text="完成"
+               current-text="今天" clear-text="清空" required/>
       <span class="input-group-btn">
-        <button type="button" class="btn btn-default" ng-click="startDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+        <button type="button" class="btn btn-default" ng-click="startDateOpen($event)"><i
+                class="glyphicon glyphicon-calendar"></i></button>
       </span>
       </p>
     </div>
@@ -54,9 +61,12 @@
     </div>
     <div class="col-sm-7">
       <p class="input-group">
-        <input type="text" class="form-control" datepicker-popup="{{unDateFormat}}" ng-model="stopDate" is-open="stopOpened" datepicker-options="dateOptions" ng-click="stopDateOpen($event)" close-text="完成" current-text="今天" clear-text ="清空" />
+        <input type="text" class="form-control" datepicker-popup="{{unDateFormat}}" ng-model="stopDate"
+               is-open="stopOpened" datepicker-options="dateOptions" ng-click="stopDateOpen($event)" close-text="完成"
+               current-text="今天" clear-text="清空" required/>
         <span class="input-group-btn">
-          <button type="button" class="btn btn-default" ng-click="stopDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+          <button type="button" class="btn btn-default" ng-click="stopDateOpen($event)"><i
+                  class="glyphicon glyphicon-calendar"></i></button>
         </span>
       </p>
     </div>
@@ -97,31 +107,33 @@
       <div class="well">
         <ol>
           <li ng-repeat="vote in votes">
-              <div class="form-group">
-                <div class="col-sm-10 col-sm-offset-2">
-                  <button class="btn btn-primary" type="button" ng-click="moveUpVote($index)">
-                    <span class="glyphicon glyphicon-arrow-up"></span> 上移
-                  </button>
-                  <button class="btn btn-primary" type="button" ng-click="moveDownVote($index)">
-                    <span class="glyphicon glyphicon-arrow-down"></span> 下移
-                  </button>
-                  <button class="btn btn-danger" type="button" ng-click="removeVote($index)">
-                    <span class="glyphicon glyphicon-remove"></span> 删除
-                  </button>
-                </div>
+            <div class="form-group">
+              <div class="col-sm-10 col-sm-offset-2">
+                <button class="btn btn-primary" type="button" ng-click="moveUpVote($index)">
+                  <span class="glyphicon glyphicon-arrow-up"></span> 上移
+                </button>
+                <button class="btn btn-primary" type="button" ng-click="moveDownVote($index)">
+                  <span class="glyphicon glyphicon-arrow-down"></span> 下移
+                </button>
+                <button class="btn btn-danger" type="button" ng-click="removeVote($index)">
+                  <span class="glyphicon glyphicon-remove"></span> 删除
+                </button>
               </div>
-              <div class="form-group">
-                <label class="control-label col-sm-2">项目名</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" ng-model="vote.name">
-                </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2">项目名</label>
+
+              <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="vote.name">
               </div>
-              <div class="form-group">
-                <label class="control-label col-sm-2">详情介绍</label>
-                <div class="col-sm-10">
-                  <div class="ueditor" ng-model="activityContent" config="activityConfig"></div>
-                </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2">详情介绍</label>
+
+              <div class="col-sm-10">
+                <div class="ueditor" ng-model="activityContent" config="activityConfig"></div>
               </div>
+            </div>
           </li>
         </ol>
         <hr>
@@ -143,46 +155,49 @@
       <div class="well">
         <ol>
           <li ng-repeat="form in forms">
-              <div class="form-group">
-                <label class="col-sm-2 control-label">{{showType[form.type]}}</label>
-                <div class="col-sm-10">
-                  <button class="btn btn-primary" type="button" ng-click="moveUpForm($index)">
-                    <span class="glyphicon glyphicon-arrow-up"></span> 上移
-                  </button>
-                  <button class="btn btn-primary" type="button" ng-click="moveDownForm($index)">
-                    <span class="glyphicon glyphicon-arrow-down"></span> 下移
-                  </button>
-                  <button class="btn btn-danger" type="button" ng-click="removeForm($index)">
-                    <span class="glyphicon glyphicon-remove"></span> 删除
-                  </button>
-                </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">{{showType[form.type]}}</label>
+
+              <div class="col-sm-10">
+                <button class="btn btn-primary" type="button" ng-click="moveUpForm($index)">
+                  <span class="glyphicon glyphicon-arrow-up"></span> 上移
+                </button>
+                <button class="btn btn-primary" type="button" ng-click="moveDownForm($index)">
+                  <span class="glyphicon glyphicon-arrow-down"></span> 下移
+                </button>
+                <button class="btn btn-danger" type="button" ng-click="removeForm($index)">
+                  <span class="glyphicon glyphicon-remove"></span> 删除
+                </button>
               </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">题干</label>
-                <div class="col-sm-10">
-                  <input class="form-control" type="text" ng-model="form.label">
-                </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">题干</label>
+
+              <div class="col-sm-10">
+                <input class="form-control" type="text" ng-model="form.label">
               </div>
-              <div class="form-group" ng-show="showContent[form.type]">
-                <label class="col-sm-2 control-label">选项</label>
-                <div class="col-sm-10">
-                  <button class="btn btn-primary" type="button" ng-click="appendContent($index)">
-                    <span class="glyphicon glyphicon-plus"></span> 增加选项
-                  </button>
-                </div>
+            </div>
+            <div class="form-group" ng-show="showContent[form.type]">
+              <label class="col-sm-2 control-label">选项</label>
+
+              <div class="col-sm-10">
+                <button class="btn btn-primary" type="button" ng-click="appendContent($index)">
+                  <span class="glyphicon glyphicon-plus"></span> 增加选项
+                </button>
               </div>
-              <div class="form-group" ng-show="showContent[form.type]">
-                <div class="col-sm-10 col-sm-offset-2">
-                  <div class="input-group" ng-repeat="single in form.content track by $index">
+            </div>
+            <div class="form-group" ng-show="showContent[form.type]">
+              <div class="col-sm-10 col-sm-offset-2">
+                <div class="input-group" ng-repeat="single in form.content track by $index">
                     <span class="input-group-btn">
                       <button class="btn btn-primary" type="button" ng-click="removeContent($parent.$index,$index)">
                         <span class="glyphicon glyphicon-minus"></span>
                       </button>
                     </span>
-                    <input type="text" class="form-control" ng-model="form.content[$index]">
-                  </div>
+                  <input type="text" class="form-control" ng-model="form.content[$index]">
                 </div>
               </div>
+            </div>
           </li>
         </ol>
         <hr>
@@ -232,33 +247,40 @@
       <div class="well">
         <ol>
           <li ng-repeat="seckill in seckills">
-              <div class="form-group">
-                <div class="col-sm-10 col-sm-offset-2">
-                  <button class="btn btn-danger" type="button" ng-click="removeSeckill($index)">
-                    <span class="glyphicon glyphicon-remove"></span> 删除
-                  </button>
-                </div>
+            <div class="form-group">
+              <div class="col-sm-10 col-sm-offset-2">
+                <button class="btn btn-danger" type="button" ng-click="removeSeckill($index)">
+                  <span class="glyphicon glyphicon-remove"></span> 删除
+                </button>
               </div>
-              <div class="form-group">
-                <label class="control-label col-sm-2">本轮票数</label>
-                <div class="col-sm-10">
-                  <input type="number" class="form-control" ng-model="seckill.total">
-                </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2">本轮票数</label>
+
+              <div class="col-sm-10">
+                <input type="number" class="form-control" ng-model="seckill.total">
               </div>
-              <div class="form-group">
-                <label class="control-label col-sm-2">开抢时间</label>
-                <div class="col-sm-7">
-                  <p class="input-group">
-                    <input type="text" class="form-control" ng-click="seckill.seckillStartDateOpen($event)" datepicker-popup="{{cnDateFormat}}" ng-model="seckill.startDate" is-open="seckill.seckillStartOpened" datepicker-options="dateOptions" close-text="完成" current-text="今天" clear-text ="清空" />
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2">开抢时间</label>
+
+              <div class="col-sm-7">
+                <p class="input-group">
+                  <input type="text" class="form-control" ng-click="seckill.seckillStartDateOpen($event)"
+                         datepicker-popup="{{cnDateFormat}}" ng-model="seckill.startDate"
+                         is-open="seckill.seckillStartOpened" datepicker-options="dateOptions" close-text="完成"
+                         current-text="今天" clear-text="清空"/>
                   <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="seckill.seckillStartDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                    <button type="button" class="btn btn-default" ng-click="seckill.seckillStartDateOpen($event)"><i
+                            class="glyphicon glyphicon-calendar"></i></button>
                   </span>
-                  </p>
-                </div>
-                <div class="col-sm-3">
-                  <timepicker ng-model="seckill.startTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
-                </div>
+                </p>
               </div>
+              <div class="col-sm-3">
+                <timepicker ng-model="seckill.startTime" hour-step="hstep" minute-step="mstep"
+                            show-meridian="false"></timepicker>
+              </div>
+            </div>
           </li>
         </ol>
         <hr>
@@ -274,6 +296,7 @@
       <button class="btn btn-block btn-success" ng-click="submit()">{{submitButtonName}}</button>
     </div>
     <br class="visible-xs">
+
     <div class="col-sm-2">
       <button class="btn btn-block btn-default" ng-click="preview()">预览</button>
     </div>

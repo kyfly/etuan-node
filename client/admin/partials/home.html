@@ -1,47 +1,52 @@
-  <!--数量统计-->
-  <div class="row state-overview">
-    <div class="col-md-4">
-      <section class="panel">
-        <div class="symbol btn-danger">
-          <span class="glyphicon glyphicon-user"></span>
-        </div>
-        <div class="value">
-          <h1 ng-bind="parCount"></h1>
-          <p>参与人数</p>
-        </div>
-      </section>
-    </div>
-    <div class="col-md-4">
-      <section class="panel">
-        <div class="symbol btn-warning">
-          <span class="glyphicon glyphicon-calendar"></span>
-        </div>
-        <div class="value">
-          <h1 ng-bind="actCount"></h1>
-          <p>进行活动</p>
-        </div>
-      </section>
-    </div>
-    <div class="col-md-4">
-      <section class="panel">
-        <div class="symbol btn-primary">
-          <span class="glyphicon glyphicon-globe"></span>
-        </div>
-        <div class="value">
-          <h1 ng-bind="viewCount"></h1>
-          <p>浏览量</p>
-        </div>
-      </section>
-    </div>
+<!--数量统计-->
+<div class="row state-overview">
+  <div class="col-md-4">
+    <section class="panel">
+      <div class="symbol btn-danger">
+        <span class="glyphicon glyphicon-user"></span>
+      </div>
+      <div class="value">
+        <h1 ng-bind="parCount"></h1>
+
+        <p>参与人数</p>
+      </div>
+    </section>
   </div>
-  <!--通知-->
-  <div class="row notice-area">
-    <div class="col-md-4 col-sm-6" ng-repeat="notice in notices">
-      <section class="panel notice">
-        <h3>{{notice.title}}</h3>
-        <p>{{notice.time}}</p>
-        <p>{{notice.content | limitTo:120}}&nbsp;<a href="">+更多</a></p>
-      </section>
-    </div>
+  <div class="col-md-4">
+    <section class="panel">
+      <div class="symbol btn-warning">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </div>
+      <div class="value">
+        <h1 ng-bind="actCount"></h1>
+
+        <p>进行活动</p>
+      </div>
+    </section>
   </div>
+  <div class="col-md-4">
+    <section class="panel">
+      <div class="symbol btn-primary">
+        <span class="glyphicon glyphicon-globe"></span>
+      </div>
+      <div class="value">
+        <h1 ng-bind="viewCount"></h1>
+
+        <p>浏览量</p>
+      </div>
+    </section>
+  </div>
+</div>
+<!--通知-->
+<div class="row notice-area">
+  <div class="col-md-4 col-sm-6" ng-repeat="notice in notices">
+    <section class="panel notice">
+      <h3>{{notice.title}}</h3>
+
+      <p>{{notice.time}}</p>
+
+      <p>{{notice.content | limitTo:120}}&nbsp;<a href="">+更多</a></p>
+    </section>
+  </div>
+</div>
 </div>

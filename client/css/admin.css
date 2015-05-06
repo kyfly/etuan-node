@@ -16,7 +16,7 @@ body {
 #sidebar {
   margin-top: -20px;
   background-color: #2a3542;
-  padding:20px 15px 60px;
+  padding: 20px 15px 60px;
 }
 
 .sidebar-list .sidebar-item {
@@ -68,13 +68,14 @@ body {
   right: 10px;
   top: 0px;
 }
+
 .top-nav-right .dropdown-menu {
   float: right;
   right: 0;
   left: auto;
 }
 
-#main  {
+#main {
   padding: 20px 50px 40px;
   background-color: #F0F1F6;
   margin-top: -20px;
@@ -86,114 +87,134 @@ body {
   box-shadow: none;
   margin-top: 20px;
 }
+
 .state-overview .symbol {
   width: 40%;
   padding: 25px 15px;
   border-radius: 4px 0px 0px 4px;
 }
+
 .state-overview .symbol span {
   color: #fff;
   font-size: 50px;
 }
+
 .state-overview .value {
   width: 58%;
   padding-top: 21px;
   float: right;
 }
+
 .state-overview .symbol, .state-overview .value {
   display: inline-block;
   text-align: center;
 }
+
 .state-overview .value h1 {
   font-weight: 300;
 }
+
 .state-overview .value h1, .state-overview .value p {
   margin: 0;
   padding: 0;
   color: #c6cad6;
 }
 
-.notice-area .notice,.list-area .list-item {
+.notice-area .notice, .list-area .list-item {
   padding: 5px 15px 30px;
   background-color: #ffffff;
   height: 300px;
 }
-.notice-area .notice h3,.list-area .list-item h3 {
+
+.notice-area .notice h3, .list-area .list-item h3 {
   color: #A7D86E;
 }
-.notice-area .notice p,.list-area .list-item p {
+
+.notice-area .notice p, .list-area .list-item p {
   color: #858585;
 }
+
 .list-area {
   margin-bottom: 20px;
 }
+
 .list-area .panel {
   margin-bottom: 0;
 }
+
 .list-area .create-area {
   cursor: pointer;
 }
+
 .list-area .create-area .create {
   position: absolute;
-  top:50%;
+  top: 50%;
   margin-top: -25px;
-  left:50%;
+  left: 50%;
   margin-left: -25px;
   font-size: 50px;
   display: block;
 }
+
 .list-area .btn-area {
   position: relative;
-  top:-30px;
+  top: -30px;
   left: 0px;
   right: 0px;
   bottom: 0;
 }
+
 .list-area .btn-area a {
-  margin-top:5px;
+  margin-top: 5px;
   display: block;
   color: #fff;
 }
+
 .list-area .btn-area .edit-btn {
   position: absolute;
-  top:100%;
-  left:0;
-  width:33.333%;
-  height:30px;
+  top: 100%;
+  left: 0;
+  width: 33.333%;
+  height: 30px;
   border-bottom-left-radius: 4px;
 }
+
 .list-area .btn-area .result-btn {
   position: absolute;
-  top:100%;
-  left:33.333%;
-  width:33.333%;
-  height:30px;
+  top: 100%;
+  left: 33.333%;
+  width: 33.333%;
+  height: 30px;
 }
+
 .list-area .btn-area .delete-btn {
   position: absolute;
-  top:100%;
-  left:66.666%;
-  width:33.333%;
+  top: 100%;
+  left: 66.666%;
+  width: 33.333%;
   height: 30px;
   border-bottom-right-radius: 4px;
 }
 
 .repeat-item {
-  -webkit-transition:.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) all;
-  transition:.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) all;
+  -webkit-transition: .4s cubic-bezier(0.250, 0.460, 0.450, 0.940) all;
+  transition: .4s cubic-bezier(0.250, 0.460, 0.450, 0.940) all;
   position: relative;
 }
+
 .repeat-item.ng-leave.ng-leave-active, .repeat-item.ng-enter {
   opacity: 0;
   top: 200px;
 }
+
 .repeat-item.ng-enter.ng-enter-active, .repeat-item.ng-leave {
   opacity: 1;
   top: 0px;
 }
+
 .repeat-item.ng-enter-stagger, .repeat-item.ng-leave-stagger {
-  -webkit-transition-delay:.2s;
-  transition-delay:.2s;
+  -webkit-transition-delay: .2s;
+  transition-delay: .2s;
   -webkit-transition-duration: 0s;
   transition-duration: 0s;
 }
@@ -203,11 +224,13 @@ body {
   transition: .2s cubic-bezier(0.250, 0.460, 0.450, 0.940) all;
   position: relative;
 }
+
 .show-item {
   opacity: 1;
-  right:0;
+  right: 0;
 }
+
 .show-item.ng-hide {
   opacity: 0;
-  right:200px;
+  right: 200px;
 }

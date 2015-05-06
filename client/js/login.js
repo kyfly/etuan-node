@@ -1,4 +1,4 @@
-function loginCheck (t) {
+function loginCheck(t) {
   var tmpInfo = JSON.parse(window.localStorage.getItem(t));
   if (!tmpInfo || !tmpInfo.accessToken || !tmpInfo.userId
     || !tmpInfo.loginTime || !tmpInfo.ttl

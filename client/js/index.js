@@ -1,4 +1,3 @@
-
 var app = angular.module('app', ['ui.bootstrap']);
 var nowTime = new Date().getTime();
 
@@ -7,7 +6,6 @@ app.controller('headCtrl', function ($scope) {
 });
 
 app.controller('contentCtrl', ['$scope', '$http', function ($scope, $http) {
-  $scope.cnFormat = "yyyy-MM-dd HH:mm";
   $http.get('/api/Forms?filter[order]=id%20DESC').success(function (res) {
     $scope.flts = res;
     for (var i = 0; i < 4; i++) {
@@ -44,7 +42,7 @@ app.controller('contentCtrl', ['$scope', '$http', function ($scope, $http) {
       if (new Date($scope.skls[i].seckillArrangements[0].startTime).getTime() > nowTime) {
         $scope.skls[i].activityStatus = "即将开始";
         $scope.skls[i].textColor = "warning";
-      } else if ((new Date($scope.skls[i].seckillArrangements[0].startTime).getTime() < nowTime)&&($scope.skls[i].seckillArrangements[$scope.skls[i].seckillArrangements.length-1].total === 0)) {
+      } else if ((new Date($scope.skls[i].seckillArrangements[0].startTime).getTime() < nowTime) && ($scope.skls[i].seckillArrangements[$scope.skls[i].seckillArrangements.length - 1].total === 0)) {
         $scope.skls[i].activityStatus = "已经结束";
         $scope.skls[i].textColor = "danger";
       } else {
