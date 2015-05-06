@@ -22,7 +22,7 @@
         {
             var state = "<%= state %>";
             setInterval(function (){
-                $.get("/api/LoginCaches/confirm?state=<%- state%>", function (data, status) {
+                $.get("/api/WechatUsers/confirm?state=<%- state%>", function (data, status) {
                     $("h2 b").html(data.msg);
                     if (data.status == "err" && status == "success")
                     {

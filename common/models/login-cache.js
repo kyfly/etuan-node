@@ -1,12 +1,12 @@
 var wechatLogin = require('../modules/wechatLogin');
 module.exports = function(LoginCache) {
-	LoginCache.remoteMethod('confirm',
-		{
-			accepts:{arg:'state',type:'string'},
-			description:"微信登录验证,手机,PC端都用这个接口验证",
-			http:{path:"/confirm",verb: 'get'}
-		});
-	LoginCache.beforeRemote('confirm',function(ctx, unused, next){
+	// LoginCache.remoteMethod('confirm',
+	// 	{
+	// 		accepts:{arg:'state',type:'string'},
+	// 		description:"微信登录验证,手机,PC端都用这个接口验证",
+	// 		http:{path:"/confirm",verb: 'get'}
+	// 	});
+	LoginCache.confirm = function(ctx, unused, next){
 		var state = ctx.req.query.state;
 		var url = ctx.req.headers.referer;
 		if(ctx.req.headers['user-agent'].indexOf('MicroMessenger') > 0)
@@ -42,5 +42,5 @@ return;
 					});
 				}
 			});
-	});
+	};
 };
