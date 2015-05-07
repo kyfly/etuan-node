@@ -532,6 +532,10 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     if ($scope.contentShow[4]) {
       uploadParameters.verifyRule = $scope.verifyRule;
     }
+    if (uploadParameters.stopTime <= uploadParameters.startTime) {
+      alert('开始时间要在结束时间之前噢');
+      return;
+    }
     switch ($routeParams.type) {
       case 'activity':
         uploadParameters.contentUrl = $scope.activityContentUrl;
@@ -563,6 +567,10 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
             'total': $scope.seckills[i].total
           };
           seckillArrangementsTmp.push(seckillArrangement);
+          if (new Date(seckillArrangementsTmp[0].startTime).getTime() < new Date().getTime()) {
+            alert('请不要创建过去的抢票噢');
+            return;
+          }
           if (i !== 0 && seckillStartTmp <= new Date(seckillArrangementsTmp[i - 1].startTime)) {
             alert('请按时间先后顺序设置各轮开始时间');
             return;
