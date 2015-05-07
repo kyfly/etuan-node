@@ -1,44 +1,179 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
-  <title>WeChat</title>
+  <title>学号验证 - 团团一家</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-</head>
-<script type="text/javascript">
-  var bindstudentID = function () {
-    var ajax = new XMLHttpRequest();
-    ajax.open('PUT', '/api/WeChatUsers/updateAttributes', {studentId:;
-    password: ;
-  }, true
-  )
-  ;
-  ajax.send();
-  ajax.onreadystatechange = function () {
-    if (ajax.readyState === 4) {
-      var data = JSON.parse(ajax.responseText);
-      if (data.studentId && ajax.status === 200) {
-        window.location = 'smurl';
-      }
-      else if (ajax.status === 200 || ajax.status === 304) {
-        document.getElementById('logstatus').innerHTML = data.msg;
-      }
-      ;
+  <link href="lib/bootstrap/css/etuan.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
+      background-color: #e7e8ec;
     }
-    ;
-  };
-  }
-  ;
-</script>
-<body>
-<div ng-controller="LoginCtrl">
-  <h2>学号验证</h2>
-  <hr>
-  <label>学号</label>
-  <input ng-model="text">
-  <label>密码</label>
-  <input ng-model="text">
-  <button ng-click="bindstudentID()">绑定</button>
+
+    .field {
+      margin: 30px;
+      padding: 30px;
+      padding-top: 20px;
+      border: 1px solid #e5e5e5;
+      background-color: #fff;
+      min-height: 500px;
+    }
+
+    .centerclass {
+      text-align: center;
+    }
+
+    .centerclass > .glyphicon-user {
+      margin-top: 60px;
+      font-size: 100px;
+      color: #555555;
+    }
+
+    .texts {
+      text-align: left;
+    }
+
+    .bindingTitle {
+      margin-bottom: 20px;
+    }
+
+    .img-md {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body ng-app="app">
+<!--头部-->
+<header id="nav" ng-controller="headCtrl">
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button class="navbar-toggle" ng-click="isCollapsed = !isCollapsed" type="button">
+            <span class="sr-only">导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <h5>
+            <a href="index.html">
+              <img src="http://img.kyfly.net/common/logo/etuan-logo-word.png@60h.png" height="30px" alt="团团一家LOGO">
+            </a>
+          </h5>
+        </div>
+        <div collapse="isCollapsed" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active">
+              <a href="index.html">首页</a>
+            </li>
+            <li>
+              <a href="">组织</a>
+            </li>
+            <li>
+              <a href="">活动</a>
+            </li>
+            <li>
+              <a href="">表单</a>
+            </li>
+            <li>
+              <a href="">疯抢</a>
+            </li>
+            <li>
+              <a href="">投票</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="container mainHeight" ng-controller="loginCtrl">
+  <div class="field clearfix">
+    <div class="centerclass">
+      <span class="glyphicon glyphicon-user col-md-5 img-md"></span>
+    </div>
+    <div class="texts col-md-6">
+      <h2 class="col-sm-offset-2 col-sm-10 bindingTitle hidden-xs">绑定学号</h2>
+
+      <h2 class="col-sm-offset-2 col-sm-10 bindingTitle visible-xs text-center">绑定学号</h2>
+
+      <form class="form-horizontal" role="form" method="post">
+        <div class="form-group">
+          <label for="inputSno" class="col-sm-2 control-label hidden-xs">学号</label>
+
+          <div class="col-sm-10">
+            <input type="text" ng-model="studentId" class="form-control" id="inputSno" name="stu_id"
+                   placeholder="请输入您的学号">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword" class="col-sm-2 control-label hidden-xs">密码</label>
+
+          <div class="col-sm-10">
+            <input type="password" ng-model="studentPassword" class="form-control" id="inputPassword" name="stu_name"
+                   placeholder="请输入您的密码">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10 hidden-xs">
+            <button ng-click="bindstudentID()" class="btn btn-primary btn-lg">绑定</button>
+          </div>
+          <div class="col-sm-offset-2 col-sm-10 visible-xs">
+            <button ng-click="bindstudentID()" class="btn btn-primary btn-block">绑定</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <p class="help-block">
+              我们承诺保护您的个人信息，详见<a href="/privacy.html" target="_blank">隐私声明</a>。
+            </p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
+
+<script src="lib/angular/angular.js"></script>
+<script src="lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
+<script>
+  var app = angular.module('app', ['ui.bootstrap']);
+
+  app.controller('headCtrl', function ($scope) {
+    $scope.isCollapsed = true;
+  });
+
+  app.controller('loginCtrl', ['$scope', '$http', function ($scope, $http) {
+    var userId = JSON.parse(window.localStorage.getItem('d2VjaGF0')).userId;
+    var accessToken = JSON.parse(window.localStorage.getItem('d2VjaGF0')).accessToken;
+
+    function getQueryString() {
+      var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+      for (var i = 0; i < result.length; i++) {
+        result[i] = result[i].substring(1);
+      }
+      result = result.toString().substr(8);
+      return result;
+    }
+
+    $scope.bindstudentID = function () {
+      $http.put('/api/WeChatUsers/' + userId + "?access_token=" + accessToken, {
+        studentId: $scope.studentId,
+        password: $scope.studentPassword
+      }).success(function (res) {
+        if (res.err) {
+          alert(res.err);
+        } else {
+          window.location = getQueryString();
+        }
+      }).error(function () {
+        alert("连接出错啦！");
+      });
+    };
+
+  }]);
+
+</script>
 </body>
 </html>
