@@ -144,7 +144,7 @@
   <div class="contentRow col-xs-12">
 
     <div ng-repeat="vlt in vlts.slice(0,4)" class="col-sm-6 col-md-3">
-      <a ng-href="/form#?id={{vlt.id}}" ng-click="vltView(vlt.id)">
+      <a ng-href="/vote#?id={{vlt.id}}" ng-click="vltView(vlt.id)">
         <div class="thumbnail">
           <div class="text-center">
             <h4 ng-bind="vlt.title"></h4>
@@ -164,7 +164,7 @@
   </div>
   <div class="contentRow col-xs-12">
     <div class="col-sm-6 col-md-3" ng-repeat="skl in skls.slice(0,4)">
-      <a ng-href="/form#?id={{skl.id}}" ng-click="sklView(skl.id)">
+      <a ng-href="/seckill#?id={{skl.id}}" ng-click="sklView(skl.id)">
         <div class="thumbnail">
           <div class="text-center">
             <h4 ng-bind="skl.title"></h4>

@@ -6,8 +6,8 @@ function SeckillCtrl($scope, $location, $window) {
   $scope.cnFormat = 'yyyy-MM-dd HH:mm';
 
   var socket = io(
-    window.location.host + '/seckill/' + seckillUrlSearchObj.id, {
-      query: 'accessToken=' + JSON.parse($window.localStorage.getItem('d2VjaGF0')).accessToken
+    window.location.host + "/socket/seckill", {
+      query: 'accessToken=' + JSON.parse($window.localStorage.getItem('d2VjaGF0')).accessToken + "&id=" + seckillUrlSearchObj.id
     }
   );
   var start = new Date();     //秒杀开始时间
@@ -17,7 +17,12 @@ function SeckillCtrl($scope, $location, $window) {
   var resultList = [];
 
   socket.on('error', function (err) {
-    console.log(err);
+    alert("对不起，身份验证失败，错误代码：" + err);
+    //404	不存在的seckillId
+    //101	不存在的accessToken
+    //102	accessToken已过期
+    //103	找不到该用户
+    //104	学号未绑定
   });
 
   socket.once('initSeckill', function (info, result, status) {
@@ -103,7 +108,7 @@ function SeckillCtrl($scope, $location, $window) {
   socket.on('addResult', function (verifyId) {
     $scope.remain--;
     $scope.resultList.push(verifyId);
-    if ($scope.remain <= 0)
+    if ($scope.remain = 0)
       $scope.status = '已经结束';
     $scope.$apply();
   });
