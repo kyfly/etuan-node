@@ -8,7 +8,7 @@ function WebSocket(application, httpServer) {
   app = application;
   server = httpServer;
   io = require('socket.io')(server);
-  seckill = require('./socketSeckill')(app);
+  app.socketSeckill = seckill = require('./socketSeckill')(app);
 }
 
 WebSocket.prototype.start = function () {
