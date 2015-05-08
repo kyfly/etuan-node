@@ -33,4 +33,12 @@ module.exports = function(Seckill) {
       next();
     }
   });
+
+  Seckill.observe('after delete', function(ctx, next) {
+    if (ctx.instance)
+    {
+      Seckill.app.socketSeckill.deleteCache(ctx.instance.id);
+      next();
+    }
+  });
 };
