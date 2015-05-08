@@ -7,8 +7,9 @@
 <body>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  var socket = io(window.location.host + '/seckill/' + window.location.hash.substr(1),
-    {query: "accessToken=p8oDbkjV1VeKMQ2kTEqGkjVjUqc2vG6pHHeH7gSGHsKqHtioIGBgXKShVp9N056a"});
+  var socket = io(window.location.host + '/socket/seckill',
+    {query: "accessToken=1K4HLSt2fWDTf4shcCR1aBZVb3ObupPE9hMoEu1eIfszcc4nHKeWwmEEGPlAw75k&id="
+      + window.location.hash.substr(1)});
   socket.on('error', function (err) {
     console.log(err);
   });
