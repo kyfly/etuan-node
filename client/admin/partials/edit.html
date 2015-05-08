@@ -20,9 +20,14 @@
       <label class="control-label">{{cnType}}Logo</label>
     </div>
     <div class="col-sm-10">
-      <input onchange="logoChanged()" type="file" class="form-control" id="{{cnType}}logo">
-
-      <p ng-hide="ifEdit" class="help-block">如果未上传新logo默认就是用之前的logo</p>
+      <div class="input-group">
+        <input onchange="logoChanged()" type="file" class="form-control" id="{{cnType}}logo">
+      <span class="input-group-btn">
+        <button class="btn btn-primary" type="button" ng-click="logoUpload()">上传Logo</button>
+      </span>
+      </div>
+      <p class="help-block">选择了logo记得点击上传按钮噢<span ng-hide="ifEdit">；如果未上传新logo默认就是用之前的logo</span></p>
+      <p class="help-block" ng-bind="uploadStatus"></p>
     </div>
   </div>
 
