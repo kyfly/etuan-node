@@ -16,20 +16,21 @@
 <h2><img src="http://www.etuan.org/img/waiting.gif">&nbsp;<b>正在登录中...</b></h2>
 <script src="http://cdn.kyfly.net/lib/js/jquery.min.js"></script>
 <script>
-    data = <%- data %>
-    if (data.msg === "success" && ajax.status === 200) {
-      //data expect {"msg":"success","url":url,"userInfo":userInfo,"token":token}
+var msg = "<%- msg%>";
+var token = "<%- token%>";
+var url = "<%- url%>";
+ if (msg === "success") {
       var lsTmp = {
-        accessToken:data.token.id,
-        userId:data.token.userId,
-        loginTime:data.token.created,
-        ttl:data.token.ttl
+        accessToken:token.id,
+        userId:token.userId,
+        loginTime:token.created,
+        ttl:token.ttl
       };
       window.localStorage.setItem('d2VjaGF0',JSON.stringify(lsTmp));
-      if(data.url) window.location= data.url;
+      if(url) window.location= url;
       else window.location= '/';
     }else{
-        alert('sos');
+       alert('sos');
     }
 </script>
 </body>
