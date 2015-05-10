@@ -64,7 +64,7 @@
 <div class="col-sm-2 show-item" id="sidebar" ng-controller="SidebarCtrl" ng-show="sidebarShow">
   <div>
     <ul class="nav nav-pills nav-stacked sidebar-list">
-      <li id="{{sidebar.id}}" ng-repeat="sidebar in sidebars" class="sidebar-item" ng-class="{active: sidebar.active}">
+      <li ng-click="sidebarToggle()" id="{{sidebar.id}}" ng-repeat="sidebar in sidebars" class="sidebar-item" ng-class="{active: sidebar.active}">
         <a href ng-click="redirect($index)">{{sidebar.display_name}}</a>
       </li>
     </ul>
