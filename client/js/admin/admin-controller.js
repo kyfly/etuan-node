@@ -8,7 +8,14 @@ function AdminCtrl($scope, $timeout) {
   //768像素为界限决定侧边栏的显示与否
   $scope.sidebarShow = (document.body.clientWidth >= 768);
   $scope.sidebarToggle = function () {
-    $scope.sidebarShow = !$scope.sidebarShow;
+    if(document.body.clientWidth <= 768){
+      $scope.sidebarShow = !$scope.sidebarShow;
+    }
+  };
+  $scope.sidebarToggle2 = function () {
+    if(document.body.clientWidth <= 768){
+      $scope.sidebarShow = !$scope.sidebarShow;
+    }
   };
   //监听ngView完成事件，延迟200ms用于页面渲染
   $scope.$on('$viewContentLoaded', function () {
@@ -478,13 +485,16 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     }
   };
 
-  //上传图片至OSS服务
-  $scope.logoUpload = function () {
-    $scope.uploadStatus = "";
-    var logoFd = new FormData();
-    var logoFile = document.getElementById($scope.cnType + 'logo').files[0];
-    if(logoFile){
-      $scope.uploadStatus = "上传成功！";
+  /* 提交区
+   * 用于提交数据，uploadParameter中首先加入通用部分的参数，然后根据switch结构向其中分别添加特定部分的参数
+   * 在完成提交后，将转跳至列表页面list.html
+   */
+  $scope.submit = function () {
+    var uploadParameters = {};
+    //上传图片至OSS服务
+    var logoUpload = function () {
+      var logoFd = new FormData();
+      var logoFile = document.getElementById($scope.cnType + 'logo').files[0];
       var logoXhr = new XMLHttpRequest();
       var fileExt = /\.[^\.]+/.exec(document.getElementById($scope.cnType + 'logo').value.toLowerCase());
       if (!((fileExt[0] === '.png') || (fileExt[0] === '.jpg') || (fileExt[0] === '.jpeg') || (fileExt[0] === '.gif'))) {
@@ -495,32 +505,25 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         if (logoXhr.readyState === 4) {
           if (logoXhr.status === 200) {
             $scope.logoUrl = JSON.parse(logoXhr.responseText).url;
-            if ($routeParams.id === 'create') {
-              Edit.save({logoUrl: $scope.logoUrl});
-            }
-            else {
-              if (logoChange === true) {
-                Edit.update({fk: $routeParams.id}, {logoUrl: $scope.logoUrl});
-              }
-            }
+            uploadParameters.logoUrl = $scope.logoUrl;
           }
         }
       };
       logoFd.append('logo', logoFile);
       logoXhr.onreadystatechange = logoReadyHandle;
-      logoXhr.open('POST', '/ue/uploads?action=uploadimage&dir=logo&access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, true);
+      logoXhr.open('POST', '/ue/uploads?action=uploadimage&dir=logo&access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, false);
       logoXhr.send(logoFd);
-    }else {
-      $scope.uploadStatus = "请先选择logo";
-    }
-  };
+    };
 
-  /* 提交区
-   * 用于提交数据，uploadParameter中首先加入通用部分的参数，然后根据switch结构向其中分别添加特定部分的参数
-   * 在完成提交后，将转跳至列表页面list.html
-   */
-  $scope.submit = function () {
-    var uploadParameters = {};
+    if ($routeParams.id === 'create') {
+      logoUpload();
+    }
+    else {
+      if (logoChange === true) {
+        logoUpload();
+      }
+    }
+
     uploadParameters.updatedAt = new Date();
     if ($scope.contentShow[0]) {
       uploadParameters.title = $scope.title;

@@ -15,19 +15,27 @@ function SeckillCtrl($scope, $location, $window) {
   var countdownTimer;       //倒计时定时器
   var countdownSec;        //用秒表示的倒计时
   var resultList = [];
+  var newReferer = "index.html";
 
   socket.on('error', function (err) {
-    alert("对不起，身份验证失败，错误代码：" + err);
-    //404	不存在的seckillId
-    //101	不存在的accessToken
-    //102	accessToken已过期
-    //103	找不到该用户
-    //104	学号未绑定
+    if (err === "104") {
+      window.location = "../student.html?referer=" + newReferer
+    } else {
+      alert("对不起，身份验证失败，错误代码：" + err);
+      //404	不存在的seckillId
+      //101	不存在的accessToken
+      //102	accessToken已过期
+      //103	找不到该用户
+      //104	学号未绑定
+    }
   });
 
   socket.once('initSeckill', function (info, result, status) {
     var now = new Date();
     deltaTime = new Date().getTime() - now.getTime();
+    console.log(status);
+    console.log(result);
+    console.log(info);
     start = new Date(info.seckillArrangements[status.current].startTime);
     //判断当前状态，即将开始、正在进行或已经结束
     if (now.getTime() < start.getTime()) {
@@ -60,8 +68,8 @@ function SeckillCtrl($scope, $location, $window) {
         break;
     }
 
-    $scope.title = info.title;
     $scope.current = status.current;
+    $scope.title = info.title;
     $scope.startTime = info.seckillArrangements[status.current].startTime;
     $scope.description = info.description;
     $scope.seckillArrangements = info.seckillArrangements;
@@ -103,6 +111,7 @@ function SeckillCtrl($scope, $location, $window) {
 
   socket.on('killSuccess', function () {
     alert('恭喜你抢到了！');
+    history.go(0);
   });
 
   socket.on('addResult', function (verifyId) {
