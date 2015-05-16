@@ -8,7 +8,6 @@ module.exports = function(LoginCache) {
 	// 	});
 	LoginCache.confirm = function(ctx, unused, next){
 		var state = ctx.req.query.state;
-		var url = ctx.req.headers.referer;
 		if(ctx.req.headers['user-agent'].indexOf('MicroMessenger') > 0)
 			LoginCache.findOne({where:{randstate:state}},function(err,loginCache){
 				if(err) ctx.res.send({status:"err","msg":"请刷新后再试"});
@@ -23,6 +22,7 @@ module.exports = function(LoginCache) {
 			});
 		else
 			LoginCache.findOne({where:{randstate:state}},function(err,loginInfo){
+				console.log(loginInfo);
 				if(err) ctx.res.send({"msg":"请刷新后再试"});
 				else if(loginInfo === null)
 					ctx.res.send({"msg":"非法的请求,请刷新后登陆"});
@@ -32,13 +32,13 @@ module.exports = function(LoginCache) {
 					var options = {
 						code:loginInfo.code,
 						userModel:LoginCache.app.models.WeChatUser,
-						referer:url,
+						referer:loginInfo.referer,
 						ctx:ctx,
 						state:state
 					};
 					wechatLogin(options,function(signMsg){
 						ctx.res.send(signMsg);
-return;
+						return;
 					});
 				}
 			});

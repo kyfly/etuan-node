@@ -50,26 +50,26 @@ module.exports = function (WeChatUser) {
    * @return {[type]}              [description]
    */
   WeChatUser.beforeRemote("wechatLogin", function (ctx, unused, next) {
-    if (ctx.req.headers.referer)
-      var referer = ctx.req.headers.referer;
-    else
-      var referer = 'http://' + ctx.req.hostname + ':3000';
+    var id = ctx.req.query.id? "#?id=" + ctx.req.query.id : undefined;
+    var url = ctx.req.query.url? ctx.req.query.url : '/';
+    if(id) url = url + id;
     var state = __randomString(40) + new Date().getTime().toString();
     var loginCacheObj = {
       createAt: new Date(),
       randstate: state,
       isConfirm: 0,
-      code: 0
+      code: 0,
+      referer: url
     };
     WeChatUser.app.models.LoginCache.create(loginCacheObj, function (err, result) {
       if (err)
         ctx.res.send(err);
       if (ctx.req.headers['user-agent'].indexOf('MicroMessenger') > 0)
       {
-	   var url = client.getAuthorizeURL('http://' + 'beta.etuan.org' + '/api/WeChatUsers/phoneoauth', state, 'snsapi_userinfo');
-	   ctx.res.redirect(url); 
+	       var url = client.getAuthorizeURL('http://' + 'beta.etuan.org' + '/api/WeChatUsers/phoneoauth?', state, 'snsapi_userinfo');
+	       ctx.res.redirect(url); 
       }else {
-        var url = client.getAuthorizeURL('http://' + 'beta.etuan.org' + '/api/WeChatUsers/oauth', state, 'snsapi_userinfo');
+        var url = client.getAuthorizeURL('http://' + 'beta.etuan.org' + '/api/WeChatUsers/oauth?', state, 'snsapi_userinfo');
         ctx.res.render('sign-in.ejs', {state: state, qrcodeUrl: url});
       }
     });
@@ -82,18 +82,22 @@ module.exports = function (WeChatUser) {
    * @return 登录前请求页面
    */
   WeChatUser.beforeRemote("phoneoauth", function (ctx, unused, next) {
-    var referer = ctx.req.query.referer;
-    var code = ctx.req.query.code;
-    var options = {
-      code: code,
-      userModel: WeChatUser,
-      referer: referer,
-      ctx: ctx
-    };
-    wechatLogin(options, function (signMsg) {
-      //需要手机中转页面，未完成
-      ctx.res.render("phone-login.ejs",signMsg);
+    WeChatUser.app.models.LoginCache.find({where:{randstate:ctx.req.query.state}},function(err, instance){
+      if(err) return;
+      var referer = instance.referer;
+      var code = ctx.req.query.code;
+      var options = {
+        code: code,
+        userModel: WeChatUser,
+        referer: referer,
+        ctx: ctx
+      };
+      wechatLogin(options, function (signMsg) {
+        //需要手机中转页面，未完成
+        ctx.res.render("phone-login.ejs",signMsg);
+      });
     });
+    
   });
   /**
    * 微信oauth2.0回调地址
