@@ -26,6 +26,8 @@ function loginCheck (t) {
     || !tmpInfo.loginTime || !tmpInfo.ttl
     || (new Date() - new Date(tmpInfo.loginTime) > tmpInfo.ttl * 1000)
   ) {
+    var url = '/api/WechatUsers/wechatLogin?' + window.location.hash.substr(2) + '&url=' +window.location.href;
+    console.log();
     window.localStorage.removeItem(t);
     switch (t) {
       case 'b3JnYW5p':
@@ -33,9 +35,9 @@ function loginCheck (t) {
         break;
       case 'd2VjaGF0':
         if(bower === 'wechat' || bower === 'pc')
-          window.location = '/api/WechatUsers/wechatLogin';
+          window.location = url;
         else
-          window.alert('这是手机浏览器');
+          window.location = "/";
         break;
     }
   }
