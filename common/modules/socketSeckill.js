@@ -92,10 +92,6 @@ function onAddKiller(socket, verifyId) {
           else if (cache.remain <= 0) {
             //error: 没有余量了
             socket.emit('killFail', 'no enough');
-            if (cache.current < arrangements.length) {
-              cache.current++;
-              cache.remain = arrangements[cache.current].total;
-            }
             //没有抢到的也写入数据库，作为记录和分析
             SeckillResult.upsert({
               seckillId: seckillId,
@@ -121,6 +117,10 @@ function onAddKiller(socket, verifyId) {
                 socket.emit('killFail', 'database error');
               }
               else {
+                if (cache.remain <= 0 && cache.current < arrangements.length) {
+                    cache.current++;
+                    cache.remain = arrangements[cache.current].total;
+                  }
                 socket.emit('killSuccess');
                 socket.broadcast.to(seckillId).emit('addResult', cache.verify.idMask(verifyId))
               }
@@ -130,7 +130,7 @@ function onAddKiller(socket, verifyId) {
     });
 }
 
-SocketSeckill.prototype.updateCache = function (seckillId) {
+SocketSeckill.prototype.updateCache = function (seckillId, cb) {
   Seckill.findOne({where: {id: seckillId}, field: {id: true, verifyRule: true, seckillArrangements: true}},
     function (err, infoData) {
       seckillCache[seckillId] = seckillCache[seckillId] || {};
@@ -148,6 +148,7 @@ SocketSeckill.prototype.updateCache = function (seckillId) {
             break;
           }
         }
+        if (cb) cb();
       })
     })
 };
