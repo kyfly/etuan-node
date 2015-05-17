@@ -90,7 +90,7 @@
               <a href="baomingList.html">活动</a>
             </li>
             <li>
-              <a href="">表单</a>
+              <a href="formList.html">表单</a>
             </li>
             <li>
               <a href="seckillList.html">疯抢</a>
@@ -118,6 +118,25 @@
 <div class="container" ng-controller="contentCtrl">
 
   <div class="listHead col-xs-12">
+    <h3 class="col-xs-8 col-sm-10">最新活动</h3>
+    <a class="col-xs-4 col-sm-2" href="baomingList.html"><i>查看更多»</i></a>
+  </div>
+  <div class="contentRow col-xs-12">
+    <div ng-repeat="alt in alts.slice(0,4)" class="col-sm-6 col-md-3">
+      <a ng-href="/activity#?iad={{alt.id}}" ng-click="">
+        <div class="thumbnail">
+          <div class="text-center">
+            <h4 ng-bind="alt.title"></h4>
+          </div>
+          <img ng-src="{{alt.logoUrl}}" alt="{{alt.title}}" height="150px" width="150px">
+          <h4 class="statusText text-{{alt.textColor}}" ng-bind="alt.activityStatus"></h4>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="listHead col-xs-12">
     <h3 class="col-xs-8 col-sm-10">最新表单</h3>
     <a class="col-xs-4 col-sm-2" href=""><i>查看更多»</i></a>
   </div>
@@ -130,6 +149,25 @@
           </div>
           <img ng-src="{{flt.logoUrl}}" alt="{{flt.title}}" height="150px" width="150px">
           <h4 class="statusText text-{{flt.textColor}}" ng-bind="flt.activityStatus"></h4>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="listHead col-xs-12">
+    <h3 class="col-xs-8 col-sm-10">最新疯抢</h3>
+    <a class="col-xs-4 col-sm-2" href="seckillList.html"><i>查看更多»</i></a>
+  </div>
+  <div class="contentRow col-xs-12">
+    <div class="col-sm-6 col-md-3" ng-repeat="skl in skls.slice(0,4)">
+      <a ng-href="/seckill#?id={{skl.id}}" ng-click="sklView(skl.id)">
+        <div class="thumbnail">
+          <div class="text-center">
+            <h4 ng-bind="skl.title"></h4>
+          </div>
+          <img ng-src="{{skl.logoUrl}}" alt="{{skl.title}}" height="150px" width="150px">
+          <h4 class="statusText text-{{skl.textColor}}" ng-bind="skl.activityStatus"></h4>
         </div>
       </a>
     </div>
@@ -150,25 +188,6 @@
           </div>
           <img ng-src="{{vlt.logoUrl}}" alt="{{vlt.title}}" height="150px" width="150px">
           <h4 class="statusText text-{{vlt.textColor}}" ng-bind="vlt.activityStatus"></h4>
-        </div>
-      </a>
-    </div>
-
-  </div>
-
-  <div class="listHead col-xs-12">
-    <h3 class="col-xs-8 col-sm-10">最新疯抢</h3>
-    <a class="col-xs-4 col-sm-2" href="seckillList.html"><i>查看更多»</i></a>
-  </div>
-  <div class="contentRow col-xs-12">
-    <div class="col-sm-6 col-md-3" ng-repeat="skl in skls.slice(0,4)">
-      <a ng-href="/seckill#?id={{skl.id}}" ng-click="sklView(skl.id)">
-        <div class="thumbnail">
-          <div class="text-center">
-            <h4 ng-bind="skl.title"></h4>
-          </div>
-          <img ng-src="{{skl.logoUrl}}" alt="{{skl.title}}" height="150px" width="150px">
-          <h4 class="statusText text-{{skl.textColor}}" ng-bind="skl.activityStatus"></h4>
         </div>
       </a>
     </div>

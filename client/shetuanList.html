@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html>
+<html ng-app="app">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -57,7 +57,7 @@
               <a href="baomingList.html">活动</a>
             </li>
             <li>
-              <a href="">表单</a>
+              <a href="formList.html">表单</a>
             </li>
             <li>
               <a href="seckillList.html">疯抢</a>
@@ -82,30 +82,21 @@
     </div>
   </div>
   <!--内容-->
-  <div id="main" class="container">
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs" id="orgList" role="tablist" style="margin-bottom: 20px">
-      <li class="active"><a href="#universityLevel" role="tab" data-toggle="tab">校级组织</a></li>
-      <li><a href="#otherOrg" role="tab" data-toggle="tab">职能社团</a></li>
-      <li><a href="#schoolLevel" role="tab" data-toggle="tab">院级组织</a></li>
-      <li><a href="#club" role="tab" data-toggle="tab">兴趣社团</a></li>
-    </ul>
-    <!--社团列表-->
+  <div class="container" ng-controller="contentCtrl">
+    <tabset justified="true">
+      <tab heading="校级组织">
 
-    <div class="tab-content">
-      <div id="universityLevel" class="tab-pane fade in active">
+      </tab>
+      <tab heading="校级社团">
 
-      </div>
+      </tab>
+      <tab heading="院级组织">
 
-      <div id="otherOrg" class="tab-pane fade">
-      </div>
+      </tab>
+      <tab heading="院级社团">
 
-      <div id="schoolLevel" class="tab-pane fade">
-      </div>
-
-      <div id="club" class="tab-pane fade">
-      </div>
-    </div>
+      </tab>
+    </tabset>
   </div>
 </div>
 <footer id="footer" class="panel-footer">

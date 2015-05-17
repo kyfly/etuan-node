@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <meta name="keywords" content="杭州电子科技大学,杭电,团团一家,杭电报名招新,杭电抢票,杭电投票,社团服务">
-  <meta name="description" content=" 没有想不到，只有抢不到！抢票就上团团一家！">
-  <title>全民疯抢 - 团团一家</title>
+  <meta name="description" content=" 一票在手，天下我有！妈妈再也不用担心我投票啦！">
+  <title>表单荟萃 - 团团一家</title>
   <link rel="icon" href="img/etuan_logo.ico" type="image/x-icon">
   <link rel="shortcut icon" href="img/etuan_logo.ico" type="image/x-icon">
   <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -56,10 +56,10 @@
             <li>
               <a href="baomingList.html">活动</a>
             </li>
-            <li>
+            <li class="active">
               <a href="formList.html">表单</a>
             </li>
-            <li class="active">
+            <li>
               <a href="seckillList.html">疯抢</a>
             </li>
             <li>
@@ -72,25 +72,24 @@
   </nav>
 </header>
 <div id="mainHeight">
-  <div class="jumbotron" style="background-color: #ff6666;">
+  <div class="jumbotron" style="background-color: #9966FF;">
     <div class="container">
-      <p id="title1" class="hidden-xs">全民疯抢</p>
+      <p id="title1" class="hidden-xs">表单荟萃</p>
 
-      <p id="title2" class="visible-xs-block">全民疯抢</p>
+      <p id="title2" class="visible-xs-block">表单荟萃</p>
 
-      <h2>没有想不到，只有抢不到！抢票就上团团一家！</h2>
+      <h2>世界上只有填不完的表,没有走不通的路！</h2>
     </div>
   </div>
   <!--内容-->
   <div class="container" ng-controller="contentCtrl">
 
-    <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="skl in skls">
-      <a ng-href="/seckill#?id={{skl.id}}" ng-click="sklView(skl.id)">
+    <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="flt in flts"f>
+      <a ng-href="/form#?id={{flt.id}}" ng-click="fltView(flt.id)">
         <div class="thumbnail borderDiv">
-          <p class="listhead" ng-bind="skl.title"></p>
-          <img style="height: 150px; width: 150px" ng-src="{{skl.logoUrl}}">
-
-          <p class="status text-{{skl.textColor}}" ng-bind="skl.activityStatus"></p>
+          <p class="listhead" ng-bind="flt.title"></p>
+          <img style="height: 150px; width: 150px" ng-src="{{flt.logoUrl}}">
+          <p class="status text-{{flt.textColor}}" ng-bind="flt.activityStatus"></p>
         </div>
       </a>
     </div>

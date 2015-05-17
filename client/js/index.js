@@ -6,6 +6,25 @@ app.controller('headCtrl', function ($scope) {
 });
 
 app.controller('contentCtrl', ['$scope', '$http', function ($scope, $http) {
+  $http.get('/api/OrganizationUsers?filter[order]=id%20DESC').success(function (res) {
+    console.log(res);
+    $scope.alts = res;
+  });
+  $http.get('/api/Activities?filter[order]=id%20DESC').success(function (res) {
+    $scope.alts = res;
+    for (var i = 0; i < $scope.alts.length; i++) {
+      if (new Date($scope.alts[i].startTime).getTime() > nowTime) {
+        $scope.alts[i].activityStatus = "即将开始";
+        $scope.alts[i].textColor = "warning";
+      } else if (new Date($scope.alts[i].stopTime).getTime() < nowTime) {
+        $scope.alts[i].activityStatus = "已经结束";
+        $scope.alts[i].textColor = "danger";
+      } else {
+        $scope.alts[i].activityStatus = "正在进行";
+        $scope.alts[i].textColor = "success";
+      }
+    }
+  });
   $http.get('/api/Forms?filter[order]=id%20DESC').success(function (res) {
     $scope.flts = res;
     for (var i = 0; i < $scope.flts.length; i++) {
