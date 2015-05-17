@@ -10,10 +10,10 @@ function browserRedirect() {
     var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
     var bIsWX = sUserAgent.match(/MicroMessenger/i) == "micromessenger";
     
-    if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
-        return "mobile";
-    } else if(bIsWX) {
+    if (bIsWX) {
         return "wechat";
+    } else if(bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+        return "mobile";
     }else{
       return "pc";
     }
@@ -22,12 +22,14 @@ function browserRedirect() {
 function loginCheck (t) {
   var tmpInfo = JSON.parse(window.localStorage.getItem(t));
   var bower = browserRedirect();
+  alert(!tmpInfo || !tmpInfo.accessToken || !tmpInfo.userId
+    || !tmpInfo.loginTime || !tmpInfo.ttl
+    || (new Date() - new Date(tmpInfo.loginTime) > tmpInfo.ttl * 1000);
   if (!tmpInfo || !tmpInfo.accessToken || !tmpInfo.userId
     || !tmpInfo.loginTime || !tmpInfo.ttl
     || (new Date() - new Date(tmpInfo.loginTime) > tmpInfo.ttl * 1000)
   ) {
     var url = '/api/WechatUsers/wechatLogin?' + window.location.hash.substr(2) + '&url=' +window.location.href;
-    console.log();
     window.localStorage.removeItem(t);
     switch (t) {
       case 'b3JnYW5p':

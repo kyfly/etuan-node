@@ -1,8 +1,7 @@
-var OAuth = require('wechat-oauth');
 var config = require('../../server/config');
-var wechatLogin = require('../modules/wechatLogin');
+var wechatOauth = require('wechat-oauth');
 var hduConfim = require('../modules/hdu-student.js');
-var client = new OAuth(config.wechat.appid, config.wechat.appsecret);
+var client = new wechatOauth(config.wechat.appid, config.wechat.appsecret);
 function __randomString(len) {
   len = len || 32;
   var $chars = 'ABCDEFGHJoOLl9gqVvUuI1KMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
@@ -41,6 +40,7 @@ module.exports = function (WeChatUser) {
   WeChatUser.beforeRemote('confirm', function (ctx, unused, next) {
     return WeChatUser.app.models.LoginCache.confirm(ctx, unused, next);
   });
+
   /**
    * 微信用户获取oauth2.0链接接口
    * method get
@@ -53,24 +53,24 @@ module.exports = function (WeChatUser) {
     var id = ctx.req.query.id? "#?id=" + ctx.req.query.id : undefined;
     var url = ctx.req.query.url? ctx.req.query.url : '/';
     if(id) url = url + id;
-    var state = __randomString(40) + new Date().getTime().toString();
+    var ticket = __randomString(30) + new Date().getTime().toString();
     var loginCacheObj = {
       createAt: new Date(),
-      randstate: state,
+      ticket: ticket,
       isConfirm: 0,
-      code: 0,
-      referer: url
+      referer: url,
+      userId:null
     };
     WeChatUser.app.models.LoginCache.create(loginCacheObj, function (err, result) {
       if (err)
         ctx.res.send(err);
       if (ctx.req.headers['user-agent'].indexOf('MicroMessenger') > 0)
       {
-	       var url = client.getAuthorizeURL('http://' + 'beta.etuan.org' + '/api/WeChatUsers/phoneoauth?', state, 'snsapi_userinfo');
-	       ctx.res.redirect(url); 
+        var url = client.getAuthorizeURL('http://beta.etuan.org/api/WeChatUsers/phoneoauth', ticket, 'snsapi_userinfo');
+	      ctx.res.redirect(url); 
       }else {
-        var url = client.getAuthorizeURL('http://' + 'beta.etuan.org' + '/api/WeChatUsers/oauth?', state, 'snsapi_userinfo');
-        ctx.res.render('sign-in.ejs', {state: state, qrcodeUrl: url});
+        var url = client.getAuthorizeURL('http://beta.etuan.org/api/WeChatUsers/oauth', ticket, 'snsapi_userinfo');
+        ctx.res.render('sign-in.ejs', {state: ticket, qrcodeUrl: url});
       }
     });
   });
@@ -82,23 +82,54 @@ module.exports = function (WeChatUser) {
    * @return 登录前请求页面
    */
   WeChatUser.beforeRemote("phoneoauth", function (ctx, unused, next) {
-    WeChatUser.app.models.LoginCache.find({where:{randstate:ctx.req.query.state}},function(err, instance){
-      if(err) return;
-      var referer = instance.referer;
-      var code = ctx.req.query.code;
-      var options = {
-        code: code,
-        userModel: WeChatUser,
-        referer: referer,
-        ctx: ctx
-      };
-      wechatLogin(options, function (signMsg) {
-        //需要手机中转页面，未完成
-        ctx.res.render("phone-login.ejs",signMsg);
-      });
+    var state = ctx.req.query.state;
+    var code = ctx.req.query.code;
+    var assistModel = WeChatUser.app.models.LoginCache;
+    createOrUpdateUserByCode(code, state, assistModel, function (err, user, cache){
+      if(err) ctx.res.render("phone-login.ejs",err);
+      else 
+        WeChatUser.login({
+          email: user.email,
+          password: user.openid
+        },function (err, token){
+          console.log(cache.referer);
+          ctx.res.render("phone-login.ejs", {"msg": "success", "url": cache.referer, "userInfo": user, "token": token});
+        });
     });
-    
   });
+
+  function createOrUpdateUserByCode(code, state, assistModel, callback){
+    function updateAssistModel (assistModel, user, cache, callback){
+      assistModel.updateAll({ticket: state},{
+        isConfirm: 1,
+        userId: user.id
+      },function (err, count){
+        if(err) callback({"msg": "出错了,请刷新后登陆-"});
+        else callback(null, user, cache);
+      });
+    }
+    assistModel.findOne({where: {ticket: state}}, function (err, cache) {
+      if (err) callback({"msg": "-出错了,请刷新后登陆"});
+      else if(!cache) callback({"msg": "TICKET过期可能过期了,刷新后再试试"});
+      else
+        client.getUserByCode(code, function (err, user) {
+          user.email = user.openid + "@etuan.org";
+          user.password = user.openid;
+          WeChatUser.findOne({where:{openid: user.openid}}, function (err, beUser){
+            if(err) callback({"msg": "-保存信息时出错了,刷新后再试试"});
+            if(beUser) WeChatUser.updateAll({openid: user.openid},function (err, count){
+              if(err) callback({"msg": "保存信息时出错了-,刷新后再试试"});
+              else updateAssistModel (assistModel, beUser, cache, callback);
+            });
+            else
+              WeChatUser.create(user, function (err, newUser){
+                if(err)  callback({"msg": "保存信息时出错了,刷新后再试试-"});
+                else updateAssistModel (assistModel, newUser, cache, callback);
+              });
+          });
+        });
+    });
+  }
   /**
    * 微信oauth2.0回调地址
    * url /api/WeChatUsers/oauth?code=CODE&state=STATE
@@ -108,23 +139,12 @@ module.exports = function (WeChatUser) {
    * @return { msg:"some msg"} 当返回msg为success时表示成功，其他可以直接展示给用户                                                                                          [description]
    */
   WeChatUser.beforeRemote("oauth", function (ctx, unused, next) {
-    var query = ctx.req.query;
-    var state = query.state;
-    WeChatUser.app.models.LoginCache.find({where: {randstate: query.state}}, function (err, loginCache) {
-      if (err)
-        ctx.res.render("phone.ejs", {"msg": "出错了,请刷新后登陆"});
-      else if (loginCache.length == 0)
-        ctx.res.render("phone.ejs", {"msg": "非法的请求"});
-      else
-        WeChatUser.app.models.LoginCache.updateAll(
-          {randstate: state},
-          {code: query.code},
-          function (err, count) {
-            if (err)
-              ctx.res.render("phone.ejs", {"msg": "出错了,请刷新后登陆"});
-            else
-              ctx.res.render("phone.ejs", {"msg": "success", "state": state});
-          });
+    var state = ctx.req.query.state;
+    var code = ctx.req.query.code;
+    var assistModel = WeChatUser.app.models.LoginCache;
+    createOrUpdateUserByCode(code, state, assistModel, function (err, user){
+      if(err) ctx.res.render("phone.ejs", err);
+      else ctx.res.render("phone.ejs", {"msg": "success", "state": state});
     });
   });
 

@@ -4,26 +4,19 @@
   "idInjection": true,
   "properties": {
     "createAt": {
-      "type": "date",
-      "required": true
+      "type": "date"
     },
-    "randstate": {
-      "type": "string",
-      "required": true
+    "ticket": {
+      "type": "string"
     },
-    "code": {
-      "type": "number",
-      "required": true
-    },
-    "ttl": {
-      "type": "number",
-      "description": "time to live in seconds (2 weeks by default)",
-      "ttl": true,
-      "default": 10
+    "userId": {
+      "type": "string"
     },
     "isConfirm": {
-      "type": "number",
-      "required": true
+      "type": "number"
+    },
+    "referer":{
+      "type": "string"
     }
   },
   "validations": [],

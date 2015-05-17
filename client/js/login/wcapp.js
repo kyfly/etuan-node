@@ -5,6 +5,7 @@ var checkStatus = function () {
   ajax.onreadystatechange = function () {
     if (ajax.readyState === 4) {
       var data = JSON.parse(ajax.responseText);
+      console.log(data);
       if (data.msg === "success" && ajax.status === 200) {
         //data expect {"msg":"success","url":url,"userInfo":userInfo,"token":token}
         var lsTmp = {
