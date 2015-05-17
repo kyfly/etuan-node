@@ -22,9 +22,6 @@ function browserRedirect() {
 function loginCheck(t) {
   var tmpInfo = JSON.parse(window.localStorage.getItem(t));
   var bower = browserRedirect();
-  alert(!tmpInfo || !tmpInfo.accessToken || !tmpInfo.userId
-    || !tmpInfo.loginTime || !tmpInfo.ttl
-    || (new Date() - new Date(tmpInfo.loginTime) > tmpInfo.ttl * 1000);
   if (!tmpInfo || !tmpInfo.accessToken || !tmpInfo.userId
     || !tmpInfo.loginTime || !tmpInfo.ttl
     || (new Date() - new Date(tmpInfo.loginTime) > tmpInfo.ttl * 1000)
