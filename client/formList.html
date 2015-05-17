@@ -51,10 +51,10 @@
               <a href="index.html">首页</a>
             </li>
             <li>
-              <a href="shetuanList.html">组织</a>
+              <a href="organizationList.html">组织</a>
             </li>
             <li>
-              <a href="baomingList.html">活动</a>
+              <a href="activityList.html">活动</a>
             </li>
             <li class="active">
               <a href="formList.html">表单</a>
@@ -84,11 +84,12 @@
   <!--内容-->
   <div class="container" ng-controller="contentCtrl">
 
-    <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="flt in flts"f>
+    <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="flt in flts" f>
       <a ng-href="/form#?id={{flt.id}}" ng-click="fltView(flt.id)">
         <div class="thumbnail borderDiv">
           <p class="listhead" ng-bind="flt.title"></p>
           <img style="height: 150px; width: 150px" ng-src="{{flt.logoUrl}}">
+
           <p class="status text-{{flt.textColor}}" ng-bind="flt.activityStatus"></p>
         </div>
       </a>

@@ -61,11 +61,13 @@
       <p ng-bind="description"></p>
     </div>
 
-    <div class="text-warning">
-      <div class="col-md-4">开始时间：<span ng-bind="startTime | date: cnFormat">载入中...</span></div>
-      <div class="col-md-3">状态：<span ng-bind="status">载入中...</span></div>
-      <div class="col-md-2">余量：<span ng-bind="remain">载入中...</span></div>
-      <div class="col-md-3">在线人数：<span ng-bind="onlineNumber">载入中...</span></div>
+    <div class="text-warning text-center">
+      <div class="col-md-12">开始时间：<span ng-bind="startTime | date: cnFormat">载入中...</span></div>
+      <br><br class="hidden-xs">
+
+      <div class="col-md-4">状态：<span ng-bind="status">载入中...</span></div>
+      <div class="col-md-4">余量：<span ng-bind="remain">载入中...</span></div>
+      <div class="col-md-4">在线人数：<span ng-bind="onlineNumber">载入中...</span></div>
     </div>
 
     <table class="table table-striped text-center table-bordered">
