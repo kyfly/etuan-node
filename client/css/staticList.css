@@ -1,0 +1,97 @@
+body {
+  font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
+  height: 100%;
+  min-height: 100%;
+}
+
+html {
+  height: 100%;
+  min-height: 100%;
+}
+
+.navbar {
+  margin-bottom: 0;
+}
+
+.jumbotron > .container > p {
+  font-weight: 500;
+  color: #fff;
+}
+
+#title1 {
+  font-size: 85px;
+}
+
+#title2 {
+  font-size: 57px;
+}
+
+.jumbotron > .container > h2 {
+  color: #fff;
+  letter-spacing: 2px;
+}
+
+.listhead {
+  color: #666;
+  font-size: 16px;
+  min-height: 69px;
+}
+
+.listhead_org {
+  color: #666;
+  font-size: 16px;
+  min-height: 46px;
+
+}
+
+.thumbnail {
+  padding: 13px;
+}
+
+.regLogo {
+  width: 150px !important;
+  height: 150px !important;
+}
+
+.status {
+  margin-top: 10px;
+  margin-bottom: -5px;
+  text-align: right;
+  font-size: 22px;
+}
+
+.text-on {
+  color: #33cc33;
+}
+
+.text-coming {
+  color: #ffcc33;
+}
+
+.text-over {
+  color: #cc3300;
+}
+
+.text-view-more {
+  color: #a8d154;
+  font-size: 16px;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+#mainHeight {
+  min-height: 90%;
+}
+
+@media screen and (min-width: 1400px) {
+  #title1 {
+    margin-top: 100px;
+    font-size: 110px;
+  }
+
+  .panel-footer {
+    margin-top: 50px;
+  }
+}

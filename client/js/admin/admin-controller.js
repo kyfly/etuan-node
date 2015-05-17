@@ -7,13 +7,12 @@ function logoChanged() {
 function AdminCtrl($scope, $timeout) {
   //768像素为界限决定侧边栏的显示与否
   $scope.sidebarShow = (document.body.clientWidth >= 768);
-  $scope.sidebarToggle = function () {
-    if(document.body.clientWidth <= 768){
-      $scope.sidebarShow = !$scope.sidebarShow;
-    }
-  };
-  $scope.sidebarToggle2 = function () {
-    if(document.body.clientWidth <= 768){
+  $scope.sidebarToggle = function (flag) {
+    if (flag === 1) {
+      if (document.body.clientWidth <= 768) {
+        $scope.sidebarShow = !$scope.sidebarShow;
+      }
+    } else {
       $scope.sidebarShow = !$scope.sidebarShow;
     }
   };

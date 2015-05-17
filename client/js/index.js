@@ -6,9 +6,28 @@ app.controller('headCtrl', function ($scope) {
 });
 
 app.controller('contentCtrl', ['$scope', '$http', function ($scope, $http) {
+  $http.get('/api/OrganizationUsers?filter[order]=id%20DESC').success(function (res) {
+    console.log(res);
+    $scope.alts = res;
+  });
+  $http.get('/api/Activities?filter[order]=id%20DESC').success(function (res) {
+    $scope.alts = res;
+    for (var i = 0; i < $scope.alts.length; i++) {
+      if (new Date($scope.alts[i].startTime).getTime() > nowTime) {
+        $scope.alts[i].activityStatus = "即将开始";
+        $scope.alts[i].textColor = "warning";
+      } else if (new Date($scope.alts[i].stopTime).getTime() < nowTime) {
+        $scope.alts[i].activityStatus = "已经结束";
+        $scope.alts[i].textColor = "danger";
+      } else {
+        $scope.alts[i].activityStatus = "正在进行";
+        $scope.alts[i].textColor = "success";
+      }
+    }
+  });
   $http.get('/api/Forms?filter[order]=id%20DESC').success(function (res) {
     $scope.flts = res;
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < $scope.flts.length; i++) {
       if (new Date($scope.flts[i].startTime).getTime() > nowTime) {
         $scope.flts[i].activityStatus = "即将开始";
         $scope.flts[i].textColor = "warning";
@@ -23,7 +42,7 @@ app.controller('contentCtrl', ['$scope', '$http', function ($scope, $http) {
   });
   $http.get('/api/Votes?filter[order]=id%20DESC').success(function (res) {
     $scope.vlts = res;
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < $scope.flts.length; i++) {
       if (new Date($scope.vlts[i].startTime).getTime() > nowTime) {
         $scope.vlts[i].activityStatus = "即将开始";
         $scope.vlts[i].textColor = "warning";
@@ -38,7 +57,7 @@ app.controller('contentCtrl', ['$scope', '$http', function ($scope, $http) {
   });
   $http.get('/api/Seckills?filter[order]=id%20DESC').success(function (res) {
     $scope.skls = res;
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < $scope.flts.length; i++) {
       if (new Date($scope.skls[i].seckillArrangements[0].startTime).getTime() > nowTime) {
         $scope.skls[i].activityStatus = "即将开始";
         $scope.skls[i].textColor = "warning";

@@ -41,13 +41,36 @@
 </head>
 <body>
 <div class="container bg_white">
+  <div ng-show="seckillStart">
+    <div class="col-xs-4">他们抢到啦：</div>
+    <marquee class="col-xs-7">
+      <span ng-repeat="result in resultList">
+        <span ng-bind="result + '&nbsp;&nbsp;&nbsp;&nbsp;'"></span>
+      </span>
+    </marquee>
+  </div>
+
   <div class="col-md-8 col-md-offset-2">
-    <h1 ng-bind="title"></h1>
+    <div class="text-center">
+      <h1 ng-bind="title"></h1>
 
-    <h2 ng-bind-template="第{{current+1}}场"></h2>
+      <h2 ng-bind-template="第{{current+1}}场"></h2>
+      <img class="img-circle" ng-src="{{logoUrl}}" height="150px" width="150px">
+      <br><br>
 
-    <p ng-bind="description"></p>
-    <table class="table table-striped text-center">
+      <p ng-bind="description"></p>
+    </div>
+
+    <div class="text-warning text-center">
+      <div class="col-md-12">开始时间：<span ng-bind="startTime | date: cnFormat">载入中...</span></div>
+      <br><br class="hidden-xs">
+
+      <div class="col-md-4">状态：<span ng-bind="status">载入中...</span></div>
+      <div class="col-md-4">余量：<span ng-bind="remain">载入中...</span></div>
+      <div class="col-md-4">在线人数：<span ng-bind="onlineNumber">载入中...</span></div>
+    </div>
+
+    <table class="table table-striped text-center table-bordered">
       <thead>
       <tr>
         <td>场次</td>
@@ -65,16 +88,8 @@
     </table>
     <br>
 
-    <div>开始时间：<span ng-bind="startTime | date: cnFormat">载入中...</span></div>
-    <div>倒计时：<span ng-bind="countdownTime">载入中...</span></div>
-    <div>状态：<span ng-bind="status">载入中...</span></div>
-    <div>余量：<span ng-bind="remain">载入中...</span></div>
-    <div>在线人数：<span ng-bind="onlineNumber">载入中...</span></div>
-    <div>他们抢到啦：
-      <span ng-repeat="result in resultList">
-        <span ng-bind="result + '&nbsp;&nbsp;&nbsp;&nbsp;'"></span>
-      </span>
-    </div>
+    <div class="text-center text-danger">倒计时：<span ng-bind="countdownTime">载入中...</span></div>
+
     <br>
     <input ng-hide="verifyRule == '学号'" class="form-control" type="text" ng-model="verifyId"
            placeholder="请输入{{verifyRule}}">

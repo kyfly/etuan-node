@@ -39,6 +39,7 @@ function SeckillCtrl($scope, $location, $window) {
     start = new Date(info.seckillArrangements[status.current].startTime);
     //判断当前状态，即将开始、正在进行或已经结束
     if (now.getTime() < start.getTime()) {
+      $scope.seckillStart = false;
       $scope.status = '即将开始';
       $scope.btnStatus = '即将开始';
       countdown();
@@ -47,10 +48,12 @@ function SeckillCtrl($scope, $location, $window) {
     else {
       $scope.countdownTime = 0;
       if (status.remain > 0) {
+        $scope.seckillStart = true;
         $scope.status = '正在进行';
         $scope.btnStatus = '开抢';
       }
       else {
+        $scope.seckillStart = true;
         $scope.status = '已经结束';
         $scope.btnStatus = '已经结束';
       }
@@ -75,6 +78,7 @@ function SeckillCtrl($scope, $location, $window) {
     $scope.seckillArrangements = info.seckillArrangements;
     $scope.remain = status.remain;
     $scope.onlineNumber = status.onlineNumber;
+    $scope.logoUrl = info.logoUrl;
 
     for (var i = 0; i < result.length; i++) {
       resultList.push(result[i].verifyId);

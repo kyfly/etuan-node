@@ -19,7 +19,7 @@ function browserRedirect() {
     }
 }
 
-function loginCheck (t) {
+function loginCheck(t) {
   var tmpInfo = JSON.parse(window.localStorage.getItem(t));
   var bower = browserRedirect();
   alert(!tmpInfo || !tmpInfo.accessToken || !tmpInfo.userId
@@ -36,7 +36,7 @@ function loginCheck (t) {
         window.location = '/login';
         break;
       case 'd2VjaGF0':
-        if(bower === 'wechat' || bower === 'pc')
+        if (bower === 'wechat' || bower === 'pc')
           window.location = url;
         else
           window.location = "/";
