@@ -107,7 +107,38 @@ module.exports = function(OrganizationUser) {
 		accepts: {arg: 'token', type: 'String'},
 		returns: {arg: 'parCount', type: 'Object'},
 		http: {verb: 'get'}
-	});	
+	});
+
+	//获取组织列表，返回特定的字段，防止敏感信息外泄
+	OrganizationUser.list = function(cb) {
+		OrganizationUser.find({ fields: {id:1, name: 1, logoUrl: 1, type: 1, school: 1} }, function(err, orgs) {
+			if(err)
+				cb(null, '获取组织列表失败');
+			else
+				cb(null, JSON.stringify(orgs));
+		});
+	};
+
+	OrganizationUser.remoteMethod('list', {
+		returns: {arg: 'orgs', type: 'String'},
+		http: {verb: 'get'}
+	});
+
+	//获取某一组织的详细信息，返回特定字段，防止敏感信息外泄
+	OrganizationUser.detail = function(id, cb) {
+		OrganizationUser.findOne({ where: {id: id}, fields: {id: 1, logoUrl: 1, description: 1, departments: 1, name: 1, photoUrl: 1} }, function(err, org) {
+			if(err)
+				cb(null, '获取组织详情失败');
+			else
+				cb(null, JSON.stringify(org))
+		});
+	}
+
+	OrganizationUser.remoteMethod('detail', {
+		accepts: {arg: 'id', type: 'String'},
+		returns: {arg: 'org', type: 'String'},
+		http: {verb: 'get', path: '/detail/:id'}
+	});
 
 	function accessTokenCheck(token, cb, callback) {
 		var AccessToken = OrganizationUser.app.models.AccessToken;

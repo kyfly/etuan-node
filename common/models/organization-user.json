@@ -285,7 +285,19 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "parCount"
-    }         
+    } ,
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "list"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "detail"
+    }
 
   ],
   "methods": []
