@@ -790,10 +790,12 @@ function SettingCtrl($scope, $resource, etuanAdmin) {
       $scope.weChat = res.weChat;
       $scope.phone = res.phone;
       $scope.organizationUserDepartments = res.organizationUserDepartments;
+      console.log($scope.name);
     },
     function () {
     }
   );
+  console.log($scope.name);
   $scope.types = etuanAdmin.org.types;
   //下面的这个写法是根据社团属性来动态实现下面学院选择的变化，三元表达式的写法是对if/else模形的简写方式
   $scope.schools = ($scope.type === '校级社团' || $scope.type === '校级组织') ? ['全校'] : etuanAdmin.org.schools;
@@ -823,6 +825,7 @@ function SettingCtrl($scope, $resource, etuanAdmin) {
     logoXhr.open('POST', '/ue/uploads?action=uploadimage&dir=logo&access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, true);
     logoXhr.send(logoFd);
   };
+
   //基本信息提交按钮
   $scope.basicSubmit = function () {
     Setting.update({
@@ -839,6 +842,7 @@ function SettingCtrl($scope, $resource, etuanAdmin) {
       }
     );
   };
+
   $scope.addDepartment = function () {
     $scope.organizationUserDepartments.push({
       name: '部门',

@@ -25,6 +25,11 @@
       s.parentNode.insertBefore(hm, s);
     })();
   </script>
+  <style>
+    .thumbnail {
+      margin-top: 15px;
+    }
+  </style>
 </head>
 <body>
 <!--头部-->
@@ -83,20 +88,66 @@
   </div>
   <!--内容-->
   <div class="container" ng-controller="contentCtrl">
+
     <tabset justified="true">
       <tab heading="校级组织">
+
+        <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="olt in olts" ng-show = "olt.type === '校级组织'">
+          <a ng-href="/organization#?id={{olt.id}}" ng-click="">
+            <div class="thumbnail borderDiv">
+              <p class="listhead" ng-bind="olt.name"></p>
+              <img style="height: 150px; width: 150px" ng-src="{{olt.logoUrl}}">
+
+              <p class="status text-success">查看详情</p>
+            </div>
+          </a>
+        </div>
 
       </tab>
       <tab heading="校级社团">
 
+        <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="olt in olts" ng-show = "olt.type === '校级社团'">
+          <a ng-href="/organization#?id={{olt.id}}" ng-click="">
+            <div class="thumbnail borderDiv">
+              <p class="listhead" ng-bind="olt.name"></p>
+              <img style="height: 150px; width: 150px" ng-src="{{olt.logoUrl}}">
+
+              <p class="status text-success">查看详情</p>
+            </div>
+          </a>
+        </div>
+
       </tab>
       <tab heading="院级组织">
+
+        <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="olt in olts" ng-show = "olt.type === '院级组织'">
+          <a ng-href="/organization#?id={{olt.id}}" ng-click="">
+            <div class="thumbnail borderDiv">
+              <p class="listhead" ng-bind="olt.name"></p>
+              <img style="height: 150px; width: 150px" ng-src="{{olt.logoUrl}}">
+
+              <p class="status text-success">查看详情</p>
+            </div>
+          </a>
+        </div>
 
       </tab>
       <tab heading="院级社团">
 
+        <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="olt in olts" ng-show = "olt.type === '院级社团'">
+          <a ng-href="/organization#?id={{olt.id}}" ng-click="">
+            <div class="thumbnail borderDiv">
+              <p class="listhead" ng-bind="olt.name"></p>
+              <img style="height: 150px; width: 150px" ng-src="{{olt.logoUrl}}">
+
+              <p class="status text-success">查看详情</p>
+            </div>
+          </a>
+        </div>
+
       </tab>
     </tabset>
+
   </div>
 </div>
 <footer id="footer" class="panel-footer">
