@@ -757,18 +757,16 @@ function HomeCtrl($scope, $resource) {
     }
   ];
   //获得接口并进行显示
-  $resource('/api/OrganizationUsers/actCount').get({}, function (res) {
-    console.log(res);
+  var token = JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken;
+  $resource("/api/OrganizationUsers/actCount?token=%22" + token + "%22&access_token=" + token).get({}, function (res) {
     $scope.actCount = res.actCount.actCount;
   }, function () {
   });
-  $resource('/api/OrganizationUsers/viewCount').get({}, function (res) {
-    console.log(res);
+  $resource("/api/OrganizationUsers/viewCount?token=%22" + token + "%22&access_token=" + token).get({}, function (res) {
     $scope.viewCount = res.viewCount.viewCount;
   }, function () {
   });
-  $resource('/api/OrganizationUsers/parCount').get({}, function (res) {
-    console.log(res);
+  $resource("/api/OrganizationUsers/parCount?token=%22" + token + "%22&access_token=" + token).get({}, function (res) {
     $scope.parCount = res.parCount.parCount;
   }, function () {
   });
@@ -812,14 +810,6 @@ function SettingCtrl($scope, $resource, etuanAdmin) {
     alert("修改成功！");
   };
 
-
-
-  //$scope.types = etuanAdmin.org.types;
-  ////下面的这个写法是根据社团属性来动态实现下面学院选择的变化，三元表达式的写法是对if/else模形的简写方式
-  //$scope.schools = ($scope.type === '校级社团' || $scope.type === '校级组织') ? ['全校'] : etuanAdmin.org.schools;
-  //$scope.typeChange = function () {
-  //  $scope.schools = ($scope.type === '校级社团' || $scope.type === '校级组织') ? ['全校'] : etuanAdmin.org.schools;
-  //};
   //上传图片至OSS服务
   $scope.logoUpload = function () {
     var logoFd = new FormData();
