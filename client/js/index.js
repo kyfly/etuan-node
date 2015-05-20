@@ -7,7 +7,6 @@ app.controller('headCtrl', function ($scope) {
 
 app.controller('contentCtrl', ['$scope', '$http', function ($scope, $http) {
   $http.get('/api/OrganizationUsers?filter[order]=id%20DESC').success(function (res) {
-    console.log(res);
     $scope.alts = res;
   });
   $http.get('/api/Activities?filter[order]=id%20DESC').success(function (res) {
