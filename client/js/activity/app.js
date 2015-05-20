@@ -1,8 +1,4 @@
-var app = angular.module('app', ['ngResource']);
-app.controller('activityCtrl', ['$scope', '$resource', '$location', '$window', ActivityCtrl]);
-app.config(['$resourceProvider', RewriteResourceActions]);
-
-function ActivityCtrl($scope, $resource, $location, $window) {
+function ActivityCtrl($scope, $resource, $location) {
   var activityUrlSearchObj = $location.search();
   var Activity = $resource('/api/activities/:id');
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
@@ -55,3 +51,7 @@ function RewriteResourceActions($resourceProvider) {
     }
   };
 }
+
+var app = angular.module('app', ['ngResource']);
+app.controller('activityCtrl', ['$scope', '$resource', '$location', ActivityCtrl]);
+app.config(['$resourceProvider', RewriteResourceActions]);
