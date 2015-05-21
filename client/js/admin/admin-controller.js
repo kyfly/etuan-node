@@ -757,18 +757,16 @@ function HomeCtrl($scope, $resource) {
     }
   ];
   //获得接口并进行显示
-  $resource('/api/OrganizationUsers/actCount').get({}, function (res) {
-    console.log(res);
+  var token = JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken;
+  $resource("/api/OrganizationUsers/actCount?token=%22" + token + "%22&access_token=" + token).get({}, function (res) {
     $scope.actCount = res.actCount.actCount;
   }, function () {
   });
-  $resource('/api/OrganizationUsers/viewCount').get({}, function (res) {
-    console.log(res);
+  $resource("/api/OrganizationUsers/viewCount?token=%22" + token + "%22&access_token=" + token).get({}, function (res) {
     $scope.viewCount = res.viewCount.viewCount;
   }, function () {
   });
-  $resource('/api/OrganizationUsers/parCount').get({}, function (res) {
-    console.log(res);
+  $resource("/api/OrganizationUsers/parCount?token=%22" + token + "%22&access_token=" + token).get({}, function (res) {
     $scope.parCount = res.parCount.parCount;
   }, function () {
   });
@@ -780,26 +778,38 @@ function SettingCtrl($scope, $resource, etuanAdmin) {
       userId: etuanAdmin.cache.userId
     }
   );
+  $scope.infos = [];
   Setting.get({},
     function (res) {
-      $scope.name = res.name;
-      $scope.logoUrl = res.logoUrl;
-      $scope.description = res.description;
-      $scope.type = res.type || '院级社团';
-      $scope.school = res.school || '计算机学院';
-      $scope.weChat = res.weChat;
-      $scope.phone = res.phone;
-      $scope.organizationUserDepartments = res.organizationUserDepartments;
+      $scope.infos[0] = res;
+      $scope.infos[0].types = etuanAdmin.org.types;
+      //下面的这个写法是根据社团属性来动态实现下面学院选择的变化，三元表达式的写法是对if/else模形的简写方式
+      $scope.infos[0].schools = ($scope.infos[0].type === '校级社团' || $scope.infos[0].type === '校级组织') ? ['全校'] : etuanAdmin.org.schools;
+      $scope.typeChange = function () {
+        $scope.infos[0].schools = ($scope.infos[0].type === '校级社团' || $scope.infos[0].type === '校级组织') ? ['全校'] : etuanAdmin.org.schools;
+      };
     },
     function () {
     }
   );
-  $scope.types = etuanAdmin.org.types;
-  //下面的这个写法是根据社团属性来动态实现下面学院选择的变化，三元表达式的写法是对if/else模形的简写方式
-  $scope.schools = ($scope.type === '校级社团' || $scope.type === '校级组织') ? ['全校'] : etuanAdmin.org.schools;
-  $scope.typeChange = function () {
-    $scope.schools = ($scope.type === '校级社团' || $scope.type === '校级组织') ? ['全校'] : etuanAdmin.org.schools;
+  //基本信息提交按钮
+  $scope.basicSubmit = function () {
+    Setting.update({
+        name: $scope.infos[0].name,
+        description: $scope.infos[0].description,
+        type: $scope.infos[0].type,
+        school: $scope.infos[0].school,
+        weChat: $scope.infos[0].weChat,
+        phone: $scope.infos[0].phone
+      },
+      function () {
+      },
+      function () {
+      }
+    );
+    alert("修改成功！");
   };
+
   //上传图片至OSS服务
   $scope.logoUpload = function () {
     var logoFd = new FormData();
@@ -813,8 +823,9 @@ function SettingCtrl($scope, $resource, etuanAdmin) {
     var logoReadyHandle = function () {
       if (logoXhr.readyState === 4) {
         if (logoXhr.status === 200) {
-          $scope.logoUrl = JSON.parse(logoXhr.responseText).url;
-          Setting.update({logoUrl: $scope.logoUrl});
+          $scope.infos[0].logoUrl = JSON.parse(logoXhr.responseText).url;
+          Setting.update({logoUrl: $scope.infos[0].logoUrl});
+          alert("保存成功");
         }
       }
     };
@@ -823,51 +834,37 @@ function SettingCtrl($scope, $resource, etuanAdmin) {
     logoXhr.open('POST', '/ue/uploads?action=uploadimage&dir=logo&access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, true);
     logoXhr.send(logoFd);
   };
-  //基本信息提交按钮
-  $scope.basicSubmit = function () {
-    Setting.update({
-        name: $scope.name,
-        description: $scope.description,
-        type: $scope.type,
-        school: $scope.school,
-        weChat: $scope.weChat,
-        phone: $scope.phone
-      },
-      function () {
-      },
-      function () {
-      }
-    );
-  };
+
   $scope.addDepartment = function () {
-    $scope.organizationUserDepartments.push({
+    $scope.infos[0].organizationUserDepartments.push({
       name: '部门',
       description: '部门介绍'
     });
   };
   $scope.moveUpDepartment = function (index) {
     if (index > 0) {
-      $scope.organizationUserDepartments.splice(index - 1, 0, $scope.organizationUserDepartments.splice(index, 1)[0]);
+      $scope.infos[0].organizationUserDepartments.splice(index - 1, 0, $scope.infos[0].organizationUserDepartments.splice(index, 1)[0]);
     }
   };
   $scope.moveDownDepartment = function (index) {
-    if (index < $scope.organizationUserDepartments.length) {
-      $scope.organizationUserDepartments.splice(index + 1, 0, $scope.organizationUserDepartments.splice(index, 1)[0]);
+    if (index < $scope.infos[0].organizationUserDepartments.length) {
+      $scope.infos[0].organizationUserDepartments.splice(index + 1, 0, $scope.infos[0].organizationUserDepartments.splice(index, 1)[0]);
     }
   };
   $scope.removeDepartment = function (index) {
-    $scope.organizationUserDepartments.splice(index, 1);
+    $scope.infos[0].organizationUserDepartments.splice(index, 1);
   };
   //部门信息提交按钮
   $scope.departmentSubmit = function () {
     var dsTmp = [];
-    for (var i = 0; i < $scope.organizationUserDepartments.length; i++) {
-      dsTmp.push($scope.organizationUserDepartments[i]);
+    for (var i = 0; i < $scope.infos[0].organizationUserDepartments.length; i++) {
+      dsTmp.push($scope.infos[0].organizationUserDepartments[i]);
       dsTmp[i].id = i;
     }
     Setting.update({
       organizationUserDepartments: dsTmp
     });
+    alert("修改成功！");
   };
 }
 

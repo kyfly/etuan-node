@@ -92,4 +92,4 @@ app.service('etuanAdmin', function () {
       }
     }
   };
-})
+});
