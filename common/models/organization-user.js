@@ -2,11 +2,11 @@ module.exports = function(OrganizationUser) {
 
 	//正在进行活动
 	OrganizationUser.actCount = function(token, cb) {
-		var Form = OrganizationUser.app.models.Form;
-		var Vote = OrganizationUser.app.models.Vote;
-		var Seckill = OrganizationUser.app.models.Seckill;
-		var Activity = OrganizationUser.app.models.Activity;	
 		accessTokenCheck(token, cb, function(organizationUser) {
+			var Form = OrganizationUser.app.models.Form;
+			var Vote = OrganizationUser.app.models.Vote;
+			var Seckill = OrganizationUser.app.models.Seckill;
+			var Activity = OrganizationUser.app.models.Activity;	
 			var actCount = 0;
 			Form.find({where: {organizationUid: organizationUser.id, startTime: {lt: Date.now()}, stopTime: {gt: Date.now()}}}, {id: 1}, function(err, forms) {
 				actCount += forms.length;
@@ -16,7 +16,7 @@ module.exports = function(OrganizationUser) {
 						actCount += seckills.length;
 						Activity.find({where: {organizationUid: organizationUser.id, startTime: {lt: Date.now()}, stopTime: {gt: Date.now()}}}, {id: 1}, function(err, activities) {
 							actCount += activities.length;
-							cb(null, {status: '200', actCount: actCount});
+							cb(null, {status: 200, actCount: actCount});
 						});
 					});
 				});
@@ -32,11 +32,17 @@ module.exports = function(OrganizationUser) {
 
 	//浏览人数
 	OrganizationUser.viewCount = function(token, cb) {
+		console.log(token);
 		accessTokenCheck(token, cb, function(organizationUser) {
 			var Form = OrganizationUser.app.models.Form;
 			var Vote = OrganizationUser.app.models.Vote;
 			var Seckill = OrganizationUser.app.models.Seckill;
+			var Activity = OrganizationUser.app.models.Activity;
 			Form.find({where:{organizationUid: organizationUser.id}}, function(err, forms) {
+				var Form = OrganizationUser.app.models.Form;
+				var Vote = OrganizationUser.app.models.Vote;
+				var Seckill = OrganizationUser.app.models.Seckill;
+				var Activity = OrganizationUser.app.models.Activity;
 				var viewCount = 0;
 				forms.forEach(function(form){
 					viewCount += form.viewCount;
@@ -49,7 +55,12 @@ module.exports = function(OrganizationUser) {
 						seckills.forEach(function(seckill){
 							viewCount += seckill.viewCount;
 						});
-						cb(null, {status: 200, viewCount: viewCount})			
+						Activity.find({where:{organizationUid: organizationUser.id}}, function(err, activities) {
+							activities.forEach(function(activity) {
+								viewCount += activity.viewCount;
+							});
+							cb(null, {status: 200, viewCount: viewCount});			
+						});
 					});
 				});	
 			});
@@ -142,7 +153,9 @@ module.exports = function(OrganizationUser) {
 
 	function accessTokenCheck(token, cb, callback) {
 		var AccessToken = OrganizationUser.app.models.AccessToken;
-		AccessToken.findOne({where:{_id: token}}, function(err, accessToken) {
+		//由于下面findOne非常奇怪，如果token是undefined那么会找到第一个accessToken，所以我用||判断了一下
+		token = token || null;
+		AccessToken.findOne({where: {id: token} }, function(err, accessToken) {
 			if(accessToken) {
 				OrganizationUser.findOne({where: {_id: accessToken.userId}}, function(err, organizationUser) {
 					if(organizationUser) {
