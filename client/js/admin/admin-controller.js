@@ -122,7 +122,7 @@ function SidebarCtrl($scope, $window) {
 function ListCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
   //项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的item.infoProperty属性
   var List = $resource(
-    etuanAdmin.item.infoProperty[$routeParams.type], {
+    etuanAdmin.item.infoProperty[$routeParams.type] + "?filter[order]=id%20DESC", {
       userId: etuanAdmin.cache.userId
     }
   );
@@ -206,6 +206,9 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         }
         if ($scope.contentShow[4]) {
           $scope.verifyRule = res.verifyRule;
+        }
+        if ($scope.contentShow[6]) {
+          $scope.maxVote = res.maxVote;
         }
         switch ($routeParams.type) {
           case 'form':
@@ -539,6 +542,10 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     if ($scope.contentShow[4]) {
       uploadParameters.verifyRule = $scope.verifyRule;
     }
+    if ($scope.contentShow[6]) {
+      uploadParameters.maxVote = $scope.maxVote;
+    }
+
     if (uploadParameters.stopTime <= uploadParameters.startTime) {
       alert('开始时间要在结束时间之前噢');
       return;
