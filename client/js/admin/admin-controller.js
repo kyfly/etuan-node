@@ -724,6 +724,7 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         $scope.title = res.title;
         $scope.startTime = res.startTime;
         $scope.stopTime = res.stopTime;
+        $scope.resultHeaders.push('序号');
         $scope.resultHeaders.push('名称');
         $scope.resultHeaders.push('数量');
         break;
