@@ -295,7 +295,6 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
    * 获得编辑器得到的contentUrl
    */
   $scope.activityConfig = etuanAdmin.editor.config;
-  $scope.activityContentUrl = 'http://www.baidu.com';
   /* 表单特定功能区
    * 实现了表单项目的CRUD，对于选择题等拥有content[]项目的表单项目，还实现了对具体选项的CRUD操作。
    * 其实现原理为将表单结构与forms对象实现双向绑定
@@ -523,8 +522,7 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
       var editorReadyHandle = function () {
         if (editorXhr.readyState === 4) {
           if (editorXhr.status === 200) {
-            $scope.contentUrl = JSON.parse(editorXhr.responseText).url;
-            uploadParameters.contentUrl = $scope.contentUrl;
+            uploadParameters.contentUrl = JSON.parse(editorXhr.responseText).url;
           }
         }
       };
@@ -573,7 +571,6 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     }
     switch ($routeParams.type) {
       case 'activity':
-        uploadParameters.contentUrl = $scope.activityContentUrl;
         break;
       case 'form':
         var formQuestionsTmp = [];
