@@ -55,10 +55,10 @@ app.service('etuanAdmin', function () {
     item: {
       isBasicContent: {
         //表示每一个活动是否拥有相应的子项目，对应数组分别为[title,description,startTime,stopTime,verifyRule]
-        activity: [true, true, true, true, false, true],
-        form: [true, true, true, true, true, true],
-        seckill: [true, true, false, false, true, true],
-        vote: [true, true, true, true, true, true]
+        activity: [true, true, true, true, false, true, false],
+        form: [true, true, true, true, true, true, false],
+        seckill: [true, true, false, false, true, true, false],
+        vote: [true, true, true, true, true, true, true]
       },
       infoProperty: {
         activity: '/api/OrganizationUsers/:userId/activities/:fk',
@@ -92,4 +92,4 @@ app.service('etuanAdmin', function () {
       }
     }
   };
-})
+});

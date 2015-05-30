@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-controller="OrganizationCtrl">
+<head>
+  <title ng-bind-template="{{title}} - 团团一家">组织 - 团团一家</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <script src="/js/login.js"></script>
+  <script type="text/javascript">
+    loginCheck('d2VjaGF0');
+  </script>
+  <link rel="stylesheet" href="/lib/bootstrap/css/etuan.css"/>
+  <script src="/lib/angular/angular.js"></script>
+  <script src="/lib/angular-components/angular-resource.js"></script>
+  <script src="/js/organization/app.js"></script>
+  <style>
+    html {
+      min-height: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
+      background-color: #a8d154;
+      min-height: 100%;
+      height: 100%;
+    }
+
+    .bg_white {
+      background-color: #ffffff;
+      min-height: 100%;
+      height: 100%;
+      overflow: auto;
+    }
+
+    .footer {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+<div class="container bg_white">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="text-center">
+      <h1>{{name}}</h1>
+      <br>
+      <img class="img-circle" ng-src="{{logoUrl}}" alt="{{name}}" height="150px" width="150px">
+    </div>
+    <br>
+    <p>{{description}}</p>
+    <hr>
+    <div class="text-center footer">
+      <img src="/img/full-logo.png" height="25px" alt="团团一家LOGO">&nbsp;提供技术支持
+    </div>
+  </div>
+</div>
+</body>
+</html>

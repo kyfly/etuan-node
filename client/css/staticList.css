@@ -32,9 +32,10 @@ html {
 }
 
 .listhead {
+  text-align: center;
   color: #666;
   font-size: 16px;
-  min-height: 69px;
+
 }
 
 .listhead_org {
@@ -57,7 +58,7 @@ html {
   margin-top: 10px;
   margin-bottom: -5px;
   text-align: right;
-  font-size: 22px;
+  font-size: 16px;
 }
 
 .text-on {

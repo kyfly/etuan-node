@@ -88,7 +88,7 @@
       <a ng-href="/vote#?id={{vlt.id}}" ng-click="vltView(vlt.id)">
         <div class="thumbnail borderDiv">
           <p class="listhead" ng-bind="vlt.title"></p>
-          <img style="height: 150px; width: 150px" ng-src="{{vlt.logoUrl}}">
+          <img class="regLogo" ng-src="{{vlt.logoUrl}}">
           <p class="status text-{{vlt.textColor}}" ng-bind="vlt.activityStatus"></p>
         </div>
       </a>

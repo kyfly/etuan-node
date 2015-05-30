@@ -3,7 +3,7 @@ module.exports = function(VoteResult) {
   //vote-result检查１．微信绑定　２．最大投票数　３．已经投票 4.开始时间结束时间
   VoteResult.observe('before save', function(ctx, next) {
     var Vote = VoteResult.app.models.Vote;
-    var WeChatUser = VoteResult.app.models.WeChatUser;
+    var weChatUser = VoteResult.app.models.WeChatUser;
     try {
       VoteResult.findOne({ where: {weChatUid: ctx.instance.weChatUid }}, function(err, voteResult) {
         if(voteResult === null) {
