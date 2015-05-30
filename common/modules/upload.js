@@ -1,6 +1,6 @@
 var fs = require('fs');
 var os = require('os');
-var path = require('path');
+var Path = require('path');
 var Busboy = require('busboy');
 var ALY = require('aliyun-sdk');
 
@@ -25,16 +25,18 @@ function __img(req,res,next,callback){
       });
   busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
     res.up_img = function(img_url) {
-      var tmpdir = path.join(os.tmpDir(), path.basename(filename));
-      var name = new Date().getTime().toString() + MathRand(6) + path.extname(tmpdir);
+      var tmpdir = Path.join(os.tmpDir(), Path.basename(filename));
+      var name = new Date().getTime().toString() + MathRand(6) + Path.extname(tmpdir);
       var F;
       file.pipe(F = fs.createWriteStream(tmpdir));
       F.on('finish',function(){
         fs.readFile(tmpdir,function(err,data){
-          if(err) return;
+          if(err) 
+            res.send({status: 500, message: "服务器错误,保存失败", error: err.code});
           else 
-            __oss(path.join(img_url,name),data,function(err,data){
-              if(err) return;
+            __oss(Path.join(img_url,name),data,function(err,data){
+              if(err) 
+                res.send({status: 500, message: "服务器错误,保存失败", error: err.code});
               else
                 res.send({
                     'url': 'http://etuan-node.oss-cn-hangzhou.aliyuncs.com/'+img_url+'/'+name,
@@ -70,14 +72,16 @@ function upload(callback) {
       return;
     }else if(req.query.action === 'uploadtext'){
       res.up_text = function(dir){
-        var path = path.join(dir,new Date().getTime().toString() + MathRand(6)+".html");
-        __oss(path,req.body,function(err,aliMsg){
-          if(err) return;
-          else 
-            res.json({
-              "url":path.join('http://etuan-node.oss-cn-hangzhou.aliyuncs.com/', path),
-              "state":"SUCCESS"
-            });
+        var path = Path.join(dir,new Date().getTime().toString() + MathRand(6)+".html");
+        __oss(path,req.body.content,function(err,aliMsg){
+        if(err) {
+          res.send({status: 500, message: "服务器错误,保存失败", error: err.code});
+        }
+        else 
+          res.json({
+            "url":Path.join('http://etuan-node.oss-cn-hangzhou.aliyuncs.com/', path),
+            "state":"SUCCESS"
+          });
         });
       }
       callback(req, res, next);
@@ -89,7 +93,7 @@ function upload(callback) {
           Prefix: path
         },function(err,data){
           if(!data)
-            return;
+            res.send({status: 500, message: "服务器错误,保存失败", error: err.code});
            var prefix = 'http://etuan-node.oss-cn-hangzhou.aliyuncs.com/';
            var list = [];
            data.Contents.forEach(function(content){
@@ -109,7 +113,7 @@ function upload(callback) {
         });
       }
       callback(req, res, next);
-      return
+      return;
     }
   };
 };

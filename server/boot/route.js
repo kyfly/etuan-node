@@ -34,7 +34,7 @@ app.use("/ue/uploads", upload(function(req, res, next) {
       case 'uploadimage':
         res.up_img('images/' + path);break;
       case 'uploadtext':
-        res.up_text('html/' + path);
+        res.up_text('html/' + path);break;
       case 'listimage':
         res.image_list('images/'+userId);
       }

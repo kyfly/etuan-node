@@ -530,7 +530,8 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
       };
       editorXhr.onreadystatechange = editorReadyHandle;
       editorXhr.open('POST', '/ue/uploads?action=uploadtext&dir=ue&access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, false);
-      editorXhr.send($scope.activityContent);
+      editorXhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");  
+      editorXhr.send("content=" + $scope.activityContent);
     };
 
     if($routeParams.type === "activity"){
