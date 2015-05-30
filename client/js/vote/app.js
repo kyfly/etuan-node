@@ -1,6 +1,7 @@
 function VoteCtrl($scope, $resource, $location, $window) {
   var voteUrlSearchObj = $location.search();
   var Vote = $resource('/api/votes/:id');
+  var newReferer = "index.html";
   var VoteResult = $resource('/api/WeChatUsers/:id/voteResults', {
     id: JSON.parse($window.localStorage.getItem('d2VjaGF0')).userId
   });
@@ -32,9 +33,14 @@ function VoteCtrl($scope, $resource, $location, $window) {
         'voteId': voteUrlSearchObj.id,
         'results': resultTmp
       },
-      function (res) {
+      function () {
+        alert("投票成功");
       },
       function (res) {
+        alert(res.data.error.message);
+        if(res.data.error.message === "需要绑定学号") {
+          window.location = "../student.html?referer=" + newReferer
+        }
       }
     );
   };
