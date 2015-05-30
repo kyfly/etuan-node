@@ -15,7 +15,7 @@ module.exports = function(FormResult) {
 										next();
 									}
 									else {
-										next({'status': '400', 'message': '需要绑定微信'});
+										next({'status': '400', 'message': '需要绑定学号'});
 									}
 								});    		
 									break;

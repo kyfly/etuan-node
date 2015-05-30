@@ -5,7 +5,9 @@ module.exports = function(VoteResult) {
     var Vote = VoteResult.app.models.Vote;
     var weChatUser = VoteResult.app.models.WeChatUser;
     try {
-      VoteResult.findOne({ where: {weChatUid: ctx.instance.weChatUid }}, function(err, voteResult) {
+      VoteResult.findOne({ where: {weChatUid: ctx.instance.weChatUid, voteId: ctx.instance.voteId}}, function(err, voteResult) {
+        console.log(ctx.instance.weChatUid );
+        console.log(voteResult);
         if(voteResult === null) {
           Vote.findOne({ where: { id: ctx.instance.voteId }}, function(err, vote) {
             if(vote.startTime <= new Date() && vote.stopTime >= new Date()) {
@@ -16,7 +18,7 @@ module.exports = function(VoteResult) {
                       next();
                     }
                     else {
-                      next({'status': '400', 'message': '需要绑定微信'});
+                      next({'status': '400', 'message': '需要绑定学号'});
                     }
                     break;
                   default:
