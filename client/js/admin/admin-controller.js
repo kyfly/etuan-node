@@ -517,6 +517,26 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
       logoXhr.send(logoFd);
     };
 
+    //上传editor内容
+    var editorUpload = function () {
+      var editorXhr = new XMLHttpRequest();
+      var editorReadyHandle = function () {
+        if (editorXhr.readyState === 4) {
+          if (editorXhr.status === 200) {
+            $scope.contentUrl = JSON.parse(editorXhr.responseText).url;
+            uploadParameters.contentUrl = $scope.contentUrl;
+          }
+        }
+      };
+      editorXhr.onreadystatechange = editorReadyHandle;
+      editorXhr.open('POST', '/ue/uploads?action=uploadtext&dir=ue&access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, false);
+      editorXhr.send($scope.activityContent);
+    };
+
+    if($routeParams.type === "activity"){
+      editorUpload();
+    }
+
     if ($routeParams.id === 'create') {
       logoUpload();
     }
