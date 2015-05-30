@@ -41,7 +41,7 @@ app.controller('contentCtrl', ['$scope', '$http', function ($scope, $http) {
   });
   $http.get('/api/Votes?filter[order]=id%20DESC').success(function (res) {
     $scope.vlts = res;
-    for (var i = 0; i < $scope.flts.length; i++) {
+    for (var i = 0; i < $scope.vlts.length; i++) {
       if (new Date($scope.vlts[i].startTime).getTime() > nowTime) {
         $scope.vlts[i].activityStatus = "即将开始";
         $scope.vlts[i].textColor = "warning";
@@ -56,7 +56,7 @@ app.controller('contentCtrl', ['$scope', '$http', function ($scope, $http) {
   });
   $http.get('/api/Seckills?filter[order]=id%20DESC').success(function (res) {
     $scope.skls = res;
-    for (var i = 0; i < $scope.flts.length; i++) {
+    for (var i = 0; i < $scope.skls.length; i++) {
       if (new Date($scope.skls[i].seckillArrangements[0].startTime).getTime() > nowTime) {
         $scope.skls[i].activityStatus = "即将开始";
         $scope.skls[i].textColor = "warning";

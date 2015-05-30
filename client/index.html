@@ -53,6 +53,13 @@
       overflow: hidden;
     }
 
+    .thumbnail > img{
+      max-height: 150px;
+      max-width: 150px;
+      height: 150px;
+      width: 150px;
+    }
+
     .footer {
       margin-bottom: 15px;
     }
@@ -128,7 +135,7 @@
           <div class="text-center">
             <h4 ng-bind="alt.title"></h4>
           </div>
-          <img ng-src="{{alt.logoUrl}}" alt="{{alt.title}}" height="150px" width="150px">
+          <img ng-src="{{alt.logoUrl}}" alt="{{alt.title}}">
           <h4 class="statusText text-{{alt.textColor}}" ng-bind="alt.activityStatus"></h4>
         </div>
       </a>
@@ -147,7 +154,7 @@
           <div class="text-center">
             <h4 ng-bind="flt.title"></h4>
           </div>
-          <img ng-src="{{flt.logoUrl}}" alt="{{flt.title}}" height="150px" width="150px">
+          <img ng-src="{{flt.logoUrl}}" alt="{{flt.title}}">
           <h4 class="statusText text-{{flt.textColor}}" ng-bind="flt.activityStatus"></h4>
         </div>
       </a>
@@ -166,7 +173,7 @@
           <div class="text-center">
             <h4 ng-bind="skl.title"></h4>
           </div>
-          <img ng-src="{{skl.logoUrl}}" alt="{{skl.title}}" height="150px" width="150px">
+          <img ng-src="{{skl.logoUrl}}" alt="{{skl.title}}">
           <h4 class="statusText text-{{skl.textColor}}" ng-bind="skl.activityStatus"></h4>
         </div>
       </a>
@@ -186,7 +193,7 @@
           <div class="text-center">
             <h4 ng-bind="vlt.title"></h4>
           </div>
-          <img ng-src="{{vlt.logoUrl}}" alt="{{vlt.title}}" height="150px" width="150px">
+          <img ng-src="{{vlt.logoUrl}}" alt="{{vlt.title}}">
           <h4 class="statusText text-{{vlt.textColor}}" ng-bind="vlt.activityStatus"></h4>
         </div>
       </a>
