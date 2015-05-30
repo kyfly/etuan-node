@@ -32,11 +32,11 @@ function __img(req,res,next,callback){
       F.on('finish',function(){
         fs.readFile(tmpdir,function(err,data){
           if(err) 
-            res.send({status: 500, message: "服务器错误,保存失败", error: err.code});
+            res.send({message: "保存失败", error: err.code});
           else 
             __oss(Path.join(img_url,name),data,function(err,data){
               if(err) 
-                res.send({status: 500, message: "服务器错误,保存失败", error: err.code});
+                res.send({message: "保存失败", error: err.code});
               else
                 res.send({
                     'url': 'http://etuan-node.oss-cn-hangzhou.aliyuncs.com/'+img_url+'/'+name,
@@ -75,7 +75,7 @@ function upload(callback) {
         var path = Path.join(dir,new Date().getTime().toString() + MathRand(6)+".html");
         __oss(path,req.body.content,function(err,aliMsg){
         if(err) {
-          res.send({status: 500, message: "服务器错误,保存失败", error: err.code});
+          res.send({message: "保存失败", error: err.code});
         }
         else 
           res.json({
@@ -93,7 +93,7 @@ function upload(callback) {
           Prefix: path
         },function(err,data){
           if(!data)
-            res.send({status: 500, message: "服务器错误,保存失败", error: err.code});
+            res.send({message: "获取列表保存失败", error: err.code});
            var prefix = 'http://etuan-node.oss-cn-hangzhou.aliyuncs.com/';
            var list = [];
            data.Contents.forEach(function(content){
