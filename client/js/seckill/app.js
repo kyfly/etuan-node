@@ -33,10 +33,11 @@ function SeckillCtrl($scope, $location, $window) {
   socket.once('initSeckill', function (info, result, status) {
     var now = new Date();
     deltaTime = new Date().getTime() - now.getTime();
-    console.log(status);
-    console.log(result);
-    console.log(info);
-    start = new Date(info.seckillArrangements[status.current].startTime);
+    if (status.current < info.seckillArrangements.length) {
+      start = new Date(info.seckillArrangements[status.current].startTime);
+    } else {
+      start = new Date(info.seckillArrangements[status.current - 1].startTime);
+    }
     //判断当前状态，即将开始、正在进行或已经结束
     if (now.getTime() < start.getTime()) {
       $scope.seckillStart = false;
@@ -73,7 +74,11 @@ function SeckillCtrl($scope, $location, $window) {
 
     $scope.current = status.current;
     $scope.title = info.title;
-    $scope.startTime = info.seckillArrangements[status.current].startTime;
+    if (status.current < info.seckillArrangements.length) {
+      $scope.startTime = new Date(info.seckillArrangements[status.current].startTime);
+    } else {
+      $scope.startTime = new Date(info.seckillArrangements[status.current - 1].startTime);
+    }
     $scope.description = info.description;
     $scope.seckillArrangements = info.seckillArrangements;
     $scope.remain = status.remain;

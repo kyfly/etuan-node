@@ -56,11 +56,12 @@ app.controller('contentCtrl', ['$scope', '$http', function ($scope, $http) {
   });
   $http.get('/api/Seckills?filter[order]=id%20DESC').success(function (res) {
     $scope.skls = res;
+    //抢票默认设置为一天后显示已经结束
     for (var i = 0; i < $scope.skls.length; i++) {
       if (new Date($scope.skls[i].seckillArrangements[0].startTime).getTime() > nowTime) {
         $scope.skls[i].activityStatus = "即将开始";
         $scope.skls[i].textColor = "warning";
-      } else if ((new Date($scope.skls[i].seckillArrangements[0].startTime).getTime() < nowTime) && ($scope.skls[i].seckillArrangements[$scope.skls[i].seckillArrangements.length - 1].total === 0)) {
+      } else if ((new Date($scope.skls[i].seckillArrangements[0].startTime).getTime() + 86400000) < nowTime) {
         $scope.skls[i].activityStatus = "已经结束";
         $scope.skls[i].textColor = "danger";
       } else {
