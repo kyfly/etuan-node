@@ -6,25 +6,25 @@ module.exports = function(VoteResult) {
     var weChatUser = VoteResult.app.models.WeChatUser;
     try {
       VoteResult.findOne({ where: {weChatUid: ctx.instance.weChatUid, voteId: ctx.instance.voteId}}, function(err, voteResult) {
-        console.log(ctx.instance.weChatUid );
-        console.log(voteResult);
         if(voteResult === null) {
           Vote.findOne({ where: { id: ctx.instance.voteId }}, function(err, vote) {
             if(vote.startTime <= new Date() && vote.stopTime >= new Date()) {
               if(ctx.instance.results.length <= vote.maxVote) {
-                switch(vote.verifyRule){
-                  case 'studentId':
-                    if(weChatUser.studentId != null) {
+                weChatUser.findOne({where: {id: ctx.instance.weChatUid}}, function(err, weChatUser) {
+                  switch(vote.verifyRule){
+                    case 'studentId':
+                      if(weChatUser.studentId != null) {
+                        next();
+                      }
+                      else {
+                        next({'status': '400', 'message': '需要绑定学号'});
+                      }
+                      break;
+                    default:
                       next();
-                    }
-                    else {
-                      next({'status': '400', 'message': '需要绑定学号'});
-                    }
-                    break;
-                  default:
-                    next();
-                    break;
-                }
+                      break;
+                  }
+                });
               }
               else {
                 next({'status': '400', 'message': '超过最大投票数'});
@@ -57,9 +57,10 @@ module.exports = function(VoteResult) {
             }
             else {
               instance.updateAttribute('count', instance.count+1, function(err, instance) {
-                if(err) {
-                  next(err);
-                }
+                //这里很神奇的居然会有err但是又能成功更新
+                //if(err) {
+                //  next(err);
+                //}
               });
             }
           });

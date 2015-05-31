@@ -184,6 +184,7 @@ module.exports = function (WeChatUser) {
           });
       });
   });
+
   //保存更新时间
   WeChatUser.observe('before save', function (ctx, next) {
     if (ctx.instance) {
@@ -202,7 +203,7 @@ module.exports = function (WeChatUser) {
   });
 
   //创建投票结果之前写入ip
-  WeChatUser.beforeRemote('prototype.__create__formResults', function (ctx, instance, next) {
+  WeChatUser.beforeRemote('prototype.__create__voteResults', function (ctx, instance, next) {
     ctx.req.body.ip = getClientIp(ctx.req);
     next();
   });
@@ -221,9 +222,4 @@ module.exports = function (WeChatUser) {
   };
 
 };
-// {
-//   "id": "FzSvMzLHvgdrrIK3HDoX7uyya8ysr7QoPt0YuDtDBa9s0AYZ1BsrPaVpELWHwMRX",
-//   "ttl": 1209600,
-//   "created": "2015-04-20T10:00:31.236Z",
-//   "userId": "5534ce317f6ac78c11054114"
-// }
+
