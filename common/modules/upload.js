@@ -72,14 +72,14 @@ function upload(callback) {
       return;
     }else if(req.query.action === 'uploadtext'){
       res.up_text = function(dir){
-        var path = Path.join(dir,new Date().getTime().toString() + MathRand(6)+".html");
+        var path = dir + "/" + (new Date().getTime().toString() + MathRand(6)+".html");
         __oss(path,req.body.content,function(err,aliMsg){
         if(err) {
           res.send({message: "保存失败", error: err.code});
         }
         else 
           res.json({
-            "url":Path.join('http://etuan-node.oss-cn-hangzhou.aliyuncs.com/', path),
+            "url": "http://etuan-node.oss-cn-hangzhou.aliyuncs.com/" + path,
             "state":"SUCCESS"
           });
         });
