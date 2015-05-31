@@ -17,8 +17,7 @@ SocketSeckill.prototype.handshake = function (socket, next) {
   var handshakeQuery = socket.handshake.query;
   if (!seckillCache[handshakeQuery.id])
     next(new Error("404"));  //Invalid seckill id
-  else
-  {
+  else {
     socket.join(handshakeQuery.id);
     seckillCache[handshakeQuery.id].verify.checkToken(handshakeQuery.accessToken,
       function (err, pass, studentId) {
@@ -28,7 +27,7 @@ SocketSeckill.prototype.handshake = function (socket, next) {
           next();
         }
         else
-          next(new Error(err || "Authentication failed" ));
+          next(new Error(err || "Authentication failed"));
       });
   }
 };
@@ -117,10 +116,10 @@ function onAddKiller(socket, verifyId) {
                 socket.emit('killFail', 'database error');
               }
               else {
-                if (cache.remain <= 0 && cache.current < arrangements.length) {
-                    cache.current++;
-                    cache.remain = arrangements[cache.current].total;
-                  }
+                if (cache.remain <= 0 && cache.current < arrangements.length - 1) {
+                  cache.current++;
+                  cache.remain = arrangements[cache.current].total;
+                }
                 socket.emit('killSuccess');
                 socket.broadcast.to(seckillId).emit('addResult', cache.verify.idMask(verifyId))
               }
@@ -153,7 +152,7 @@ SocketSeckill.prototype.updateCache = function (seckillId, cb) {
     })
 };
 
-SocketSeckill.prototype.updateAllCache = function() {
+SocketSeckill.prototype.updateAllCache = function () {
   Seckill.find({field: {id: true}}, function (err, allSeckill) {
     allSeckill.forEach(function (seckill) {
       SocketSeckill.prototype.updateCache(seckill.id);
