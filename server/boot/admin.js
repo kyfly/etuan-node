@@ -21,7 +21,7 @@ module.exports = function(app) {
     {where:{email: 'admin@etuan.org'}}
   , function(err, user) {
     if (err) throw err;
-    if (!user.id) {
+    if (!user) {
       User.create({"email":"admin@etuan.org","password":"www.etuan.org"}, function (err, newUser) {
         createAdmin(newUser.id);
       });
