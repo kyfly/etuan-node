@@ -33,10 +33,10 @@ function loginCheck(t) {
         window.location = '/login';
         break;
       case 'd2VjaGF0':
-        if (bower === 'wechat' || bower === 'pc')
-          window.location = url;
-        else
-          window.location = "/";
+        //if (bower === 'wechat' || bower === 'pc')
+        //  window.location = url;
+        //else
+        //  window.location = "/";
         break;
     }
   }

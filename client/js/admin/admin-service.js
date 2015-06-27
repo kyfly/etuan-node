@@ -69,7 +69,7 @@ app.service('etuanAdmin', function () {
       resultProperty: {
         activity: '',
         form: '/api/Forms/:id/results',
-        seckill: '',
+        seckill: '/api/Seckills/:id/results',
         vote: '/api/Votes/:id/subitems'
       },
       resultDownloadType: {

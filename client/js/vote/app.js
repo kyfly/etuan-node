@@ -35,6 +35,7 @@ function VoteCtrl($scope, $resource, $location, $window) {
       },
       function () {
         alert("投票成功");
+        $window.location = '../'
       },
       function (res) {
         alert(res.data.error.message);

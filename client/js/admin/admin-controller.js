@@ -516,7 +516,7 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
       logoXhr.send(logoFd);
     };
 
-    //上传editor内容
+    //上传activity的editor内容
     var editorUpload = function () {
       var editorXhr = new XMLHttpRequest();
       var editorReadyHandle = function () {
@@ -528,11 +528,33 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
       };
       editorXhr.onreadystatechange = editorReadyHandle;
       editorXhr.open('POST', '/ue/uploads?action=uploadtext&dir=ue&access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, false);
-      editorXhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");  
+      editorXhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       editorXhr.send("content=" + $scope.activityContent);
     };
 
-    if($routeParams.type === "activity"){
+    //上传vote的editor内容
+    var voteEditorUpload = function () {
+      for (var i = 0; i < $scope.votes.length; i++) {
+        var editorXhr = new XMLHttpRequest();
+        var editorReadyHandle = function () {
+          if (editorXhr.readyState === 4) {
+            if (editorXhr.status === 200) {
+              $scope.votes[i].detailUrl = JSON.parse(editorXhr.responseText).url;
+            }
+          }
+        };
+        editorXhr.onreadystatechange = editorReadyHandle;
+        editorXhr.open('POST', '/ue/uploads?action=uploadtext&dir=ue&access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, false);
+        editorXhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        editorXhr.send("content=" + $scope.votes[i].voteContent);
+      }
+    };
+
+    if ($routeParams.type === "vote") {
+      voteEditorUpload();
+    }
+
+    if ($routeParams.type === "activity") {
       editorUpload();
     }
 
@@ -686,6 +708,11 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         }
         break;
       case 'seckill':
+        for (var i = 0; i < res.length; i++) {
+          var seckillResultTmp = [];
+          seckillResultTmp.push(res[i].verifyId);
+          $scope.results.push(seckillResultTmp);
+        }
         break;
       case 'vote':
         for (var i = 0; i < res.length; i++) {
@@ -717,6 +744,8 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         $scope.title = res.title;
         $scope.startTime = res.seckillArrangements[0].startTime;
         $scope.stopTime = res.seckillArrangements[res.seckillArrangements.length - 1].startTime;
+        $scope.resultHeaders.push('序号');
+        $scope.resultHeaders.push('学号');
         break;
       case 'vote':
         $scope.title = res.title;

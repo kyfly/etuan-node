@@ -43,25 +43,33 @@
   <div class="col-md-8 col-md-offset-2">
     <h1>{{form.title}}</h1>
     <h4>{{form.description}}</h4>
+
     <p>开始时间：{{startTime | date:cnFormat}}</p>
+
     <p>结束时间：{{stopTime | date:cnFormat}}</p>
 
     <hr>
     <form>
       <div class="form-group" ng-repeat="question in form.formQuestions">
         <label class="control-label">{{question.label}}</label>
-        <select class="form-control" ng-show="questionShow(question.type,1)">
-          <option ng-repeat="choiceContent in question.content track by $index" name="choice-{{$parent.$index}}" ng-model="answer[$parent.$index]" value="{{choiceContent}}">{{choiceContent}}</option>
+        <select class="form-control" ng-show="questionShow(question.type,1)" ng-model="answer[$index]">
+          <option ng-repeat="choiceContent in question.content track by $index" name="choice-{{$parent.$index}}"
+                  value="{{choiceContent}}">{{choiceContent}}
+          </option>
         </select>
         <input type="text" class="form-control" ng-show="questionShow(question.type,2)" ng-model="answer[$index]">
-        <textarea rows="10" class="form-control" style="resize:none" ng-show="questionShow(question.type,3)" ng-model="answer[$index]"></textarea>
-        <label class="radio-inline" ng-repeat="judgeContent in question.content track by $index" ng-show="questionShow(question.type,4)">
-          <input name="judge-{{$parent.$index}}" type="radio" ng-model="answer[$parent.$index]" value="{{judgeContent}}">{{judgeContent}}
+        <textarea rows="10" class="form-control" style="resize:none" ng-show="questionShow(question.type,3)"
+                  ng-model="answer[$index]"></textarea>
+        <label class="radio-inline" ng-repeat="judgeContent in question.content track by $index"
+               ng-show="questionShow(question.type,4)">
+          <input name="judge-{{$parent.$index}}" type="radio" ng-model="answer[$parent.$index]"
+                 value="{{judgeContent}}">{{judgeContent}}
         </label>
       </div>
       <div class="form-group">
         <br>
-        <button class="btn btn-block btn-danger" ng-click="submit()"><span class="glyphicon glyphicon-envelope"></span>&ensp;提交</button>
+        <button class="btn btn-block btn-danger" ng-click="submit()"><span class="glyphicon glyphicon-envelope"></span>&ensp;提交
+        </button>
       </div>
     </form>
 

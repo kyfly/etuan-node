@@ -1,4 +1,5 @@
 function FormCtrl($scope, $resource, $location, $window) {
+  var newReferer = "index.html";
   $scope.title = '表单';
   var formUrlSearchObj = $location.search();
   var Form = $resource('/api/forms/:id');
@@ -35,8 +36,16 @@ function FormCtrl($scope, $resource, $location, $window) {
         'formResultAnswers': resultTmp
       },
       function (res) {
+        alert("提交成功");
+        $window.location = '../';
       },
       function (res) {
+        if(res.status === 400){
+          alert(res.data.error.message);
+          if(res.data.error.message === "需要绑定学号") {
+            window.location = "../student.html?referer=" + newReferer;
+          }
+        }
       }
     );
   };
