@@ -33,10 +33,13 @@ function loginCheck(t) {
         window.location = '/login';
         break;
       case 'd2VjaGF0':
-        //if (bower === 'wechat' || bower === 'pc')
-        //  window.location = url;
-        //else
-        //  window.location = "/";
+        if (bower === 'pc')//直接跳转到二维码登录页面，登录页面的serch属性应该加登陆后应该到的地址
+          window.location = "/wx-tmp.html";
+        else if (bower === 'wechat') {
+          window.location = '/api/WechatUsers/fromWechat?next='+"登陆后的地址";
+        }
+        else//某个提示页面，这个页面应该显示“用微信客户端访问或者电脑访问”
+          window.location = "/";
         break;
     }
   }

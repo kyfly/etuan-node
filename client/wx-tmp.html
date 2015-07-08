@@ -1,52 +1,35 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
-  <title>WeChat</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <script src="/lib/angular/angular.min.js"></script>
-  <script src="/lib/angular-components/angular-resource.min.js"></script>
-  <script>
-    function LoginCtrl($scope, $resource, $timeout, $window) {
-      var Login = $resource('/api/WeChatUsers/login');
-      $scope.loginBtn = function () {
-        Login.save(
-          {
-            'email': $scope.email,
-            'password': $scope.password
-          },
-          function (res) {
-            var lsTmp = {
-              accessToken: res.id,
-              userId: res.userId,
-              loginTime: res.created,
-              ttl: res.ttl
-            };
-            $window.localStorage.setItem('d2VjaGF0', JSON.stringify(lsTmp));
-            alert('登录成功，将在1秒钟后跳转!');
-            $timeout(function () {
-              $window.location = '/list-tmp.html'
-            }, 1000);
-          },
-          function (res) {
-            alert('登录失败!');
-          }
-        );
-      }
-    }
-    var app = angular.module('app', ['ngResource']);
-    app.controller('LoginCtrl', ['$scope', '$resource', '$timeout', '$window', LoginCtrl]);
-  </script>
+  <title>团团一家 - 用户登录</title>
+  <link rel="stylesheet" href="/css/wclogin.css">
 </head>
 <body>
-<div ng-controller="LoginCtrl">
-  <h2>WeChat</h2>
-  <hr>
-  <label>email</label>
-  <input ng-model="email">
-  <label>password</label>
-  <input ng-model="password">
-  <button ng-click="loginBtn()">login</button>
+<div id="login_container">
+  <div class="main">
+    <div class="loginPanel normalPanel">
+      <div class="title">
+        <p>微信登录</p>
+      </div>
+      <div class="waiting panelContent">
+        <div class="qrcodeContent" style="position:relative;">
+          <div id="qrcode"></div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="normlDesc loginTip pngBackground" style="position:relative;">
+          <p id="logstatus">请使用微信扫描二维码以登录</p>
+        </div>
+      </div>
+      <div class="footer">
+        <p><hr style="border:1px solid #242627; opacity: 0.2;">www.etuan.org&nbsp;&nbsp;团团一家</p>
+      </div>
+    </div>
+  </div>
 </div>
+<script src="/js/qrcode.min.js"></script>
+<script src="/js/login/wcapp.js"></script>
 </body>
 </html>

@@ -13,11 +13,15 @@ function __randomString(len) {
   return pwd;
 }
 module.exports = function (WeChatUser) {
-  WeChatUser.remoteMethod("wechatLogin",
+  WeChatUser.remoteMethod("formPC",
     {
       returns: {arg: "data", type: "object"},
       description: "获取微信登录链接,返回{state:state,url:url}",
-      http: {path: "/wechatlogin", verb: 'get'}
+      http: {path: "/formPC", verb: 'get'}
+    });
+  WeChatUser.remoteMethod('fromWechat',
+    {
+      http: {path: '/fromWechat', verb: 'get'}
     });
   WeChatUser.remoteMethod("oauth",
     {
@@ -49,30 +53,32 @@ module.exports = function (WeChatUser) {
    * @param  {String} next){		var referer       [description]
    * @return {[type]}              [description]
    */
-  WeChatUser.beforeRemote("wechatLogin", function (ctx, unused, next) {
-    var id = ctx.req.query.id? "#?id=" + ctx.req.query.id : undefined;
-    var url = ctx.req.query.url? ctx.req.query.url : '/';
-    if(id) url = url + id;
+  WeChatUser.beforeRemote("formPC", function (ctx, unused, next) {
     var ticket = __randomString(30) + new Date().getTime().toString();
     var loginCacheObj = {
       createAt: new Date(),
       ticket: ticket,
       isConfirm: 0,
-      referer: url,
       userId:null
     };
     WeChatUser.app.models.LoginCache.create(loginCacheObj, function (err, result) {
       if (err)
         ctx.res.send(err);
-      if (ctx.req.headers['user-agent'].indexOf('MicroMessenger') > 0)
-      {
-        var url = client.getAuthorizeURL('http://beta.etuan.org/api/WeChatUsers/phoneoauth', ticket, 'snsapi_userinfo');
-	      ctx.res.redirect(url); 
-      }else {
-        var url = client.getAuthorizeURL('http://beta.etuan.org/api/WeChatUsers/oauth', ticket, 'snsapi_userinfo');
-        ctx.res.render('sign-in.ejs', {state: ticket, qrcodeUrl: url});
-      }
+      var url = client.getAuthorizeURL('http://beta.etuan.org/api/WeChatUsers/oauth', ticket, 'snsapi_userinfo');
+      ctx.res.send({state: ticket, qrcodeUrl: url});
     });
+  });
+  /**
+   * 微信客户端Auth2.0验证
+   * @param  {[type]} ctx      [description]
+   * @param  {[type]} unused   [description]
+   * @param  {[type]} next)    {                       var url [description]
+   * @param  {[type]} function (err,         token){                             console.log(cache.referer);          ctx.res.render("phone-login.ejs", {"msg": "success", "url": cache.referer, "userInfo": user, "token": token});        } [description]
+   * @return {[type]}          [description]
+   */
+  WeChatUser.beforeRemote('fromWechat', function (ctx, unused, next) {
+    var url = client.getAuthorizeURL('http://beta.etuan.org/api/WeChatUsers/phoneoauth', '', 'snsapi_userinfo');
+    ctx.res.redirect(url);
   });
   /**
    * 手机微信用户oauth2.0登录接口
