@@ -26,7 +26,7 @@ function loginCheck(t) {
     || !tmpInfo.loginTime || !tmpInfo.ttl
     || (new Date() - new Date(tmpInfo.loginTime) > tmpInfo.ttl * 1000)
   ) {
-    var url = '/api/WechatUsers/wechatLogin?' + window.location.hash.substr(2) + '&url=' +window.location.href;
+    var url = 'next=' +window.location.href;
     window.localStorage.removeItem(t);
     switch (t) {
       case 'b3JnYW5p':
@@ -34,12 +34,12 @@ function loginCheck(t) {
         break;
       case 'd2VjaGF0':
         if (bower === 'pc')//直接跳转到二维码登录页面，登录页面的serch属性应该加登陆后应该到的地址
-          window.location = "/wx-tmp.html";
+          window.location = '/wx-tmp.html?' + url;
         else if (bower === 'wechat') {
-          window.location = '/api/WechatUsers/fromWechat?next='+"登陆后的地址";
+          window.location = '/api/WechatUsers/fromWechat?'+url;
         }
-        else//某个提示页面，这个页面应该显示“用微信客户端访问或者电脑访问”
-          window.location = "/";
+        else
+          window.location = "/warning.html";
         break;
     }
   }
