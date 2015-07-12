@@ -8,7 +8,8 @@
 </head>
 <body>
 <div class="container" style="text-align: center;margin-top: 100px">
-  <img src="img/warning.png" style="width: 50%">
+  <!--img src="img/warning.png" style="width: 50%"-->
+  <p>将在 <b id='time' ></b> 秒后回到首页</p>
   <p>请使用微信客户端或电脑打开</p>
   <hr>
   <div class="text-center footer">
@@ -16,4 +17,14 @@
   </div>
 </div>
 </body>
+<script type="text/javascript">
+  setTimeout(function() {
+    window.location = "/";
+  }, 3000);
+  var time = 3;
+  setInterval(function () {
+    if(time > -1)
+      document.getElementById('time').innerHTML = time--;
+  }, 1000);
+</script>
 </html>
