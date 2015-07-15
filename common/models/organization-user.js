@@ -169,16 +169,48 @@ module.exports = function(OrganizationUser) {
 		});			
 	}
 
-  //保存更新时间
-  OrganizationUser.observe('before save', function(ctx, next) {
-    if(ctx.instance) {
-      ctx.instance.updatedAt = new Date();
-    }
-    else {
-      ctx.data.updatedAt = new Date();
-    }
-    next();
-  });
+	OrganizationUser.remoteMethod('emailExist', {
+		accepts: {arg: 'email', type: 'String'},
+		returns: {arg: 'exist', type: 'Boolean'},
+		http: {verb: 'get', path: '/email/exist'}
+	});
+
+	OrganizationUser.beforeRemote('emailExist', function(ctx, instance, next) {
+		OrganizationUser.findOne({where: {email: ctx.req.query.email} }, function(err, organizationUser) {
+			if(err || organizationUser)
+				ctx.res.end('true');
+			else
+				ctx.res.end('false');
+		})
+	});
+
+	OrganizationUser.remoteMethod('nameExist', {
+		accepts: {arg: 'name', type: 'String'},
+		returns: {arg: 'exist', type: 'Boolean'},
+		http: {verb: 'get', path: '/name/exist'}
+	});
+
+	OrganizationUser.beforeRemote('nameExist', function(ctx, instance, next) {
+		OrganizationUser.findOne({where: {name: ctx.req.query.name} }, function(err, organizationUser) {
+			if(err || organizationUser)
+				ctx.res.end('true');
+			else
+				ctx.res.end('false');
+		})
+	});
+
+
+
+	  //保存更新时间
+	  OrganizationUser.observe('before save', function(ctx, next) {
+	    if(ctx.instance) {
+	      ctx.instance.updatedAt = new Date();
+	    }
+	    else {
+	      ctx.data.updatedAt = new Date();
+	    }
+	    next();
+	  });
 
   //修改accesstoken有效时间
   OrganizationUser.beforeRemote('login', function(ctx, instance, next) {

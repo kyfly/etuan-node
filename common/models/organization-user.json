@@ -303,6 +303,18 @@
       "principalId": "admin",
       "permission": "ALLOW",
       "property": "find"
+     },
+     {
+ 		"principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "emailExist"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "nameExist"
     }
 
   ],

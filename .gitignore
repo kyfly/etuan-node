@@ -41,3 +41,5 @@ server/config.beta.json
 server/config.production.json
 server/datasources.beta.json
 server/datasources.production.json
+
+*.DS_Store
