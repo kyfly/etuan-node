@@ -1,193 +1,210 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
-	<title>注册 - 团团一家</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-	<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css">
-	<script src="/lib/angular/angular.min.js"></script>
-	<script src="/lib/angular-components/angular-resource.min.js"></script>
-	<script src="/lib/w5cvalidator/w5cValidator.min.js"></script>	
-	<script src="/js/register/app.js"></script>
-	<style type="text/css">
-		.w5c-error {
-		    color: #b94a48;
-		    display: block;
-		    margin-top: 5px;
-		 }
-	</style>
+  <title>注册管理员 - 团团一家</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css">
+  <script src="/lib/angular/angular.min.js"></script>
+  <script src="/lib/angular-components/angular-resource.min.js"></script>
+  <script src="/lib/w5cvalidator/w5cValidator.min.js"></script>
+  <script src="/js/register/app.js"></script>
+  <style type="text/css">
+    .w5c-error {
+      color: #b94a48;
+      display: block;
+      margin-top: 5px;
+    }
+  </style>
 </head>
-<body ng-controller="main">
-	<h1>组织管理者注册</h1>
-	<form class="form-horizontal w5c-form demo-form" role="form"
+<body class="container" ng-controller="main">
+<h1>组织管理者注册</h1>
+
+<form class="form-horizontal w5c-form demo-form" role="form"
       w5c-form-validate="vm.validateOptions" novalidate name="validateForm">
-		<div id="createId" ng-show="current == 'createId'">
-			<div class="form-group has-feedback" id="inputbox1">
-				<label for="inputEmail" class="col-sm-2 control-label">电子邮箱</label>
-				<div class="col-sm-6">
-					<input type="email" class="form-control" id="inputEmail" ng-model="user.email" name="email" required="" w5c-unique-check="{url:'/api/OrganizationUsers/email/exist?email='+user.email}">
-				</div>
-			</div>
-			<div class="form-group has-feedback" id="inputbox2">
-				<label for="inputPassword" class="col-sm-2 control-label">密码</label>
+  <div id="createId" ng-show="current == 'createId'">
+    <div class="form-group has-feedback" id="inputbox1">
+      <label for="inputEmail" class="col-sm-2 control-label">电子邮箱</label>
 
-				<div class="col-sm-6">
-					<input type="password" class="form-control" id="inputPassword" ng-model="user.password" name="password" required="" maxlength="16" minlength="6" placeholder="请输入6-16位非空格字符">
-				</div>
-			</div>
-			<div class="form-group has-feedback" id="inputbox3">
-				<label for="inputPassword2" class="col-sm-2 control-label">确认密码</label>
-				<div class="col-sm-6">
-					<input type="password" class="form-control" id="inputPassword2" ng-model="user.password_verify" name="password_verify" w5c-repeat="password">
-				</div>
-			</div>
-			<div class="form-group has-feedback" id="inputbox4">
-				<label for="inputPhone" class="col-sm-2 control-label">手机号码</label>
+      <div class="col-sm-6">
+        <input type="email" class="form-control" id="inputEmail" ng-model="user.email" name="email" required=""
+               w5c-unique-check="{url:'/api/OrganizationUsers/email/exist?email='+user.email}">
+      </div>
+    </div>
+    <div class="form-group has-feedback" id="inputbox2">
+      <label for="inputPassword" class="col-sm-2 control-label">密码</label>
 
-				<div class="col-sm-6">
-					<input type="number" class="form-control" id="inputPhone" ng-model="user.phone" name="phone" required="" maxlength="11" minlength="11" placeholder="请输入11位手机号码" >
-				</div>
-			</div>
-			<div class="form-group has-feedback" id="inputbox5">
-				<label for="inputPhone2" class="col-sm-2 control-label">移动短号</label>
-				<div class="col-sm-6">
-					<input type="number" class="form-control" id="inputPhone2" ng-model="user.phone_short" name="phone_short" minlength="6" maxlength="6" placeholder="移动用户请输入6位短号（选填）">
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-6">
-					<button type="button" class="btn btn-primary btn-lg" ng-click="current = 'orgInfo'">下一步</button>
-				</div>
-			</div>
-		</div>
-		<div id="orgInfo" ng-show="current == 'orgInfo'">
-			<div class="form-group has-feedback" id="inputbox6">
-				<label for="inputShetuan" class="col-sm-2 control-label">名称</label>
+      <div class="col-sm-6">
+        <input type="password" class="form-control" id="inputPassword" ng-model="user.password" name="password"
+               required="" maxlength="16" minlength="6" placeholder="请输入6-16位非空格字符">
+      </div>
+    </div>
+    <div class="form-group has-feedback" id="inputbox3">
+      <label for="inputPassword2" class="col-sm-2 control-label">确认密码</label>
 
-				<div class="col-sm-6">
-					<input name="name" type="text" class="form-control" id="inputShetuan" ng-model="user.name" name="name" required="" maxlength="12" w5c-unique-check="{url: '/api/OrganizationUsers/name/exist?name='+user.name }">
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="inputType" class="col-sm-2 control-label">类别</label>
+      <div class="col-sm-6">
+        <input type="password" class="form-control" id="inputPassword2" ng-model="user.password_verify"
+               name="password_verify" w5c-repeat="password">
+      </div>
+    </div>
+    <div class="form-group has-feedback" id="inputbox4">
+      <label for="inputPhone" class="col-sm-2 control-label">手机号码</label>
 
-				<div class="col-sm-6">
-					<select class="form-control" id="inputType" ng-model="user.type">
-						<option value="院级组织">院级组织</option>
-						<option value="校级社团">校级社团</option>
-						<option value="院级社团">院级社团</option>
-					</select>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="inputXueyuan" class="col-sm-2 control-label">所属学院</label>
+      <div class="col-sm-6">
+        <input type="number" class="form-control" id="inputPhone" ng-model="user.phone" name="phone" required=""
+               maxlength="11" minlength="11" placeholder="请输入11位手机号码">
+      </div>
+    </div>
+    <div class="form-group has-feedback" id="inputbox5">
+      <label for="inputPhone2" class="col-sm-2 control-label">移动短号</label>
 
-				<div class="col-sm-6">
-					<select class="form-control" id="inputXueyuan" ng-init="user.school = '全校' " ng-model="user.school">
-						<option value="全校">全校</option>
-					</select>
-				</div>
-			</div>
-			<div class="form-group has-feedback" id="inputbox7">
-				<label for="inputIntro" class="col-sm-2 control-label">介绍</label>
+      <div class="col-sm-6">
+        <input type="number" class="form-control" id="inputPhone2" ng-model="user.phone_short" name="phone_short"
+               minlength="6" maxlength="6" placeholder="移动用户请输入6位短号（选填）">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-6">
+        <button type="button" class="btn btn-primary btn-lg" ng-click="current = 'orgInfo'">下一步</button>
+      </div>
+    </div>
+  </div>
+  <div id="orgInfo" ng-show="current == 'orgInfo'">
+    <div class="form-group has-feedback" id="inputbox6">
+      <label for="inputShetuan" class="col-sm-2 control-label">名称</label>
 
-				<div class="col-sm-6">
-					<textarea class="form-control" maxlength="200" style="resize:none" rows="7" id="inputIntro" ng-model="user.description" placeholder="请保持在200字以内" required="" maxlength="200"></textarea>
-				</div>
-			</div>
-			<div class="form-group has-feedback" id="inputbox8">
-				<label for="inputWeixin" class="col-sm-2 control-label">微信公众号</label>
+      <div class="col-sm-6">
+        <input name="name" type="text" class="form-control" id="inputShetuan" ng-model="user.name" name="name"
+               required="" maxlength="12"
+               w5c-unique-check="{url: '/api/OrganizationUsers/name/exist?name='+user.name }">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputType" class="col-sm-2 control-label">类别</label>
 
-				<div class="col-sm-6">
-					<input type="text" class="form-control" id="inputWeixin" ng-model="user.weChat" name="weChat" ng-pattern="/^[A-Za-z0-9]*$/" placeholder="您的微信公众号，数字与字母（选填)">
-				</div>
-			</div>
-			<div class="help-block col-md-offset-2">以下图片单张大小请不要超过<strong>1MB</strong>，否则无法上传。</div>
-			<div class="form-group has-feedback" id="inputbox9">
-				<label for="inputLogo" class="col-sm-2 control-label">上传logo</label>
+      <div class="col-sm-6">
+        <select class="form-control" id="inputType" ng-model="userType"  ng-change="typeChange()">
+          <option value="{{type}}" ng-repeat="type in types" ng-selected="type === userType">{{type}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputXueyuan" class="col-sm-2 control-label">所属学院</label>
 
-				<div class="col-sm-6">
-					<input name="logo" type="file" id="inputLogo">
-					<span id="span9-1" class="glyphicon glyphicon-ok form-control-feedback hidespan"></span>
-					<span class="help-block">建议上传1:1比例的高清不带文字logo图</span>
-				</div>
-			</div>
-			<div class="form-group has-feedback" id="inputbox10">
-				<label for="inputPic1" class="col-sm-2 control-label">展示照片1</label>
+      <div class="col-sm-6">
+        <select class="form-control" id="inputXueyuan" ng-init="school = '全校' " ng-model="userSchool">
+          <option value="{{school}}" ng-repeat="school in userSchools" ng-selected="school === userSchool">
+            {{school}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group has-feedback" id="inputbox7">
+      <label for="inputIntro" class="col-sm-2 control-label">介绍</label>
 
-				<div class="col-sm-6">
-					<input name="pic1" type="file" id="inputPic1">
-					<span id="span10-1" class="glyphicon glyphicon-ok form-control-feedback hidespan"></span>
-				</div>
-			</div>
-			<div class="form-group has-feedback" id="inputbox11">
-				<label for="inputPic2" class="col-sm-2 control-label">展示照片2</label>
+      <div class="col-sm-6">
+        <textarea class="form-control" maxlength="200" style="resize:none" rows="7" id="inputIntro"
+                  ng-model="user.description" placeholder="请保持在200字以内" required="" maxlength="200"></textarea>
+      </div>
+    </div>
+    <div class="form-group has-feedback" id="inputbox8">
+      <label for="inputWeixin" class="col-sm-2 control-label">微信公众号</label>
 
-				<div class="col-sm-6">
-					<input name="pic2" type="file" id="inputPic2">
-					<span id="span11-1" class="glyphicon glyphicon-ok form-control-feedback hidespan"></span>
-				</div>
-			</div>
-			<div class="form-group has-feedback" id="inputbox12">
-				<label for="inputPic3" class="col-sm-2 control-label">展示照片3</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="inputWeixin" ng-model="user.weChat" name="weChat"
+               ng-pattern="/^[A-Za-z0-9]*$/" placeholder="您的微信公众号，数字与字母（选填)">
+      </div>
+    </div>
+    <div class="help-block col-md-offset-2">以下图片单张大小请不要超过<strong>1MB</strong>，否则无法上传。</div>
+    <div class="form-group has-feedback" id="inputbox9">
+      <label for="inputLogo" class="col-sm-2 control-label">上传logo</label>
 
-				<div class="col-sm-6">
-					<input name="pic3" type="file" id="inputPic3">
-					<span id="span12-1" class="glyphicon glyphicon-ok form-control-feedback hidespan"></span>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-6">
-					<button id="next2" type="button" class="btn btn-primary btn-lg" ng-click="current = 'createId' ">上一步</button>
-					<button id="next3" type="button" class="btn btn-primary btn-lg col-sm-offset-1" ng-click="current = 'deparInfo'">下一步</button>
-				</div>
+      <div class="col-sm-6">
+        <input name="logo" type="file" id="inputLogo">
+        <span class="help-block">建议上传1:1比例的高清不带文字logo图</span>
+      </div>
+    </div>
+    <div class="form-group has-feedback" id="inputbox10">
+      <label for="inputPic1" class="col-sm-2 control-label">展示照片1</label>
 
-			</div>
+      <div class="col-sm-6">
+        <input name="pic1" type="file" id="inputPic1">
+      </div>
+    </div>
+    <div class="form-group has-feedback" id="inputbox11">
+      <label for="inputPic2" class="col-sm-2 control-label">展示照片2</label>
 
-		</div>
-		<div id="deparInfo" ng-show="current == 'deparInfo'">
-			<div id="addablebox" ng-repeat="department in user.organizationUserDepartments">
-				<div class="form-group">
-					<label class="col-sm-2 control-label">部门名称</label>
+      <div class="col-sm-6">
+        <input name="pic2" type="file" id="inputPic2">
+      </div>
+    </div>
+    <div class="form-group has-feedback" id="inputbox12">
+      <label for="inputPic3" class="col-sm-2 control-label">展示照片3</label>
 
-					<div class="col-sm-6">
-						<input type="text" class="form-control" ng-model="department.name" name="depart_name" required="" maxlength="12">
-					</div>
+      <div class="col-sm-6">
+        <input name="pic3" type="file" id="inputPic3">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-6">
+        <button id="next2" type="button" class="btn btn-primary btn-lg" ng-click="current = 'createId' ">上一步</button>
+        <button id="next3" type="button" class="btn btn-primary btn-lg col-sm-offset-1"
+                ng-click="current = 'deparInfo'">下一步
+        </button>
+      </div>
 
-					<div class="col-sm-2" ng-hide="$index == 0">
-						<button class="btn btn-danger" ng-click="delDepart($index)">删除</button>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">部门介绍</label>
+    </div>
 
-					<div class="col-sm-6">
-						<textarea class="form-control" style="resize:none" rows="3" ng-model="department.description" name="depart_description" required="" maxlength="50" placeholder="请保持在50字以内"></textarea>
-					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-2"></div>
-				<div class="col-sm-6">
-					<div id="addelement" class="addimgtxt col-sm-12" onmouseover="this.style.border='2px dotted #ccc'" onmouseout="this.style.border='2px dotted #ddd'" style="border: 2px dotted rgb(221, 221, 221);" ng-click="addDepart()">
-						+
-					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="cpol-sm-offset-2 col-sm-6">
-					<button id="next4" type="button" class="btn btn-primary btn-lg" ng-click="current ='orgInfo' ">上一步</button>
-					<button type="submit" class="btn btn-warning btn-lg col-sm-offset-1" id="btnSubmit" ng-click="register()">完成注册</button>
-				</div>
-			</div>
-			<div>
-				<p class="help-block col-md-offset-2">
-					我们承诺保护用户的个人信息，详见<a href="/privacy.html" target="_blank">隐私声明。</a>
-				</p>
-			</div>
+  </div>
+  <div id="deparInfo" ng-show="current == 'deparInfo'">
+    <div id="addablebox" ng-repeat="department in user.organizationUserDepartments">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">部门名称</label>
 
-		</div>
-	</form>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" ng-model="department.name" name="depart_name" required=""
+                 maxlength="12">
+        </div>
+
+        <div class="col-sm-2" ng-hide="$index == 0">
+          <button class="btn btn-danger" ng-click="delDepart($index)">删除</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">部门介绍</label>
+
+        <div class="col-sm-6">
+          <textarea class="form-control" style="resize:none" rows="3" ng-model="department.description"
+                    name="depart_description" required="" maxlength="50" placeholder="请保持在50字以内"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-6">
+        <div style="cursor: pointer;border:2px dotted #ddd; min-height: 50px; line-height: 50px; font-size: 30px" id="addelement" class="text-center col-sm-12"
+             onmouseover="this.style.border='2px dotted #ccc'" onmouseout="this.style.border='2px dotted #ddd'"
+             style="border: 2px dotted rgb(221, 221, 221);" ng-click="addDepart()">
+          +
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-6">
+        <button id="next4" type="button" class="btn btn-primary btn-lg" ng-click="current ='orgInfo' ">上一步</button>
+        <button type="submit" class="btn btn-warning btn-lg col-sm-offset-1" id="btnSubmit" ng-click="register()">完成注册
+        </button>
+      </div>
+    </div>
+    <div>
+      <p class="help-block col-md-offset-2">
+        我们承诺保护用户的个人信息，详见<a href="/privacy.html" target="_blank">隐私声明。</a>
+      </p>
+    </div>
+
+  </div>
+</form>
 </div>
 </body>
 </html>
