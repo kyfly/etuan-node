@@ -211,6 +211,17 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
           $scope.maxVote = res.maxVote;
         }
         switch ($routeParams.type) {
+          case 'activity':
+            console.log(res);
+            var ueditorContent = $resource(res.contentUrl);
+            ueditorContent.get({},
+              function (res) {
+                console.log(res);
+              },
+              function (res) {
+              }
+            );
+            break;
           case 'form':
             $scope.forms = res.formQuestions;
             break;
