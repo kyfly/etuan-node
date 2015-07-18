@@ -212,13 +212,13 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         }
         switch ($routeParams.type) {
           case 'activity':
-            console.log(res);
-            var ueditorContent = $resource(res.contentUrl);
+            var ueditorContent = $resource('/api/Activities/get-content?url=' + res.contentUrl);
             ueditorContent.get({},
               function (res) {
-                console.log(res);
+                $scope.activityContent = res.content;
               },
               function (res) {
+                alert("对不起，获取编辑器内容失败");
               }
             );
             break;
@@ -244,7 +244,22 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
             }
             break;
           case 'vote':
-            $scope.votes = res.voteSubitems;
+          function loadContent(url, i) {
+            var http = new XMLHttpRequest();
+            http.onreadystatechange = function () {
+              if (http.readyState == 4 && http.status == 200) {
+                voteInfo[i].voteContent = JSON.parse(http.responseText).content;
+              }
+            };
+            http.open("GET", '/api/Activities/get-content?url=' + url, true);
+            http.send();
+          }
+
+            var voteInfo = res.voteSubitems;
+            for (var i = 0; i < voteInfo.length; i++) {
+              loadContent(voteInfo[i].detailUrl, i);
+            }
+            $scope.votes = voteInfo;
             break;
         }
       },
