@@ -3,10 +3,10 @@ var os = require('os');
 var Path = require('path');
 var Busboy = require('busboy');
 var ALY = require('aliyun-sdk');
-
+var OSS = require('../../server/config').oss;
 var oss = new ALY.OSS({
-  "accessKeyId": "MMwC9Qmvatxk3UIT",
-  "secretAccessKey": "W5nTtKZ46lRvDtJKo8ViWahMlGFi34",
+  "accessKeyId": OSS.accessKeyId,
+  "secretAccessKey": OSS.secretAccessKey,
   endpoint: 'http://oss-cn-hangzhou.aliyuncs.com',
   apiVersion: '2013-10-15'
 });
@@ -39,7 +39,7 @@ function __img(req,res,next,callback){
                 res.send({message: "保存失败", error: err.code});
               else
                 res.send({
-                    'url': 'http://etuan-node.oss-cn-hangzhou.aliyuncs.com/'+img_url+'/'+name,
+                    'url': OSS.url+img_url+'/'+name,
                     'title': req.body.pictitle,
                     'original': filename,
                     'state': 'SUCCESS'
@@ -55,7 +55,7 @@ function __img(req,res,next,callback){
 function __oss(path,data,cb){
   path = path.replace(/\\/g,"/");
   oss.putObject({
-    Bucket: 'etuan-node',
+    Bucket: 'etuan',
     Key:  path,
     Body:data,
     ServerSideEncryption: 'AES256',
@@ -79,7 +79,7 @@ function upload(callback) {
         }
         else 
           res.json({
-            "url": "http://etuan-node.oss-cn-hangzhou.aliyuncs.com/" + path,
+            "url": OSS.url + path,
             "state":"SUCCESS"
           });
         });
@@ -94,7 +94,7 @@ function upload(callback) {
         },function(err,data){
           if(!data)
             res.send({message: "获取列表保存失败", error: err.code});
-           var prefix = 'http://etuan-node.oss-cn-hangzhou.aliyuncs.com/';
+           var prefix = OSS.url;
            var list = [];
            data.Contents.forEach(function(content){
               var item = {
