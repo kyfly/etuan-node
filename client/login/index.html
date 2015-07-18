@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="/lib/bootstrap/css/etuan.css">
   <script src="/lib/angular/angular.min.js"></script>
+  <script src="/lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
   <script src="/lib/angular-components/angular-resource.min.js"></script>
   <script src="/js/login/app.js"></script>
   <style>
@@ -17,16 +18,47 @@
 </head>
 <body>
 <!--头部-->
-<header id="nav">
+<header id="nav" ng-controller="headCtrl">
   <nav class="navbar navbar-default" role="navigation">
     <div class="container">
       <div class="container-fluid">
         <div class="navbar-header">
+          <button class="navbar-toggle" ng-click="isCollapsed = !isCollapsed" type="button">
+            <span class="sr-only">导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
           <h5>
             <a href="index.html">
-              <img src="/img/full-logo.png" height="30px" alt="团团一家LOGO">
+              <img src="http://img.kyfly.net/common/logo/etuan-logo-word.png@60h.png" height="30px" alt="团团一家LOGO">
             </a>
           </h5>
+        </div>
+        <div collapse="isCollapsed" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="index.html">首页</a>
+            </li>
+            <li>
+              <a href="/organizationList.html">组织</a>
+            </li>
+            <li>
+              <a href="/activityList.html">活动</a>
+            </li>
+            <li>
+              <a href="/formList.html">表单</a>
+            </li>
+            <li>
+              <a href="/seckillList.html">疯抢</a>
+            </li>
+            <li>
+              <a href="/voteList.html">投票</a>
+            </li>
+            <li class="active">
+              <a href="/admin">管理后台</a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

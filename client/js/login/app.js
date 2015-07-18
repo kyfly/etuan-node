@@ -25,5 +25,10 @@ function LoginCtrl($scope, $resource, $timeout, $window) {
     );
   }
 }
-var app = angular.module('app', ['ngResource']);
+
+var app = angular.module('app', ['ngResource', 'ui.bootstrap']);
 app.controller('LoginCtrl', ['$scope', '$resource', '$timeout', '$window', LoginCtrl]);
+
+app.controller('headCtrl', function ($scope) {
+  $scope.isCollapsed = true;
+});

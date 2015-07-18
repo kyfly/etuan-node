@@ -62,22 +62,22 @@
               <a href="index.html">首页</a>
             </li>
             <li>
-              <a href="organizationList.html">组织</a>
+              <a href="/organizationList.html">组织</a>
             </li>
             <li>
-              <a href="activityList.html">活动</a>
+              <a href="/activityList.html">活动</a>
             </li>
             <li>
-              <a href="formList.html">表单</a>
+              <a href="/formList.html">表单</a>
             </li>
             <li>
-              <a href="seckillList.html">疯抢</a>
+              <a href="/seckillList.html">疯抢</a>
             </li>
             <li>
-              <a href="voteList.html">投票</a>
+              <a href="/voteList.html">投票</a>
             </li>
             <li>
-              <a href="admin">管理后台</a>
+              <a href="/admin">管理后台</a>
             </li>
           </ul>
         </div>
@@ -150,6 +150,16 @@
               <input name="name" type="text" class="form-control" id="inputShetuan" ng-model="user.name" name="name"
                      required="" maxlength="12"
                      w5c-unique-check="{url: '/api/OrganizationUsers/name/exist?name='+user.name }">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputUniversity" class="col-sm-2 control-label">学校</label>
+
+            <div class="col-sm-6">
+              <select id="inputUniversity" class="form-control" ng-model="university">
+                <option value="{{uni}}" ng-repeat="uni in universitys" ng-selected="uni === university">{{uni}}
+                </option>
+              </select>
             </div>
           </div>
           <div class="form-group">
