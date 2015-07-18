@@ -6,7 +6,7 @@ module.exports = function(OrganizationUser) {
 			var Form = OrganizationUser.app.models.Form;
 			var Vote = OrganizationUser.app.models.Vote;
 			var Seckill = OrganizationUser.app.models.Seckill;
-			var Activity = OrganizationUser.app.models.Activity;	
+			var Activity = OrganizationUser.app.models.Activity;
 			var actCount = 0;
 			Form.find({where: {organizationUid: organizationUser.id, startTime: {lt: Date.now()}, stopTime: {gt: Date.now()}}}, {id: 1}, function(err, forms) {
 				actCount += forms.length;
@@ -20,7 +20,7 @@ module.exports = function(OrganizationUser) {
 						});
 					});
 				});
-			});	
+			});
 		});
 	}
 
@@ -59,12 +59,12 @@ module.exports = function(OrganizationUser) {
 							activities.forEach(function(activity) {
 								viewCount += activity.viewCount;
 							});
-							cb(null, {status: 200, viewCount: viewCount});			
+							cb(null, {status: 200, viewCount: viewCount});
 						});
 					});
-				});	
+				});
 			});
-		});	
+		});
 	};
 
 	OrganizationUser.remoteMethod('viewCount', {
@@ -96,7 +96,7 @@ module.exports = function(OrganizationUser) {
 							voteIds.push(vote.id);
 						});
 						VoteResult.find({where: {voteId: {inq: voteIds}}}, {id: 1}, function(err, voteResults) {
-							parCount += voteResults.length;	
+							parCount += voteResults.length;
 							Seckill.find({where:{organizationUid: organizationUser.id}}, function(err, seckills) {
 								var seckillIds = [];
 								seckills.forEach(function(seckill){
@@ -104,14 +104,14 @@ module.exports = function(OrganizationUser) {
 								});
 								SeckillResult.find({where: {seckillId: {inq: seckillIds}}}, function(err, seckillResults) {
 									parCount += seckillResults.length;
-									cb(null, {status: 200, parCount: parCount});	
+									cb(null, {status: 200, parCount: parCount});
 								});
 							});
-						});						
-					});	
+						});
+					});
 				});
 			});
-		});	
+		});
 	};
 
 	OrganizationUser.remoteMethod('parCount', {
@@ -166,7 +166,7 @@ module.exports = function(OrganizationUser) {
 			else {
 				cb(null, {statuc: '500', content: "非法的AccessToken"});
 			}
-		});			
+		});
 	}
 
 	OrganizationUser.remoteMethod('emailExist', {
@@ -197,6 +197,19 @@ module.exports = function(OrganizationUser) {
 			else
 				ctx.res.end('false');
 		})
+	});
+
+	OrganizationUser.afterRemote('create', function(ctx, instance, next) {
+		OrganizationUser.login({
+		 email: instance.email,
+		 password: ctx.req.body.password,
+		 ttl: 7200
+		}, function (err, accessToken) {
+		 ctx.res.end(JSON.stringify({
+		 	"accessToken": accessToken.id,
+		 	"userId": accessToken.userId
+		 }));
+		});
 	});
 
 
