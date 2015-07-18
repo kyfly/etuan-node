@@ -84,6 +84,7 @@ app.controller('main', ['$scope', '$http', function ($scope, $http) {
   //初始化设定current，使得第一个注册界面出现
   $scope.current = 'createId';
   $scope.types = ['校级社团', '校级组织', '院级社团', '院级组织'];
+  $scope.universitys = ['杭州电子科技大学', '南京工程学院'];
 
   var schools = [
     '机械工程学院', '电子信息学院', '通信工程学院', '自动化学院', '计算机学院',
@@ -100,7 +101,7 @@ app.controller('main', ['$scope', '$http', function ($scope, $http) {
   };
 
   $scope.user = {
-    organizationUserDepartments: [{name: "", description: ""}], //默认的一个部门
+    organizationUserDepartments: [{name: "", description: ""}] //默认的一个部门
   };
 
   $scope.addDepart = function () {
@@ -118,6 +119,7 @@ app.controller('main', ['$scope', '$http', function ($scope, $http) {
     var userData = $scope.user;
     userData.type = $scope.userType;
     userData.school = $scope.userSchool;
+    userData.university = $scope.university;
     $http.post('/api/OrganizationUsers', userData).
       success(function (data, status, headers, config) {
         alert("注册成功");

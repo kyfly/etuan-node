@@ -849,6 +849,7 @@ function SettingCtrl($scope, $resource, etuanAdmin) {
     function (res) {
       $scope.infos[0] = res;
       $scope.infos[0].types = etuanAdmin.org.types;
+      $scope.infos[0].universitys = etuanAdmin.org.universitys;
       //下面的这个写法是根据社团属性来动态实现下面学院选择的变化，三元表达式的写法是对if/else模形的简写方式
       $scope.infos[0].schools = ($scope.infos[0].type === '校级社团' || $scope.infos[0].type === '校级组织') ? ['全校'] : etuanAdmin.org.schools;
       $scope.typeChange = function () {
@@ -865,6 +866,7 @@ function SettingCtrl($scope, $resource, etuanAdmin) {
         description: $scope.infos[0].description,
         type: $scope.infos[0].type,
         school: $scope.infos[0].school,
+        university: $scope.infos[0].university,
         weChat: $scope.infos[0].weChat,
         phone: $scope.infos[0].phone
       },
