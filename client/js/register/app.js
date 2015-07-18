@@ -1,5 +1,9 @@
-var app = angular.module('app', ['ngResource', 'w5c.validator']);
+var app = angular.module('app', ['ngResource', 'w5c.validator','ui.bootstrap']);
 window.app = app;
+
+app.controller('headCtrl', function ($scope) {
+  $scope.isCollapsed = true;
+});
 
 app.config(["w5cValidatorProvider", function (w5cValidatorProvider) {
 
@@ -56,6 +60,7 @@ app.config(["w5cValidatorProvider", function (w5cValidatorProvider) {
 }]);
 
 app.controller('main', ['$scope', '$http', function ($scope, $http) {
+  $scope.isCollapsed = true;
 
   var vm = $scope.vm = {
     htmlSource: "",
@@ -116,7 +121,7 @@ app.controller('main', ['$scope', '$http', function ($scope, $http) {
     $http.post('/api/OrganizationUsers', userData).
       success(function (data, status, headers, config) {
         alert("注册成功");
-        $window.location = '../login';
+        window.location = '../login';
       }).
       error(function (data, status, headers, config) {
         alert("注册失败");
