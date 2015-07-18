@@ -23,7 +23,7 @@ app.use("/ue/uploads", upload(function(req, res, next) {
   var dirs = ['ue','form','vote','logo'];
   verify.getUserId(query.access_token,function (err,userId){
     if(err) return;
-    if(inarray(dirs,query.dir) && userId && query.dir != undefined)
+    if(inarray(dirs,query.dir) && userId)
       var path = userId + "/" + query.dir;
     else{
       return;
