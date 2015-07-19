@@ -98,5 +98,9 @@
   "Activity": {
     "dataSource": "db",
     "public": true
+  },
+  "University": {
+    "dataSource": "db",
+    "public": true
   }
 }

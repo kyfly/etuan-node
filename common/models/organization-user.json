@@ -285,7 +285,7 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "parCount"
-    } ,
+    },
     {
       "principalType": "ROLE",
       "principalId": "$everyone",
@@ -303,9 +303,9 @@
       "principalId": "admin",
       "permission": "ALLOW",
       "property": "find"
-     },
-     {
- 		"principalType": "ROLE",
+    },
+    {
+      "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "emailExist"
@@ -316,7 +316,6 @@
       "permission": "ALLOW",
       "property": "nameExist"
     }
-
   ],
   "methods": []
 }

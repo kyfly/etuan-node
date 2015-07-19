@@ -27,8 +27,7 @@
       <label for="inputEmail" class="col-sm-2 control-label">电子邮箱</label>
 
       <div class="col-sm-6">
-        <input type="email" class="form-control" id="inputEmail" ng-model="user.email" name="email" required=""
-               w5c-unique-check="{url:'/api/OrganizationUsers/email/exist?email='+user.email}">
+        <input type="email" class="form-control" id="inputEmail" ng-model="user.email" name="email" required="" w5c-unique-check="{url:'/api/OrganizationUsers/email/exist?email='+user.email}">
       </div>
     </div>
     <div class="form-group has-feedback" id="inputbox2">
@@ -75,26 +74,25 @@
 
       <div class="col-sm-6">
         <input name="name" type="text" class="form-control" id="inputShetuan" ng-model="user.name" name="name"
-               required="" maxlength="12"
-               w5c-unique-check="{url: '/api/OrganizationUsers/name/exist?name='+user.name }">
+               required="" maxlength="12" w5c-unique-check="{url: '/api/OrganizationUsers/name/exist?name='+user.name }">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputType" class="col-sm-2 control-label">学校</label>
+      <div class="col-sm-6">
+        <select class="form-control" id="inputType" ng-model="user.university"  ng-change="universityChange()" ng-options="university as university for university in universities" required></select>
       </div>
     </div>
     <div class="form-group">
       <label for="inputType" class="col-sm-2 control-label">类别</label>
-
       <div class="col-sm-6">
-        <select class="form-control" id="inputType" ng-model="user.type"  ng-change="typeChange()" ng-options="type as type for type in types" required>
-<!--           <option value="{{type}}" ng-options="type as type for type in types" ng-selected="$index === 0"> -->
-          </option>
-        </select>
+        <select class="form-control" id="inputType" ng-model="user.type"  ng-change="typeChange()" ng-options="type.name as type.name for type in types" required></select>
       </div>
     </div>
     <div class="form-group">
       <label for="inputXueyuan" class="col-sm-2 control-label">所属学院</label>
-
       <div class="col-sm-6">
-        <select class="form-control" id="inputXueyuan" ng-init="typeChange()" ng-model="user.school" ng-options="school as school for school in schools" required>
-        </select>
+        <select class="form-control" id="inputXueyuan" ng-model="user.school" ng-options="school as school for school in schools" required></select>
       </div>
     </div>
     <div class="form-group has-feedback" id="inputbox7">
