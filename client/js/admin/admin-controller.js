@@ -853,27 +853,72 @@ function HomeCtrl($scope, $resource) {
   });
 }
 
-function SettingCtrl($scope, $resource, etuanAdmin) {
+function SettingCtrl($scope, $resource, etuanAdmin, $http) {
   var Setting = $resource(
     '/api/OrganizationUsers/:userId', {
       userId: etuanAdmin.cache.userId
     }
   );
+
   $scope.infos = [];
   Setting.get({},
     function (res) {
+
       $scope.infos[0] = res;
-      $scope.infos[0].types = etuanAdmin.org.types;
-      $scope.infos[0].universitys = etuanAdmin.org.universitys;
-      //下面的这个写法是根据社团属性来动态实现下面学院选择的变化，三元表达式的写法是对if/else模形的简写方式
-      $scope.infos[0].schools = ($scope.infos[0].type === '校级社团' || $scope.infos[0].type === '校级组织') ? ['全校'] : etuanAdmin.org.schools;
-      $scope.typeChange = function () {
-        $scope.infos[0].schools = ($scope.infos[0].type === '校级社团' || $scope.infos[0].type === '校级组织') ? ['全校'] : etuanAdmin.org.schools;
+
+      $http.get('/api/Universities?filter[fields][name]=true').
+        success(function (res) {
+          var universities = [];
+          res.map(function (university) {
+            universities.push(university.name);
+          });
+          $scope.infos[0].universities = universities;
+          $scope.universityChange();
+        })
+        .error(function () {
+          alert("获取学校信息失败");
+        });
+
+      $scope.universityChange = function () {
+        $http.get('/api/Universities?filter[where][name]=' + $scope.infos[0].university + '&filter[fields][types]=true')
+          .success(function (res) {
+            var types = [];
+            res[0].types.map(function (type) {
+              types.push(type.name);
+            });
+            $scope.infos[0].types = types;
+            var typeChange = function () {
+              for (var i = 0; i < res[0].types.length; i++) {
+                if (res[0].types[i].name === $scope.infos[0].type) {
+                  $scope.infos[0].schools = res[0].types[i].schools;
+                  break;
+                }
+              }
+            };
+            typeChange();
+            $scope.typeChange = function () {
+              typeChange();
+            }
+          })
+          .error(function () {
+            alert("获取类别失败");
+          });
       };
+
+      //$scope.infos[0].types = etuanAdmin.org.types;
+      //$scope.infos[0].universities = etuanAdmin.org.universities;
+      ////下面的这个写法是根据社团属性来动态实现下面学院选择的变化，三元表达式的写法是对if/else模形的简写方式
+      //$scope.infos[0].schools = ($scope.infos[0].type === '校级社团' || $scope.infos[0].type === '校级组织') ? ['全校'] : etuanAdmin.org.schools;
+      //$scope.typeChange = function () {
+      //  $scope.infos[0].schools = ($scope.infos[0].type === '校级社团' || $scope.infos[0].type === '校级组织') ? ['全校'] : etuanAdmin.org.schools;
+      //};
     },
     function () {
     }
   );
+
+
+
   //基本信息提交按钮
   $scope.basicSubmit = function () {
     Setting.update({
