@@ -122,7 +122,7 @@ module.exports = function (WeChatUser) {
     });
   });
   function wxchatReQuest (state, cb) {
-    WeChatUser.app.models.LoginCache.findOne({where:[{ticket: state}, {request: 1}]}, function (err, loginInfo) {
+    WeChatUser.app.models.LoginCache.findOne({where:{and:[{ticket: state}, {request: 1}]}}, function (err, loginInfo) {
       if(err)
         return cb("出错了，请重试");
       else if (!loginInfo)
@@ -168,11 +168,11 @@ module.exports = function (WeChatUser) {
       }
       else
       {
-        WeChatUser.updateAll({openid:user.openid}, function (err, count) {
+        WeChatUser.updateAll({openid:oldUser.openid}, function (err, count) {
           if (err) 
             cb("服务器错误，请重试");
           else
-            cb(null, user);
+            cb(null, oldUser);
         })
       }
     })
@@ -196,16 +196,16 @@ module.exports = function (WeChatUser) {
     var code = ctx.req.query.code;
     wxchatReQuest(state, function (err, num){
       if (err)
-        return ctx.res.render("phone.ejs", {"status": "fail", "msg" : err, "state": state});
+        ctx.res.render("phone.ejs", {"status": "fail", "msg" : err, "state": state});
       else if (num === 0)
       {
         getWechatInfoByCode(code, function (err, wechatUserInfo) {
           if (err || !wechatUserInfo) 
-            return ctx.res.render("phone.ejs", {'status': "fail", 'msg': "获取微信信息失败,请刷新二维码重试", "state": state});
+            ctx.res.render("phone.ejs", {'status': "fail", 'msg': "获取微信信息失败,请刷新二维码重试", "state": state});
           else
             createWechatUser(wechatUserInfo, function (err, user) {
               if (err)
-                return ctx.res.render("phone.ejs", {'status': "fail", 'msg': err, "state": state});
+                ctx.res.render("phone.ejs", {'status': "fail", 'msg': err, "state": state});
               else
               {
                 WeChatUser.app.models.LoginCache.updateAll({ticket: state},{
@@ -213,9 +213,9 @@ module.exports = function (WeChatUser) {
                   userId: user.id
                 },function (err, count){
                   if(err) 
-                    return ctx.res.render("phone.ejs",{"status": "fail","msg": "出错了,请刷新后登陆-", "state": state});
+                    ctx.res.render("phone.ejs",{"status": "fail","msg": "出错了,请刷新后登陆-", "state": state});
                   else 
-                    return ctx.res.render("phone.ejs", {"status": "success", "state": state});
+                    ctx.res.render("phone.ejs", {"status": "success", "state": state});
                 });
               }
             });
