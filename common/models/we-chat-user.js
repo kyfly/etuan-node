@@ -44,7 +44,18 @@ module.exports = function (WeChatUser) {
   WeChatUser.beforeRemote('confirm', function (ctx, unused, next) {
     return WeChatUser.app.models.LoginCache.confirm(ctx, unused, next);
   });
-
+  function getTicket (cb) {
+    var ticket = __randomString(30) + new Date().getTime().toString();
+    var loginCacheObj = {
+      createAt: new Date(),
+      ticket: ticket,
+      isConfirm: 0,
+      userId:null
+    };
+    WeChatUser.app.models.LoginCache.create(loginCacheObj, function (err, result) {
+      cb(err, ticket);
+    });
+  }
   /**
    * 微信用户获取oauth2.0链接接口
    * method get
@@ -54,16 +65,7 @@ module.exports = function (WeChatUser) {
    * @return {[type]}              [description]
    */
   WeChatUser.beforeRemote("formPC", function (ctx, unused, next) {
-    var ticket = __randomString(30) + new Date().getTime().toString();
-    var loginCacheObj = {
-      createAt: new Date(),
-      ticket: ticket,
-      isConfirm: 0,
-      userId:null
-    };
-    WeChatUser.app.models.LoginCache.create(loginCacheObj, function (err, result) {
-      if (err)
-        ctx.res.send(err);
+    getTicket(function (err, ticket) {
       var url = client.getAuthorizeURL('http://beta.etuan.org/api/WeChatUsers/oauth', ticket, 'snsapi_userinfo');
       ctx.res.send({state: ticket, qrcodeUrl: url});
     });
@@ -77,8 +79,10 @@ module.exports = function (WeChatUser) {
    * @return {[type]}          [description]
    */
   WeChatUser.beforeRemote('fromWechat', function (ctx, unused, next) {
-    var url = client.getAuthorizeURL('http://beta.etuan.org/api/WeChatUsers/phoneoauth', '', 'snsapi_userinfo');
-    ctx.res.redirect(url);
+    getTicket(function (err, ticket) {
+      var url = client.getAuthorizeURL('http://beta.etuan.org/api/WeChatUsers/phoneoauth', ticket, 'snsapi_userinfo');
+      ctx.res.redirect(url);
+    });
   });
   /**
    * 手机微信用户oauth2.0登录接口
@@ -98,8 +102,9 @@ module.exports = function (WeChatUser) {
           email: user.email,
           password: user.openid
         },function (err, token){
-          console.log(cache.referer);
-          ctx.res.render("phone-login.ejs", {"msg": "success", "url": cache.referer, "userInfo": user, "token": token});
+          if(err) ctx.res.render("phone-login.ejs",err);
+          else
+            ctx.res.render("phone-login.ejs", {"msg": "success", "userInfo": user, "token": token});
         });
     });
   });
