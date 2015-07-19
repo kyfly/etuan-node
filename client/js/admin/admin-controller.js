@@ -212,13 +212,13 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         }
         switch ($routeParams.type) {
           case 'activity':
-            console.log(res);
-            var ueditorContent = $resource(res.contentUrl);
+            var ueditorContent = $resource('/api/Activities/get-content?url=' + res.contentUrl);
             ueditorContent.get({},
               function (res) {
-                console.log(res);
+                $scope.activityContent = res.content;
               },
               function (res) {
+                alert("对不起，获取编辑器内容失败");
               }
             );
             break;
@@ -244,7 +244,22 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
             }
             break;
           case 'vote':
-            $scope.votes = res.voteSubitems;
+          function loadContent(url, i) {
+            var http = new XMLHttpRequest();
+            http.onreadystatechange = function () {
+              if (http.readyState == 4 && http.status == 200) {
+                voteInfo[i].voteContent = JSON.parse(http.responseText).content;
+              }
+            };
+            http.open("GET", '/api/Activities/get-content?url=' + url, true);
+            http.send();
+          }
+
+            var voteInfo = res.voteSubitems;
+            for (var i = 0; i < voteInfo.length; i++) {
+              loadContent(voteInfo[i].detailUrl, i);
+            }
+            $scope.votes = voteInfo;
             break;
         }
       },
@@ -849,6 +864,7 @@ function SettingCtrl($scope, $resource, etuanAdmin) {
     function (res) {
       $scope.infos[0] = res;
       $scope.infos[0].types = etuanAdmin.org.types;
+      $scope.infos[0].universitys = etuanAdmin.org.universitys;
       //下面的这个写法是根据社团属性来动态实现下面学院选择的变化，三元表达式的写法是对if/else模形的简写方式
       $scope.infos[0].schools = ($scope.infos[0].type === '校级社团' || $scope.infos[0].type === '校级组织') ? ['全校'] : etuanAdmin.org.schools;
       $scope.typeChange = function () {
@@ -865,6 +881,7 @@ function SettingCtrl($scope, $resource, etuanAdmin) {
         description: $scope.infos[0].description,
         type: $scope.infos[0].type,
         school: $scope.infos[0].school,
+        university: $scope.infos[0].university,
         weChat: $scope.infos[0].weChat,
         phone: $scope.infos[0].phone
       },

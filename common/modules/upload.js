@@ -34,7 +34,7 @@ function __img(req,res,next,callback){
           if(err) 
             res.send({message: "保存失败", error: err.code});
           else 
-            __oss(Path.join(img_url,name),data,function(err,data){
+            __oss(Path.join(img_url,name),data,mimetype,function(err,data){
               if(err) 
                 res.send({message: "保存失败", error: err.code});
               else
@@ -52,12 +52,14 @@ function __img(req,res,next,callback){
   });
   req.pipe(busboy);
 }
-function __oss(path,data,cb){
+function __oss(path,data,type,cb){
   path = path.replace(/\\/g,"/");
   oss.putObject({
     Bucket: 'etuan',
     Key:  path,
-    Body:data,
+    Body: data,
+    ContentType: type,
+    ContentDisposition: "inline",
     ServerSideEncryption: 'AES256',
     Expires: new Date()   
   },cb);
@@ -73,7 +75,7 @@ function upload(callback) {
     }else if(req.query.action === 'uploadtext'){
       res.up_text = function(dir){
         var path = dir + "/" + (new Date().getTime().toString() + MathRand(6)+".html");
-        __oss(path,req.body.content,function(err,aliMsg){
+        __oss(path,req.body.content,'text/html',function(err,aliMsg){
         if(err) {
           res.send({message: "保存失败", error: err.code});
         }

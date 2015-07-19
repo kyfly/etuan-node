@@ -2,6 +2,8 @@
 <html ng-app="app" ng-controller="VoteCtrl">
 <head>
   <title ng-bind-template="{{title}} - 团团一家">投票 - 团团一家</title>
+  <link rel="icon" href="/img/etuan_logo.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/img/etuan_logo.ico" type="image/x-icon">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <script src="/js/login.js"></script>
@@ -36,6 +38,10 @@
       font-size: 20px;
       margin-bottom: 15px;
     }
+
+    .checkbox {
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
@@ -43,6 +49,7 @@
   <div class="col-md-8 col-md-offset-2">
     <h1>{{vote.title}}</h1>
     <h4>{{vote.description}}</h4>
+    <p>最大投票数：{{vote.maxVote}}</p>
     <p>开始时间：{{startTime | date:cnFormat}}</p>
     <p>结束时间：{{stopTime | date:cnFormat}}</p>
     <hr>
@@ -52,7 +59,7 @@
           <label>
             &nbsp;&nbsp;&nbsp;
             <input type="checkbox" ng-model="answer[$index]" ng-true-value="true" ng-false-value="false">
-            {{$index+1}}.&nbsp;{{vsb.name}}<a href="{{vsb.detailUrl}}">&nbsp;&nbsp;<span class="glyphicon glyphicon-link"></span></a>
+            {{$index+1}}.&nbsp;{{vsb.name}}<a href="{{vsb.detailUrl}}">&nbsp;&nbsp;<span title="查看详情" class="glyphicon glyphicon-link"></span></a>
           </label>
         </div>
       </div>

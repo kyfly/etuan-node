@@ -25,7 +25,7 @@ module.exports = function(OrganizationUser) {
 	}
 
 	OrganizationUser.remoteMethod('actCount', {
-		accepts: {arg: 'token', type: 'String'},
+		accepts: {arg: 'access_token', type: 'String'},
 		returns: {arg: 'actCount', type: 'Object'},
 		http: {verb: 'get'}
 	});
@@ -68,7 +68,7 @@ module.exports = function(OrganizationUser) {
 	};
 
 	OrganizationUser.remoteMethod('viewCount', {
-		accepts: {arg: 'token', type: 'String'},
+		accepts: {arg: 'access_token', type: 'String'},
 		returns: {arg: 'viewCount', type: 'Object'},
 		http: {verb: 'get'}
 	});
@@ -115,7 +115,7 @@ module.exports = function(OrganizationUser) {
 	};
 
 	OrganizationUser.remoteMethod('parCount', {
-		accepts: {arg: 'token', type: 'String'},
+		accepts: {arg: 'access_token', type: 'String'},
 		returns: {arg: 'parCount', type: 'Object'},
 		http: {verb: 'get'}
 	});
