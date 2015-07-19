@@ -33,6 +33,15 @@
     "viewCount": {
       "type": "number",
       "default": 0
+    },
+    "university": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "school": {
+      "type": "string"
     }
   },
   "validations": [],
