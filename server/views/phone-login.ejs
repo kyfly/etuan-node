@@ -16,11 +16,13 @@
 <h2><img src="http://www.etuan.org/img/waiting.gif">&nbsp;<b>正在登录中...</b></h2>
 <script src="http://cdn.kyfly.net/lib/js/jquery.min.js"></script>
 <script>
-var msg = "<%- msg%>";
-var token = "<%- token%>";
-var url = "<%- url%>";
-var user = "<%- userInfo%>"
- if (msg === "success") {
+var status = "<%- status%>";
+alert(status);
+if(status === "fail"){
+	alert("<%- msg%>");
+}
+/* if (status === "success") {
+	var token = "<%- token%>"
       var lsTmp = {
         accessToken:token.id,
         userId:token.userId,
@@ -32,7 +34,7 @@ var user = "<%- userInfo%>"
       else window.location= '/';
     }else{
        alert('sos');
-    }
+    }*/
 </script>
 </body>
 </html>

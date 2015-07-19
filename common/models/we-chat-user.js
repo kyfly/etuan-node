@@ -93,20 +93,22 @@ module.exports = function (WeChatUser) {
    */
   WeChatUser.beforeRemote("phoneoauth", function (ctx, unused, next) {
     var code = ctx.req.query.code;
+//return ctx.res,render("phone-login.ejs",{"a":"b"});
+console.log(ctx.req.query);
     getWechatInfoByCode(code, function (err, wechatUserInfo) {
       if (err || !wechatUserInfo) 
-        return ctx.res.render("phone-login.ejs", {data : {status: "fail", msg: "获取微信信息失败"}});
+        return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "获取微信信息失败", "token":{}});
       else
         createWechatUser(wechatUserInfo, function (err, user) {
           if (err)
-            return ctx.res.render("phone-login.ejs", {data : {status: "fail", msg: err}});
+            return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': err, "token":{}});
           else
           {
             wechatLogin(user.openid, function (err, token) {
               if (err)
-                return ctx.res.render("phone-login.ejs", {data : {status: "fail", msg: "登录失败"}});
+                return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "登录失败", "token":{}});
               else 
-                return ctx.res.render("phone-login.ejs", {data : {status: "success", token: token}});
+                return ctx.res.render("phone-login.ejs", {'status': "success", 'token': token});
             });
           }
         });
@@ -118,25 +120,25 @@ module.exports = function (WeChatUser) {
   function getWechatInfoByCode (code, cb) {
     client.getUserByCode(code, function (err, user) {
       if (err) 
-        cb("获取微信信息失败");
+        cb(err);
       else
       {
         user.email = user.openid + "@etuan.org";
         user.password = user.openid;
-        cb(user);
+        cb(null, user);
       }
     });
   }
 
   function createWechatUser (user, cb) {
-    wechatUserIsInDB(user.openid, function (err, user) {
-      if (err) 
+    wechatUserIsInDB(user.openid, function (err, oldUser) {
+if (err) 
         cb("服务器错误，请重试");
-      else if (!user)
+      else if (!oldUser)
       {
         WeChatUser.create(user, function (err, newUser){
           cb(null,newUser);
-        }
+        });
       }
       else
       {
