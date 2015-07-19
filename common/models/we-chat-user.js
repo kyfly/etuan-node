@@ -107,16 +107,53 @@ module.exports = function (WeChatUser) {
             ctx.res.render("phone-login.ejs", {"msg": "success", "userInfo": user, "token": token});
         });
     });
-  });
+    getWechatInfoByCode(code, function (err, wechatUserInfo) {
+      if (err) 
+        return ctx.res.render("phone-login.ejs", {data : {status: "fail", msg: "获取微信信息失败"}});
+      else 
+        wechatUserIsInDB(wechatUserInfo.openid, function (err, wechatUser) {
+          if (err) 
+            return ctx.res.render("phone-login.ejs", {data : {status: "fail", msg: "服务器错误，请重试"}});
+          else if (wechatUser)
+          {
+            wechatLogin(wechatUser.openid, function (err, token){
+              if (err)
+                return ctx.res.render("phone-login.ejs", {data : {status: "fail", msg: "登录失败，请重试"}});
+              else
+                return ctx.res.render("phone-login.ejs",{data: {status: "success", token: token}});
+            });
+          }
+          else
+          {
 
+          } 
+        });
+    });
+  });
+  function wechatUserIsInDB (openid, cb) {
+    WeChatUser.findOne({where:{openid: openid}}, cb);
+  }
+  function getWechatInfoByCode (code, cb) {
+    client.getUserByCode(code,cb);
+  }
+  function createWechatUser (user, cb) {
+    WeChatUser.create(user, cb);
+  }
+  function wechatLogin (openid, cb) {
+    WeChatUser.login({
+      email: openid + "@etuan.org",
+      password: openid
+    },cb);
+  }
+  
   function createOrUpdateUserByCode(code, state, assistModel, callback){
-    function updateAssistModel (assistModel, user, cache, callback){
+    function updateAssistModel (assistModel, user, cache, cb){
       assistModel.updateAll({ticket: state},{
         isConfirm: 1,
         userId: user.id
       },function (err, count){
-        if(err) callback({"msg": "出错了,请刷新后登陆-"});
-        else callback(null, user, cache);
+        if(err) cb({"msg": "出错了,请刷新后登陆-"});
+        else cb(null, user, cache);
       });
     }
     assistModel.findOne({where: {ticket: state}}, function (err, cache) {
