@@ -21,7 +21,7 @@
         {
             var state = "<%= state %>";
             setInterval(function (){
-                $.get("/api/WechatUsers/confirm?state=<%- state%>", function (data, status) {
+                $.get("/api/WechatUsers/confirm?state=" + state, function (data, status) {
                     $("h2 b").html(data.msg);
                     if (data.status == "err" && status == "success")
                     {
@@ -30,7 +30,7 @@
                         //成功后关闭微信浏览器,未完成
                         //记得关闭setInterval,不然服务器可能挂
                         //表示授权成功
-                        alert(data.msg);
+                        alert("登录成功,即将关闭窗口");
                         WeixinJSBridge.call('closeWindow');
                     }
                 });
