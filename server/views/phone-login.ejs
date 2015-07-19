@@ -19,22 +19,20 @@
 var status = "<%- status%>";
 alert(status);
 if(status === "fail"){
-	alert("<%- msg%>");
+	$("h2 b").html("<%- msg%>");
 }
-/* if (status === "success") {
-	var token = "<%- token%>"
-      var lsTmp = {
-        accessToken:token.id,
-        userId:token.userId,
-        loginTime:token.created,
-        ttl:token.ttl
-      };
-      window.localStorage.setItem('d2VjaGF0',JSON.stringify(lsTmp));
-      if(url) window.location= url;
-      else window.location= '/';
-    }else{
-       alert('sos');
-    }*/
+if (status === "success") {
+  var token = "<%- token%>"
+  var lsTmp = {
+    accessToken:token.id,
+    userId:token.userId,
+    loginTime:token.created,
+    ttl:token.ttl
+  };
+  window.localStorage.setItem('d2VjaGF0',JSON.stringify(lsTmp));
+  //if(url) window.location= url;
+  window.location= '/';
+}
 </script>
 </body>
 </html>

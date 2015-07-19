@@ -50,6 +50,7 @@ module.exports = function (WeChatUser) {
       createAt: new Date(),
       ticket: ticket,
       isConfirm: 0,
+      request: 0,
       userId:null
     };
     WeChatUser.app.models.LoginCache.create(loginCacheObj, function (err, result) {
@@ -93,27 +94,52 @@ module.exports = function (WeChatUser) {
    */
   WeChatUser.beforeRemote("phoneoauth", function (ctx, unused, next) {
     var code = ctx.req.query.code;
-//return ctx.res,render("phone-login.ejs",{"a":"b"});
-console.log(ctx.req.query);
-    getWechatInfoByCode(code, function (err, wechatUserInfo) {
-      if (err || !wechatUserInfo) 
-        return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "获取微信信息失败", "token":{}});
-      else
-        createWechatUser(wechatUserInfo, function (err, user) {
-          if (err)
-            return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': err, "token":{}});
+    var state = ctx.req.query.state;
+    wxchatReQuest(state, function (err, num){
+      if (err)
+        return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': err, "token":{}});
+      if (num === 0)
+      {
+        getWechatInfoByCode(code, function (err, wechatUserInfo) {
+          if (err || !wechatUserInfo) 
+            return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "获取微信信息失败", "token":{}});
           else
-          {
-            wechatLogin(user.openid, function (err, token) {
+            createWechatUser(wechatUserInfo, function (err, user) {
               if (err)
-                return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "登录失败", "token":{}});
-              else 
-                return ctx.res.render("phone-login.ejs", {'status': "success", 'token': token});
+                return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': err, "token":{}});
+              else
+              {
+                wechatLogin(user.openid, function (err, token) {
+                  if (err)
+                    return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "登录失败", "token":{}});
+                  else 
+                    return ctx.res.render("phone-login.ejs", {'status': "success",'msg': "获取微信信息成功", 'token': token});
+                });
+              }
             });
-          }
         });
+      }
     });
   });
+  function wxchatReQuest (state, cb) {
+    WeChatUser.app.models.LoginCache.findOne({where:[{ticket: state}, {request: 1}]}, function (err, loginInfo) {
+      if(err)
+        return cb("出错了，请重试");
+      else if (!loginInfo)
+      {
+        WeChatUser.app.models.LoginCache.updateAll({ticket: state}, {request: 1}, function (err, count) {
+          if (err)
+            return cb("出错了，请重试");
+          else
+            return cb(null,0);
+        });
+      } 
+      else
+      {
+        return cb(null, 1);
+      }
+    });
+  }
   function wechatUserIsInDB (openid, cb) {
     WeChatUser.findOne({where:{openid: openid}}, cb);
   }
@@ -132,7 +158,7 @@ console.log(ctx.req.query);
 
   function createWechatUser (user, cb) {
     wechatUserIsInDB(user.openid, function (err, oldUser) {
-if (err) 
+    if (err) 
         cb("服务器错误，请重试");
       else if (!oldUser)
       {
@@ -157,40 +183,7 @@ if (err)
       password: openid
     },cb);
   }
-  
-  // function createOrUpdateUserByCode(code, state, assistModel, callback){
-  //   function updateAssistModel (assistModel, user, cache, cb){
-  //     assistModel.updateAll({ticket: state},{
-  //       isConfirm: 1,
-  //       userId: user.id
-  //     },function (err, count){
-  //       if(err) cb({"msg": "出错了,请刷新后登陆-"});
-  //       else cb(null, user, cache);
-  //     });
-  //   }
-  //   assistModel.findOne({where: {ticket: state}}, function (err, cache) {
-  //     if (err) callback({"msg": "-出错了,请刷新后登陆"});
-  //     else if(!cache) callback({"msg": "TICKET过期可能过期了,刷新后再试试"});
-  //     else
-  //       client.getUserByCode(code, function (err, user) {
-  //         user.email = user.openid + "@etuan.org";
-  //         user.password = user.openid;
-  //         WeChatUser.findOne({where:{openid: user.openid}}, function (err, beUser){
-  //           if(err) callback({"msg": "-保存信息时出错了,刷新后再试试"});
-  //           if(beUser) WeChatUser.updateAll({openid: user.openid},function (err, count){
-  //             if(err) callback({"msg": "保存信息时出错了-,刷新后再试试"});
-  //             else updateAssistModel (assistModel, beUser, cache, callback);
-  //           });
-  //           else
-  //             WeChatUser.create(user, function (err, newUser){
-  //               if(err)  callback({"msg": "保存信息时出错了,刷新后再试试-"});
-  //               else updateAssistModel (assistModel, newUser, cache, callback);
-  //             });
-  //         });
-  //       });
-  //   });
-  // }
-  /**
+    /**
    * 微信oauth2.0回调地址
    * url /api/WeChatUsers/oauth?code=CODE&state=STATE
    * get code=CODE&state=STATE
@@ -201,10 +194,33 @@ if (err)
   WeChatUser.beforeRemote("oauth", function (ctx, unused, next) {
     var state = ctx.req.query.state;
     var code = ctx.req.query.code;
-    var assistModel = WeChatUser.app.models.LoginCache;
-    createOrUpdateUserByCode(code, state, assistModel, function (err, user){
-      if(err) ctx.res.render("phone.ejs", err);
-      else ctx.res.render("phone.ejs", {"msg": "success", "state": state});
+    wxchatReQuest(state, function (err, num){
+      if (err)
+        return ctx.res.render("phone.ejs", {"status": "fail", "msg" : err, "state": state});
+      else if (num === 0)
+      {
+        getWechatInfoByCode(code, function (err, wechatUserInfo) {
+          if (err || !wechatUserInfo) 
+            return ctx.res.render("phone.ejs", {'status': "fail", 'msg': "获取微信信息失败,请刷新二维码重试", "state": state});
+          else
+            createWechatUser(wechatUserInfo, function (err, user) {
+              if (err)
+                return ctx.res.render("phone.ejs", {'status': "fail", 'msg': err, "state": state});
+              else
+              {
+                WeChatUser.app.models.LoginCache.updateAll({ticket: state},{
+                  isConfirm: 1,
+                  userId: user.id
+                },function (err, count){
+                  if(err) 
+                    return ctx.res.render("phone.ejs",{"status": "fail","msg": "出错了,请刷新后登陆-", "state": state});
+                  else 
+                    return ctx.res.render("phone.ejs", {"status": "success", "state": state});
+                });
+              }
+            });
+        });
+      }
     });
   });
 
