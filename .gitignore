@@ -43,3 +43,4 @@ server/datasources.beta.json
 server/datasources.production.json
 
 *.DS_Store
+数据库查询
