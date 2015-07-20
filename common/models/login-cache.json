@@ -17,6 +17,9 @@
     },
     "referer":{
       "type": "string"
+    },
+    "rerequest":{
+      "type": "number"
     }
   },
   "validations": [],
