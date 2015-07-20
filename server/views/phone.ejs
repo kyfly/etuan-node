@@ -17,10 +17,9 @@
 <script src="http://cdn.kyfly.net/lib/js/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
- alert("<%= status%>")       if("<%= status %>" === "success")
+        if("<%= status %>" === "success")
         {
             var state = "<%= state %>";
-$("h2 b").html = state;
             setInterval(function (){
                 $.get("/api/WechatUsers/confirm?state=" + state, function (data, status) {
                     $("h2 b").html(data.msg);
