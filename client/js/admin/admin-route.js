@@ -6,7 +6,7 @@ function RouteConfigure($routeProvider) {
     })
     .when('/setting', {
       templateUrl: '/admin/partials/setting.html',
-      controller: ['$scope', '$resource', 'etuanAdmin', SettingCtrl]
+      controller: ['$scope', '$resource', 'etuanAdmin', '$http', SettingCtrl]
     })
     .when('/help', {
       templateUrl: '/admin/partials/help.html',
