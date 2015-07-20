@@ -158,18 +158,19 @@ module.exports = function (WeChatUser) {
 
   function createWechatUser (user, cb) {
     wechatUserIsInDB(user.openid, function (err, oldUser) {
-    if (err) 
+     if (err) 
         cb("服务器错误，请重试");
       else if (!oldUser)
       {
         WeChatUser.create(user, function (err, newUser){
-          cb(null,newUser);
+         cb(null,newUser);
         });
       }
       else
       {
-        WeChatUser.updateAll({openid:oldUser.openid}, function (err, count) {
-          if (err) 
+        user.password=oldUser.password;
+        WeChatUser.updateAll({openid:oldUser.openid}, user, function (err, count) {
+         if (err) 
             cb("服务器错误，请重试");
           else
             cb(null, oldUser);
@@ -212,10 +213,10 @@ module.exports = function (WeChatUser) {
                   isConfirm: 1,
                   userId: user.id
                 },function (err, count){
-                  if(err) 
+              if(err) 
                     ctx.res.render("phone.ejs",{"status": "fail","msg": "出错了,请刷新后登陆-", "state": state});
                   else 
-                    ctx.res.render("phone.ejs", {"status": "success", "state": state});
+                    ctx.res.render("phone.ejs", {"status": "success", "msg": "获取微信信息成功", "state": state});
                 });
               }
             });
