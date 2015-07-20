@@ -37,7 +37,7 @@ function wechatLogin() {
             window.localStorage.setItem('d2VjaGF0', JSON.stringify(lsTmp));
             //这里跳转到应该跳转的页面
             
-            data.userInfo.studentId ? window.location = window.location.search.substr(6) || '/' : window.location = '/student.html?referer=' + window.location.search.substr(6) || '/';
+            data.userInfo.studentId ? window.location = (window.location.search.substr(6) + window.location.hash) || '/' : window.location = ('/student.html?referer=' + window.location.search.substr(6) + window.location.hash) || '/';
           }
           else if (ajax.status === 200 || ajax.status === 304) {
             document.getElementById('logstatus').innerHTML = data.msg;

@@ -166,7 +166,7 @@
           alert(res.err);
         } else {
           alert("绑定成功！");
-          window.location = getQueryString();
+          window.location = (getQueryString() + window.location.hash);
         }
       }).error(function () {
         alert("连接出错啦！");
