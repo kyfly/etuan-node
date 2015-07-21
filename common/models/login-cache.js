@@ -22,14 +22,16 @@ module.exports = function(LoginCache) {
 					LoginCache.app.models.WeChatUser.findById(cache.userId,function (err, user){
 						if(err) ctx.res.send({"msg":"获取微信信息失败"});
 						else
-							LoginCache.app.models.WeChatUser.login({
-			          email: user.email,
-			          password: user.openid
-			        },function (err, token){
-			          ctx.res.send({"msg": "success", "url": cache.referer, "userInfo": user, "token": token});
+							LoginCache.app.models.WeChatUser.reLoadLogin(user.openid,function (err, token){
+			        	if (err)
+			        		ctx.res.send({"msg": "fail"});
+			        	else	
+			          	ctx.res.send({"msg": "success", "token": token});
 			        });
 					})
-				}else ctx.res.send({"msg":"请用微信扫描二维码"});
+				}
+				else 
+					ctx.res.send({"msg":"请用微信扫描二维码"});
 			});
 	};
 };

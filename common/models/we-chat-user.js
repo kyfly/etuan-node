@@ -41,6 +41,12 @@ module.exports = function (WeChatUser) {
       description: "微信登录验证,手机,PC端都用这个接口验证",
       http: {path: "/confirm", verb: 'get'}
     });
+  WeChatUser.reLoadLogin = function (openid, fn) {
+    WeChatUser.login({
+      email: openid + "@etuan.org",
+      password: openid
+    }, fn);
+  }
   WeChatUser.beforeRemote('confirm', function (ctx, unused, next) {
     return WeChatUser.app.models.LoginCache.confirm(ctx, unused, next);
   });
@@ -109,7 +115,7 @@ module.exports = function (WeChatUser) {
                 return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': err, "token":{}});
               else
               {
-                wechatLogin(user.openid, function (err, token) {
+                WeChatUser.reLoadLogin(user.openid, function (err, token) {
                   if (err)
                     return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "登录失败", "token":{}});
                   else 
@@ -178,12 +184,7 @@ module.exports = function (WeChatUser) {
       }
     })
   }
-  function wechatLogin (openid, cb) {
-    WeChatUser.login({
-      email: openid + "@etuan.org",
-      password: openid
-    },cb);
-  }
+ 
     /**
    * 微信oauth2.0回调地址
    * url /api/WeChatUsers/oauth?code=CODE&state=STATE
