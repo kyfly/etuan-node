@@ -184,8 +184,7 @@ module.exports = function (WeChatUser) {
       }
     })
   }
- 
-    /**
+  /**
    * 微信oauth2.0回调地址
    * url /api/WeChatUsers/oauth?code=CODE&state=STATE
    * get code=CODE&state=STATE
@@ -236,33 +235,35 @@ module.exports = function (WeChatUser) {
     var userId = ctx.req.query.userId;
     if (data.studentId === undefined || data.password === undefined)
       ctx.res.send({"err": "密码学号都不能为空"});
-    else
+    else {
       hduConfim.ihdu(data.studentId, data.password, function (name) {
         if (!name) ctx.res.send({"err": "获取学生姓名失败"});
         if (name === 'mistake_notice') ctx.res.send({err: '密码或学号错误'});
-        else
-          WeChatUser.findOne({where: {id: userId}}, function (err, userInfo) {
-            updatedAt = userInfo.updatedAt || new Date();
-            histories = userInfo.weChatUserHistories;
-            data.studentName = name;
-            data.university = '杭州电子科技大学';
-            data.updatedAt = new Date();
-            data.verifiedDate = new Date();
-            var history = {
-              "university": data.university,
-              "studentId": data.studentId,
-              "studentName": name,
-              "verifiedDate": new Date(),
-              "updatedAt": updatedAt,
-              "id": histories.length + 1
-            };
-            histories.push(history);
-            data.weChatUserHistories = histories;
-            next();
-          });
+        else {
+          data.studentName = name;
+          data.password = undefined;
+          data.university = '杭州电子科技大学';
+          data.updatedAt = new Date();
+          data.verifiedDate = new Date();
+          next();
+        }
       });
+    }
   });
-
+  WeChatUser.afterRemote("prototype.updateAttributes", function (ctx, instance, next) {
+    var history = {
+      "studentName" : instance.studentName,
+      "university" : '杭州电子科技大学',
+      "updatedAt" : new Date(),
+      "verifiedDate" : instance.verifiedDate,
+      "studentId" : instance.studentId,
+      'id' : instance.weChatUserHistories.length
+    };
+    instance.histories.create(history, function (err, history) {
+      console.log(err, history);
+      next();
+    });
+  });
   //保存更新时间
   WeChatUser.observe('before save', function (ctx, next) {
     if (ctx.instance) {
