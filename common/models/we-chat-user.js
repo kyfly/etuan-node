@@ -119,7 +119,7 @@ module.exports = function (WeChatUser) {
                   if (err)
                     return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "登录失败", "token":{}});
                   else 
-                    return ctx.res.render("phone-login.ejs", {'status': "success",'msg': "获取微信信息成功", 'token': token});
+                    return ctx.res.render("phone-login.ejs", {'status': "success",'msg': "获取微信信息成功", 'token': token, "userInfo": user});
                 });
               }
             });
@@ -260,7 +260,8 @@ module.exports = function (WeChatUser) {
       'id' : instance.weChatUserHistories.length
     };
     instance.histories.create(history, function (err, history) {
-      console.log(err, history);
+      if (err)
+        return next(err);
       next();
     });
   });

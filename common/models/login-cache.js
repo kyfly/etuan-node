@@ -25,8 +25,10 @@ module.exports = function(LoginCache) {
 							LoginCache.app.models.WeChatUser.reLoadLogin(user.openid,function (err, token){
 			        	if (err)
 			        		ctx.res.send({"msg": "fail"});
-			        	else	
-			          	ctx.res.send({"msg": "success", "token": token});
+			        	else	{
+			        		user.email = undefined;
+			          	ctx.res.send({"msg": "success", "userInfo": user,"token": token});
+			        	}
 			        });
 					})
 				}
