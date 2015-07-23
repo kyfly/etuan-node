@@ -103,21 +103,21 @@ module.exports = function (WeChatUser) {
     var state = ctx.req.query.state;
     wxchatReQuest(state, function (err, num){
       if (err)
-        return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': err, "token":{}});
+        return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': err, "token":{}, "userInfo": {}});
       if (num === 0)
       {
         getWechatInfoByCode(code, function (err, wechatUserInfo) {
           if (err || !wechatUserInfo) 
-            return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "获取微信信息失败", "token":{}});
+            return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "获取微信信息失败", "token":{}, "userInfo": {}});
           else
             createWechatUser(wechatUserInfo, function (err, user) {
               if (err)
-                return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': err, "token":{}});
+                return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': err, "token":{}, "userInfo": {}});
               else
               {
                 WeChatUser.reLoadLogin(user.openid, function (err, token) {
                   if (err)
-                    return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "登录失败", "token":{}});
+                    return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "登录失败", "token":{}, "userInfo": {}});
                   else 
                     return ctx.res.render("phone-login.ejs", {'status': "success",'msg': "获取微信信息成功", 'token': token, "userInfo": user});
                 });
