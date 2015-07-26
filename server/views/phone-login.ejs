@@ -17,13 +17,14 @@
 <script src="http://cdn.kyfly.net/lib/js/jquery.min.js"></script>
 <script>
 var status = "<%- status%>";
-var next = "<%- next%>" || '/';
 if(status === "fail"){
   $("h2 b").html("<%- msg%>");
 }
 if (status === "success") {
   var token = JSON.parse('<%- JSON.stringify(token)%>');
   var user = JSON.parse('<%- JSON.stringify(userInfo)%>');
+  var next = window.localStorage.getItem('next') || '/';
+  window.localStorage.remove('next');
   var lsTmp = {
     accessToken:token.id,
     userId:token.userId,
@@ -33,7 +34,7 @@ if (status === "success") {
   window.localStorage.setItem('d2VjaGF0',JSON.stringify(lsTmp));
   $("h2 b").html("登陆成功，即将跳转");
   
-  user.studentId ? window.location = next || '/': window.location = ('/student.html?referer=' + next || '/');
+  user.studentId ? window.location = next : window.location = ('/student.html?referer=' + next);
 }
 </script>
 </body>

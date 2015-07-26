@@ -86,9 +86,8 @@ module.exports = function (WeChatUser) {
    * @return {[type]}          [description]
    */
   WeChatUser.beforeRemote('fromWechat', function (ctx, unused, next) {
-    var next = ctx.req.query.next;
     getTicket(function (err, ticket) {
-      var url = client.getAuthorizeURL('http://beta.etuan.org/api/WeChatUsers/phoneoauth?next=' + next, ticket, 'snsapi_userinfo');
+      var url = client.getAuthorizeURL('http://beta.etuan.org/api/WeChatUsers/phoneoauth?', ticket, 'snsapi_userinfo');
       ctx.res.redirect(url);
     });
   });
@@ -102,26 +101,25 @@ module.exports = function (WeChatUser) {
   WeChatUser.beforeRemote("phoneoauth", function (ctx, unused, next) {
     var code = ctx.req.query.code;
     var state = ctx.req.query.state;
-    var next = ctx.req.query.next;
     wxchatReQuest(state, function (err, num){
       if (err)
-        return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': err, "token":{}, 'next':"", "userInfo": {}});
+        return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': err, "token":{}, "userInfo": {}});
       if (num === 0)
       {
         getWechatInfoByCode(code, function (err, wechatUserInfo) {
           if (err || !wechatUserInfo) 
-            return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "获取微信信息失败", "token":{}, 'next':"", "userInfo": {}});
+            return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "获取微信信息失败", "token":{}, "userInfo": {}});
           else
             createWechatUser(wechatUserInfo, function (err, user) {
               if (err)
-                return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': err, "token":{}, 'next':"", "userInfo": {}});
+                return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': err, "token":{}, "userInfo": {}});
               else
               {
                 WeChatUser.reLoadLogin(user.openid, function (err, token) {
                   if (err)
-                    return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "登录失败", "token":{}, 'next':"", "userInfo": {}});
+                    return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "登录失败", "token":{}, "userInfo": {}});
                   else 
-                    return ctx.res.render("phone-login.ejs", {'status': "success",'msg': "获取微信信息成功", 'token': token, 'next':next, "userInfo": user});
+                    return ctx.res.render("phone-login.ejs", {'status': "success",'msg': "获取微信信息成功", 'token': token, "userInfo": user});
                 });
               }
             });

@@ -28,6 +28,7 @@ function loginCheck(t) {
   ) {
     var url = window.location.href;
     window.localStorage.removeItem(t);
+    window.localStorage.setItem('next', url);
     switch (t) {
       case 'b3JnYW5p':
         window.location = '/login';
@@ -36,7 +37,7 @@ function loginCheck(t) {
         if (bower === 'pc')//直接跳转到二维码登录页面，登录页面的serch属性应该加登陆后应该到的地址
           window.location = '/wx-tmp.html?next=' + url;
         else if (bower === 'wechat') {
-          window.location = '/api/WechatUsers/fromWechat?next=' + url;
+          window.location = '/api/WechatUsers/fromWechat';
         }
         else
           window.location = "/warning.html";
