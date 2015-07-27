@@ -24,7 +24,6 @@ if (status === "success") {
   var token = JSON.parse('<%- JSON.stringify(token)%>');
   var user = JSON.parse('<%- JSON.stringify(userInfo)%>');
   var next = window.localStorage.getItem('next') || '/';
-  window.localStorage.remove('next');
   var lsTmp = {
     accessToken:token.id,
     userId:token.userId,
