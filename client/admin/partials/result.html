@@ -27,7 +27,7 @@
   <tbody>
   <tr ng-repeat="result in results track by $index">
     <td>{{$index+1}}</td>
-    <td ng-repeat="resultDetail in result">{{resultDetail}}</td>
+    <td ng-repeat="resultDetail in result track by $index">{{resultDetail}}</td>
   </tr>
   </tbody>
 </table>
