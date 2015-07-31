@@ -806,10 +806,10 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
    * 在这个区域中包括了pdf下载和excel下载。
    */
   $scope.pdfDownload = function () {
-    window.open('/api/Forms/pdf/' + $routeParams.id, '_blank');
+    window.open('/api/Forms/pdf/' + $routeParams.id + "?access_token=" +  JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, '_blank');
   };
   $scope.excelDownload = function () {
-    window.open('/api/Forms/excel/' + $routeParams.id, '_blank');
+    window.open('/api/Forms/excel/' + $routeParams.id + "?access_token=" +  JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, '_blank');
   };
 }
 
