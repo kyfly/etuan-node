@@ -6,6 +6,9 @@
   "properties": {
     "ip": {
       "type": "string"
+    },
+    "studentId": {
+      "type": "string"
     }
   },
   "validations": [],
