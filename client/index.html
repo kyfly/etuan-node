@@ -40,6 +40,7 @@
 
     .contentRow {
       margin-bottom: 20px;
+      min-height: 260px;
     }
 
     .contentRow > div > a {
@@ -130,7 +131,7 @@
   </div>
   <div class="contentRow col-xs-12">
     <div ng-repeat="alt in alts.slice(0,4)" class="col-sm-6 col-md-3">
-      <a ng-href="{{alt.contentUrl}}" ng-click="">
+      <a ng-href="/activity/#?id={{alt.id}}" ng-click="">
         <div class="thumbnail">
           <div class="text-center">
             <h4 ng-bind="alt.title"></h4>
