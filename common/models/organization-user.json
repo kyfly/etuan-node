@@ -315,6 +315,12 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "nameExist"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "resetpwd"
     }
   ],
   "methods": []

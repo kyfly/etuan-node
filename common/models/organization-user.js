@@ -25,8 +25,8 @@ module.exports = function(OrganizationUser) {
 	}
 
 	OrganizationUser.remoteMethod('actCount', {
-		accepts: {arg: 'access_token', type: 'String'},
-		returns: {arg: 'actCount', type: 'Object'},
+		accepts: {arg: 'access_token', type: 'string'},
+		returns: {arg: 'actCount', type: 'string'},
 		http: {verb: 'get'}
 	});
 
@@ -68,8 +68,8 @@ module.exports = function(OrganizationUser) {
 	};
 
 	OrganizationUser.remoteMethod('viewCount', {
-		accepts: {arg: 'access_token', type: 'String'},
-		returns: {arg: 'viewCount', type: 'Object'},
+		accepts: {arg: 'access_token', type: 'string'},
+		returns: {arg: 'viewCount', type: 'string'},
 		http: {verb: 'get'}
 	});
 
@@ -115,8 +115,8 @@ module.exports = function(OrganizationUser) {
 	};
 
 	OrganizationUser.remoteMethod('parCount', {
-		accepts: {arg: 'access_token', type: 'String'},
-		returns: {arg: 'parCount', type: 'Object'},
+		accepts: {arg: 'access_token', type: 'string'},
+		returns: {arg: 'parCount', type: 'string'},
 		http: {verb: 'get'}
 	});
 
@@ -230,4 +230,26 @@ module.exports = function(OrganizationUser) {
   	ctx.req.body.ttl = 7200;
   	next();
   });
+  
+  //帮用户修改密码
+  	OrganizationUser.resetpwd = function(email,newpassword, cb) {
+	  newpassword = OrganizationUser.hashPassword(newpassword);//加密
+		OrganizationUser.updateAll({email:email} ,{password:newpassword},function(err,info){
+		//有一个问题就是updateAll找不到匹配的也不报错
+		if(err)
+			cb(null, false);
+		else
+			cb(null, true);
+		});
+	};
+
+	OrganizationUser.remoteMethod('resetpwd', {
+		accepts: [
+			{arg: 'email', type: 'String'},
+			{arg: 'newpassword', type: 'String'}
+		],
+		returns: {arg: 'status', type: 'Boolean'},
+		http: {verb: 'post', path: '/resetpwd'}
+	});
+  
 };
