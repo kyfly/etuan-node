@@ -14,13 +14,10 @@ function LoginCtrl($scope, $resource, $timeout, $window) {
           ttl: res.ttl
         };
         $window.localStorage.setItem('b3JnYW5p', JSON.stringify(lsTmp));
-        alert('登录成功，将在1秒钟后跳转!');
-        $timeout(function () {
-          $window.location = '/admin'
-        }, 1000);
+        $window.location = '/admin'
       },
       function (res) {
-        alert('登录失败!');
+        alert('登录失败，请检查登录信息!');
       }
     );
   }
