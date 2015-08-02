@@ -13,7 +13,7 @@ function ActivityCtrl($scope, $resource, $location) {
       $scope.startTime = new Date($scope.activity.startTime);
       $scope.stopTime = new Date($scope.activity.stopTime);
       var ueditorContent = $resource('/api/Activities/get-content?url=' + res.contentUrl);
-      document.getElementById("content").innerHTML = ueditorContent;
+      document.getElementById("content").innerHTML = ueditorContent.content;
     },
     function (res) {
     }
