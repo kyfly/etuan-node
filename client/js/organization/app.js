@@ -48,6 +48,9 @@ function RewriteResourceActions($resourceProvider) {
     }
   };
 }
-var app = angular.module('app', ['ngResource']);
+var app = angular.module('app', ['ngResource', 'ui.bootstrap']);
 app.controller('OrganizationCtrl', ['$scope', '$resource', '$location', OrganizationCtrl]);
 app.config(['$resourceProvider', RewriteResourceActions]);
+app.controller('headCtrl', function ($scope) {
+  $scope.isCollapsed = true;
+});

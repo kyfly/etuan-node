@@ -83,8 +83,11 @@ function RewriteResourceActions($resourceProvider) {
     }
   };
 }
-var app = angular.module('app', ['ngResource']);
+var app = angular.module('app', ['ngResource', 'ui.bootstrap']);
 app.controller('FormCtrl', ['$scope', '$resource', '$location', '$window', FormCtrl]);
 app.config(['$resourceProvider', RewriteResourceActions]);
+app.controller('headCtrl', function ($scope) {
+  $scope.isCollapsed = true;
+});
 
 

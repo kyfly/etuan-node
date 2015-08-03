@@ -1,4 +1,4 @@
-var app = angular.module('app', []);
+var app = angular.module('app', ['ui.bootstrap']);
 app.controller('SeckillCtrl', ['$scope', '$location', '$window', SeckillCtrl]);
 
 function SeckillCtrl($scope, $location, $window) {
@@ -173,4 +173,8 @@ function SeckillCtrl($scope, $location, $window) {
   }
 
 }
+
+app.controller('headCtrl', function ($scope) {
+  $scope.isCollapsed = true;
+});
 

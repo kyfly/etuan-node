@@ -1,4 +1,4 @@
-function VoteCtrl($scope, $resource, $location, $window) {
+function VoteCtrl($scope, $resource, $location, $window, $modal) {
   var voteUrlSearchObj = $location.search();
   var Vote = $resource('/api/votes/:id');
   var newReferer = "index.html";
@@ -15,6 +15,38 @@ function VoteCtrl($scope, $resource, $location, $window) {
       $scope.title = res.title || '投票';
       $scope.startTime = new Date($scope.vote.startTime);
       $scope.stopTime = new Date($scope.vote.stopTime);
+
+      function loadContent(url, i) {
+        var http = new XMLHttpRequest();
+        http.onreadystatechange = function () {
+          if (http.readyState == 4 && http.status == 200) {
+            voteInfo[i].voteContent = JSON.parse(http.responseText).content;
+          }
+        };
+        http.open("GET", '/api/Activities/get-content?url=' + url, true);
+        http.send();
+      }
+
+      var voteInfo = res.voteSubitems;
+      console.log(voteInfo);
+      for (var i = 0; i < voteInfo.length; i++) {
+        loadContent(voteInfo[i].detailUrl, i);
+      }
+
+      //模态框
+      $scope.open = function (num) {
+        $modal.open({
+          animation: true,
+          templateUrl: 'myModalContent.html',
+          controller: 'ModalInstanceCtrl',
+          resolve: {
+            voteInfo: function () {
+              return voteInfo[num].voteContent;
+            }
+          }
+        });
+      };
+
     },
     function (res) {
     }
@@ -39,13 +71,15 @@ function VoteCtrl($scope, $resource, $location, $window) {
       },
       function (res) {
         alert(res.data.error.message);
-        if(res.data.error.message === "需要绑定学号") {
+        if (res.data.error.message === "需要绑定学号") {
           window.location = "../student.html?referer=" + newReferer
         }
       }
     );
   };
+
 }
+
 
 function RewriteResourceActions($resourceProvider) {
   var commonHeaders = {
@@ -79,8 +113,15 @@ function RewriteResourceActions($resourceProvider) {
     }
   };
 }
-var app = angular.module('app', ['ngResource']);
-app.controller('VoteCtrl', ['$scope', '$resource', '$location', '$window', VoteCtrl]);
+var app = angular.module('app', ['ngResource', 'ui.bootstrap', 'ngSanitize']);
+app.controller('VoteCtrl', ['$scope', '$resource', '$location', '$window', '$modal', VoteCtrl]);
 app.config(['$resourceProvider', RewriteResourceActions]);
-
-
+app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, voteInfo) {
+  $scope.content = voteInfo;
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
+app.controller('headCtrl', function ($scope) {
+  $scope.isCollapsed = true;
+});

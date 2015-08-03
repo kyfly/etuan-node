@@ -13,7 +13,15 @@ function ActivityCtrl($scope, $resource, $location) {
       $scope.startTime = new Date($scope.activity.startTime);
       $scope.stopTime = new Date($scope.activity.stopTime);
       var ueditorContent = $resource('/api/Activities/get-content?url=' + res.contentUrl);
-      document.getElementById("content").innerHTML = ueditorContent.content;
+      ueditorContent.get({},
+        function (res) {
+          document.getElementById("content").innerHTML = res.content;
+        },
+        function (res) {
+          alert("对不起，获取内容失败");
+        }
+      );
+
     },
     function (res) {
     }
@@ -53,6 +61,9 @@ function RewriteResourceActions($resourceProvider) {
   };
 }
 
-var app = angular.module('app', ['ngResource']);
+var app = angular.module('app', ['ngResource', 'ui.bootstrap']);
 app.controller('activityCtrl', ['$scope', '$resource', '$location', ActivityCtrl]);
 app.config(['$resourceProvider', RewriteResourceActions]);
+app.controller('headCtrl', function ($scope) {
+  $scope.isCollapsed = true;
+});
