@@ -35,7 +35,8 @@ html {
   text-align: center;
   color: #666;
   font-size: 16px;
-
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .listhead_org {
