@@ -39,6 +39,7 @@ function VoteCtrl($scope, $resource, $location, $window, $modal) {
           animation: true,
           templateUrl: 'myModalContent.html',
           controller: 'ModalInstanceCtrl',
+          size: 'lg',
           resolve: {
             voteInfo: function () {
               return voteInfo[num].voteContent;

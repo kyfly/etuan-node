@@ -110,42 +110,39 @@
 
     <p>结束时间：{{stopTime | date:cnFormat}}</p>
     <hr>
-    <!--模态框-->
-    <div>
-      <form class="form-horizontal">
-        <div class="form-group" ng-repeat="vsb in vote.voteSubitems">
-          <div class="checkbox">
-            <label>
-              &nbsp;&nbsp;&nbsp;
-              <input type="checkbox" ng-model="answer[$index]" ng-true-value="true" ng-false-value="false">
-              {{$index+1}}.&nbsp;{{vsb.name}}
-              <button class="detailOpen btn btn-default" ng-click="open($index)"><span title="查看详情"
-                                                                             class="glyphicon glyphicon-link"></span>
-              </button>
-            </label>
-          </div>
+    <form class="form-horizontal">
+      <div class="form-group" ng-repeat="vsb in vote.voteSubitems">
+        <div class="checkbox">
+          <label>
+            &nbsp;&nbsp;&nbsp;
+            <input type="checkbox" ng-model="answer[$index]" ng-true-value="true" ng-false-value="false">
+            {{$index+1}}.&nbsp;{{vsb.name}}
+            <button class="detailOpen btn btn-default" ng-click="open($index)"><span title="查看详情"
+                                                                                     class="glyphicon glyphicon-link"></span>
+            </button>
+          </label>
         </div>
-        <div class="form-group">
-          <br>
+      </div>
+      <div class="form-group">
+        <br>
 
-          <div class="col-sm-12 text-center">
-            <button class="btn btn-block btn-success col-sm-2" ng-click="submit()">提交</button>
-          </div>
+        <div class="col-sm-12 text-center">
+          <button class="btn btn-block btn-success col-sm-2" ng-click="submit()">提交</button>
         </div>
-      </form>
+      </div>
+    </form>
 
-      <script type="text/ng-template" id="myModalContent.html">
-        <div class="modal-header">
-          <h3 class="modal-title">简介</h3>
-        </div>
-        <div class="modal-body">
-          <div ng-bind-html="content"></div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-warning" ng-click="cancel()">关闭</button>
-        </div>
-      </script>
-    </div>
+    <script type="text/ng-template" id="myModalContent.html">
+      <div class="modal-header">
+        <h3 class="modal-title">简介</h3>
+      </div>
+      <div class="modal-body">
+        <div ng-bind-html="content" style="width: 100%;overflow: auto"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()">关闭</button>
+      </div>
+    </script>
 
     <br>
     <hr>
