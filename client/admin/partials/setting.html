@@ -31,7 +31,8 @@
           </div>
           <div class="col-sm-7">
             <select class="form-control" ng-model="info.university" id="university" ng-change="universityChange()">
-              <option value="{{university}}" ng-repeat="university in infos[0].universities track by $index" ng-selected="university === info.university">
+              <option value="{{university}}" ng-repeat="university in infos[0].universities track by $index"
+                      ng-selected="university === info.university">
                 {{university}}
               </option>
             </select>
@@ -42,8 +43,9 @@
             <label for="type" class="control-label">类型</label>
           </div>
           <div class="col-sm-7">
-            <select class="form-control" ng-model="info.type" id="type" ng-change="typeChange()" >
-              <option value="{{type}}" ng-repeat="type in infos[0].types track by $index" ng-selected="type === info.type">{{type}}
+            <select class="form-control" ng-model="info.type" id="type" ng-change="typeChange()">
+              <option value="{{type}}" ng-repeat="type in infos[0].types track by $index"
+                      ng-selected="type === info.type">{{type}}
               </option>
             </select>
           </div>
@@ -54,7 +56,8 @@
           </div>
           <div class="col-sm-7">
             <select class="form-control" ng-model="info.school" id="school">
-              <option value="{{school}}" ng-repeat="school in infos[0].schools track by $index" ng-selected="school === info.school">
+              <option value="{{school}}" ng-repeat="school in infos[0].schools track by $index"
+                      ng-selected="school === info.school">
                 {{school}}
               </option>
             </select>
@@ -145,6 +148,40 @@
       <div class="form-group">
         <div class="col-sm-2 col-sm-offset-2">
           <button class="btn btn-block btn-primary" ng-click="departmentSubmit()">保存</button>
+        </div>
+      </div>
+    </tab>
+    <tab heading="修改密码">
+      <br>
+      <div ng-repeat="resetPwd in resetPwds">
+        <div class="form-group">
+          <div class="col-sm-2 col-sm-offset-1">
+            <label for="email" class="control-label">邮箱</label>
+          </div>
+          <div class="col-sm-7">
+            <input type="text" class="form-control" ng-model='resetPwd.email' id="email">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-2 col-sm-offset-1">
+            <label for="oldPwd" class="control-label">旧密码</label>
+          </div>
+          <div class="col-sm-7">
+            <input type="text" class="form-control" ng-model='resetPwd.oldPwd' id="oldPwd">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-2 col-sm-offset-1">
+            <label for="newPwd" class="control-label">新密码</label>
+          </div>
+          <div class="col-sm-7">
+            <input type="text" class="form-control" ng-model='resetPwd.newPwd' id="newPwd">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2 col-sm-offset-3">
+          <button class="btn btn-block btn-primary" ng-click="resetPwd()">修改</button>
         </div>
       </div>
     </tab>

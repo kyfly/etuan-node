@@ -806,10 +806,10 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
    * 在这个区域中包括了pdf下载和excel下载。
    */
   $scope.pdfDownload = function () {
-    window.open('/api/Forms/pdf/' + $routeParams.id + "?access_token=" +  JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, '_blank');
+    window.open('/api/Forms/pdf/' + $routeParams.id + "?access_token=" + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, '_blank');
   };
   $scope.excelDownload = function () {
-    window.open('/api/Forms/excel/' + $routeParams.id + "?access_token=" +  JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, '_blank');
+    window.open('/api/Forms/excel/' + $routeParams.id + "?access_token=" + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, '_blank');
   };
 }
 
@@ -839,7 +839,7 @@ function HomeCtrl($scope, $resource) {
   });
 }
 
-function SettingCtrl($scope, $resource, etuanAdmin, $http) {
+function SettingCtrl($scope, $resource, etuanAdmin, $http ,$window) {
   var Setting = $resource(
     '/api/OrganizationUsers/:userId', {
       userId: etuanAdmin.cache.userId
@@ -902,7 +902,6 @@ function SettingCtrl($scope, $resource, etuanAdmin, $http) {
     function () {
     }
   );
-
 
 
   //基本信息提交按钮
@@ -979,6 +978,28 @@ function SettingCtrl($scope, $resource, etuanAdmin, $http) {
       organizationUserDepartments: dsTmp
     });
     alert("修改成功！");
+  };
+
+  //修改密码
+  var ResetPwd = $resource('/api/OrganizationUsers/resetpwd');
+  $scope.resetPwds = [{"email": "", "oldPwd": "", "newPwd": ""}];
+  console.log($scope.resetPwds);
+  $scope.resetPwd = function () {
+    console.log($scope.resetPwds);
+    ResetPwd.save(
+      {
+        email: $scope.resetPwds[0].email,
+        oldpwd: $scope.resetPwds[0].oldPwd,
+        newpwd: $scope.resetPwds[0].newPwd
+      },
+      function (res) {
+        alert('恭喜你,密码修改成功');
+        $window.localStorage.removeItem('b3JnYW5p');
+        $window.location = '/login/';
+      },
+      function (res) {
+        alert(res.data.error.message);
+      });
   };
 }
 
