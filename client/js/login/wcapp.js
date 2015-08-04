@@ -6,7 +6,7 @@ function createQrcode (url) {
 }
 function getAuthData (cb) {
   var ajax = new XMLHttpRequest();
-  ajax.open('GET', '/api/WechatUsers/formPC', true);
+  ajax.open('GET', '/api/WechatUsers/fromPC', true);
   ajax.send();
   ajax.onreadystatechange = function () {
     if (ajax.readyState === 4) {

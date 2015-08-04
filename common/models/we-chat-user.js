@@ -13,11 +13,11 @@ function __randomString(len) {
   return pwd;
 }
 module.exports = function (WeChatUser) {
-  WeChatUser.remoteMethod("formPC",
+  WeChatUser.remoteMethod("fromPC",
     {
       returns: {arg: "data", type: "object"},
       description: "获取微信登录链接,返回{state:state,url:url}",
-      http: {path: "/formPC", verb: 'get'}
+      http: {path: "/fromPC", verb: 'get'}
     });
   WeChatUser.remoteMethod('fromWechat',
     {
@@ -71,7 +71,7 @@ module.exports = function (WeChatUser) {
    * @param  {String} next){		var referer       [description]
    * @return {[type]}              [description]
    */
-  WeChatUser.beforeRemote("formPC", function (ctx, unused, next) {
+  WeChatUser.beforeRemote("fromPC", function (ctx, unused, next) {
     getTicket(function (err, ticket) {
       var url = client.getAuthorizeURL(config.wechat.redrectUrl + '/api/WeChatUsers/oauth', ticket, 'snsapi_userinfo');
       ctx.res.send({state: ticket, qrcodeUrl: url});

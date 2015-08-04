@@ -139,7 +139,7 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
-      "property": "fromPc"
+      "property": "fromPC"
     },
     {
       "principalType": "ROLE",
