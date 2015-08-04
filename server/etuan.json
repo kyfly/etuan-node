@@ -2,7 +2,7 @@
   "wechat": {
     "appid": "wx809e719f43b30edf",
     "appsecret": "cceb290d7b8fea3dbc7289963b189d05",
-    "redrectUrl": "http://beta.etuan.org"
+    "redrectUrl": "http://www.etuan.org"
   },
   "oss": {
     "accessKeyId": "ILhh2EX7UnN2UI1t",
