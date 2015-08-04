@@ -1,4 +1,4 @@
-var config = require('../../server/config');
+var config = require('../../server/etuan');
 var wechatOauth = require('wechat-oauth');
 var hduConfim = require('../modules/hdu-student.js');
 var client = new wechatOauth(config.wechat.appid, config.wechat.appsecret);
@@ -73,7 +73,7 @@ module.exports = function (WeChatUser) {
    */
   WeChatUser.beforeRemote("formPC", function (ctx, unused, next) {
     getTicket(function (err, ticket) {
-      var url = client.getAuthorizeURL('http://beta.etuan.org/api/WeChatUsers/oauth', ticket, 'snsapi_userinfo');
+      var url = client.getAuthorizeURL(config.wechat.redrectUrl + '/api/WeChatUsers/oauth', ticket, 'snsapi_userinfo');
       ctx.res.send({state: ticket, qrcodeUrl: url});
     });
   });
@@ -87,7 +87,7 @@ module.exports = function (WeChatUser) {
    */
   WeChatUser.beforeRemote('fromWechat', function (ctx, unused, next) {
     getTicket(function (err, ticket) {
-      var url = client.getAuthorizeURL('http://beta.etuan.org/api/WeChatUsers/phoneoauth?', ticket, 'snsapi_userinfo');
+      var url = client.getAuthorizeURL(config.wechat.redrectUrl + '/api/WeChatUsers/phoneoauth?', ticket, 'snsapi_userinfo');
       ctx.res.redirect(url);
     });
   });

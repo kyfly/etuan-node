@@ -25,14 +25,5 @@
     "errorHandler": {
       "disableStackTrace": false
     }
-  },
-  "wechat": {
-    "appid": "wx5d92b3c192f993e7",
-    "appsecret": "ec1fde1a2cac7b6d6cced695df6e5e92"
-  },
-  "oss": {
-    "accessKeyId": "ILhh2EX7UnN2UI1t",
-    "secretAccessKey": "L46bpHJOvK4BRxgvWf7RnllvaOq1sq",
-    "url": "http://static.etuan.org/"
   }
 }
