@@ -12,6 +12,8 @@
   </script>
   <link rel="stylesheet" href="/lib/bootstrap/css/etuan.css"/>
   <script src="/lib/angular/angular.min.js"></script>
+  <script src="/lib/angular-components/angular-sanitize.min.js"></script>
+  <script src="/lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
   <script src="/lib/angular-components/angular-resource.min.js"></script>
   <script src="/js/vote/app.js"></script>
   <style>
@@ -42,15 +44,70 @@
     .checkbox {
       text-decoration: none;
     }
+
+    .detailOpen {
+      margin-top: -8px;
+      color: #0000CC;
+    }
   </style>
 </head>
 <body>
+<!--头部-->
+<header id="nav" ng-controller="headCtrl">
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button class="navbar-toggle" ng-click="isCollapsed = !isCollapsed" type="button">
+            <span class="sr-only">导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <h5>
+            <a href="/index.html">
+              <img src="http://img.kyfly.net/common/logo/etuan-logo-word.png@60h.png" height="30px" alt="团团一家LOGO">
+            </a>
+          </h5>
+        </div>
+        <div collapse="isCollapsed" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/index.html">首页</a>
+            </li>
+            <li>
+              <a href="/organizationList.html">组织</a>
+            </li>
+            <li>
+              <a href="/activityList.html">活动</a>
+            </li>
+            <li>
+              <a href="/formList.html">表单</a>
+            </li>
+            <li>
+              <a href="/seckillList.html">疯抢</a>
+            </li>
+            <li>
+              <a href="/voteList.html">投票</a>
+            </li>
+            <li>
+              <a href="/admin">管理后台</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
 <div class="container bg_white">
   <div class="col-md-8 col-md-offset-2">
     <h1>{{vote.title}}</h1>
     <h4>{{vote.description}}</h4>
+
     <p>最大投票数：{{vote.maxVote}}</p>
+
     <p>开始时间：{{startTime | date:cnFormat}}</p>
+
     <p>结束时间：{{stopTime | date:cnFormat}}</p>
     <hr>
     <form class="form-horizontal">
@@ -59,17 +116,34 @@
           <label>
             &nbsp;&nbsp;&nbsp;
             <input type="checkbox" ng-model="answer[$index]" ng-true-value="true" ng-false-value="false">
-            {{$index+1}}.&nbsp;{{vsb.name}}<a href="{{vsb.detailUrl}}">&nbsp;&nbsp;<span title="查看详情" class="glyphicon glyphicon-link"></span></a>
+            {{$index+1}}.&nbsp;{{vsb.name}}
+            <button class="detailOpen btn btn-default" ng-click="open($index)"><span title="查看详情"
+                                                                                     class="glyphicon glyphicon-link"></span>
+            </button>
           </label>
         </div>
       </div>
       <div class="form-group">
         <br>
-        <div class="col-sm-2 col-md-offset-2">
-          <button class="btn btn-block btn-success" ng-click="submit()">提交</button>
+
+        <div class="col-sm-12 text-center">
+          <button class="btn btn-block btn-success col-sm-2" ng-click="submit()">提交</button>
         </div>
       </div>
     </form>
+
+    <script type="text/ng-template" id="myModalContent.html">
+      <div class="modal-header">
+        <h3 class="modal-title">简介</h3>
+      </div>
+      <div class="modal-body">
+        <div ng-bind-html="content" style="width: 100%;overflow: auto"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()">关闭</button>
+      </div>
+    </script>
+
     <br>
     <hr>
     <div class="text-center footer">

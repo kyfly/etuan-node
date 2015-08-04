@@ -29,11 +29,18 @@
     .navbar {
       background-color: #FFFFFF;
     }
+
     .navbar-nav > li:hover {
       background-color: #EEEEEE;
     }
+
     .thumbnail {
       margin-top: 15px;
+    }
+
+    .listhead {
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
   </style>
 </head>
@@ -101,10 +108,12 @@
     <tabset justified="true">
       <tab heading="校级组织">
 
-        <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="olt in olts" ng-show = "olt.type === '校级组织'">
+        <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="olt in olts" ng-show="olt.type === '校级组织'">
           <a ng-href="/organization#?id={{olt.id}}" ng-click="">
             <div class="thumbnail borderDiv">
-              <p class="listhead" ng-bind="olt.name"></p>
+              <p class="listhead">
+              <nobr>{{olt.name}}</nobr>
+              </p>
               <img class="regLogo" ng-src="{{olt.logoUrl}}">
 
               <p class="status text-success">查看详情</p>
@@ -115,10 +124,12 @@
       </tab>
       <tab heading="校级社团">
 
-        <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="olt in olts" ng-show = "olt.type === '校级社团'">
+        <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="olt in olts" ng-show="olt.type === '校级社团'">
           <a ng-href="/organization#?id={{olt.id}}" ng-click="">
             <div class="thumbnail borderDiv">
-              <p class="listhead" ng-bind="olt.name"></p>
+              <p class="listhead">
+              <nobr>{{olt.name}}</nobr>
+              </p>
               <img class="regLogo" ng-src="{{olt.logoUrl}}">
 
               <p class="status text-success">查看详情</p>
@@ -129,10 +140,12 @@
       </tab>
       <tab heading="院级组织">
 
-        <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="olt in olts" ng-show = "olt.type === '院级组织'">
+        <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="olt in olts" ng-show="olt.type === '院级组织'">
           <a ng-href="/organization#?id={{olt.id}}" ng-click="">
             <div class="thumbnail borderDiv">
-              <p class="listhead" ng-bind="olt.name"></p>
+              <p class="listhead">
+              <nobr>{{olt.name}}</nobr>
+              </p>
               <img class="regLogo" ng-src="{{olt.logoUrl}}">
 
               <p class="status text-success">查看详情</p>
@@ -143,10 +156,12 @@
       </tab>
       <tab heading="院级社团">
 
-        <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="olt in olts" ng-show = "olt.type === '院级社团'">
+        <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="olt in olts" ng-show="olt.type === '院级社团'">
           <a ng-href="/organization#?id={{olt.id}}" ng-click="">
             <div class="thumbnail borderDiv">
-              <p class="listhead" ng-bind="olt.name"></p>
+              <p class="listhead">
+              <nobr>{{olt.name}}</nobr>
+              </p>
               <img style="height: 150px; width: 150px" ng-src="{{olt.logoUrl}}">
 
               <p class="status text-success">查看详情</p>

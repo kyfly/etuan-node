@@ -10,21 +10,6 @@
   <link rel="shortcut icon" href="img/etuan_logo.ico" type="image/x-icon">
   <link href="lib/bootstrap/css/etuan.css" rel="stylesheet">
   <link href="css/staticList.css" rel="stylesheet">
-  <!--[if lt IE 9]>
-  <script>
-    document.write('<h2>您的浏览器版本过低</h2><p>本网站不支持IE8及以下版本，请更换浏览器！</p><p>若已使用高版本浏览器，请关闭兼容模式。</p>');
-    document.execCommand("stop");
-  </script>
-  <![endif]-->
-  <script>
-    var _hmt = _hmt || [];
-    (function () {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?76a5edb5c9902d7c2e38f7a723060cff";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
 </head>
 <body>
 <!--头部-->
@@ -90,7 +75,7 @@
     <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="skl in skls">
       <a ng-href="/seckill#?id={{skl.id}}" ng-click="sklView(skl.id)">
         <div class="thumbnail borderDiv">
-          <p class="listhead" ng-bind="skl.title"></p>
+          <p class="listhead"><nobr>{{skl.title}}</nobr></p>
           <img class="regLogo" ng-src="{{skl.logoUrl}}">
 
           <p class="status text-{{skl.textColor}}" ng-bind="skl.activityStatus"></p>

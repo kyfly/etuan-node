@@ -65,6 +65,11 @@
       width: 150px;
     }
 
+    .listName {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
     .footer {
       margin-bottom: 15px;
       font-size: 20px;
@@ -136,7 +141,9 @@
       <a ng-href="/activity/#?id={{alt.id}}" ng-click="">
         <div class="thumbnail">
           <div class="text-center">
-            <h4 ng-bind="alt.title"></h4>
+            <h4 class="listName">
+              <nobr>{{alt.title}}</nobr>
+            </h4>
           </div>
           <img ng-src="{{alt.logoUrl}}" alt="{{alt.title}}">
           <h4 class="statusText text-{{alt.textColor}}" ng-bind="alt.activityStatus"></h4>
@@ -155,7 +162,9 @@
       <a ng-href="/form/#?id={{flt.id}}" ng-click="fltView(flt.id)">
         <div class="thumbnail">
           <div class="text-center">
-            <h4 ng-bind="flt.title"></h4>
+            <h4 class="listName">
+              <nobr>{{flt.title}}</nobr>
+            </h4>
           </div>
           <img ng-src="{{flt.logoUrl}}" alt="{{flt.title}}">
           <h4 class="statusText text-{{flt.textColor}}" ng-bind="flt.activityStatus"></h4>
@@ -174,7 +183,9 @@
       <a ng-href="/seckill/#?id={{skl.id}}" ng-click="sklView(skl.id)">
         <div class="thumbnail">
           <div class="text-center">
-            <h4 ng-bind="skl.title"></h4>
+            <h4 class="listName">
+              <nobr>{{skl.title}}</nobr>
+            </h4>
           </div>
           <img ng-src="{{skl.logoUrl}}" alt="{{skl.title}}">
           <h4 class="statusText text-{{skl.textColor}}" ng-bind="skl.activityStatus"></h4>
@@ -194,7 +205,9 @@
       <a ng-href="/vote/#?id={{vlt.id}}" ng-click="vltView(vlt.id)">
         <div class="thumbnail">
           <div class="text-center">
-            <h4 ng-bind="vlt.title"></h4>
+            <h4 class="listName">
+              <nobr>{{vlt.title}}</nobr>
+            </h4>
           </div>
           <img ng-src="{{vlt.logoUrl}}" alt="{{vlt.title}}">
           <h4 class="statusText text-{{vlt.textColor}}" ng-bind="vlt.activityStatus"></h4>
@@ -213,8 +226,8 @@
 
 </div>
 
-<script src="lib/angular/angular.min.js"></script>
-<script src="lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
-<script src="js/index.js"></script>
+<script src="/lib/angular/angular.min.js"></script>
+<script src="/lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
+<script src="/js/index.js"></script>
 </body>
 </html>
