@@ -3,7 +3,7 @@ var os = require('os');
 var Path = require('path');
 var Busboy = require('busboy');
 var ALY = require('aliyun-sdk');
-var OSS = require('../../server/config').oss;
+var OSS = require('../../server/etuan').oss;
 var oss = new ALY.OSS({
   "accessKeyId": OSS.accessKeyId,
   "secretAccessKey": OSS.secretAccessKey,
