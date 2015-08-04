@@ -32,7 +32,6 @@ module.exports = function(OrganizationUser) {
 
 	//浏览人数
 	OrganizationUser.viewCount = function(token, cb) {
-		console.log(token);
 		accessTokenCheck(token, cb, function(organizationUser) {
 			var Form = OrganizationUser.app.models.Form;
 			var Vote = OrganizationUser.app.models.Vote;
@@ -232,24 +231,68 @@ module.exports = function(OrganizationUser) {
   });
   
   //帮用户修改密码
-  	OrganizationUser.resetpwd = function(email,newpassword, cb) {
-	  newpassword = OrganizationUser.hashPassword(newpassword);//加密
-		OrganizationUser.updateAll({email:email} ,{password:newpassword},function(err,info){
-		//有一个问题就是updateAll找不到匹配的也不报错
-		if(err)
-			cb(null, false);
-		else
-			cb(null, true);
-		});
+  OrganizationUser.resetpwd = function(email, oldpwd, newpwd, cb) {
+	  newpassword = OrganizationUser.hashPassword(newpwd);//加密
+	  OrganizationUser.findOne({where: {email: email}}, function (err, userInstance) {
+	  	if (err)
+	  		cb(err.message);
+	  	else if (!userInstance)
+	  		cb('不存在改邮箱');
+	  	else
+	  		userInstance.hasPassword(oldpwd, function (err, isMatch) {
+	  			if (isMatch)
+	  				OrganizationUser.updateAll(
+			  			{email:email} ,
+			  			{password:newpassword},
+			  			function(err,info){
+			  				if(err)
+									cb('修改密码失败' + err.message);
+								else
+									cb(null, 'success');
+			  			}
+			  		);
+	  			else
+	  				cb('原密码不对');
+	  		});
+	  });
 	};
 
 	OrganizationUser.remoteMethod('resetpwd', {
 		accepts: [
-			{arg: 'email', type: 'String'},
-			{arg: 'newpassword', type: 'String'}
+			{arg: 'email', type: 'string'},
+			{arg: 'oldpwd', type: 'string'},
+			{arg: 'newpwd', type: 'string'}
 		],
-		returns: {arg: 'status', type: 'Boolean'},
+		returns: {arg: 'status', type: 'string'},
 		http: {verb: 'post', path: '/resetpwd'}
+	});
+	OrganizationUser.rePwd = function (email, newpwd, cb) {
+		newpassword = OrganizationUser.hashPassword(newpwd);
+		OrganizationUser.findOne({where: {email: email}}, function (err, userInstance) {
+	  	if (err)
+	  		cb(err.message);
+	  	else if (!userInstance)
+	  		cb('不存在改邮箱');
+	  	else
+	  		OrganizationUser.updateAll(
+	  			{email:email} ,
+	  			{password:newpassword},
+	  			function(err,info){
+	  				if(err)
+							cb(err.message);
+						else
+							cb(null, 'success');
+	  			}
+	  		);
+	  });
+	}
+	OrganizationUser.remoteMethod('rePwd', {
+		accepts: [
+			{arg: 'email', type: 'string'},
+			{arg: 'newpwd', type: 'string'}
+		],
+		returns: {arg: 'status', type: 'string'},
+		http: {verb: 'post', path: '/rePwd'}
 	});
   
 };

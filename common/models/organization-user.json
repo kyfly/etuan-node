@@ -318,9 +318,15 @@
     },
     {
       "principalType": "ROLE",
-      "principalId": "admin",
+      "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "resetpwd"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "rePwd"
     }
   ],
   "methods": []

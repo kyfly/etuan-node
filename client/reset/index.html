@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>团团一家-密码修改</title>
+  <script src="/lib/angular/angular.min.js"></script>
+  <script src="/lib/angular-components/angular-resource.min.js"></script>
+  <script src="/js/reset/app.js"></script>
+</head>
+<body>
+  <div ng-controller="ResetCtrl">
+    <form>
+    邮箱：<input type="text" ng-model='email'>
+    旧密码：<input type="text" ng-model='oldpwd'>
+    新密码：<input type="text" ng-model='newpwd'>
+    <button ng-click="resetPwd()">提交</button>
+  </form>
+  </div>
+</body>
+</html>
