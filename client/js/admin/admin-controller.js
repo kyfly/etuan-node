@@ -330,28 +330,28 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     choice: function () {
       $scope.forms.push({
         type: 1,
-        label: '请选择你的答案',
+        label: '',
         content: ['A-', 'B-', 'C-', 'D-']
       });
     },
     simple: function () {
       $scope.forms.push({
         type: 2,
-        label: '请简答你的答案',
+        label: '',
         content: []
       });
     },
     complex: function () {
       $scope.forms.push({
         type: 3,
-        label: '请陈述你的答案',
+        label: '',
         content: []
       });
     },
     judge: function () {
       $scope.forms.push({
         type: 4,
-        label: '请判断你的答案',
+        label: '',
         content: ['是', '否']
       });
     },
@@ -475,7 +475,7 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
   $scope.addSeckill = function () {
     $scope.seckills.push({
       startDate: '',
-      total: 0,
+      total: '',
       seckillStartDateOpen: function ($event) {
         $event.preventDefault();
         $event.stopPropagation();
@@ -494,7 +494,7 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
   $scope.votes = [];
   $scope.addVote = function () {
     $scope.votes.push({
-      'name': '这是一个投票项',
+      'name': '',
       'detailUrl': ''
     });
   };
