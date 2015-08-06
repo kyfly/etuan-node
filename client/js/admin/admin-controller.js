@@ -31,7 +31,7 @@ function NavbarCtrl($scope, $window, $resource, etuanAdmin) {
   $scope.etuanLogo = "/img/full-logo.png";
   //获取社团基本信息的接口，可以用于显示右上角信息
   var Organization = $resource(
-    '/api/OrganizationUsers/:userId', {
+    '/api/OrganizationUsers/:userId' + '?access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, {
       userId: etuanAdmin.cache.userId
     }
   );
@@ -825,15 +825,15 @@ function HomeCtrl($scope, $resource) {
   ];
   //获得接口并进行显示
   var token = JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken;
-  $resource("/api/OrganizationUsers/actCount?token=%22" + token + "%22&access_token=" + token).get({}, function (res) {
+  $resource("/api/OrganizationUsers/actCount?token=" + token + "&access_token=" + token).get({}, function (res) {
     $scope.actCount = res.actCount.actCount;
   }, function () {
   });
-  $resource("/api/OrganizationUsers/viewCount?token=%22" + token + "%22&access_token=" + token).get({}, function (res) {
+  $resource("/api/OrganizationUsers/viewCount?token=" + token + "&access_token=" + token).get({}, function (res) {
     $scope.viewCount = res.viewCount.viewCount;
   }, function () {
   });
-  $resource("/api/OrganizationUsers/parCount?token=%22" + token + "%22&access_token=" + token).get({}, function (res) {
+  $resource("/api/OrganizationUsers/parCount?token=" + token + "&access_token=" + token).get({}, function (res) {
     $scope.parCount = res.parCount.parCount;
   }, function () {
   });
