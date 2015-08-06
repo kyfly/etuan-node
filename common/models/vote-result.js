@@ -1,18 +1,6 @@
 module.exports = function(VoteResult) {
-
     var Q = require('q');
-
-    function findOne(model, condition) {
-        return Q.Promise(function(resolve, reject, notify) {
-            model.findOne(condition, function(err, obj) {
-                if(err) {
-                    reject(err);
-                }else {
-                    resolve(obj);
-                }
-            });
-        });
-    }
+    var findOne = require('../modules/Promise.js').findOne;
 
     //vote-result检查１．微信绑定　２．最大投票数　３．已经投票 4.开始时间结束时间
     VoteResult.observe('before save', function(ctx, next) {
@@ -50,7 +38,6 @@ module.exports = function(VoteResult) {
             var weChatUser = data[1];
             switch(vote.verifyRule){
                 case 'studentId':
-                    console.log(weChatUser);
                     if(weChatUser.studentId) {
                         return findOne(VoteResult, {where: {weChatUid: ctx.instance.weChatUid, studentId: weChatUser.studentId}});
                     }
