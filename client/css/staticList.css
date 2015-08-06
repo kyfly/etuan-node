@@ -50,6 +50,18 @@ html {
   padding: 13px;
 }
 
+.navbar {
+  background-color: #FFFFFF;
+}
+
+.navbar-nav > li:hover {
+  background-color: #EEEEEE;
+}
+
+.thumbnail {
+  margin-top: 15px;
+}
+
 .regLogo {
   width: 150px !important;
   height: 150px !important;
