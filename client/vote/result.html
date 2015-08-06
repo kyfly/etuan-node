@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html ng-app="app" ng-controller="OrganizationCtrl">
+<html ng-app="app" ng-controller="VoteCtrl">
 <head>
-  <title>{{title}} - 团团一家</title>
+  <title>{{title}} - 结果</title>
   <link rel="icon" href="/img/etuan_logo.ico" type="image/x-icon">
   <link rel="shortcut icon" href="/img/etuan_logo.ico" type="image/x-icon">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -11,10 +11,11 @@
     loginCheck('d2VjaGF0');
   </script>
   <link rel="stylesheet" href="/lib/bootstrap/css/etuan.css"/>
-  <script src="/lib/angular/angular.js"></script>
+  <script src="/lib/angular/angular.min.js"></script>
+  <script src="/lib/angular-components/angular-sanitize.min.js"></script>
   <script src="/lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
-  <script src="/lib/angular-components/angular-resource.js"></script>
-  <script src="/js/organization/app.js"></script>
+  <script src="/lib/angular-components/angular-resource.min.js"></script>
+  <script src="/js/vote/result.js"></script>
   <style>
     html {
       min-height: 100%;
@@ -23,7 +24,7 @@
 
     body {
       font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
-      background-color: #a8d154;
+      background-color: #66ccff;
       min-height: 100%;
       height: 100%;
     }
@@ -38,6 +39,15 @@
     .footer {
       font-size: 20px;
       margin-bottom: 15px;
+    }
+
+    .checkbox {
+      text-decoration: none;
+    }
+
+    .detailOpen {
+      margin-top: -8px;
+      color: #0000CC;
     }
   </style>
 </head>
@@ -91,14 +101,59 @@
 </header>
 <div class="container bg_white">
   <div class="col-md-8 col-md-offset-2">
-    <div class="text-center">
-      <h1>{{name}}</h1>
-      <br>
-      <img class="img-circle" ng-src="{{logoUrl}}" alt="{{name}}" height="150px" width="150px">
-      <br><br>
+    <h1>{{vote.title}}</h1>
+    <h4>{{vote.description}}</h4>
 
-      <p>简介：{{description}}</p>
-    </div>
+    <p>最大投票数：{{vote.maxVote}}</p>
+
+    <p>开始时间：{{startTime | date:cnFormat}}</p>
+
+    <p>结束时间：{{stopTime | date:cnFormat}}</p>
+    <hr>
+    <!--<form class="form-horizontal">-->
+      <!--<div class="form-group" ng-repeat="voteResult in voteResults">-->
+        <!--<div class="checkbox">-->
+          <!--<label>-->
+            <!--{{$index+1}}.&nbsp;{{voteResult.name}}-->
+            <!--<button class="detailOpen btn btn-default" ng-click="open($index)"><span title="查看详情"-->
+                                                                                     <!--class="glyphicon glyphicon-link"></span>-->
+            <!--</button>-->
+          <!--</label>-->
+          <!--<div>：{{voteResult.count}}票</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</form>-->
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>序号</th>
+        <th>名称</th>
+        <th>数量</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="result in voteResults track by $index">
+        <td>{{$index+1}}</td>
+        <td>{{result.name}}</td>
+        <td>{{result.count}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <script type="text/ng-template" id="myModalContent.html">
+      <div class="modal-header">
+        <h3 class="modal-title">简介</h3>
+      </div>
+      <div class="modal-body">
+        <div ng-bind-html="content" style="width: 100%;overflow: auto"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()">关闭</button>
+      </div>
+    </script>
+
+    <br>
     <hr>
     <div class="text-center footer">
       <img src="/img/full-logo.png" height="25px" alt="团团一家LOGO">&nbsp;提供技术支持
