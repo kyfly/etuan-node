@@ -99,6 +99,20 @@ a:link {
   min-height: 90%;
 }
 
+.mainBox {
+  transition: 0.2s;
+  -webkit-transition: 0.2s;
+  -o-transition: 0.2s;
+  -moz-transition: 0.2s;
+}
+
+.mainBox:hover {
+  transform: scale(1.05,1.05);
+  -webkit-transform: scale(1.05,1.05);
+  -o-transform: scale(1.05,1.05);
+  -moz-transform: scale(1.05,1.05);
+}
+
 @media screen and (min-width: 1400px) {
   #title1 {
     margin-top: 100px;

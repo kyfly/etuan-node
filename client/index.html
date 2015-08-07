@@ -76,6 +76,20 @@
       line-height: 150px;
     }
 
+    .mainBox {
+      transition: 0.2s;
+      -webkit-transition: 0.2s;
+      -o-transition: 0.2s;
+      -moz-transition: 0.2s;
+    }
+
+    .mainBox:hover {
+      transform: scale(1.05,1.05);
+      -webkit-transform: scale(1.05,1.05);
+      -o-transform: scale(1.05,1.05);
+      -moz-transform: scale(1.05,1.05);
+    }
+
   </style>
 </head>
 <body>
@@ -137,7 +151,7 @@
     <a class="col-xs-4 col-sm-2" href="activityList.html"><i>查看更多»</i></a>
   </div>
   <div class="contentRow col-xs-12">
-    <div ng-repeat="alt in alts.slice(0,4)" class="col-sm-6 col-md-3">
+    <div ng-repeat="alt in alts.slice(0,4)" class="col-sm-6 col-md-3 mainBox">
       <a ng-href="/activity/#?id={{alt.id}}" ng-click="">
         <div class="thumbnail">
           <div class="text-center">
@@ -158,7 +172,7 @@
     <a class="col-xs-4 col-sm-2" href="formList.html"><i>查看更多»</i></a>
   </div>
   <div class="contentRow col-xs-12">
-    <div ng-repeat="flt in flts.slice(0,4)" class="col-sm-6 col-md-3">
+    <div ng-repeat="flt in flts.slice(0,4)" class="col-sm-6 col-md-3 mainBox">
       <a ng-href="/form/#?id={{flt.id}}" ng-click="fltView(flt.id)">
         <div class="thumbnail">
           <div class="text-center">
@@ -179,7 +193,7 @@
     <a class="col-xs-4 col-sm-2" href="seckillList.html"><i>查看更多»</i></a>
   </div>
   <div class="contentRow col-xs-12">
-    <div class="col-sm-6 col-md-3" ng-repeat="skl in skls.slice(0,4)">
+    <div class="col-sm-6 col-md-3 mainBox" ng-repeat="skl in skls.slice(0,4)">
       <a ng-href="/seckill/#?id={{skl.id}}" ng-click="sklView(skl.id)">
         <div class="thumbnail">
           <div class="text-center">
@@ -201,7 +215,7 @@
   </div>
   <div class="contentRow col-xs-12">
 
-    <div ng-repeat="vlt in vlts.slice(0,4)" class="col-sm-6 col-md-3">
+    <div ng-repeat="vlt in vlts.slice(0,4)" class="col-sm-6 col-md-3 mainBox">
       <a ng-href="/vote/#?id={{vlt.id}}" ng-click="vltView(vlt.id)">
         <div class="thumbnail">
           <div class="text-center">

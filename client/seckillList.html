@@ -74,7 +74,7 @@
     <tabset justified="true">
       <tab heading="全部疯抢">
 
-        <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="skl in skls">
+        <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="skl in skls">
           <a ng-href="/seckill#?id={{skl.id}}" ng-click="sklView(skl.id)">
             <div class="thumbnail borderDiv">
               <p class="listhead"><nobr>{{skl.title}}</nobr></p>
@@ -89,7 +89,7 @@
 
       <tab heading="即将开始">
 
-        <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="skl in skls" ng-show="skl.activityStatus === '即将开始'">
+        <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="skl in skls" ng-show="skl.activityStatus === '即将开始'">
           <a ng-href="/seckill#?id={{skl.id}}" ng-click="sklView(skl.id)">
             <div class="thumbnail borderDiv">
               <p class="listhead"><nobr>{{skl.title}}</nobr></p>
@@ -104,7 +104,7 @@
 
       <tab heading="正在进行">
 
-        <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="skl in skls" ng-show="skl.activityStatus === '正在进行'">
+        <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="skl in skls" ng-show="skl.activityStatus === '正在进行'">
           <a ng-href="/seckill#?id={{skl.id}}" ng-click="sklView(skl.id)">
             <div class="thumbnail borderDiv">
               <p class="listhead"><nobr>{{skl.title}}</nobr></p>
@@ -119,7 +119,7 @@
 
       <tab heading="已经结束">
 
-        <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="skl in skls" ng-show="skl.activityStatus === '已经结束'">
+        <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="skl in skls" ng-show="skl.activityStatus === '已经结束'">
           <a ng-href="/seckill#?id={{skl.id}}" ng-click="sklView(skl.id)">
             <div class="thumbnail borderDiv">
               <p class="listhead"><nobr>{{skl.title}}</nobr></p>
