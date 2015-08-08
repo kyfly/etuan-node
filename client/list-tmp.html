@@ -8,7 +8,7 @@
   <script type="text/javascript">
     loginCheck('d2VjaGF0');
   </script>
-  <script src="/lib/angular/angular.min.js"></script>
+  <script src="http://static.etuan.org/lib/angular/angular.min.js"></script>
   <script>
     angular.module('app', []).controller('fltCtrl', ['$scope', '$http', function ($scope, $http) {
       $http.get('/api/Forms').success(function (res) {
