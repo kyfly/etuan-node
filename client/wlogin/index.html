@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>团团一家 - 用户登录</title>
+  <link rel="stylesheet" href="/css/wclogin.css">
+</head>
+<body>
+<div id="login_container">
+  <div class="main">
+    <div class="loginPanel normalPanel">
+      <div class="title">
+        <p>微信登录</p>
+      </div>
+      <div class="waiting panelContent">
+        <div class="qrcodeContent" style="position:relative;">
+          <div id="qrcode"></div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="normlDesc loginTip pngBackground" style="position:relative;">
+          <p id="logstatus">请使用微信扫描二维码以登录</p>
+        </div>
+      </div>
+      <div class="footer">
+        <p><hr style="border:1px solid #242627; opacity: 0.2;">www.etuan.org&nbsp;&nbsp;团团一家</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/qrcode.min.js"></script>
+<script src="/js/login/wcapp.js"></script>
+</body>
+</html>
