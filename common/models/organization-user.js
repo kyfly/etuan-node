@@ -130,7 +130,7 @@ module.exports = function(OrganizationUser) {
 	};
 
 	OrganizationUser.remoteMethod('list', {
-		returns: {arg: 'orgs', type: 'String'},
+		returns: {arg: 'orgs', type: 'string'},
 		http: {verb: 'get'}
 	});
 
@@ -145,8 +145,8 @@ module.exports = function(OrganizationUser) {
 	}
 
 	OrganizationUser.remoteMethod('detail', {
-		accepts: {arg: 'id', type: 'String'},
-		returns: {arg: 'org', type: 'String'},
+		accepts: {arg: 'id', type: 'string'},
+		returns: {arg: 'org', type: 'string'},
 		http: {verb: 'get', path: '/detail/:id'}
 	});
 
@@ -169,8 +169,8 @@ module.exports = function(OrganizationUser) {
 	}
 
 	OrganizationUser.remoteMethod('emailExist', {
-		accepts: {arg: 'email', type: 'String'},
-		returns: {arg: 'exist', type: 'Boolean'},
+		accepts: {arg: 'email', type: 'string'},
+		returns: {arg: 'exist', type: 'boolean'},
 		http: {verb: 'get', path: '/email/exist'}
 	});
 
@@ -184,8 +184,8 @@ module.exports = function(OrganizationUser) {
 	});
 
 	OrganizationUser.remoteMethod('nameExist', {
-		accepts: {arg: 'name', type: 'String'},
-		returns: {arg: 'exist', type: 'Boolean'},
+		accepts: {arg: 'name', type: 'string'},
+		returns: {arg: 'exist', type: 'boolean'},
 		http: {verb: 'get', path: '/name/exist'}
 	});
 
