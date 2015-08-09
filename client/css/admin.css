@@ -248,6 +248,12 @@ body {
 }
 
 .qrcode > img {
-  width: 150px;
-  height: 150px;
+  width: 175px;
+  height: 175px;
+}
+
+@media screen and (max-width: 768px) {
+  .qrcode {
+    top: 0;
+  }
 }
