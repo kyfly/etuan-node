@@ -121,7 +121,7 @@ module.exports = function(OrganizationUser) {
 
 	//获取组织列表，返回特定的字段，防止敏感信息外泄
 	OrganizationUser.list = function(cb) {
-		OrganizationUser.find({ fields: {id:1, name: 1, logoUrl: 1, type: 1, school: 1} }, function(err, orgs) {
+		OrganizationUser.find({ fields: {id:1, name: 1, logoUrl: 1, type: 1, school: 1, internalOrder: 1} }, function(err, orgs) {
 			if(err)
 				cb(null, '获取组织列表失败');
 			else
