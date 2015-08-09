@@ -673,14 +673,21 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         break;
     }
     if ($routeParams.id === 'create') {
-      Edit.save(uploadParameters);
+      Edit.save(uploadParameters, function () {
+        alert("创建"+ $scope.cnType + '成功！');
+      }, function () {
+        alert("创建"+ $scope.cnType + '失败！');
+      });
     }
     else {
-      Edit.update({fk: $routeParams.id}, uploadParameters);
+      Edit.update({fk: $routeParams.id}, uploadParameters, function () {
+        alert("更新"+ $scope.cnType + '成功！');
+        window.history.back();
+      }, function () {
+        alert("更新"+ $scope.cnType + '失败！');
+        window.history.back();
+      });
     }
-    var mode = $routeParams.id === 'create' ? '创建' : '更新';
-    alert(mode + $scope.cnType + '成功！');
-    window.history.back();
   };
 
   $scope.preview = function () {

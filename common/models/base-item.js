@@ -9,7 +9,7 @@ module.exports = function(BaseItem) {
 		var loopback = require('loopback');
 	        var context = loopback.getCurrentContext();
 	        var currentUser = context && context.get('currentUser');
-	        if(currentUser) {
+	        if(currentUser && currentUser.university && currentUser.school && currentUser.type) {
 			ctx.instance.university = currentUser.university;
 			ctx.instance.type = currentUser.type;
 			ctx.instance.school = currentUser.school;
