@@ -5,7 +5,7 @@
     </section>
   </div>
   <div class="col-lg-3 col-md-4 col-sm-6 repeat-item" ng-repeat="listItem in listItems">
-    <section class="panel list-item">
+    <section class="panel list-item" id="{{listItem.id}}" ng-mouseover="getQRcode()">
       <h3 ng-show="contentShow[0]" style="word-break:break-word">{{listItem.title | limitTo:20}}</h3>
 
       <p ng-show="contentShow[2]">开始：{{listItem.startTime | date:unFormat}}</p>

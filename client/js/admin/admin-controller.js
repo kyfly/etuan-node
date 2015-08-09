@@ -131,6 +131,13 @@ function ListCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
   $scope.unFormat = etuanAdmin.datetime.unFormat;
   //请求获取信息
   $scope.listItems = List.query();
+  $scope.getQRcode = function () {
+    var url = $window.location.host + $routeParams.type + '/#?id=' + this.listItem.id;
+    var qr = qrcode(12, 'L');
+    qr.addData(url);
+    qr.make();
+    document.getElementById(this.listItem.id).innerHTML = qr.createImgTag(4, 12);
+  }
   //编辑按钮操作函数
   $scope.edit = function (id) {
     $window.location.hash = '#/' + $routeParams.type + '/edit/' + id;
