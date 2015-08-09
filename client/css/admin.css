@@ -236,6 +236,14 @@ body {
 }
 
 .qrcode {
+  position: absolute;
+  left: 15px;
+  top: 20px;
+  right: 15px;
+  bottom: 30px;
+  color: #ffffff;
+  border-radius: 4px 4px 0 0;
+  background-color: rgba(0,0,0,.6);
   text-align: center;
 }
 
