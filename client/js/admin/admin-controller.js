@@ -133,7 +133,7 @@ function ListCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
   //请求获取信息
   $scope.listItems = List.query();
   $scope.getQRcode = function () {
-    var url = 'http://' + $window.location.host + $routeParams.type + '/#?id=' + this.listItem.id;
+    var url = 'http://' + $window.location.host + '/' + $routeParams.type + '/#?id=' + this.listItem.id;
     var qr = qrcode(4, 'L');
     qr.addData(url);
     qr.make();
