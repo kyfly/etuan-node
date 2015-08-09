@@ -133,12 +133,21 @@ function ListCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
   //请求获取信息
   $scope.listItems = List.query();
   $scope.getQRcode = function () {
+<<<<<<< HEAD
     $scope.mouseover = true;
     var url = $window.location.host + $routeParams.type + '/#?id=' + this.listItem.id;
     var qr = qrcode(12, 'L');
     qr.addData(url);
     qr.make();
     document.getElementById(this.listItem.id).innerHTML ='<br>' +  '分享二维码' + '<br>' + '<br>' + qr.createImgTag(4, 12);
+=======
+    var url = 'http://' + $window.location.host + '/' + $routeParams.type + '/#?id=' + this.listItem.id;
+    var qr = qrcode(4, 'L');
+    qr.addData(url);
+    qr.make();
+    document.getElementById(this.listItem.id).innerHTML ='<br>' +  '分享二维码' + '<br>' + '<br>' + qr.createImgTag(4, 12);
+    $scope.mouseOver = true;
+>>>>>>> 1c3ec2940d29e758532fd27366114e3c4c346ec5
   };
 
   $scope.mouseleave = function () {

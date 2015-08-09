@@ -4,71 +4,41 @@ var nowTime = new Date().getTime();
 app.controller('headCtrl', function ($scope) {
   $scope.isCollapsed = true;
 });
-
+function StatusFun (ActType) {
+  for (var i = 0; i < ActType.length; i++) {
+    if(ActType[i].startTime.indexOf('-'))
+      ActType[i].startTime = ActType[i].startTime.replace(/-/g,"/");
+    if(ActType[i].stopTime.indexOf('-'))
+      ActType[i].stopTime = ActType[i].stopTime.replace(/-/g,"/");
+    if (new Date(ActType[i].startTime).getTime() > nowTime) {
+      ActType[i].activityStatus = "即将开始";
+      ActType[i].textColor = "warning";
+    } else if (new Date(ActType[i].stopTime).getTime() < nowTime) {
+      ActType[i].activityStatus = "已经结束";
+      ActType[i].textColor = "danger";
+    } else {
+      ActType[i].activityStatus = "正在进行";
+      ActType[i].textColor = "success";
+    }
+  }
+}
 app.controller('contentCtrl', ['$scope', '$http', function ($scope, $http) {
-  $http.get('/api/OrganizationUsers/list?filter[order]=id%20DESC').success(function (res) {
-    $scope.olts = JSON.parse(res.orgs);
-  });
+  
   $http.get('/api/Activities?filter[order]=id%20DESC').success(function (res) {
     $scope.alts = res;
-    for (var i = 0; i < $scope.alts.length; i++) {
-      if (new Date($scope.alts[i].startTime).getTime() > nowTime) {
-        $scope.alts[i].activityStatus = "即将开始";
-        $scope.alts[i].textColor = "warning";
-      } else if (new Date($scope.alts[i].stopTime).getTime() < nowTime) {
-        $scope.alts[i].activityStatus = "已经结束";
-        $scope.alts[i].textColor = "danger";
-      } else {
-        $scope.alts[i].activityStatus = "正在进行";
-        $scope.alts[i].textColor = "success";
-      }
-    }
+    StatusFun($scope.alts);
   });
   $http.get('/api/Forms?filter[order]=id%20DESC').success(function (res) {
     $scope.flts = res;
-    for (var i = 0; i < $scope.flts.length; i++) {
-      if (new Date($scope.flts[i].startTime).getTime() > nowTime) {
-        $scope.flts[i].activityStatus = "即将开始";
-        $scope.flts[i].textColor = "warning";
-      } else if (new Date($scope.flts[i].stopTime).getTime() < nowTime) {
-        $scope.flts[i].activityStatus = "已经结束";
-        $scope.flts[i].textColor = "danger";
-      } else {
-        $scope.flts[i].activityStatus = "正在进行";
-        $scope.flts[i].textColor = "success";
-      }
-    }
+    StatusFun($scope.flts);
   });
   $http.get('/api/Votes?filter[order]=id%20DESC').success(function (res) {
     $scope.vlts = res;
-    for (var i = 0; i < $scope.vlts.length; i++) {
-      if (new Date($scope.vlts[i].startTime).getTime() > nowTime) {
-        $scope.vlts[i].activityStatus = "即将开始";
-        $scope.vlts[i].textColor = "warning";
-      } else if (new Date($scope.vlts[i].stopTime).getTime() < nowTime) {
-        $scope.vlts[i].activityStatus = "已经结束";
-        $scope.vlts[i].textColor = "danger";
-      } else {
-        $scope.vlts[i].activityStatus = "正在进行";
-        $scope.vlts[i].textColor = "success";
-      }
-    }
+    StatusFun($scope.vlts);
   });
   $http.get('/api/Seckills?filter[order]=id%20DESC').success(function (res) {
     $scope.skls = res;
-    //抢票默认设置为一天后显示已经结束
-    for (var i = 0; i < $scope.skls.length; i++) {
-      if (new Date($scope.skls[i].seckillArrangements[0].startTime).getTime() > nowTime) {
-        $scope.skls[i].activityStatus = "即将开始";
-        $scope.skls[i].textColor = "warning";
-      } else if ((new Date($scope.skls[i].seckillArrangements[0].startTime).getTime() + 86400000) < nowTime) {
-        $scope.skls[i].activityStatus = "已经结束";
-        $scope.skls[i].textColor = "danger";
-      } else {
-        $scope.skls[i].activityStatus = "正在进行";
-        $scope.skls[i].textColor = "success";
-      }
-    }
+    StatusFun($scope.skls);
   });
   var accessToken = window.localStorage.swagger_accessToken;
   $scope.fltView = function (id) {
