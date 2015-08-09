@@ -234,3 +234,12 @@ body {
   opacity: 0;
   right: 200px;
 }
+
+.qrcode {
+  text-align: center;
+}
+
+.qrcode > img {
+  width: 150px;
+  height: 150px;
+}

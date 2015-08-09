@@ -129,6 +129,7 @@ function ListCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
   $scope.contentShow = etuanAdmin.item.isBasicContent[$routeParams.type];
   //日期显示格式，标准Angular Date Filter格式,从service-etuanAdmin中去取得
   $scope.unFormat = etuanAdmin.datetime.unFormat;
+
   //请求获取信息
   $scope.listItems = List.query();
   $scope.getQRcode = function () {
@@ -136,8 +137,15 @@ function ListCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     var qr = qrcode(12, 'L');
     qr.addData(url);
     qr.make();
-    document.getElementById(this.listItem.id).innerHTML = qr.createImgTag(4, 12);
-  }
+    document.getElementById(this.listItem.id).innerHTML ='<br>' +  '刷该二维码即可参与这个活动' + '<br>' + '<br>' + qr.createImgTag(4, 12);
+    $scope.mouseOver = true;
+  };
+
+  $scope.mouseleave = function () {
+    $scope.mouseOver = false;
+    document.getElementById(this.listItem.id).innerHTML = '';
+  };
+
   //编辑按钮操作函数
   $scope.edit = function (id) {
     $window.location.hash = '#/' + $routeParams.type + '/edit/' + id;
@@ -681,17 +689,17 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     }
     if ($routeParams.id === 'create') {
       Edit.save(uploadParameters, function () {
-        alert("创建"+ $scope.cnType + '成功！');
+        alert("创建" + $scope.cnType + '成功！');
       }, function () {
-        alert("创建"+ $scope.cnType + '失败！');
+        alert("创建" + $scope.cnType + '失败！');
       });
     }
     else {
       Edit.update({fk: $routeParams.id}, uploadParameters, function () {
-        alert("更新"+ $scope.cnType + '成功！');
+        alert("更新" + $scope.cnType + '成功！');
         window.history.back();
       }, function () {
-        alert("更新"+ $scope.cnType + '失败！');
+        alert("更新" + $scope.cnType + '失败！');
         window.history.back();
       });
     }
@@ -853,7 +861,7 @@ function HomeCtrl($scope, $resource) {
   });
 }
 
-function SettingCtrl($scope, $resource, etuanAdmin, $http ,$window) {
+function SettingCtrl($scope, $resource, etuanAdmin, $http, $window) {
   var Setting = $resource(
     '/api/OrganizationUsers/:userId', {
       userId: etuanAdmin.cache.userId
