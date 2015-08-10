@@ -4,7 +4,7 @@ app.service('etuanAdmin', function () {
     cache: JSON.parse(window.localStorage.getItem('b3JnYW5p')),
     //在这包含和社团组织相关的信息，主要用于设置当中，如果需要其他组件需要也可以直接注入
     org: {
-      types: ['校级组织', '职能社团', '院级组织', '兴趣社团'],
+      types: ['校级社团', '校级组织', '院级社团', '院级组织'],
       universities: ['杭州电子科技大学', '南京工程学院'],
       schools: [
         '机械工程学院', '电子信息学院', '通信工程学院', '自动化学院', '计算机学院',
