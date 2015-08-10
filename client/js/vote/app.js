@@ -28,9 +28,9 @@ function VoteCtrl($scope, $resource, $location, $window, $modal) {
       }
 
       var voteInfo = res.voteSubitems;
-      console.log(voteInfo);
       for (var i = 0; i < voteInfo.length; i++) {
-        loadContent(voteInfo[i].detailUrl, i);
+        if (voteInfo[i].detailUrl) 
+          loadContent(voteInfo[i].detailUrl, i);
       }
 
       //模态框
