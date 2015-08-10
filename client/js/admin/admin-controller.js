@@ -692,8 +692,10 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     if ($routeParams.id === 'create') {
       Edit.save(uploadParameters, function () {
         alert("创建" + $scope.cnType + '成功！');
+        window.history.back();
       }, function () {
         alert("创建" + $scope.cnType + '失败！');
+        window.history.back();
       });
     }
     else {
