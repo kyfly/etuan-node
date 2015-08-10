@@ -26,7 +26,9 @@ function StatusFun (ActType) {
   }
 }
 app.controller('contentCtrl', ['$scope', '$http', function ($scope, $http) {
-  
+  $http.get('/api/OrganizationUsers/list?filter[order]=id%20DESC').success(function (res) {
+    $scope.olts = JSON.parse(res.orgs);
+  });
   $http.get('/api/Activities?filter[order]=id%20DESC').success(function (res) {
     $scope.alts = res;
     StatusFun($scope.alts);
