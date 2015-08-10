@@ -274,7 +274,8 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
 
             var voteInfo = res.voteSubitems;
             for (var i = 0; i < voteInfo.length; i++) {
-              loadContent(voteInfo[i].detailUrl, i);
+              if (voteInfo[i].detailUrl)
+                loadContent(voteInfo[i].detailUrl, i);
             }
             $scope.votes = voteInfo;
             break;
