@@ -14,7 +14,7 @@ function FormCtrl($scope, $resource, $location, $window) {
     function (res) {
       $scope.form = res;
       $scope.title = res.title || '表单';
-      if(!new Date($scope.form.startTime))
+      if(!new Date($scope.form.startTime).getTime())
       {
         if($scope.form.startTime.indexOf('-'))
           $scope.form.startTime = $scope.form.startTime.replace(/-/g,"/");
