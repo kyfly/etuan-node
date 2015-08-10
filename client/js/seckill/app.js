@@ -7,7 +7,7 @@ function SeckillCtrl($scope, $location, $window) {
 
   var socket = io(
     window.location.host + "/socket/seckill", {
-      query: 'accessToken=' + JSON.parse($window.localStorage.getItem('d2VjaGF0')).accessToken + "&id=" + seckillUrlSearchObj.id
+      query: 'accessToken=' + JSON.parse($window.sessionStorage.getItem('d2VjaGF0')).accessToken + "&id=" + seckillUrlSearchObj.id
     }
   );
   var start = new Date();     //秒杀开始时间

@@ -1,7 +1,7 @@
 //将公共部分写成service依赖注入，实现模块化，摆脱controller
 app.service('etuanAdmin', function () {
   return {
-    cache: JSON.parse(window.localStorage.getItem('b3JnYW5p')),
+    cache: JSON.parse(window.sessionStorage.getItem('b3JnYW5p')),
     //在这包含和社团组织相关的信息，主要用于设置当中，如果需要其他组件需要也可以直接注入
     org: {
       types: ['校级社团', '校级组织', '院级社团', '院级组织'],
@@ -23,7 +23,7 @@ app.service('etuanAdmin', function () {
     //包含了editor的配置项
     editor: {
       config: {
-        serverUrl: "/ue/uploads?access_token=" + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken + "&dir=ue",
+        serverUrl: "/ue/uploads?access_token=" + JSON.parse(window.sessionStorage.getItem('b3JnYW5p')).accessToken + "&dir=ue",
         toolbars: [[
           'fullscreen', 'source', '|', 'undo', 'redo', '|',
           'bold', 'italic', 'underline', 'fontborder', 'strikethrough', '|',

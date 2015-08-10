@@ -3,7 +3,7 @@ function VoteCtrl($scope, $resource, $location, $window, $modal) {
   var Vote = $resource('/api/votes/:id');
   var newReferer = "index.html";
   var VoteResult = $resource('/api/WeChatUsers/:id/voteResults', {
-    id: JSON.parse($window.localStorage.getItem('d2VjaGF0')).userId
+    id: JSON.parse($window.sessionStorage.getItem('d2VjaGF0')).userId
   });
   $scope.answer = [];
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
@@ -15,7 +15,8 @@ function VoteCtrl($scope, $resource, $location, $window, $modal) {
       $scope.title = res.title || '投票';
       $scope.startTime = new Date($scope.vote.startTime);
       $scope.stopTime = new Date($scope.vote.stopTime);
-
+      if (new Date($scope.vote.stopTime).getTime() < new Date()) 
+        $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
       function loadContent(url, i) {
         var http = new XMLHttpRequest();
         http.onreadystatechange = function () {
@@ -87,7 +88,7 @@ function VoteCtrl($scope, $resource, $location, $window, $modal) {
 
 function RewriteResourceActions($resourceProvider) {
   var commonHeaders = {
-    Authorization: JSON.parse(window.localStorage.getItem('d2VjaGF0')).accessToken
+    Authorization: JSON.parse(window.sessionStorage.getItem('d2VjaGF0')).accessToken
   };
   $resourceProvider.defaults.actions = {
     'get': {

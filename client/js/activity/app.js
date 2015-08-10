@@ -38,7 +38,6 @@ function ActivityCtrl($scope, $resource, $location) {
 
 function RewriteResourceActions($resourceProvider) {
   var commonHeaders = {
-    Authorization: JSON.parse(window.localStorage.getItem('d2VjaGF0')).accessToken
   };
   $resourceProvider.defaults.actions = {
     'get': {
