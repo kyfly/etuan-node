@@ -139,10 +139,12 @@ function ListCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     qr.make();
     document.getElementById(this.listItem.id).innerHTML ='<br>' +  '分享二维码' + '<br>' + '<br>' + qr.createImgTag(4, 12);
     $scope.mouseover = true;
+    this.qrcodeClass = 'qrcode';
   };
 
   $scope.mouseleave = function () {
     $scope.mouseover = false;
+    this.qrcodeClass = false;
     document.getElementById(this.listItem.id).innerHTML = '';
   };
 
