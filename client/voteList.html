@@ -76,7 +76,7 @@
       <tab heading="全部投票">
 
         <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="vlt in vlts">
-          <a ng-href="/vote#?id={{vlt.id}}" ng-click="vltView(vlt.id)">
+          <a ng-href="/vote/#?id={{vlt.id}}" ng-click="vltView(vlt.id)">
             <div class="thumbnail borderDiv">
               <p class="listhead"><nobr>{{vlt.title}}</nobr></p>
               <img class="regLogo" ng-src="{{vlt.logoUrl}}">
@@ -90,7 +90,7 @@
       <tab heading="正在进行">
 
         <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="vlt in vlts" ng-show="vlt.activityStatus === '正在进行'">
-          <a ng-href="/vote#?id={{vlt.id}}" ng-click="vltView(vlt.id)">
+          <a ng-href="/vote/#?id={{vlt.id}}" ng-click="vltView(vlt.id)">
             <div class="thumbnail borderDiv">
               <p class="listhead"><nobr>{{vlt.title}}</nobr></p>
               <img class="regLogo" ng-src="{{vlt.logoUrl}}">
@@ -104,7 +104,7 @@
       <tab heading="即将开始">
 
         <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="vlt in vlts" ng-show="vlt.activityStatus === '即将开始'">
-          <a ng-href="/vote#?id={{vlt.id}}" ng-click="vltView(vlt.id)">
+          <a ng-href="/vote/#?id={{vlt.id}}" ng-click="vltView(vlt.id)">
             <div class="thumbnail borderDiv">
               <p class="listhead"><nobr>{{vlt.title}}</nobr></p>
               <img class="regLogo" ng-src="{{vlt.logoUrl}}">
@@ -118,7 +118,7 @@
       <tab heading="已经结束">
 
         <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="vlt in vlts" ng-show="vlt.activityStatus === '已经结束'">
-          <a ng-href="/vote#?id={{vlt.id}}" ng-click="vltView(vlt.id)">
+          <a ng-href="/vote/#?id={{vlt.id}}" ng-click="vltView(vlt.id)">
             <div class="thumbnail borderDiv">
               <p class="listhead"><nobr>{{vlt.title}}</nobr></p>
               <img class="regLogo" ng-src="{{vlt.logoUrl}}">
