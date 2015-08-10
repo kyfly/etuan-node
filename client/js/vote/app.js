@@ -15,8 +15,11 @@ function VoteCtrl($scope, $resource, $location, $window, $modal) {
       $scope.title = res.title || '投票';
       $scope.startTime = new Date($scope.vote.startTime);
       $scope.stopTime = new Date($scope.vote.stopTime);
-      if (new Date($scope.vote.stopTime).getTime() < new Date()) 
+
+      if (new Date($scope.vote.stopTime).getTime() < new Date().getTime()) {
         $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
+      }
+
       function loadContent(url, i) {
         var http = new XMLHttpRequest();
         http.onreadystatechange = function () {
@@ -30,7 +33,7 @@ function VoteCtrl($scope, $resource, $location, $window, $modal) {
 
       var voteInfo = res.voteSubitems;
       for (var i = 0; i < voteInfo.length; i++) {
-        if (voteInfo[i].detailUrl) 
+        if (voteInfo[i].detailUrl)
           loadContent(voteInfo[i].detailUrl, i);
       }
 
@@ -75,8 +78,9 @@ function VoteCtrl($scope, $resource, $location, $window, $modal) {
         alert(res.data.error.message);
         if (res.data.error.message === "需要绑定学号") {
           window.location = "../student.html?referer=" + newReferer
-        }
-        if (res.data.error.message === "已经投过票了") {
+        } else if (res.data.error.message === "已经投过票了") {
+          $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
+        } else if (res.data.error.message === "已经结束") {
           $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
         }
       }
