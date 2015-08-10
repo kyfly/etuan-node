@@ -14,10 +14,13 @@ function FormCtrl($scope, $resource, $location, $window) {
     function (res) {
       $scope.form = res;
       $scope.title = res.title || '表单';
-      if($scope.form.startTime.indexOf('-'))
-        $scope.form.startTime = $scope.form.startTime.replace(/-/g,"/");
-      if($scope.form.stopTime.indexOf('-'))
-        $scope.form.stopTime = $scope.form.stopTime.replace(/-/g,"/");
+      if(!new Date($scope.form.startTime))
+      {
+        if($scope.form.startTime.indexOf('-'))
+          $scope.form.startTime = $scope.form.startTime.replace(/-/g,"/");
+        if($scope.form.stopTime.indexOf('-'))
+          $scope.form.stopTime = $scope.form.stopTime.replace(/-/g,"/");
+      }
       $scope.startTime = new Date($scope.form.startTime);
       $scope.stopTime = new Date($scope.form.stopTime);
     },

@@ -10,10 +10,14 @@ function ActivityCtrl($scope, $resource, $location) {
       $scope.title = $scope.activity.title;
       $scope.description = $scope.activity.description;
       $scope.logoUrl = $scope.activity.logoUrl;
-      if($scope.activity.startTime.indexOf('-'))
-        $scope.activity.startTime = $scope.activity.startTime.replace(/-/g,"/");
-      if($scope.activity.stopTime.indexOf('-'))
-        $scope.activity.stopTime = $scope.activity.stopTime.replace(/-/g,"/");
+      console.log($scope.activity.startTime);
+      if(!new Date($scope.activity.startTime).getTime())
+      {
+        if($scope.activity.startTime.indexOf('-'))
+          $scope.activity.startTime = $scope.activity.startTime.replace(/-/g,"/");
+        if($scope.activity.stopTime.indexOf('-'))
+          $scope.activity.stopTime = $scope.activity.stopTime.replace(/-/g,"/");
+      }
       $scope.startTime = new Date($scope.activity.startTime);
       $scope.stopTime = new Date($scope.activity.stopTime);
       var ueditorContent = $resource('/api/Activities/get-content?url=' + res.contentUrl);

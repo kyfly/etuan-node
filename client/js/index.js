@@ -6,10 +6,13 @@ app.controller('headCtrl', function ($scope) {
 });
 function StatusFun (ActType) {
   for (var i = 0; i < ActType.length; i++) {
-    if(ActType[i].startTime.indexOf('-'))
-      ActType[i].startTime = ActType[i].startTime.replace(/-/g,"/");
-    if(ActType[i].stopTime.indexOf('-'))
-      ActType[i].stopTime = ActType[i].stopTime.replace(/-/g,"/");
+    if(!new Date(ActType[i].startTime).getTime())
+    {
+      if(ActType[i].startTime.indexOf('-'))
+        ActType[i].startTime = ActType[i].startTime.replace(/-/g,"/");
+      if(ActType[i].stopTime.indexOf('-'))
+        ActType[i].stopTime = ActType[i].stopTime.replace(/-/g,"/");
+    }
     if (new Date(ActType[i].startTime).getTime() > nowTime) {
       ActType[i].activityStatus = "即将开始";
       ActType[i].textColor = "warning";
