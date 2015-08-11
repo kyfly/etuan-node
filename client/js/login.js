@@ -20,15 +20,15 @@ function browserRedirect() {
 }
 
 function loginCheck(t) {
-  var tmpInfo = JSON.parse(window.sessionStorage.getItem(t));
+  var tmpInfo = JSON.parse(window.localStorage.getItem(t));
   var bower = browserRedirect();
   if (!tmpInfo || !tmpInfo.accessToken || !tmpInfo.userId
     || !tmpInfo.loginTime || !tmpInfo.ttl
     || (new Date() - new Date(tmpInfo.loginTime) > tmpInfo.ttl * 1000)
   ) {
     var url = window.location.href;
-    window.sessionStorage.removeItem(t);
-    window.sessionStorage.setItem('next', url);
+    window.localStorage.removeItem(t);
+    window.localStorage.setItem('next', url);
     switch (t) {
       case 'b3JnYW5p':
         window.location = '/login';

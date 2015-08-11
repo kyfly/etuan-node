@@ -34,7 +34,7 @@ function wechatLogin() {
               loginTime: data.token.created,
               ttl: data.token.ttl
             };
-            window.sessionStorage.setItem('d2VjaGF0', JSON.stringify(lsTmp));
+            window.localStorage.setItem('d2VjaGF0', JSON.stringify(lsTmp));
             //这里跳转到应该跳转的页面
             
             data.userInfo.studentId ? window.location = (window.location.search.substr(6) + window.location.hash) || '/' : window.location = ('/student.html?referer=' + window.location.search.substr(6) + window.location.hash) || '/';

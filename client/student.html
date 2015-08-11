@@ -146,8 +146,8 @@
   });
 
   app.controller('loginCtrl', ['$scope', '$http', function ($scope, $http) {
-    var userId = JSON.parse(window.sessionStorage.getItem('d2VjaGF0')).userId;
-    var accessToken = JSON.parse(window.sessionStorage.getItem('d2VjaGF0')).accessToken;
+    var userId = JSON.parse(window.localStorage.getItem('d2VjaGF0')).userId;
+    var accessToken = JSON.parse(window.localStorage.getItem('d2VjaGF0')).accessToken;
 
     function getQueryString() {
       var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));

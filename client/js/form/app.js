@@ -4,7 +4,7 @@ function FormCtrl($scope, $resource, $location, $window) {
   var formUrlSearchObj = $location.search();
   var Form = $resource('/api/forms/:id');
   var FormResult = $resource('/api/WeChatUsers/:id/formResults', {
-    id: JSON.parse($window.sessionStorage.getItem('d2VjaGF0')).userId
+    id: JSON.parse($window.localStorage.getItem('d2VjaGF0')).userId
   });
   $scope.answer = [];
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
@@ -60,7 +60,7 @@ function FormCtrl($scope, $resource, $location, $window) {
 
 function RewriteResourceActions($resourceProvider) {
   var commonHeaders = {
-    Authorization: JSON.parse(window.sessionStorage.getItem('d2VjaGF0')).accessToken
+    Authorization: JSON.parse(window.localStorage.getItem('d2VjaGF0')).accessToken
   };
   $resourceProvider.defaults.actions = {
     'get': {

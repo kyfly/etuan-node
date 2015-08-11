@@ -31,7 +31,7 @@ function NavbarCtrl($scope, $window, $resource, etuanAdmin) {
   $scope.etuanLogo = "/img/full-logo.png";
   //获取社团基本信息的接口，可以用于显示右上角信息
   var Organization = $resource(
-    '/api/OrganizationUsers/:userId' + '?access_token=' + JSON.parse(window.sessionStorage.getItem('b3JnYW5p')).accessToken, {
+    '/api/OrganizationUsers/:userId' + '?access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, {
       userId: etuanAdmin.cache.userId
     }
   );
@@ -53,7 +53,7 @@ function NavbarCtrl($scope, $window, $resource, etuanAdmin) {
   };
   //退出动作，包括清楚存储信息，返回至登录页面
   $scope.logOut = function () {
-    $window.sessionStorage.removeItem('b3JnYW5p');
+    $window.localStorage.removeItem('b3JnYW5p');
     $window.location = '/login/';
   };
 }
@@ -556,7 +556,7 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
       };
       logoFd.append('logo', logoFile);
       logoXhr.onreadystatechange = logoReadyHandle;
-      logoXhr.open('POST', '/ue/uploads?action=uploadimage&dir=logo&access_token=' + JSON.parse(window.sessionStorage.getItem('b3JnYW5p')).accessToken, false);
+      logoXhr.open('POST', '/ue/uploads?action=uploadimage&dir=logo&access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, false);
       logoXhr.send(logoFd);
     };
 
@@ -571,7 +571,7 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         }
       };
       editorXhr.onreadystatechange = editorReadyHandle;
-      editorXhr.open('POST', '/ue/uploads?action=uploadtext&dir=ue&access_token=' + JSON.parse(window.sessionStorage.getItem('b3JnYW5p')).accessToken, false);
+      editorXhr.open('POST', '/ue/uploads?action=uploadtext&dir=ue&access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, false);
       editorXhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       editorXhr.send("content=" + $scope.activityContent);
     };
@@ -588,7 +588,7 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
           }
         };
         editorXhr.onreadystatechange = editorReadyHandle;
-        editorXhr.open('POST', '/ue/uploads?action=uploadtext&dir=ue&access_token=' + JSON.parse(window.sessionStorage.getItem('b3JnYW5p')).accessToken, false);
+        editorXhr.open('POST', '/ue/uploads?action=uploadtext&dir=ue&access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, false);
         editorXhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         editorXhr.send("content=" + $scope.votes[i].voteContent);
       }
@@ -833,10 +833,10 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
    * 在这个区域中包括了pdf下载和excel下载。
    */
   $scope.pdfDownload = function () {
-    window.open('/api/Forms/pdf/' + $routeParams.id + "?access_token=" + JSON.parse(window.sessionStorage.getItem('b3JnYW5p')).accessToken, '_blank');
+    window.open('/api/Forms/pdf/' + $routeParams.id + "?access_token=" + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, '_blank');
   };
   $scope.excelDownload = function () {
-    window.open('/api/Forms/excel/' + $routeParams.id + "?access_token=" + JSON.parse(window.sessionStorage.getItem('b3JnYW5p')).accessToken, '_blank');
+    window.open('/api/Forms/excel/' + $routeParams.id + "?access_token=" + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, '_blank');
   };
 }
 
@@ -851,7 +851,7 @@ function HomeCtrl($scope, $resource) {
     }
   ];
   //获得接口并进行显示
-  var token = JSON.parse(window.sessionStorage.getItem('b3JnYW5p')).accessToken;
+  var token = JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken;
   $resource("/api/OrganizationUsers/actCount?token=" + token + "&access_token=" + token).get({}, function (res) {
     $scope.actCount = res.actCount.actCount;
   }, function () {
@@ -971,7 +971,7 @@ function SettingCtrl($scope, $resource, etuanAdmin, $http, $window) {
     };
     logoFd.append('logo', logoFile);
     logoXhr.onreadystatechange = logoReadyHandle;
-    logoXhr.open('POST', '/ue/uploads?action=uploadimage&dir=logo&access_token=' + JSON.parse(window.sessionStorage.getItem('b3JnYW5p')).accessToken, true);
+    logoXhr.open('POST', '/ue/uploads?action=uploadimage&dir=logo&access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, true);
     logoXhr.send(logoFd);
   };
 
@@ -1021,7 +1021,7 @@ function SettingCtrl($scope, $resource, etuanAdmin, $http, $window) {
       },
       function (res) {
         alert('恭喜你,密码修改成功');
-        $window.sessionStorage.removeItem('b3JnYW5p');
+        $window.localStorage.removeItem('b3JnYW5p');
         $window.location = '/login/';
       },
       function (res) {

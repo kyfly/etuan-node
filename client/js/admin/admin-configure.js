@@ -1,6 +1,6 @@
 function RewriteResourceActions($resourceProvider) {
   var commonHeaders = {
-    Authorization: JSON.parse(window.sessionStorage.getItem('b3JnYW5p')).accessToken
+    Authorization: JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken
   };
   $resourceProvider.defaults.actions = {
     'get': {

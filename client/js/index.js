@@ -45,7 +45,7 @@ app.controller('contentCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.skls = res;
     StatusFun($scope.skls);
   });
-  var accessToken = window.sessionStorage.swagger_accessToken;
+  var accessToken = window.localStorage.swagger_accessToken;
   $scope.fltView = function (id) {
     $http.get('/api/Forms/view/' + id + '?access_token=' + accessToken)
   };

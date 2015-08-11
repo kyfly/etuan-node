@@ -13,7 +13,7 @@ function LoginCtrl($scope, $resource, $timeout, $window) {
           loginTime: res.created,
           ttl: res.ttl
         };
-        $window.sessionStorage.setItem('b3JnYW5p', JSON.stringify(lsTmp));
+        $window.localStorage.setItem('b3JnYW5p', JSON.stringify(lsTmp));
         $window.location = '/admin'
       },
       function (res) {
