@@ -43,7 +43,7 @@
       <p class="input-group">
         <input type="text" class="form-control" datepicker-popup="{{unDateFormat}}" ng-model="startDate"
                is-open="startOpened" ng-click="startDateOpen($event)" datepicker-options="dateOptions" close-text="完成"
-               current-text="今天" clear-text="清空" required/>
+               current-text="今天" clear-text="清空" required>
       <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="startDateOpen($event)"><i
                 class="glyphicon glyphicon-calendar"></i></button>
@@ -63,7 +63,7 @@
       <p class="input-group">
         <input type="text" class="form-control" datepicker-popup="{{unDateFormat}}" ng-model="stopDate"
                is-open="stopOpened" datepicker-options="dateOptions" ng-click="stopDateOpen($event)" close-text="完成"
-               current-text="今天" clear-text="清空" required/>
+               current-text="今天" clear-text="清空" required>
         <span class="input-group-btn">
           <button type="button" class="btn btn-default" ng-click="stopDateOpen($event)"><i
                   class="glyphicon glyphicon-calendar"></i></button>
@@ -303,6 +303,7 @@
   <div class="form-group">
     <div class="col-sm-2 col-sm-offset-2">
       <button class="btn btn-block btn-success" ng-click="submit()">{{submitButtonName}}</button>
+      <p class="help-block" ng-show="ifEdit">请确保已上传logo</p>
     </div>
     <br class="visible-xs">
 
