@@ -4,6 +4,7 @@ app.controller('SeckillCtrl', ['$scope', '$location', '$window', SeckillCtrl]);
 function SeckillCtrl($scope, $location, $window) {
   var seckillUrlSearchObj = $location.search();
   $scope.cnFormat = 'yyyy-MM-dd HH:mm';
+  $scope.title = '疯抢';
 
   var socket = io(
     window.location.host + "/socket/seckill", {

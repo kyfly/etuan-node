@@ -2,6 +2,7 @@ function VoteCtrl($scope, $resource, $location, $window, $modal) {
   var voteUrlSearchObj = $location.search();
   var Vote = $resource('/api/votes/:id');
   var newReferer = "index.html";
+  $scope.title = '投票';
   var VoteResult = $resource('/api/WeChatUsers/:id/voteResults', {
     id: JSON.parse($window.localStorage.getItem('d2VjaGF0')).userId
   });
