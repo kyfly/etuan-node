@@ -136,7 +136,7 @@ module.exports = function(OrganizationUser) {
 
 	//获取某一组织的详细信息，返回特定字段，防止敏感信息外泄
 	OrganizationUser.detail = function(id, cb) {
-		OrganizationUser.findOne({ where: {id: id}, fields: {id: 1, logoUrl: 1, description: 1, departments: 1, name: 1, photoUrl: 1} }, function(err, org) {
+		OrganizationUser.findOne({ where: {id: id}, fields: {id: 1, logoUrl: 1, description: 1, organizationUserDepartments: 1, name: 1, photoUrl: 1} }, function(err, org) {
 			if(err)
 				cb(null, '获取组织详情失败');
 			else
