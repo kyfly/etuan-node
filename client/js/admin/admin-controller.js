@@ -137,7 +137,7 @@ function ListCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     var qr = qrcode(4, 'L');
     qr.addData(url);
     qr.make();
-    document.getElementById(this.listItem.id).innerHTML ='<br>' +  '分享二维码' + '<br>' + '<br>' + qr.createImgTag(4, 12);
+    document.getElementById(this.listItem.id).innerHTML = '<br>' + '分享二维码' + '<br>' + '<br>' + qr.createImgTag(4, 12);
     $scope.mouseover = true;
     this.qrcodeClass = 'qrcode';
   };
@@ -446,7 +446,7 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     shortCellphoneNumber: function () {
       $scope.forms.push({
         type: 2,
-        label: '手机短号',
+        label: '移动短号',
         content: []
       });
     },
@@ -478,7 +478,7 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
       $scope.forms.splice(index + 1, 0, $scope.forms.splice(index, 1)[0]);
     }
   };
-  $scope.showType = ['', '选择题', '简答题', '陈述题', '判断题'];
+  $scope.showType = ['', '选择题', '简答题（一行输入框）', '陈述题（多行输入框）', '判断题'];
   $scope.showContent = ['', true, false, false, false];
   $scope.appendContent = function (index) {
     $scope.forms[index].content.push('');
@@ -535,6 +535,10 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
    * 在完成提交后，将转跳至列表页面list.html
    */
   $scope.submit = function () {
+    if($scope.verifyRule === undefined){
+      alert('请选择验证方式');
+      return false;
+    }
     var uploadParameters = {};
     //上传图片至OSS服务
     var logoUpload = function () {
@@ -845,9 +849,14 @@ function HomeCtrl($scope, $resource) {
   $scope.notices = [
     {
       'title': '团团一家社团服务平台上线啦',
-      'time': '2015年8月1日',
+      'time': '2015年8月10日',
       'content': '团团一家新的后台系统上线啦，更简洁更美更方便，让你的社团招新工作不再有烦恼！',
       'detailUrl': 'http://v.xiumi.us/board/v3/24dWu/2582852'
+    }, {
+      'title': '关于浏览器兼容性的说明',
+      'time': '2015年8月13日',
+      'content': '团团一家新的后台系统需要IE9以上的版本支持。推荐使用谷歌Chrome浏览器，尽量不要使用360浏览器。',
+      'detailUrl': ''
     }
   ];
   //获得接口并进行显示

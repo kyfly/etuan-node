@@ -1,13 +1,14 @@
 function ActivityCtrl($scope, $resource, $location) {
   var activityUrlSearchObj = $location.search();
   var Activity = $resource('/api/activities/:id');
+  $scope.title = '活动';
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
   Activity.get({
     "id": activityUrlSearchObj.id
   },
     function (res) {
       $scope.activity = res;
-      $scope.title = $scope.activity.title;
+      $scope.title = $scope.activity.title || '活动';
       $scope.description = $scope.activity.description;
       $scope.logoUrl = $scope.activity.logoUrl;
       console.log($scope.activity.startTime);
