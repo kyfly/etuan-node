@@ -38,6 +38,14 @@
       font-size: 20px;
       margin-bottom: 15px;
     }
+
+    .description > p {
+      text-indent: 2em;
+    }
+
+    .department {
+
+    }
   </style>
 </head>
 <body>
@@ -92,12 +100,29 @@
   <div class="col-md-8 col-md-offset-2">
     <div class="text-center">
       <h1>{{name}}</h1>
-      <br>
+      <hr>
       <img class="img-circle" ng-src="{{logoUrl}}" alt="{{name}}" height="150px" width="150px">
       <br><br>
-
-      <p>简介：{{description}}</p>
     </div>
+
+    <div class="description">
+      <h2>简介</h2>
+      <br>
+
+      <p ng-bind="description"></p>
+    </div>
+    <br>
+    <div class="department">
+      <h2>部门介绍</h2>
+      <hr>
+      <div ng-repeat="organizationUserDepartment in organizationUserDepartments">
+        <h3 ng-bind="organizationUserDepartment.name"></h3>
+        <p ng-bind="organizationUserDepartment.description"></p>
+        <br>
+      </div>
+    </div>
+
+
     <hr>
     <div class="text-center footer">
       <img src="/img/full-logo.png" height="25px" alt="团团一家LOGO">&nbsp;提供技术支持

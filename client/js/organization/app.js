@@ -11,6 +11,7 @@ function OrganizationCtrl($scope, $resource, $location) {
       $scope.name = organizationInfo.name;
       $scope.logoUrl = organizationInfo.logoUrl;
       $scope.description = organizationInfo.description;
+      $scope.organizationUserDepartments = organizationInfo.organizationUserDepartments;
     },
     function (res) {
     }
