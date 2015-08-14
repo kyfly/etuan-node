@@ -41,10 +41,11 @@
 
     .description > p {
       text-indent: 2em;
+      color: #777777;
     }
 
-    .department {
-
+    .department > p {
+      color: #777777;
     }
   </style>
 </head>
@@ -112,16 +113,15 @@
       <p ng-bind="description"></p>
     </div>
     <br>
-    <div class="department">
-      <h2>部门介绍</h2>
-      <hr>
-      <div ng-repeat="organizationUserDepartment in organizationUserDepartments">
-        <h3 ng-bind="organizationUserDepartment.name"></h3>
-        <p ng-bind="organizationUserDepartment.description"></p>
-        <br>
-      </div>
-    </div>
 
+    <h2>部门介绍</h2>
+    <hr>
+    <div class="department" ng-repeat="organizationUserDepartment in organizationUserDepartments">
+      <h3 ng-bind="organizationUserDepartment.name"></h3>
+
+      <p ng-bind="organizationUserDepartment.description"></p>
+      <br>
+    </div>
 
     <hr>
     <div class="text-center footer">
