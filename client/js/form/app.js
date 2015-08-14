@@ -13,13 +13,15 @@ function FormCtrl($scope, $resource, $location, $window) {
     },
     function (res) {
       $scope.form = res;
+      for (var i = 0; i < res.formQuestions.length; i++) {
+        $scope.answer[i] = '';
+      }
       $scope.title = res.title || '表单';
-      if(!new Date($scope.form.startTime).getTime())
-      {
-        if($scope.form.startTime.indexOf('-'))
-          $scope.form.startTime = $scope.form.startTime.replace(/-/g,"/");
-        if($scope.form.stopTime.indexOf('-'))
-          $scope.form.stopTime = $scope.form.stopTime.replace(/-/g,"/");
+      if (!new Date($scope.form.startTime).getTime()) {
+        if ($scope.form.startTime.indexOf('-'))
+          $scope.form.startTime = $scope.form.startTime.replace(/-/g, "/");
+        if ($scope.form.stopTime.indexOf('-'))
+          $scope.form.stopTime = $scope.form.stopTime.replace(/-/g, "/");
       }
       $scope.startTime = new Date($scope.form.startTime);
       $scope.stopTime = new Date($scope.form.stopTime);
@@ -33,10 +35,15 @@ function FormCtrl($scope, $resource, $location, $window) {
   $scope.submit = function () {
     var resultTmp = [];
     for (var i = 0; i < $scope.answer.length; i++) {
-      resultTmp.push({
-        'questionId': i,
-        'content': $scope.answer[i]
-      });
+      if ($scope.answer[i] != '') {
+        resultTmp.push({
+          'questionId': i,
+          'content': $scope.answer[i]
+        });
+      } else {
+        alert('请确保填写完整哦');
+        return false;
+      }
     }
     FormResult.save({
         'formId': formUrlSearchObj.id,
