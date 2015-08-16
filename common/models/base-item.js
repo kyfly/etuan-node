@@ -10,9 +10,16 @@ module.exports = function(BaseItem) {
 	        var context = loopback.getCurrentContext();
 	        var currentUser = context && context.get('currentUser');
 	        if(currentUser && currentUser.university && currentUser.school && currentUser.type) {
-						ctx.data.university = currentUser.university;
-						ctx.data.type = currentUser.type;
-						ctx.data.school = currentUser.school;
+	        	if(ctx.instance) {
+	        		ctx.instance.university = currentUser.university;
+					ctx.instance.type = currentUser.type;
+					ctx.instance.school = currentUser.school;
+	        	}
+	        	else {
+					ctx.data.university = currentUser.university;
+					ctx.data.type = currentUser.type;
+					ctx.data.school = currentUser.school;       		
+	        	}
 	        }
 		next();
 	});
