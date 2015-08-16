@@ -85,10 +85,10 @@
     }
 
     .mainBox:hover {
-      transform: scale(1.05,1.05);
-      -webkit-transform: scale(1.05,1.05);
-      -o-transform: scale(1.05,1.05);
-      -moz-transform: scale(1.05,1.05);
+      transform: scale(1.05, 1.05);
+      -webkit-transform: scale(1.05, 1.05);
+      -o-transform: scale(1.05, 1.05);
+      -moz-transform: scale(1.05, 1.05);
     }
 
   </style>
@@ -153,7 +153,7 @@
   </div>
   <div class="contentRow col-xs-12">
     <div ng-repeat="alt in alts.slice(0,4)" class="col-sm-6 col-md-3 mainBox">
-      <a ng-href="/activity/#?id={{alt.id}}" ng-click="">
+      <a ng-href="/activity/#?id={{alt.id}}">
         <div class="thumbnail">
           <div class="text-center">
             <h4 class="listName">
@@ -174,7 +174,7 @@
   </div>
   <div class="contentRow col-xs-12">
     <div ng-repeat="flt in flts.slice(0,4)" class="col-sm-6 col-md-3 mainBox">
-      <a ng-href="/form/#?id={{flt.id}}" ng-click="fltView(flt.id)">
+      <a ng-href="/form/#?id={{flt.id}}">
         <div class="thumbnail">
           <div class="text-center">
             <h4 class="listName">
@@ -195,7 +195,7 @@
   </div>
   <div class="contentRow col-xs-12">
     <div class="col-sm-6 col-md-3 mainBox" ng-repeat="skl in skls.slice(0,4)">
-      <a ng-href="/seckill/#?id={{skl.id}}" ng-click="sklView(skl.id)">
+      <a ng-href="/seckill/#?id={{skl.id}}">
         <div class="thumbnail">
           <div class="text-center">
             <h4 class="listName">
@@ -217,7 +217,7 @@
   <div class="contentRow col-xs-12">
 
     <div ng-repeat="vlt in vlts.slice(0,4)" class="col-sm-6 col-md-3 mainBox">
-      <a ng-href="/vote/#?id={{vlt.id}}" ng-click="vltView(vlt.id)">
+      <a ng-href="/vote/#?id={{vlt.id}}">
         <div class="thumbnail">
           <div class="text-center">
             <h4 class="listName">

@@ -55,15 +55,4 @@ app.controller('contentCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.skls = res;
     StatusFun($scope.skls, 1);
   });
-  var accessToken = window.localStorage.swagger_accessToken;
-  $scope.fltView = function (id) {
-    $http.get('/api/Forms/view/' + id + '?access_token=' + accessToken)
-  };
-  $scope.vltView = function (id) {
-    $http.get('/api/Votes/view/' + id + '?access_token=' + accessToken)
-  };
-  $scope.sklView = function (id) {
-    $http.get('/api/Seckills/view/' + id + '?access_token=' + accessToken)
-  }
-
 }]);

@@ -1,7 +1,7 @@
 var app = angular.module('app', ['ui.bootstrap']);
-app.controller('SeckillCtrl', ['$scope', '$location', '$window', SeckillCtrl]);
+app.controller('SeckillCtrl', ['$scope', '$location', '$window', '$http', SeckillCtrl]);
 
-function SeckillCtrl($scope, $location, $window) {
+function SeckillCtrl($scope, $location, $window, $http) {
   var seckillUrlSearchObj = $location.search();
   $scope.cnFormat = 'yyyy-MM-dd HH:mm';
   $scope.title = '疯抢';
@@ -32,6 +32,11 @@ function SeckillCtrl($scope, $location, $window) {
   });
 
   socket.once('initSeckill', function (info, result, status) {
+    var accessToken = window.localStorage.swagger_accessToken;
+    var sklView = function (id) {
+      $http.get('/api/Seckills/view/' + id + '?access_token=' + accessToken)
+    };
+    sklView(info.id);
     var now = new Date();
     deltaTime = new Date().getTime() - now.getTime();
     if (status.current < info.seckillArrangements.length) {

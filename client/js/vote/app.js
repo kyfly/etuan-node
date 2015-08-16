@@ -1,4 +1,4 @@
-function VoteCtrl($scope, $resource, $location, $window, $modal) {
+function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
   var voteUrlSearchObj = $location.search();
   var Vote = $resource('/api/votes/:id');
   var newReferer = "index.html";
@@ -12,6 +12,11 @@ function VoteCtrl($scope, $resource, $location, $window, $modal) {
       "id": voteUrlSearchObj.id
     },
     function (res) {
+      var accessToken = window.localStorage.swagger_accessToken;
+      var vltView = function (id) {
+        $http.get('/api/Votes/view/' + id + '?access_token=' + accessToken)
+      };
+      vltView(res.id);
       $scope.vote = res;
       $scope.title = res.title || '投票';
       $scope.startTime = new Date($scope.vote.startTime);
@@ -123,7 +128,7 @@ function RewriteResourceActions($resourceProvider) {
   };
 }
 var app = angular.module('app', ['ngResource', 'ui.bootstrap', 'ngSanitize']);
-app.controller('VoteCtrl', ['$scope', '$resource', '$location', '$window', '$modal', VoteCtrl]);
+app.controller('VoteCtrl', ['$scope', '$resource', '$location', '$window', '$modal', '$http', VoteCtrl]);
 app.config(['$resourceProvider', RewriteResourceActions]);
 app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, voteInfo) {
   $scope.content = voteInfo;

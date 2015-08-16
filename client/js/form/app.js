@@ -1,4 +1,4 @@
-function FormCtrl($scope, $resource, $location, $window) {
+function FormCtrl($scope, $resource, $location, $window, $http) {
   var newReferer = "index.html";
   $scope.title = '表单';
   var formUrlSearchObj = $location.search();
@@ -12,6 +12,11 @@ function FormCtrl($scope, $resource, $location, $window) {
       "id": formUrlSearchObj.id
     },
     function (res) {
+      var accessToken = window.localStorage.swagger_accessToken;
+       var fltView = function (id) {
+        $http.get('/api/Forms/view/' + id + '?access_token=' + accessToken)
+      };
+      fltView(res.id);
       $scope.form = res;
       for (var i = 0; i < res.formQuestions.length; i++) {
         $scope.answer[i] = '';
@@ -98,7 +103,7 @@ function RewriteResourceActions($resourceProvider) {
   };
 }
 var app = angular.module('app', ['ngResource', 'ui.bootstrap']);
-app.controller('FormCtrl', ['$scope', '$resource', '$location', '$window', FormCtrl]);
+app.controller('FormCtrl', ['$scope', '$resource', '$location', '$window', '$http', FormCtrl]);
 app.config(['$resourceProvider', RewriteResourceActions]);
 app.controller('headCtrl', function ($scope) {
   $scope.isCollapsed = true;
