@@ -1,7 +1,7 @@
 function OrganizationCtrl($scope, $resource, $location) {
   var organizationUrlSearchObj = $location.search();
   $scope.title = '组织';
-  var OrganizationUsers = $resource("/api/OrganizationUsers/detail/:id?access_token=" + JSON.parse(window.localStorage.getItem('d2VjaGF0')).accessToken);
+  var OrganizationUsers = $resource("/api/OrganizationUsers/detail/:id");
   OrganizationUsers.get({
       "id": organizationUrlSearchObj.id
     },
