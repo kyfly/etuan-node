@@ -700,7 +700,6 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         window.history.back();
       }, function () {
         alert("创建" + $scope.cnType + '失败！');
-        window.history.back();
       });
     }
     else {
@@ -709,7 +708,6 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         window.history.back();
       }, function () {
         alert("更新" + $scope.cnType + '失败！');
-        window.history.back();
       });
     }
   };
