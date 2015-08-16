@@ -170,7 +170,7 @@
   </div>
 </div>
 
-<div class="container" ng-controller="contentCtrl">
+<div class="container">
 
   <div class="contentRow col-xs-12">
     <div class="col-sm-6 col-md-3 mainBox">
@@ -354,6 +354,12 @@
 
 <script src="http://static.etuan.org/lib/angular/angular.min.js"></script>
 <script src="http://static.etuan.org/lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
-<script src="/js/message/orgsForm.js"></script>
+<script>
+  var app = angular.module('app', ['ui.bootstrap']);
+
+  app.controller('headCtrl', function ($scope) {
+    $scope.isCollapsed = true;
+  });
+</script>
 </body>
 </html>
