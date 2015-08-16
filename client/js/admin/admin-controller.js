@@ -535,8 +535,8 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
    * 在完成提交后，将转跳至列表页面list.html
    */
   $scope.submit = function () {
-    if($scope.verifyRule === undefined){
-      alert('请选择验证方式');
+    if($scope.verifyRule === undefined && $routeParams.type != 'activity'){
+      alert('请选择验证规则');
       return false;
     }
     var uploadParameters = {};

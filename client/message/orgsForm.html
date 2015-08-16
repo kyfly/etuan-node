@@ -1,0 +1,179 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="杭州电子科技大学,杭电,团团一家,杭电报名招新,杭电抢票,杭电投票,社团服务">
+  <meta name="description" content=" 想怎么报就怎么报！各种活动尽在团团一家！">
+  <title>八大组织报名入口 - 团团一家</title>
+  <link rel="icon" href="img/etuan_logo.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="img/etuan_logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/lib/bootstrap/css/etuan.css">
+  <style>
+    body {
+      font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
+      background-color: #f1f2f7;
+    }
+
+    header {
+      margin-bottom: -20px;
+    }
+
+    .jumbotron {
+      background-color: #99ccff;
+      color: #ffffff;
+    }
+
+    .thumbnail {
+      border: none;
+      border-radius: 0;
+      padding: 5px 15px 15px 15px;
+      height: 240px;
+      position: relative;
+    }
+
+    .contentRow {
+      margin-bottom: 20px;
+      min-height: 260px;
+    }
+
+    .contentRow > div > a {
+      text-decoration: none;
+    }
+
+    .statusText {
+      position: absolute;
+      right: 15px;
+      bottom: 10px;
+    }
+
+    .thumbnail > .text-center {
+      color: #000000;
+      overflow: hidden;
+    }
+
+    .thumbnail > img {
+      max-height: 150px;
+      max-width: 150px;
+      height: 150px;
+      width: 150px;
+    }
+
+    .listName {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .footer {
+      margin-bottom: 15px;
+      font-size: 20px;
+      line-height: 150px;
+    }
+
+    .mainBox {
+      transition: 0.2s;
+      -webkit-transition: 0.2s;
+      -o-transition: 0.2s;
+      -moz-transition: 0.2s;
+    }
+
+    .mainBox:hover {
+      transform: scale(1.05,1.05);
+      -webkit-transform: scale(1.05,1.05);
+      -o-transform: scale(1.05,1.05);
+      -moz-transform: scale(1.05,1.05);
+    }
+
+  </style>
+</head>
+<body>
+<!--头部-->
+<header id="nav" ng-controller="headCtrl">
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button class="navbar-toggle" ng-click="isCollapsed = !isCollapsed" type="button">
+            <span class="sr-only">导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <h5>
+            <a href="index.html">
+              <img src="http://static.etuan.org/common/logo/etuan-logo-word.png@60h.png" height="30px" alt="团团一家LOGO">
+            </a>
+          </h5>
+        </div>
+        <div collapse="isCollapsed" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active">
+              <a href="index.html">首页</a>
+            </li>
+            <li>
+              <a href="organizationList.html">组织</a>
+            </li>
+            <li>
+              <a href="activityList.html">活动</a>
+            </li>
+            <li>
+              <a href="formList.html">表单</a>
+            </li>
+            <li>
+              <a href="seckillList.html">疯抢</a>
+            </li>
+            <li>
+              <a href="voteList.html">投票</a>
+            </li>
+            <li>
+              <a href="admin">管理后台</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>八大校级组织招新!</h1>
+    <p>八大组织招新来袭！</p>
+  </div>
+</div>
+
+<div class="container" ng-controller="contentCtrl">
+
+  <div class="contentRow col-xs-12">
+    <div class="col-sm-6 col-md-3 mainBox">
+      <a ng-href="#" ng-click="">
+        <div class="thumbnail">
+          <div class="text-center">
+            <h4 class="listName">
+              <nobr>校学生会</nobr>
+            </h4>
+          </div>
+          <img ng-src="http://static.etuan.org/images/55c44d6478661b2851dd65a0/logo/1439567897166596612.JPG" alt="校学生会报名">
+
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+
+  <hr>
+  <div class="text-center footer">
+    <img src="/img/full-logo.png" height="25px" alt="团团一家LOGO">&nbsp;提供技术支持
+  </div>
+
+
+</div>
+
+<script src="http://static.etuan.org/lib/angular/angular.min.js"></script>
+<script src="http://static.etuan.org/lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
+<script src="/js/message/orgsForm.js"></script>
+</body>
+</html>
