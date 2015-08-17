@@ -21,6 +21,17 @@
       min-height: 500px;
     }
 
+    @media screen and (max-width: 400px) {
+      .field {
+        margin: 0;
+        padding: 0;
+        padding-top: 20px;
+        border: 1px solid #e5e5e5;
+        background-color: #fff;
+        min-height: 500px;
+      }
+    }
+
     .centerclass {
       text-align: center;
     }
@@ -33,6 +44,10 @@
 
     .texts {
       text-align: left;
+    }
+
+    .texts > h2 {
+      text-align: center;
     }
 
     .bindingTitle {
@@ -95,9 +110,8 @@
       <span class="glyphicon glyphicon-user col-md-5 img-md"></span>
     </div>
     <div class="texts col-md-6">
-      <h2 class="col-sm-offset-2 col-sm-10 bindingTitle hidden-xs">绑定教务系统</h2>
 
-      <h2 class="col-sm-offset-2 col-sm-10 bindingTitle visible-xs text-center">绑定教务系统</h2>
+      <h2 class="col-sm-offset-2 col-sm-10 bindingTitle">绑定教务系统</h2>
 
       <form class="form-horizontal" role="form" method="post">
         <div class="form-group">
