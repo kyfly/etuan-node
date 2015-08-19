@@ -33,7 +33,7 @@ module.exports = function(Form) {
     var WeChatUser = Form.app.models.WeChatUser;
     var doc = new PDFDocument();
     doc.pipe(ctx.res);
-    ctx.res.setHeader('Content-disposition', 'attachment; filename=' + 'result.pdf');
+    ctx.res.setHeader('Content-disposition', 'attachment; filename=' + ctx.req.params.id + '.pdf');
     try {
        FormResult.find({where:{formId:ctx.req.params.id}}, function(err, formResults){
          Form.findOne({where:{id:ctx.req.params.id}}, function(err, form){
@@ -47,7 +47,7 @@ module.exports = function(Form) {
                var formResult = formResults[i];
                for(var j=0; j<formResult.formResultAnswers.length; j++) {
                  var formResultAnswer = formResult.formResultAnswers[j];
-                 doc.font('../../client/fonts/meng.ttf').text(form.formQuestions[j].label+' : '+formResultAnswer.content);
+                 doc.font('./../client/fonts/meng.ttf').text(form.formQuestions[j].label+' : '+formResultAnswer.content);
                  doc.moveDown();
                }
              }
@@ -74,7 +74,7 @@ module.exports = function(Form) {
   );
 
   Form.afterRemote('excel',function(ctx,instance,next){
-    ctx.res.setHeader('Content-disposition', 'attachment; filename=' + 'result.xls');
+    ctx.res.setHeader('Content-disposition', 'attachment; filename=' + ctx.req.params.id + '.xls');
     var FormResult = Form.app.models.FormResult;
     FormResult.find({where:{formId:ctx.req.params.id}}, function(err, formResults){
 

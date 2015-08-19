@@ -38,25 +38,21 @@ module.exports = function(OrganizationUser) {
 			var Seckill = OrganizationUser.app.models.Seckill;
 			var Activity = OrganizationUser.app.models.Activity;
 			Form.find({where:{organizationUid: organizationUser.id}}, function(err, forms) {
-				var Form = OrganizationUser.app.models.Form;
-				var Vote = OrganizationUser.app.models.Vote;
-				var Seckill = OrganizationUser.app.models.Seckill;
-				var Activity = OrganizationUser.app.models.Activity;
 				var viewCount = 0;
 				forms.forEach(function(form){
-					viewCount += form.viewCount;
+					viewCount += Number(form.viewCount);
 				});
 				Vote.find({where:{organizationUid: organizationUser.id}}, function(err, votes) {
 					votes.forEach(function(vote){
-						viewCount += vote.viewCount;
+						viewCount += Number(vote.viewCount);
 					});
 					Seckill.find({where:{organizationUid: organizationUser.id}}, function(err, seckills) {
 						seckills.forEach(function(seckill){
-							viewCount += seckill.viewCount;
+							viewCount += Number(seckill.viewCount);
 						});
 						Activity.find({where:{organizationUid: organizationUser.id}}, function(err, activities) {
 							activities.forEach(function(activity) {
-								viewCount += activity.viewCount;
+								viewCount += Number(activity.viewCount);
 							});
 							cb(null, {status: 200, viewCount: viewCount});
 						});
