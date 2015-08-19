@@ -13,9 +13,20 @@
   <script src="/lib/angular-components/angular-resource.min.js"></script>
   <script src="/js/login/app.js"></script>
   <style>
+    html {
+      min-height: 100%;
+      height: 100%;
+    }
+
     body {
       font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
       background-color: #F4F4F4;
+      min-height: 100%;
+      height: 100%;
+    }
+
+    section {
+      min-height: 80%;
     }
   </style>
 </head>
@@ -69,17 +80,22 @@
 </header>
 
 <section style="margin-top: -20px; background-color: #F6F6F6;">
-  <div class="container">
-    <div class="row">
+  <div class="container" style="background-color: #ffffff; margin-top: 50px; min-height: 80%;">
+    <div class="row" style="margin-top: 5%">
       <div class="col-md-8">
         <div style="margin:60px 20px 100px">
           <h1>团团都是一家人ヾ(◍°∇°◍)ﾉﾞ</h1>
           <hr>
           <p>陌生人，我也为你祝福</p>
+
           <p>愿你有一个灿烂的前程</p>
+
           <p>愿你有情人终成眷属</p>
+
           <p>愿你在尘世获得幸福</p>
+
           <p>我只愿面朝大海，春暖花开</p>
+
           <p>——海子《面朝大海，春暖花开》</p>
         </div>
       </div>
@@ -89,6 +105,7 @@
             <h4>管理后台登录</h4>
             <hr>
             <br>
+
             <form>
               <div class="form-group">
                 <div class="input-group">
@@ -106,11 +123,15 @@
                   <input type="password" ng-model="password" name="password" class="form-control" placeholder="密码">
                 </div>
               </div>
+              <p class="help-block text-center">请不要使用360浏览器以及IE9以下的版本</p>
               <br>
+
               <div class="form-group">
                 <button class="btn btn-primary pull-left" style="width:45%" ng-click="loginBtn()">登录</button>
                 <a href="../register" class="btn btn-info pull-right" style="width:45%">注册</a>
               </div>
+              <br>
+
             </form>
           </div>
         </div>
@@ -121,6 +142,7 @@
 
 <footer class="panel-footer">
   <br>
+
   <p class="text-center">©2015&nbsp;杭州电子科技大学团团一家工作室&nbsp;<br>
     <a href="http://www.miibeian.gov.cn/" style="color: rgb(51, 51, 51);">浙ICP备14023518号-1</a>
   </p>
