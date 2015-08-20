@@ -95,7 +95,7 @@
       <nobr>他们抢到啦：</nobr>
     </div>
     <marquee class="col-xs-8">
-      <span ng-repeat="result in resultList">
+      <span ng-repeat="result in resultList track by $index">
         <span ng-bind="result + '&nbsp;&nbsp;&nbsp;&nbsp;'"></span>
       </span>
     </marquee>
@@ -130,7 +130,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="sa in seckillArrangements">
+      <tr ng-repeat="sa in seckillArrangements track by $index">
         <td ng-bind-template="第{{sa.id+1}}场"></td>
         <td ng-bind="sa.startTime | date: cnFormat"></td>
         <td ng-bind="sa.total"></td>

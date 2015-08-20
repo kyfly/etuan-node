@@ -14,7 +14,6 @@ function SubmitCtrl($scope, $resource, $timeout, $window) {
           ttl: res.ttl
         };
         $window.localStorage.setItem('d2VjaGF0', JSON.stringify(lsTmp));
-        $window.location = '/admin';
         alert('模拟注册成功，1秒后跳至首页!');
         $timeout(function () {
           $window.location = '/index.html'
