@@ -141,10 +141,13 @@ SocketSeckill.prototype.updateCache = function (seckillId, cb) {
         var tempCount = 0;
         for (var i = 0; i < infoData.seckillArrangements.length; i++) {
           tempCount += infoData.seckillArrangements[i].total;
-          if (tempCount > resultCount) {
+          if (tempCount >= resultCount) {
             cache.current = i;
             cache.remain = tempCount - resultCount;
             break;
+          } else {
+            cache.current = infoData.seckillArrangements.length - 1;
+            cache.remain = tempCount - resultCount;
           }
         }
         if (cb) cb();
