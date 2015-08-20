@@ -27,7 +27,7 @@ function SeckillCtrl($scope, $location, $window, $http) {
   });
 
   socket.once('initSeckill', function (info, result, status) {
-    var accessToken = window.localStorage.swagger_accessToken;
+    var accessToken = JSON.parse($window.localStorage.getItem('d2VjaGF0')).accessToken;
     var sklView = function (id) {
       $http.get('/api/Seckills/view/' + id + '?access_token=' + accessToken)
     };
