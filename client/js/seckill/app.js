@@ -23,11 +23,6 @@ function SeckillCtrl($scope, $location, $window, $http) {
       window.location = "../student.html?referer=" + newReferer
     } else {
       alert("对不起，身份验证失败，错误代码：" + err);
-      //404	不存在的seckillId
-      //101	不存在的accessToken
-      //102	accessToken已过期
-      //103	找不到该用户
-      //104	学号未绑定
     }
   });
 
@@ -75,6 +70,9 @@ function SeckillCtrl($scope, $location, $window, $http) {
         break;
       case "idCard":
         $scope.verifyRule = "身份证号";
+        break;
+      default:
+        $scope.verifyRule = "学号";
         break;
     }
 
