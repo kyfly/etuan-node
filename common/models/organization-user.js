@@ -236,6 +236,7 @@ module.exports = function(OrganizationUser) {
 	OrganizationUser.beforeRemote('create', function(ctx, instance, next) {
 		if (!ctx.req.body.code)
 			ctx.res.send({status:400});
+		next();
 	});
 	OrganizationUser.afterRemote('create', function(ctx, instance, next) {
 		OrganizationUser.login({
