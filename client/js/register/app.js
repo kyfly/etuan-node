@@ -48,9 +48,6 @@ app.config(["w5cValidatorProvider", function (w5cValidatorProvider) {
       required: "输入的组织描述不能为空",
       maxlength: "组织描述长度不能超过200位"
     },
-    weChat: {
-      pattern: "微信公众号名称由字母和数字组成"
-    },
     depart_name: {
       required: "输入的部门名称不能为空",
       maxlength: "部门名称最长不超过12位"
@@ -137,31 +134,46 @@ app.controller('main', ['$scope', '$http', '$resource', function ($scope, $http,
   $scope.delDepart = function (index) {
     $scope.user.organizationUserDepartments.splice(index, 1);
   };
+  $scope.codeStatus = '获取验证码';
   $scope.getCode = function () {
     var email = $scope.user.email;
-    if (email) 
+    if (email) {
       $http.get('/api/OrganizationUsers/confirmCode?email=' + email)
-        .success (function (data) {
-          $scope.confirm = true;
+        .success(function (data) {
           $scope.user.code = data.code;
+          $scope.codeStatus = '请查看邮箱';
         })
-        .error (function (data) {
+        .error(function (data) {
 
         });
-    else
+    }
+    else {
       alert('邮箱不能为空');
-  }
+    }
+  };
   $scope.checkCode = function () {
-    if ($scope.user.confirmCode === $scope.user.code)
-      $scope.user.confirmCode = '通过验证';
-    else
-      $scope.user.confirmCode = '验证码错误';
-  }
+    console.log($scope.confirmCode);
+    console.log($scope.user.code);
+    if (($scope.user.confirmCode === $scope.user.code) && ($scope.user.confirmCode != undefined)) {
+      $scope.helpBlock = '通过验证';
+      $scope.confirm = true;
+    }
+    else {
+      $scope.helpBlock = '验证码错误';
+      $scope.codeStatus = '获取验证码';
+    }
+
+  };
   $scope.updateCode = function () {
     $scope.confirm = false;
     $scope.user.confirmCode = $scope.user.code = undefined;
-  }
+  };
   $scope.register = function () {
+    if($scope.user.confirmCode === undefined){
+      alert('请先填写第一页的验证码');
+      return false;
+    }
+
     for (var i = 0; i < $scope.user.organizationUserDepartments.length; i++) {
       $scope.user.organizationUserDepartments[i].id = i;
     }
@@ -175,6 +187,8 @@ app.controller('main', ['$scope', '$http', '$resource', function ($scope, $http,
           ttl: data.ttl
         };
         window.localStorage.setItem('b3JnYW5p', JSON.stringify(lsTmp));
+        alert("注册成功！");
+        window.location = '/admin';
       }).
       error(function (data, status, headers, config) {
         alert("注册失败");
@@ -205,7 +219,6 @@ app.controller('main', ['$scope', '$http', '$resource', function ($scope, $http,
         if (logoXhr.status === 200) {
           var logoUrl = JSON.parse(logoXhr.responseText).url;
           Setting.update({logoUrl: logoUrl});
-          window.location = '/admin';
         }
         else {
           alert("图片上传失败,请登录后尝试上传!");
