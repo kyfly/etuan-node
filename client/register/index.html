@@ -85,7 +85,9 @@
 </header>
 <div class="container" ng-controller="main">
   <div class="mainBox">
-    <h1>组织管理者注册<small>(除注明选填,其他都为必填项)</small></h1>
+    <h1>组织管理者注册
+      <small>(除注明选填,其他都为必填项)</small>
+    </h1>
     <hr>
     <form class="form-horizontal w5c-form demo-form" role="form"
           w5c-form-validate="vm.validateOptions" novalidate name="validateForm" onsubmit="return false">
@@ -95,21 +97,28 @@
 
           <div class="col-sm-6">
             <input type="email" class="form-control" id="inputEmail" ng-model="user.email" name="email" required=""
-                   w5c-unique-check="{url:'/api/OrganizationUsers/email/exist?email='+user.email}" ng-change="updateCode()">
+                   w5c-unique-check="{url:'/api/OrganizationUsers/email/exist?email='+user.email}"
+                   ng-change="updateCode()">
           </div>
         </div>
-        
-        <div class="form-group has-feedback" id="inputbox2">
-          <label for="confirmCode" class="col-sm-2 control-label" >验证码</label>
+
+        <div class="form-group has-feedback">
+          <label for="confirmCode" class="col-sm-2 control-label">验证码</label>
 
           <div class="col-sm-6">
-            <button ng-show="!confirm" type="button" class="form-control" ng-click="getCode()">获取验证码</button>
-            <input ng-show="confirm" type="text" class="form-control" id="confirmCode" ng-model="user.confirmCode" name="confirmCode"
-                   required="" placeholder="请输入你收到的验证码" ng-blur="checkCode()">
+            <div class="input-group">
+              <input ng-disabled="confirm" type="text" class="form-control" id="confirmCode" ng-model="user.confirmCode"
+                     name="confirmCode" placeholder="请输入你收到的验证码" ng-blur="checkCode()">
+              <span class="input-group-btn">
+                <button ng-disabled="confirm" class="btn btn-warning" type="button" ng-click="getCode()">{{codeStatus}}</button>
+              </span>
+            </div>
+            <p class="help-block" ng-bind="helpBlock"></p>
+
           </div>
         </div>
         <div class="form-group has-feedback" id="inputbox2">
-          <label for="inputPassword" class="col-sm-2 control-label" >密码</label>
+          <label for="inputPassword" class="col-sm-2 control-label">密码</label>
 
           <div class="col-sm-6">
             <input type="password" class="form-control" id="inputPassword" ng-model="user.password" name="password"
@@ -193,7 +202,7 @@
 
           <div class="col-sm-6">
             <input type="text" class="form-control" id="inputWeixin" ng-model="user.weChat" name="weChat"
-                   ng-pattern="/^[A-Za-z0-9]*$/" placeholder="您的微信公众号，数字与字母（选填)">
+                    placeholder="您的微信公众号，数字与字母（选填)">
           </div>
         </div>
         <div class="help-block col-md-offset-2">以下图片单张大小请不要超过<strong>1MB</strong>，否则无法上传。</div>
@@ -254,7 +263,8 @@
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-6">
             <button id="next4" type="button" class="btn btn-primary btn-lg" ng-click="current ='orgInfo' ">上一步</button>
-            <button type="submit" class="btn btn-warning btn-lg col-sm-offset-1" ng-disabled="validateForm.$invalid" id="btnSubmit" ng-click="register()">
+            <button type="submit" class="btn btn-warning btn-lg col-sm-offset-1" ng-disabled="validateForm.$invalid"
+                    id="btnSubmit" ng-click="register()">
               完成注册
             </button>
           </div>
