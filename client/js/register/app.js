@@ -196,7 +196,8 @@ app.controller('main', ['$scope', '$http', '$resource', function ($scope, $http,
     var logoXhr = new XMLHttpRequest();
     var fileExt = /\.[^\.]+/.exec(document.getElementById('logo').value.toLowerCase());
     if (!((fileExt == '.png') || (fileExt == '.jpg') || (fileExt == '.jpeg') || (fileExt == '.gif'))) {
-      alert('请确认您上传的logo文件格式是jpg、png、gif或jpeg');
+      alert('请确认您上传的logo文件格式是jpg、png、gif或jpeg,请到管理后台重新上传!');
+      window.location = '/admin';
       return false;
     }
     var logoReadyHandle = function () {

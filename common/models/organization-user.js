@@ -4,7 +4,8 @@ var transporter = nodemailer.createTransport(
 		service:'163',
 		auth: {
 			user: 'erchuochuo@163.com',
-			pass: 'liu762022369'
+			//pass: 'yjzzivspsozpycgw'
+			pass: "liu762022369"
 		}
 });
 function randomString(len) {
@@ -24,8 +25,8 @@ module.exports = function(OrganizationUser) {
 			type: 'email',
 			from: 'erchuochuo@163.com',
       to: email,
-      subject:'thank',
-			text:'验证码为' + randCode,
+      subject:'团团一家注册验证',
+			text: "你的验证码为" + randCode,
 		},function (err, r) {
 			if (err)
 				cb(err.response);
