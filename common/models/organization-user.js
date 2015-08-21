@@ -1,5 +1,45 @@
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport(
+	{
+		service:'163',
+		auth: {
+			user: 'erchuochuo@163.com',
+			pass: 'liu762022369'
+		}
+});
+function randomString(len) {
+  len = len || 32;
+  var $chars = 'ABCDEFGHJoOLl9gqVvUuI1KMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
+  var maxPos = $chars.length;
+  var pwd = '';
+  for (i = 0; i < len; i++) {
+    pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+  }
+  return pwd;
+}
 module.exports = function(OrganizationUser) {
-
+	OrganizationUser.confirmCode = function (email, cb) {
+		var randCode = randomString(13);
+		transporter.sendMail({
+			type: 'email',
+			from: 'erchuochuo@163.com',
+      to: email,
+      subject:'thank',
+			text:'验证码为' + randCode,
+		},function (err, r) {
+			if (err)
+				cb(err.response);
+			else if (r)
+				cb(null, randCode);
+			else if (err)
+				cb('请检查邮箱是否正确');
+		});
+	}
+	OrganizationUser.remoteMethod('confirmCode', {
+		accepts: {arg: 'email', type: 'string'},
+		returns: {arg: 'code', type: 'string'},
+		http: {verb: 'get', path: '/confirmcode'}
+	});
 	//正在进行活动
 	OrganizationUser.actCount = function(token, cb) {
 		accessTokenCheck(token, cb, function(organizationUser) {
@@ -193,17 +233,17 @@ module.exports = function(OrganizationUser) {
 				ctx.res.end('false');
 		})
 	});
-
+	OrganizationUser.beforeRemote('create', function(ctx, instance, next) {
+		if (!ctx.req.body.code)
+			ctx.res.send({status:400});
+	});
 	OrganizationUser.afterRemote('create', function(ctx, instance, next) {
 		OrganizationUser.login({
 		 email: instance.email,
 		 password: ctx.req.body.password,
 		 ttl: 7200
 		}, function (err, accessToken) {
-		 ctx.res.end(JSON.stringify({
-		 	"accessToken": accessToken.id,
-		 	"userId": accessToken.userId
-		 }));
+		 ctx.res.end(JSON.stringify(accessToken));
 		});
 	});
 

@@ -327,6 +327,12 @@
       "principalId": "admin",
       "permission": "ALLOW",
       "property": "rePwd"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "confirmCode"
     }
   ],
   "methods": []

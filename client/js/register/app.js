@@ -137,16 +137,44 @@ app.controller('main', ['$scope', '$http', '$resource', function ($scope, $http,
   $scope.delDepart = function (index) {
     $scope.user.organizationUserDepartments.splice(index, 1);
   };
+  $scope.getCode = function () {
+    var email = $scope.user.email;
+    if (email) 
+      $http.get('/api/OrganizationUsers/confirmCode?email=' + email)
+        .success (function (data) {
+          $scope.confirm = true;
+          $scope.user.code = data.code;
+        })
+        .error (function (data) {
 
+        });
+    else
+      alert('邮箱不能为空');
+  }
+  $scope.checkCode = function () {
+    if ($scope.user.confirmCode === $scope.user.code)
+      $scope.user.confirmCode = '通过验证';
+    else
+      $scope.user.confirmCode = '验证码错误';
+  }
+  $scope.updateCode = function () {
+    $scope.confirm = false;
+    $scope.user.confirmCode = $scope.user.code = undefined;
+  }
   $scope.register = function () {
     for (var i = 0; i < $scope.user.organizationUserDepartments.length; i++) {
       $scope.user.organizationUserDepartments[i].id = i;
     }
     $http.post('/api/OrganizationUsers', $scope.user).
       success(function (data, status, headers, config) {
-        alert("注册成功");
         $scope.logoUpload(data);
-   window.location = '../login';
+        var lsTmp = {
+          accessToken: data.id,
+          userId: data.userId,
+          loginTime: data.created,
+          ttl: data.ttl
+        };
+        window.localStorage.setItem('b3JnYW5p', JSON.stringify(lsTmp));
       }).
       error(function (data, status, headers, config) {
         alert("注册失败");
@@ -156,7 +184,7 @@ app.controller('main', ['$scope', '$http', '$resource', function ($scope, $http,
 //上传图片至OSS服务
   $scope.logoUpload = function (data) {
     var Setting = $resource(
-      '/api/OrganizationUsers/:userId?access_token=' + data.accessToken, {
+      '/api/OrganizationUsers/:userId?access_token=' + data.id, {
         userId: data.userId
       },
       {
@@ -176,6 +204,7 @@ app.controller('main', ['$scope', '$http', '$resource', function ($scope, $http,
         if (logoXhr.status === 200) {
           var logoUrl = JSON.parse(logoXhr.responseText).url;
           Setting.update({logoUrl: logoUrl});
+          window.location = '/admin';
         }
         else {
           alert("图片上传失败,请登录后尝试上传!");
@@ -184,7 +213,7 @@ app.controller('main', ['$scope', '$http', '$resource', function ($scope, $http,
     };
     logoFd.append('logo', logoFile);
     logoXhr.onreadystatechange = logoReadyHandle;
-    logoXhr.open('POST', '/ue/uploads?action=uploadimage&dir=logo&access_token=' + data.accessToken, true);
+    logoXhr.open('POST', '/ue/uploads?action=uploadimage&dir=logo&access_token=' + data.id, true);
     logoXhr.send(logoFd);
   };
 
