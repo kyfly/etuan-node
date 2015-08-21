@@ -144,7 +144,7 @@ app.controller('main', ['$scope', '$http', '$resource', function ($scope, $http,
           $scope.codeStatus = '请查看邮箱';
         })
         .error(function (data) {
-
+          $scope.helpBlock = '验证码发送失败,请检查邮箱是否准确(最好使用网易邮箱和QQ邮箱)';
         });
     }
     else {
@@ -152,10 +152,9 @@ app.controller('main', ['$scope', '$http', '$resource', function ($scope, $http,
     }
   };
   $scope.checkCode = function () {
-    console.log($scope.confirmCode);
-    console.log($scope.user.code);
     if (($scope.user.confirmCode === $scope.user.code) && ($scope.user.confirmCode != undefined)) {
       $scope.helpBlock = '通过验证';
+      $scope.codeStatus = '通过验证';
       $scope.confirm = true;
     }
     else {
@@ -166,6 +165,7 @@ app.controller('main', ['$scope', '$http', '$resource', function ($scope, $http,
   };
   $scope.updateCode = function () {
     $scope.confirm = false;
+    $scope.codeStatus = '获取验证码';
     $scope.user.confirmCode = $scope.user.code = undefined;
   };
   $scope.register = function () {
