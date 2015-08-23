@@ -13,6 +13,8 @@
   </script-->
   <link rel="stylesheet" href="/lib/bootstrap/css/etuan.css"/>
   <script src="http://static.etuan.org/lib/angular/angular.js"></script>
+  <script src="http://static.etuan.org/lib/jquery/jquery.min.js"></script>
+  <script src="http://static.etuan.org/lib/bootstrap/js/bootstrap.min.js"></script>
   <script src="http://static.etuan.org/lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
   <script src="http://static.etuan.org/lib/angular-components/angular-resource.js"></script>
   <script src="/js/organization/app.js"></script>
@@ -46,6 +48,22 @@
 
     .department > p {
       color: #777777;
+    }
+    .collapse.in {
+      display: table;
+      visibility: visible;
+    }
+    h3{
+      margin: 10px 0 5px 20px;
+    }
+    fieldset{
+      border: 1px solid rgba(192, 192, 192, 0.3); margin:1em 0;padding-right: 10px; 
+    }
+    .table{
+        margin-bottom: 10px;
+    }
+    .activitylist .btn{
+      padding: 0 3px;
     }
   </style>
 <script>
@@ -122,7 +140,103 @@ var _hmt = _hmt || [];
       <p ng-bind="description"></p>
     </div>
     <br>
-
+    <div class="activitylist">
+      <h2>活动列表</h2>
+      <fieldset style="">
+        <div class="activity" role="presentation">
+        <h3 data-toggle="collapse" data-target="#活动">活动列表 {{activities.length}}</h3>
+        <table id = "活动" class="table table-responsive table-condensed">
+          <tr ng-show="activities.length">
+            <td>活动标题</td>
+            <td>开始时间</td>
+            <td>结束时间</td>
+            <td>访问量</td>
+            <td>活动状态</td>
+            <td>操作</td>
+          </tr>
+          <tr ng-repeat="act in activities">
+            <td>{{act.title}}</td>
+            <td>{{act.startTime}}</td>
+            <td>{{act.stopTime}}</td>
+            <td>{{act.viewCount}}</td>
+            <td>{{act.status}}</td>
+            <td><a href="/activity/#?id={{act.id}}" class="btn-primary btn" ng-disabled="act.status !== '正在进行'">参与活动</a></td>
+          </tr>
+        </table>
+        </div>
+      </fieldset>
+      <fieldset>
+        <div class="form">
+        <h3 data-toggle="collapse" data-target="#表单">表单列表 {{forms.length}}</h3>
+        <table id="表单" class="table table-condensed table-responsive">
+          <tr ng-show="forms.length">
+            <td>活动标题</td>
+            <td>开始时间</td>
+            <td>结束时间</td>
+            <td>访问量</td>
+            <td>活动状态</td>
+            <td>操作</td>
+          </tr>
+          <tr ng-repeat="form in forms">
+            <td>{{form.title}}</td>
+            <td>{{form.startTime}}</td>
+            <td>{{form.stopTime}}</td>
+            <td>{{form.viewCount}}</td>
+            <td>{{form.status}}</td>
+            <td><a href="/form/#?id={{form.id}}" class="btn-primary btn" ng-disabled="form.status !== '正在进行'">参与活动</a></td>
+          </tr>
+        </table>
+        </div>
+      </fieldset>
+      <fieldset>
+        <div class="vote">
+        <h3 data-toggle="collapse" data-target="#投票">投票列表 {{votes.length}}</h3>
+        <table id="投票" class="table table-condensed table-responsive">
+          <tr ng-show="votes.length">
+            <td>活动标题</td>
+            <td>开始时间</td>
+            <td>结束时间</td>
+            <td>访问量</td>
+            <td>活动状态</td>
+            <td>操作</td>
+          </tr>
+          <tr ng-repeat="vote in votes">
+            <td>{{vote.title}}</td>
+            <td>{{vote.startTime}}</td>
+            <td>{{vote.stopTime}}</td>
+            <td>{{vote.viewCount}}</td>
+            <td>{{vote.status}}</td>
+            <td><a href="/vote/#?id={{vote.id}}" class="btn-primary btn">{{vote.status=== '正在进行'? '参与活动': '查看结果'}}</a></td>
+          </tr>
+        </table>
+        </div>
+      </fieldset>
+      <fieldset>
+        <div class="seckill">
+        <h3 data-toggle="collapse" data-target="#活动">抢票列表 {{seckills.length}}</h3>
+        <table id="抢票" class="table table-condensed table-responsive">
+          <tr ng-show="seckills.length">
+            <td>活动标题</td>
+            <td>第一场开始时间</td>
+            <td>场次</td>
+            <td>余票量</td>
+            <td>访问量</td>
+            <td>活动状态</td>
+            <td>操作</td>
+          </tr>
+          <tr ng-repeat="seckill in seckills">
+            <td>{{seckill.title}}</td>
+            <td>{{seckill.seckillArrangements[0].startTime | date:'yy-MM-dd HH:mm:ss'}}</td>
+            <td>{{seckill.seckillArrangements.length}}</td>
+            <td>{{seckill.rest}}</td>
+            <td>{{seckill.viewCount}}</td>
+            <td>{{seckill.status}}</td>
+            <td><a href="/seckill/#?id={{seckill.id}}" class="btn-primary btn" ng-disabled="seckill.status !== '正在进行'">参与活动</a></td>
+          </tr>
+        </table>
+        </div>
+      </fieldset>
+    </div>
     <h2>部门介绍</h2>
     <hr>
     <div class="department" ng-repeat="organizationUserDepartment in organizationUserDepartments">

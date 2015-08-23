@@ -1,0 +1,166 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="杭州电子科技大学,杭电,团团一家,杭电报名招新,杭电抢票,杭电投票,社团服务">
+  <meta name="description" content=" 你是我的小呀小组织，怎么爱你都不嫌多——">
+  <title>组织大全 - 团团一家</title>
+  <link rel="icon" href="/img/etuan_logo.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/img/etuan_logo.ico" type="image/x-icon">
+  <link href="http://static.etuan.org/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+  <link href="/css/staticList.css" rel="stylesheet">
+  <script src="http://static.etuan.org/lib/jquery/jquery.min.js"></script>
+  <script src="http://static.etuan.org/lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="http://static.etuan.org/lib/angular/angular.min.js"></script>
+  <script src="http://static.etuan.org/lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
+  <script src="/lib/angular-components/angular-resource.min.js"></script>
+  <script src="/js/lb-services.js"></script>
+  <script src="/js/organization/new.js"></script>
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?76a5edb5c9902d7c2e38f7a723060cff";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+</head>
+<body>
+<header id="nav" ng-controller="headCtrl">
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button class="navbar-toggle" ng-click="isCollapsed = !isCollapsed" type="button">
+            <span class="sr-only">导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <h5>
+            <a href="index.html">
+              <img src="http://static.etuan.org/common/logo/etuan-logo-word.png@60h.png" height="30px" alt="团团一家LOGO">
+            </a>
+          </h5>
+        </div>
+        <div collapse="isCollapsed" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="index.html">首页</a>
+            </li>
+            <li class="active">
+              <a href="/organizationList.html">组织</a>
+            </li>
+            <li>
+              <a href="/activityList.html">活动</a>
+            </li>
+            <li>
+              <a href="/formList.html">表单</a>
+            </li>
+            <li>
+              <a href="/seckillList.html">疯抢</a>
+            </li>
+            <li>
+              <a href="/voteList.html">投票</a>
+            </li>
+            <li>
+              <a href="/admin">管理后台</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div id="mainHeight">
+<div class="jumbotron" style="background-color: #a8d154;">
+    <div class="container">
+      <p id="title1" class="hidden-xs">组织大全</p>
+
+      <p id="title2" class="visible-xs-block">组织大全</p>
+
+      <h2>你是我的小呀小组织，怎么爱你都不嫌多——</h2>
+    </div>
+  </div>
+<div ng-controller="contentCtrl">
+  <nav class="col-sm-2">
+    <ul class="nav nav-pills nav-stacked">
+      <li role="presentation" ng-repeat="University in Universitys">
+        <a  data-toggle="collapse" data-target="#{{University.name}}" aria-expanded="false" class="collapsed">{{University.name}}</a>
+        <ul id="{{University.name}}" class="collapse nav" aria-expanded="false">
+          <li ng-repeat="college in University.types[0].schools" 
+                  ng-click="getOrg()" 
+                  ng-class="{'active': this.active}" 
+                  ng-show="this.oCount">
+            <a href="#" style="color: #55BFC3;" >校级组织与社团 
+            {{this.oCount = (olts | filter : {'university': this.$parent.University.name,
+             'school': this.college}).length}}
+            </a>
+          </li>
+          <li ng-repeat="college in University.types[2].schools" ng-click="getOrg()" ng-show="this.oCount">
+            <a href="#" style="color: #55BFC3;" ng-class="{'active': this.cactive}">
+            {{college + ' '}}{{this.oCount = (olts | filter : {'university': this.$parent.University.name,
+             'school': this.college}).length }}
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+  <nav class="col-sm-10">
+    <ul class="nav nav-pills nav-stacked">
+      <div>
+        <li role="presentation">
+        <a  data-toggle="collapse" data-target="#组织" aria-expanded="true" class="collapsed" 
+                ng-init="orgCount = 0" 
+                ng-click="active()">{{u + cname + "组织列表 (" + orgCount + ')'}}</a>
+        <br>
+        <div id="组织" aria-expanded="true" class="collapse in">
+          <div class="col-xs-12 col-sm-4 col-md-3 mainBox" 
+                  ng-init="this.$parent.orgCount = $index + 1" 
+                  ng-repeat="olt in olts | filter : {'university': u, 'school': c, 'type': '组织'} | orderBy: 'internalOrder'">
+            <a ng-href="/organization/#?id={{olt.id}}">
+              <div class="thumbnail borderDiv">
+                <p class="listhead">
+                <nobr>{{olt.name}}</nobr>
+                </p>
+                <img class="regLogo" ng-src="{{olt.logoUrl}}">
+                <p class="status text-success">查看详情</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </li>
+      </div>
+      <div style="float: left;width: 100%;">
+        <li role="presentation" style="">
+        <a  data-toggle="collapse" data-target="#社团" aria-expanded="false" ng-init="colCount = 0">{{u + cname + '社团列表 (' + colCount+ ')'}}</a>
+        <br>
+        <div id="社团" aria-expanded="false" class="collapse">
+          <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-init="this.$parent.colCount = $index + 1"  ng-repeat="olt in olts | filter : {'university': u, 'school': c, 'type': '社团'} | orderBy: 'internalOrder'">
+          <a ng-href="/organization/#?id={{olt.id}}">
+            <div class="thumbnail borderDiv">
+              <p class="listhead">
+              <nobr>{{olt.name}}</nobr>
+              </p>
+              <img class="regLogo" ng-src="{{olt.logoUrl}}">
+              <p class="status text-success">查看详情</p>
+            </div>
+          </a>
+        </div>
+        </div>
+      </li>
+      </div>
+      
+    </ul>
+  </nav>
+</div>
+</div>
+<footer id="footer" class="panel-footer" style="clear: both;">
+  <p class="text-center">©2015&nbsp;团团一家工作室</p>
+</footer>
+</body>
+</html>

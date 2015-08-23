@@ -1,7 +1,12 @@
 function OrganizationCtrl($scope, $resource, $location) {
+  var nowTime = new Date().getTime();
   var organizationUrlSearchObj = $location.search();
   $scope.title = '组织';
   var OrganizationUsers = $resource("/api/OrganizationUsers/detail/:id");
+  var activities = $resource("/api/OrganizationUsers/:id/activities");
+  var forms = $resource("/api/OrganizationUsers/:id/forms");
+  var votes = $resource("/api/OrganizationUsers/:id/votes");
+  var seckills = $resource("/api/OrganizationUsers/:id/seckills");
   OrganizationUsers.get({
       "id": organizationUrlSearchObj.id
     },
@@ -16,6 +21,69 @@ function OrganizationCtrl($scope, $resource, $location) {
     function (res) {
     }
   );
+  function getStatus(ActType, flag) {
+    for (var i = 0; i < ActType.length; i++) {
+      if (!new Date(ActType[i].startTime).getTime() && !flag) {
+        if (ActType[i].startTime.indexOf('-'))
+          ActType[i].startTime = ActType[i].startTime.replace(/-/g, "/");
+        if (ActType[i].stopTime.indexOf('-'))
+          ActType[i].stopTime = ActType[i].stopTime.replace(/-/g, "/");
+      }
+      if (new Date(ActType[i].startTime).getTime() > nowTime) {
+        ActType[i].status = "即将开始";
+        ActType[i].textColor = "warning";
+      } else if (flag === 0) {
+        if (new Date(ActType[i].stopTime).getTime() < nowTime) {
+          ActType[i].status = "已经结束";
+          ActType[i].textColor = "danger";
+        } else {
+          ActType[i].status = "正在进行";
+          ActType[i].textColor = "success";
+        }
+      } else if (flag === 1) {
+        getCount(ActType[i]);
+      }
+    }
+  }
+  function getCount (seckill) {
+    var seckillResult = $resource('/api/Seckills/rest/:id');
+    seckillResult.get({
+      id: seckill.id
+    },function (res){
+      seckill.rest = res.count;
+      if (res.count <= 0) {
+        seckill.status = "已经结束";
+        seckill.textColor = "danger";
+      } else {
+        seckill.status = "正在进行";
+        seckill.textColor = "success";
+      }
+    });
+  }
+  activities.get({
+    "id": organizationUrlSearchObj.id
+  }, function (res) {
+    $scope.activities = res.list;
+    getStatus($scope.activities, 0);
+  });
+  forms.get({
+    "id": organizationUrlSearchObj.id
+  }, function (res) {
+    $scope.forms = res.list;
+    getStatus($scope.forms, 0);
+  });
+  votes.get({
+    "id": organizationUrlSearchObj.id
+  }, function (res) {
+    $scope.votes = res.list;
+    getStatus($scope.votes, 0);
+  });
+  seckills.get({
+    "id": organizationUrlSearchObj.id
+  }, function (res) {
+    $scope.seckills = res.list;
+    getStatus($scope.seckills, 1);
+  });
 }
 
 function RewriteResourceActions($resourceProvider) {

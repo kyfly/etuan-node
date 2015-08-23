@@ -32,7 +32,6 @@ function StatusFun(ActType, flag) {
         ActType[i].textColor = "success";
       }
     }
-
   }
 }
 app.controller('contentCtrl', ['$scope', '$http', function ($scope, $http) {
