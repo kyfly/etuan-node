@@ -14,6 +14,10 @@
     "isGet": {
       "type": "boolean",
       "required": true
+    },
+    "messages": {
+      "type": ["object"],
+      "comments": "给用户的信息" 
     }
   },
   "validations": [],
