@@ -338,25 +338,25 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
-      "property": "__get__votes"
+      "property": "getvotes"
     },
     {
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
-      "property": "__get__seckills"
+      "property": "getseckills"
     },
     {
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
-      "property": "__get__forms"
+      "property": "getforms"
     },
     {
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
-      "property": "__get__activities"
+      "property": "getactivities"
     }
   ],
   "methods": []

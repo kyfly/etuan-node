@@ -38,6 +38,7 @@ function NavbarCtrl($scope, $window, $resource, etuanAdmin) {
   Organization.get({},
     function (res) {
       $scope.organizationName = res.name;
+      etuanAdmin.organizationName = res.name;
       $scope.organizationLogo = res.logoUrl;
     },
     function () {
@@ -614,7 +615,7 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         logoUpload();
       }
     }
-
+    uploadParameters.organizationName = etuanAdmin.organizationName;
     uploadParameters.updatedAt = new Date();
     if ($scope.contentShow[0]) {
       uploadParameters.title = $scope.title;

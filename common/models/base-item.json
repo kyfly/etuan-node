@@ -42,6 +42,9 @@
     },
     "school": {
       "type": "string"
+    },
+    "organizationName": {
+      "type": "string"
     }
   },
   "validations": [],

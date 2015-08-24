@@ -36,28 +36,47 @@ module.exports = function(OrganizationUser) {
 				cb('请检查邮箱是否正确');
 		});
 	}
+	OrganizationUser.remoteMethod('getactivities', {
+		accepts: {arg: 'id', type: 'string'},
+		returns: {arg: 'list', type: 'object'},
+		http: {verb: 'get', path: '/:id/getactivities'}
+	});
 	OrganizationUser.remoteMethod('confirmCode', {
 		accepts: {arg: 'email', type: 'string'},
 		returns: {arg: 'code', type: 'string'},
 		http: {verb: 'get', path: '/confirmcode'}
 	});
-
-	OrganizationUser.beforeRemote ('prototype.__get__forms', function (ctx, instance, next) {
+	OrganizationUser.remoteMethod('getvotes', {
+		accepts: {arg: 'id', type: 'string'},
+		returns: {arg: 'list', type: 'object'},
+		http: {verb: 'get', path: '/:id/getvotes'}
+	});
+	OrganizationUser.remoteMethod('getforms', {
+		accepts: {arg: 'id', type: 'string'},
+		returns: {arg: 'list', type: 'object'},
+		http: {verb: 'get', path: '/:id/getforms'}
+	});
+	OrganizationUser.remoteMethod('getseckills', {
+		accepts: {arg: 'id', type: 'string'},
+		returns: {arg: 'list', type: 'object'},
+		http: {verb: 'get', path: '/:id/getseckills'}
+	});
+	OrganizationUser.beforeRemote ('getforms', function (ctx, instance, next) {
 		var Form = OrganizationUser.app.models.Form;
 		Form.find(
-			{where: {organizationUid: ctx.req.remotingContext.ctorArgs.id},
+			{where: {organizationUid: ctx.req.params.id},
 			fields: {id: true, title: true, startTime: true, stopTime: true,viewCount: true}
 		}, function (err, ins) {
 			if (err)
 				ctx.res.send({err: err.message});
 			else
-				ctx.res.send({list: ins})
+				ctx.res.send({list: ins});
 		});
 	});
-	OrganizationUser.beforeRemote ('prototype.__get__activities', function (ctx, instance, next) {
+	OrganizationUser.beforeRemote ('getactivities', function (ctx, instance, next) {
 		var Activity = OrganizationUser.app.models.Activity;
 		Activity.find({
-			where: {organizationUid: ctx.req.remotingContext.ctorArgs.id},
+			where: {organizationUid: ctx.req.params.id},
 			fields: {id: true, title: true, startTime: true, stopTime: true,viewCount: true}
 		}, function (err, ins) {
 			if (err)
@@ -66,9 +85,9 @@ module.exports = function(OrganizationUser) {
 				ctx.res.send({list: ins})
 		});
 	});
-	OrganizationUser.beforeRemote ('prototype.__get__seckills', function (ctx, instance, next) {
+	OrganizationUser.beforeRemote ('getseckills', function (ctx, instance, next) {
 		var Seckill = OrganizationUser.app.models.Seckill;
-		Seckill.find({where: {organizationUid: ctx.req.remotingContext.ctorArgs.id},
+		Seckill.find({where: {organizationUid: ctx.req.params.id},
 		fields: {id: true, title: true, seckillArrangements: true,viewCount: true}
 	}, function (err, ins) {
 			if (err)
@@ -77,10 +96,10 @@ module.exports = function(OrganizationUser) {
 				ctx.res.send({list: ins})
 		});
 	});
-	OrganizationUser.beforeRemote ('prototype.__get__votes', function (ctx, instance, next) {
+	OrganizationUser.beforeRemote ('getvotes', function (ctx, instance, next) {
 		var Vote = OrganizationUser.app.models.Vote;
 		Vote.find({
-			where: {organizationUid: ctx.req.remotingContext.ctorArgs.id},
+			where: {organizationUid: ctx.req.params.id},
 			fields: {id: true, title: true, startTime: true, stopTime: true,viewCount: true}
 		}, function (err, ins) {
 			if (err)

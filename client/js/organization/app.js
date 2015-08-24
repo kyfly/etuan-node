@@ -3,10 +3,10 @@ function OrganizationCtrl($scope, $resource, $location) {
   var organizationUrlSearchObj = $location.search();
   $scope.title = '组织';
   var OrganizationUsers = $resource("/api/OrganizationUsers/detail/:id");
-  var activities = $resource("/api/OrganizationUsers/:id/activities");
-  var forms = $resource("/api/OrganizationUsers/:id/forms");
-  var votes = $resource("/api/OrganizationUsers/:id/votes");
-  var seckills = $resource("/api/OrganizationUsers/:id/seckills");
+  var activities = $resource("/api/OrganizationUsers/:id/getactivities");
+  var forms = $resource("/api/OrganizationUsers/:id/getforms");
+  var votes = $resource("/api/OrganizationUsers/:id/getvotes");
+  var seckills = $resource("/api/OrganizationUsers/:id/getseckills");
   OrganizationUsers.get({
       "id": organizationUrlSearchObj.id
     },

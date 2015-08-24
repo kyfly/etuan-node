@@ -1210,6 +1210,40 @@ module.factory(
 
         /**
          * @ngdoc method
+         * @name lbServices.OrganizationUser#getactivities
+         * @methodOf lbServices.OrganizationUser
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{string=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `list` – `{object=}` - 
+         */
+        "getactivities": {
+          url: urlBase + "/OrganizationUsers/:id/getactivities",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
          * @name lbServices.OrganizationUser#confirmCode
          * @methodOf lbServices.OrganizationUser
          *
@@ -1239,6 +1273,108 @@ module.factory(
          */
         "confirmCode": {
           url: urlBase + "/OrganizationUsers/confirmcode",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.OrganizationUser#getvotes
+         * @methodOf lbServices.OrganizationUser
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{string=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `list` – `{object=}` - 
+         */
+        "getvotes": {
+          url: urlBase + "/OrganizationUsers/:id/getvotes",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.OrganizationUser#getforms
+         * @methodOf lbServices.OrganizationUser
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{string=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `list` – `{object=}` - 
+         */
+        "getforms": {
+          url: urlBase + "/OrganizationUsers/:id/getforms",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.OrganizationUser#getseckills
+         * @methodOf lbServices.OrganizationUser
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{string=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `list` – `{object=}` - 
+         */
+        "getseckills": {
+          url: urlBase + "/OrganizationUsers/:id/getseckills",
           method: "GET"
         },
 
@@ -7680,6 +7816,40 @@ module.factory(
          */
         "view": {
           url: urlBase + "/Seckills/view/:id",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Seckill#rest
+         * @methodOf lbServices.Seckill
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{string=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        "rest": {
+          url: urlBase + "/Seckills/rest/:id",
           method: "GET"
         },
 
