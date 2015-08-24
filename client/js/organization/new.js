@@ -25,7 +25,7 @@ app.controller('contentCtrl', ['$scope', '$http', 'OrganizationUser', 'Universit
         console.log(org);
       }).length;
     return true;
-  }
+  };
   $scope.getOrg = function () {
     this.cactive = true;
     $scope.u = this.$parent.University.name;

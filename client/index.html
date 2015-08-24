@@ -161,7 +161,7 @@
   </div>
   <div class="contentRow col-xs-12">
     <div ng-repeat="alt in alts.slice(0,4)" class="col-sm-6 col-md-3 mainBox">
-      <a ng-href="/activity/#?id={{alt.id}}">
+      <a ng-href="/activity/#?id={{alt.id}}" tooltip="由{{alt.organizationName}}创建">
         <div class="thumbnail">
           <div class="text-center">
             <h4 class="listName">
@@ -182,7 +182,7 @@
   </div>
   <div class="contentRow col-xs-12">
     <div ng-repeat="flt in flts.slice(0,4)" class="col-sm-6 col-md-3 mainBox">
-      <a ng-href="/form/#?id={{flt.id}}">
+      <a tooltip="由{{flt.organizationName}}创建" ng-href="/form/#?id={{flt.id}}" tooltip-class="tooltipClass">
         <div class="thumbnail">
           <div class="text-center">
             <h4 class="listName">
@@ -203,7 +203,7 @@
   </div>
   <div class="contentRow col-xs-12">
     <div class="col-sm-6 col-md-3 mainBox" ng-repeat="skl in skls.slice(0,4)">
-      <a ng-href="/seckill/#?id={{skl.id}}">
+      <a tooltip="由{{skl.organizationName}}创建" ng-href="/seckill/#?id={{skl.id}}" tooltip-class="tooltipClass">
         <div class="thumbnail">
           <div class="text-center">
             <h4 class="listName">
@@ -225,7 +225,7 @@
   <div class="contentRow col-xs-12">
 
     <div ng-repeat="vlt in vlts.slice(0,4)" class="col-sm-6 col-md-3 mainBox">
-      <a ng-href="/vote/#?id={{vlt.id}}">
+      <a tooltip="由{{vlt.organizationName}}创建" ng-href="/vote/#?id={{vlt.id}}" tooltip-class="tooltipClass">
         <div class="thumbnail">
           <div class="text-center">
             <h4 class="listName">
