@@ -3,12 +3,7 @@
   "base": "BaseResult",
   "strict": true,
   "idInjection": true,
-  "properties": {
-    "messages": {
-      "type": ["object"],
-      "comments": "给用户的信息" 
-    }
-  },
+  "properties": {},
   "validations": [],
   "relations": {
     "form": {

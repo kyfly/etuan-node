@@ -752,33 +752,65 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
   var resultsProcess = function (res) {
     switch ($routeParams.type) {
       case 'activity':
+        $scope.results = [];
         break;
       case 'form':
         for (var i = 0; i < res.length; i++) {
           var formResultTmp = [];
+          formResultTmp.push(res[i].id);
           var answersTmp = res[i].formResultAnswers;
           for (var j = 0; j < answersTmp.length; j++) {
             formResultTmp.push(answersTmp[j].content);
           }
+          if (res[i].remark)
+            formResultTmp.push(res[i].remark);
+          else
+            formResultTmp.push('');
+          if (res[i].messages)
+            formResultTmp.push(res[i].messages);
+          else
+            formResultTmp.push('');
           $scope.results.push(formResultTmp);
         }
         break;
       case 'seckill':
         for (var i = 0; i < res.length; i++) {
           var seckillResultTmp = [];
+          seckillResultTmp.push(res[i].id);
           seckillResultTmp.push(res[i].verifyId);
+          if (res[i].remark)
+            seckillResultTmp.push(res[i].remark);
+          else
+            seckillResultTmp.push('');
+          if (res[i].messages)
+            seckillResultTmp.push(res[i].messages);
+          else
+            seckillResultTmp.push('');
+          $scope.results.push(seckillResultTmp);
           $scope.results.push(seckillResultTmp);
         }
+
         break;
       case 'vote':
         for (var i = 0; i < res.length; i++) {
           var voteResultTmp = [];
+          voteResultTmp.push(res[i].id);
           voteResultTmp.push(res[i].name);
           voteResultTmp.push(res[i].count);
+          if (res[i].remark)
+            voteResultTmp.push(res[i].remark);
+          else
+            voteResultTmp.push('');
+          if (res[i].messages)
+            voteResultTmp.push(res[i].messages);
+          else
+            voteResultTmp.push('');
+          $scope.results.push(voteResultTmp);
           $scope.results.push(voteResultTmp);
         }
         break;
     }
+    console.log($scope.results);
   };
   var infoProcess = function (res) {
     switch ($routeParams.type) {
@@ -795,6 +827,8 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         for (var i = 0; i < res.formQuestions.length; i++) {
           $scope.resultHeaders.push(res.formQuestions[i].label);
         }
+        $scope.resultHeaders.push('备注');
+        $scope.resultHeaders.push('通知');
         break;
       case 'seckill':
         $scope.title = res.title;
@@ -802,6 +836,8 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         $scope.stopTime = res.seckillArrangements[res.seckillArrangements.length - 1].startTime;
         $scope.resultHeaders.push('序号');
         $scope.resultHeaders.push('学号');
+        $scope.resultHeaders.push('备注');
+        $scope.resultHeaders.push('通知');
         break;
       case 'vote':
         $scope.title = res.title;
@@ -810,6 +846,8 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         $scope.resultHeaders.push('序号');
         $scope.resultHeaders.push('名称');
         $scope.resultHeaders.push('数量');
+        $scope.resultHeaders.push('备注');
+        $scope.resultHeaders.push('通知');
         break;
     }
   };
@@ -832,9 +870,86 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     function (res) {
     }
   );
+  /**
+   * 审核报名用户,并添加备注,或发送通知。
+   * @return {[type]} [description]
+   */
+  $scope.putRemarkMeg = function () {
+    if (!$scope.re) {
+      document.getElementById('fUserInfo').style.display = 'none';
+      return;
+    }
+    if ($scope.re.messages)
+      $scope.re.messages = {
+        messages: $scope.re.messages,
+        createAt: new Date()
+      };
+    else
+      $scope.re.messages = undefined;
+
+    if ($scope.re.remark)
+      $scope.re.remark = {
+        remark: $scope.re.remark,
+        createAt: new Date()
+      };
+    else
+      $scope.re.remark = undefined;
+
+    var post = {
+      data: {'$push': $scope.re},
+      from: "createRM"
+    };
+    var userResult = $resource(
+      '/api/Forms/:id/results/:fk',
+      {
+        id: $routeParams.id, 
+        fk: $scope.result[0],
+        access_token: JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken
+      },
+      {
+        sendReMeg : {
+          method :"PUT"
+        }
+      }
+    );
+    userResult.sendReMeg(post,function (res) {
+      $scope.result[$scope.result.length-2].push($scope.re.remark);
+      $scope.result[$scope.result.length-1].push($scope.re.messages);
+      $scope.re = undefined;
+      document.getElementById('fUserInfo').style.display = 'none';
+    });
+  }
+  /**
+   * 格式化报名用户信息
+   * @param  {[type]} result [description]
+   * @param  {[type]} index  [description]
+   * @return {[type]}        [description]
+   */
+  $scope.onLine = function (result, index) {
+    var series = {};
+    var resultseries = [];
+    for (quest in $scope.resultHeaders) if (quest === "0") {
+      series.question = $scope.resultHeaders[quest];
+      series.answer = index;
+      resultseries.push(series);
+      series = {};
+    } else {
+      series.question = $scope.resultHeaders[quest];
+      series.answer = result[quest];
+      resultseries.push(series);
+      series = {};
+    }
+    $scope.result = this.result;
+    $scope.resultseries = resultseries;
+    console.log($scope.result, resultseries);
+  }
+  $scope.isRM = function (v) {
+    return toString.apply(v) === '[object Array]';
+  }
   /* 结果下载页面的获取区
    * 在这个区域中包括了pdf下载和excel下载。
    */
+  
   $scope.pdfDownload = function () {
     window.open('/api/Forms/pdf/' + $routeParams.id + "?access_token=" + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, '_blank');
   };
