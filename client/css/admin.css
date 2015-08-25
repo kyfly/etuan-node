@@ -252,6 +252,20 @@ body {
   height: 175px;
 }
 
+.notice-area > div {
+  transition: 0.2s;
+  -webkit-transition: 0.2s;
+  -o-transition: 0.2s;
+  -moz-transition: 0.2s;
+}
+
+.notice-area > div:hover {
+  transform: scale(1.05,1.05);
+  -webkit-transform: scale(1.05,1.05);
+  -o-transform: scale(1.05,1.05);
+  -moz-transform: scale(1.05,1.05);
+}
+
 @media screen and (max-width: 768px) {
   .qrcode {
     top: 0;
