@@ -146,12 +146,12 @@
       <h2>活动列表</h2>
       <hr>
 
-      <div class="activity table-responsive" role="presentation">
+      <div class="activity table-responsive" ng-show="activities.length">
         <h3 data-toggle="collapse" data-target="#活动">活动
           <small>共{{activities.length}}个活动</small>
         </h3>
         <table id="活动" class="table table-striped table-hover">
-          <tr ng-show="activities.length">
+          <tr>
             <td>操作</td>
             <td>活动标题</td>
             <td>开始时间</td>
@@ -170,12 +170,12 @@
           </tr>
         </table>
       </div>
-      <div class="form table-responsive">
+      <div class="form table-responsive" ng-show="forms.length">
         <h3 data-toggle="collapse" data-target="#表单">表单
           <small>共{{forms.length}}个表单</small>
         </h3>
         <table id="表单" class="table table-striped table-hover">
-          <tr ng-show="forms.length">
+          <tr>
             <td>操作</td>
             <td>表单标题</td>
             <td>开始时间</td>
@@ -194,12 +194,12 @@
           </tr>
         </table>
       </div>
-      <div class="vote table-responsive">
+      <div class="vote table-responsive" ng-show="votes.length">
         <h3 data-toggle="collapse" data-target="#投票">投票
           <small>共{{votes.length}}个投票</small>
         </h3>
         <table id="投票" class="table table-striped table-hover">
-          <tr ng-show="votes.length">
+          <tr>
             <td>操作</td>
             <td>投票标题</td>
             <td>开始时间</td>
@@ -218,12 +218,12 @@
           </tr>
         </table>
       </div>
-      <div class="seckill table-responsive">
+      <div class="seckill table-responsive" ng-show="seckills.length">
         <h3 data-toggle="collapse" data-target="#活动">疯抢
           <small>共{{seckills.length}}个疯抢</small>
         </h3>
         <table id="抢票" class="table table-striped table-hover">
-          <tr ng-show="seckills.length">
+          <tr>
             <td>操作</td>
             <td>疯抢标题</td>
             <td>第一场开始时间</td>
