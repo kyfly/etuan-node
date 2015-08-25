@@ -536,7 +536,7 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
    * 在完成提交后，将转跳至列表页面list.html
    */
   $scope.submit = function () {
-    if($scope.verifyRule === undefined && $routeParams.type != 'activity'){
+    if ($scope.verifyRule === undefined && $routeParams.type != 'activity') {
       alert('请选择验证规则');
       return false;
     }
@@ -962,15 +962,20 @@ function HomeCtrl($scope, $resource) {
   //这里写着所有的通知通告，别忘了上面的三个数字的实现也要写在这一块地方
   $scope.notices = [
     {
-      'title': '团团一家社团服务平台上线啦',
-      'time': '2015年8月10日',
-      'content': '团团一家新的后台系统上线啦，更简洁更美更方便，让你的社团招新工作不再有烦恼！',
-      'detailUrl': 'http://v.xiumi.us/board/v3/24dWu/2582852'
+      'title': '团团一家网站使用指南',
+      'time': '2015年8月13日',
+      'content': '不会使用团团一家怎么办？网站使用指南帮你忙！',
+      'detailUrl': 'http://mp.weixin.qq.com/s?__biz=MjM5MDMzODkzOQ==&mid=217770659&idx=1&sn=c90d8124676507bb233e94033ada4193#rd'
     }, {
       'title': '关于浏览器兼容性的说明',
       'time': '2015年8月13日',
       'content': '团团一家新的后台系统需要IE9以上的版本支持。推荐使用谷歌Chrome浏览器，尽量不要使用360浏览器。',
       'detailUrl': ''
+    }, {
+      'title': '团团一家社团服务平台上线啦',
+      'time': '2015年8月10日',
+      'content': '团团一家新的后台系统上线啦，更简洁更美更方便，让你的社团招新工作不再有烦恼！',
+      'detailUrl': 'http://www.etuan.org/activity/#?id=55c83cad6eee292c74058c47'
     }
   ];
   //获得接口并进行显示
