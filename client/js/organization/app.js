@@ -1,4 +1,8 @@
 function OrganizationCtrl($scope, $resource, $location) {
+  $scope.tableCollapsed1 = true;
+  $scope.tableCollapsed2 = true;
+  $scope.tableCollapsed3 = true;
+  $scope.tableCollapsed4 = true;
   var nowTime = new Date().getTime();
   var organizationUrlSearchObj = $location.search();
   $scope.title = '组织';
