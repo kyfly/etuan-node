@@ -1,4 +1,4 @@
-function OrganizationCtrl($scope, $resource, $location) {
+function OrganizationCtrl($scope, $resource, $location, $sce) {
   $scope.tableCollapsed1 = true;
   $scope.tableCollapsed2 = true;
   $scope.tableCollapsed3 = true;
@@ -20,6 +20,7 @@ function OrganizationCtrl($scope, $resource, $location) {
       $scope.name = organizationInfo.name;
       $scope.logoUrl = organizationInfo.logoUrl;
       $scope.description = organizationInfo.description;
+      $scope.userDefineDesc = organizationInfo.userDefineDesc;
       $scope.organizationUserDepartments = organizationInfo.organizationUserDepartments;
     },
     function (res) {
@@ -123,7 +124,7 @@ function RewriteResourceActions($resourceProvider) {
   };
 }
 var app = angular.module('app', ['ngResource', 'ui.bootstrap']);
-app.controller('OrganizationCtrl', ['$scope', '$resource', '$location', OrganizationCtrl]);
+app.controller('OrganizationCtrl', ['$scope', '$resource', '$location', '$sce',OrganizationCtrl]);
 app.config(['$resourceProvider', RewriteResourceActions]);
 app.controller('headCtrl', function ($scope) {
   $scope.isCollapsed = true;

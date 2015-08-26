@@ -169,11 +169,15 @@ app.controller('main', ['$scope', '$http', '$resource', function ($scope, $http,
     $scope.user.confirmCode = $scope.user.code = undefined;
   };
   $scope.register = function () {
+
     if($scope.user.confirmCode === undefined){
       alert('请先填写第一页的验证码');
       return false;
     }
-
+    if (this.validateForm.$error.required) {
+      alert('你有必填项没填');
+      return false;
+    }
     for (var i = 0; i < $scope.user.organizationUserDepartments.length; i++) {
       $scope.user.organizationUserDepartments[i].id = i;
     }

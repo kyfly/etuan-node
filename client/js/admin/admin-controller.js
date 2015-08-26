@@ -1068,7 +1068,8 @@ function SettingCtrl($scope, $resource, etuanAdmin, $http, $window) {
         school: $scope.infos[0].school,
         university: $scope.infos[0].university,
         weChat: $scope.infos[0].weChat,
-        phone: $scope.infos[0].phone
+        phone: $scope.infos[0].phone,
+        userDefineDesc: $scope.infos[0].userDefineDesc
       },
       function () {
       },

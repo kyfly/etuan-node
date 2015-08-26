@@ -49,7 +49,7 @@ function getActivityData ($http, scope, types, result, limit, school) {
     { 
       params:{
         filter:{
-          order: 'createAt DESC',
+          order: 'updatedAt desc',
           where: {"university": school},
           limit: limit
         }
@@ -89,10 +89,14 @@ function Activity ($http, $scope, school) {
     getActivityData ($http, $scope, Apis[typeIndex], result[typeIndex], limit, school);  
 }
 app.controller('contentCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
-  var d2VjaGF0 = JSON.parse(window.localStorage.getItem('d2VjaGF0')) || null;
+  var d2VjaGF0 = JSON.parse(window.localStorage.getItem('d2VjaGF0'));
   var school = window.localStorage.getItem('pc');
-  if (!d2VjaGF0)
+  if (!d2VjaGF0){
+    d2VjaGF0 = {};
     d2VjaGF0.school = undefined;
+  } else if (d2VjaGF0.school === '没绑定学校') {
+    d2VjaGF0.school = undefined;
+  }
   $scope.$$prevSibling.schoolSelect = school || d2VjaGF0.school || '全部学校';
   school = school ? school : d2VjaGF0.school? d2VjaGF0.school : $scope.$$prevSibling.schoolSelect;
   Activity ($http, $scope, school);

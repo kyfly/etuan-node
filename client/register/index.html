@@ -99,13 +99,13 @@ var _hmt = _hmt || [];
     </h1>
     <hr>
     <form class="form-horizontal w5c-form demo-form" role="form"
-          w5c-form-validate="vm.validateOptions" novalidate name="validateForm" onsubmit="return false">
+          w5c-form-validate="vm.validateOptions" novalidate name="validateForm" ng-submit="register()">
       <div id="createId" ng-show="current == 'createId'">
         <div class="form-group has-feedback" id="inputbox1">
           <label for="inputEmail" class="col-sm-2 control-label">电子邮箱</label>
 
           <div class="col-sm-6">
-            <input type="email" class="form-control" id="inputEmail" ng-model="user.email" name="email" required=""
+            <input type="email" class="form-control" id="inputEmail" ng-model="user.email" name="email" required
                    w5c-unique-check="{url:'/api/OrganizationUsers/email/exist?email='+user.email}"
                    ng-change="updateCode()">
           </div>
@@ -117,7 +117,7 @@ var _hmt = _hmt || [];
           <div class="col-sm-6">
             <div class="input-group">
               <input ng-disabled="confirm" type="text" class="form-control" id="confirmCode" ng-model="user.confirmCode"
-                     name="confirmCode" placeholder="请输入你收到的验证码" ng-blur="checkCode()">
+                     name="confirmCode" placeholder="请输入你收到的验证码" ng-blur="checkCode()" required>
               <span class="input-group-btn">
                 <button ng-disabled="confirm" class="btn btn-warning" type="button" ng-click="getCode()">{{codeStatus}}</button>
               </span>
@@ -131,7 +131,7 @@ var _hmt = _hmt || [];
 
           <div class="col-sm-6">
             <input type="password" class="form-control" id="inputPassword" ng-model="user.password" name="password"
-                   required="" maxlength="16" minlength="6" placeholder="请输入6-16位非空格字符">
+                   required maxlength="16" minlength="6" placeholder="请输入6-16位非空格字符">
           </div>
         </div>
         <div class="form-group has-feedback" id="inputbox3">
@@ -146,7 +146,7 @@ var _hmt = _hmt || [];
           <label for="inputPhone" class="col-sm-2 control-label">手机号码</label>
 
           <div class="col-sm-6">
-            <input type="number" class="form-control" id="inputPhone" ng-model="user.phone" name="phone" required=""
+            <input type="number" class="form-control" id="inputPhone" ng-model="user.phone" name="phone" required
                    maxlength="11" minlength="11" placeholder="请输入11位手机号码">
           </div>
         </div>
@@ -199,11 +199,19 @@ var _hmt = _hmt || [];
           </div>
         </div>
         <div class="form-group has-feedback" id="inputbox7">
+          <label for="inputURL" class="col-sm-2 control-label">自定义介绍地址URL</label>
+
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="inputURL" ng-model="user.userDefineDesc" name="userDefineDesc"
+                    placeholder="请输入组织介绍页面地址URL" maxlength="200"></textarea>
+          </div>
+        </div>
+        <div class="form-group has-feedback" id="inputbox7">
           <label for="inputIntro" class="col-sm-2 control-label">介绍</label>
 
           <div class="col-sm-6">
             <textarea class="form-control" maxlength="200" style="resize:none" rows="7" id="inputIntro"
-                      ng-model="user.description" placeholder="请保持在200字以内" required="" maxlength="200"></textarea>
+                      ng-model="user.description" placeholder="请保持在200字以内" required maxlength="200"></textarea>
           </div>
         </div>
         <div class="form-group has-feedback" id="inputbox8">
@@ -219,7 +227,7 @@ var _hmt = _hmt || [];
           <label class="col-sm-2 control-label">上传logo</label>
 
           <div class="col-sm-6">
-            <input name="logo" type="file" id="logo" ng-model="user.logo" >
+            <input name="logo" type="file" id="logo" ng-model="user.logo">
             <span class="help-block">建议上传1:1比例的高清不带文字logo图</span>
           </div>
         </div>
@@ -241,8 +249,8 @@ var _hmt = _hmt || [];
             <label class="col-sm-2 control-label">部门名称</label>
 
             <div class="col-sm-6">
-              <input type="text" class="form-control" ng-model="department.name" name="depart_name" required=""
-                     maxlength="12">
+              <input type="text" class="form-control" ng-model="department.name" name="depart_name"
+                     maxlength="12" required>
             </div>
 
             <div class="col-sm-2" ng-hide="$index == 0">
@@ -254,7 +262,7 @@ var _hmt = _hmt || [];
 
             <div class="col-sm-6">
             <textarea class="form-control" style="resize:none" rows="3" ng-model="department.description"
-                      name="depart_description" required="" maxlength="50" placeholder="请保持在50字以内"></textarea>
+                      name="depart_description" required maxlength="50" placeholder="请保持在50字以内"></textarea>
             </div>
           </div>
         </div>
@@ -272,8 +280,8 @@ var _hmt = _hmt || [];
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-6">
             <button id="next4" type="button" class="btn btn-primary btn-lg" ng-click="current ='orgInfo' ">上一步</button>
-            <button type="submit" class="btn btn-warning btn-lg col-sm-offset-1" ng-disabled="validateForm.$invalid"
-                    id="btnSubmit" ng-click="register()">
+            <button type="submit" class="btn btn-warning btn-lg col-sm-offset-1" ng-disabled=""
+                    id="btnSubmit">
               完成注册
             </button>
           </div>

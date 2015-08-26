@@ -32,6 +32,10 @@
       "type": "string",
       "comments": "组织介绍 200字以内"
     },
+    "userDefineDesc": {
+      "type": "string",
+      "comments": "用户自定义介绍页面"
+    },
     "internalOrder": {
       "type": "number",
       "comments": "内部顺序,默认1000,000"
