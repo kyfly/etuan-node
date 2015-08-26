@@ -94,16 +94,18 @@
   <div class="container" ng-controller="contentCtrl">
 
     <tabset justified="true">
-      <tab heading="校级组织">
+      <tab heading="校级组织 ">
 
-        <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="olt in olts" ng-show="olt.type === '校级组织'">
+        <div class="col-xs-12 col-sm-4 col-md-3 mainBox" 
+              ng-repeat="olt in olts | orderBy: 'internalOrder'" 
+              ng-show="olt.type === '校级组织'">
           <a ng-href="/organization/#?id={{olt.id}}">
             <div class="thumbnail borderDiv">
               <p class="listhead">
               <nobr>{{olt.name}}</nobr>
               </p>
               <img class="regLogo" ng-src="{{olt.logoUrl}}">
-
+              <p style="text-align: center;">{{ '微信号：' + (olt.weChat || '未添加')}}</p>
               <p class="status text-success">查看详情</p>
             </div>
           </a>
@@ -119,7 +121,7 @@
               <nobr>{{olt.name}}</nobr>
               </p>
               <img class="regLogo" ng-src="{{olt.logoUrl}}">
-
+              <p style="text-align: center;">{{ '微信号：' + (olt.weChat || '未添加')}}</p>
               <p class="status text-success">查看详情</p>
             </div>
           </a>
@@ -127,7 +129,6 @@
 
       </tab>
       <tab heading="院级组织">
-
         <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="olt in olts" ng-show="olt.type === '院级组织'">
           <a ng-href="/organization/#?id={{olt.id}}">
             <div class="thumbnail borderDiv">
@@ -135,7 +136,7 @@
               <nobr>{{olt.name}}</nobr>
               </p>
               <img class="regLogo" ng-src="{{olt.logoUrl}}">
-
+              <p style="text-align: center;">{{ '微信号：' + (olt.weChat || '未添加')}}</p>
               <p class="status text-success">查看详情</p>
             </div>
           </a>
@@ -151,7 +152,7 @@
               <nobr>{{olt.name}}</nobr>
               </p>
               <img style="height: 150px; width: 150px" ng-src="{{olt.logoUrl}}">
-
+              <p style="text-align: center;">{{ '微信号：' + (olt.weChat || '未添加')}}</p>
               <p class="status text-success">查看详情</p>
             </div>
           </a>
