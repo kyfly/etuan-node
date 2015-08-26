@@ -224,8 +224,9 @@ module.exports = function(OrganizationUser) {
 	});
 
 	//获取组织列表，返回特定的字段，防止敏感信息外泄
-	OrganizationUser.list = function(cb) {
-		OrganizationUser.find({ fields: {id:1, name: 1, logoUrl: 1, type: 1, university: 1,school: 1, internalOrder: 1} }, function(err, orgs) {
+	OrganizationUser.list = function(filter, cb) {
+		filter.fields = {id:1, name: 1, logoUrl: 1, type: 1, university: 1,school: 1, internalOrder: 1};
+		OrganizationUser.find(filter, function(err, orgs) {
 			if(err)
 				cb(null, '获取组织列表失败');
 			else
@@ -234,6 +235,7 @@ module.exports = function(OrganizationUser) {
 	};
 
 	OrganizationUser.remoteMethod('list', {
+		accepts: {arg: 'filter', type: 'object'},
 		returns: {arg: 'orgs', type: 'string'},
 		http: {verb: 'get'}
 	});
