@@ -66,25 +66,29 @@ function OrganizationCtrl($scope, $resource, $location, $sce) {
     });
   }
   activities.get({
-    "id": organizationUrlSearchObj.id
+    "id": organizationUrlSearchObj.id,
+    filter:{ order: 'id desc'}
   }, function (res) {
     $scope.activities = res.list;
     getStatus($scope.activities, 0);
   });
   forms.get({
-    "id": organizationUrlSearchObj.id
+    "id": organizationUrlSearchObj.id,
+    filter:{ order: 'id desc'}
   }, function (res) {
     $scope.forms = res.list;
     getStatus($scope.forms, 0);
   });
   votes.get({
-    "id": organizationUrlSearchObj.id
+    "id": organizationUrlSearchObj.id,
+    filter:{ order: 'id desc'}
   }, function (res) {
     $scope.votes = res.list;
     getStatus($scope.votes, 0);
   });
   seckills.get({
-    "id": organizationUrlSearchObj.id
+    "id": organizationUrlSearchObj.id,
+    filter:{ order: 'id desc'}
   }, function (res) {
     $scope.seckills = res.list;
     getStatus($scope.seckills, 1);

@@ -6,7 +6,7 @@ app.controller('headCtrl', ['$scope', '$http', function ($scope, $http) {
   $http.get('api/Universities?filter=%7B%22fields%22%3A%7B%22name%22%3Atrue%7D%7D').success(function (res) {
     $scope.university = res;
   });
-  $scope.schoolSelect = '全部学校';
+  $scope.schoolSelect = '杭州电子科技大学';
   $scope.changeSchool = function () {
     Activity($http, $scope.$$nextSibling, this.u.name);
     this.$parent.schoolSelect = this.u.name;
@@ -98,7 +98,7 @@ app.controller('contentCtrl', ['$scope', '$http', '$location', function ($scope,
   } else if (d2VjaGF0.school === '没绑定学校') {
     d2VjaGF0.school = undefined;
   }
-  $scope.$$prevSibling.schoolSelect = school || d2VjaGF0.school || '全部学校';
+  $scope.$$prevSibling.schoolSelect = school || d2VjaGF0.school || '杭州电子科技大学';
   school = school ? school : d2VjaGF0.school? d2VjaGF0.school : $scope.$$prevSibling.schoolSelect;
   Activity ($http, $scope, school);
 }]);
