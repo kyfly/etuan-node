@@ -39,31 +39,23 @@ var _hmt = _hmt || [];
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <h5>
+          <h5 style="float: left">
             <a href="index.html">
-              <img src="http://static.etuan.org/common/logo/etuan-logo-word.png@60h.png" height="30px" alt="团团一家LOGO">
+              <img src="http://static.etuan.org/common/logo/etuan-logo-word.png@60h.png" height="25px" alt="团团一家LOGO">
             </a>
           </h5>
+          <div class="dropdown navbar-btn" style="float: left;margin-left: 10px;margin-top: 8px">
+            <button style="text-overflow: ellipsis;
+  overflow: hidden;" class="btn btn-default dropdown-toggle" type="button"
+                    data-toggle="dropdown">
+              {{schoolSelect}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li ng-repeat="u in university" ng-click="changeSchool()"><a href="#">{{u.name}}</a></li>
+            </ul>
+          </div>
         </div>
-
-        <div class="dropdown navbar-btn hidden-xs" style="float: left;margin-left: 15px">
-          <button class="btn btn-info dropdown-toggle" type="button"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            {{schoolSelect}}
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li ng-repeat="u in university" ng-click="changeSchool()"><a href="#">{{u.name}}</a></li>
-          </ul>
-        </div>
-        <button class="btn btn-info dropdown-toggle btn-block  navbar-btn visible-xs" type="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          {{schoolSelect}}
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" style="width: 50%;margin-left: 25%">
-          <li ng-repeat="u in university" ng-click="changeSchool()"><a href="#">{{u.name}}</a></li>
-        </ul>
 
         <div collapse="isCollapsed" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">

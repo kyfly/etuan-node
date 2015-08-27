@@ -124,8 +124,23 @@ a:link {
   }
 }
 
+#mainHeight {
+  margin-top: 50px;
+}
+
 @media screen and (max-width: 768px) {
-  #mainHeight {
-    margin-top: 100px;
+
+  .navbar-btn {
+    width: 38%;
+  }
+
+  .navbar-btn > button {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .navbar-btn {
+    width: 28%;
   }
 }
