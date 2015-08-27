@@ -29,24 +29,24 @@
     </thead>
     <tbody>
     <tr ng-repeat="result in results track by $index">
-      <td ng-click="onLine(result, $index+1)" data-toggle="modal" data-target="#fUserInfo">{{$index+1}}</td>
+      <td style="cursor: pointer" ng-click="onLine(result, $index+1)" data-toggle="modal" data-target="#fUserInfo">{{$index+1}}</td>
       <td ng-repeat="resultDetail in result track by $index" ng-show="$index !== 0" ng-if="!isRM(resultDetail)">{{resultDetail}}</td>
       <td ng-repeat="resultDetail in result track by $index" ng-if="isRM(resultDetail)">
       <span style="margin: 2px;background-color: #337ab7;border-radius: 2px;color:#fff;padding: 3px" ng-repeat="value in resultDetail">
       <b >{{value.remark || value.messages}}</b>
-      </span>   
+      </span>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
 <div style="position: fixed;top:20px" >
-  <div class="modal fade" id="fUserInfo" tabindex="-1" role="dialog" 
+  <div class="modal fade" id="fUserInfo" tabindex="-1" role="dialog"
    aria-labelledby="onLine" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content" style="top: 20px;">
          <div class="modal-header">
-            <button type="button" class="close" 
+            <button type="button" class="close"
                data-dismiss="modal" aria-hidden="true">
                   &times;
             </button>
@@ -92,7 +92,7 @@
             </table>
          </div>
          <div class="modal-footer">
-            <button type="button" class="btn btn-default" 
+            <button type="button" class="btn btn-default"
                data-dismiss="modal">关闭
             </button>
             <button type="button" class="btn btn-primary" ng-click="putRemarkMeg()">
