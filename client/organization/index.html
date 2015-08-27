@@ -167,7 +167,7 @@
               <td>访问量</td>
               <td>活动状态</td>
             </tr>
-            <tr ng-repeat="act in activities">
+            <tr ng-repeat="act in activities| orderBy: 'id':true">
               <td><a href="/activity/#?id={{act.id}}" class="btn-primary btn"
                      ng-disabled="act.status !== '正在进行'">参与活动</a></td>
               <td>{{act.title}}</td>
@@ -197,7 +197,7 @@
               <td>访问量</td>
               <td>表单状态</td>
             </tr>
-            <tr ng-repeat="form in forms">
+            <tr ng-repeat="form in forms| orderBy: 'id':true">
               <td><a href="/form/#?id={{form.id}}" class="btn-primary btn" ng-disabled="form.status !== '正在进行'">参与填表</a></td>
               <td>{{form.title}}</td>
               <td>{{form.startTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -226,7 +226,7 @@
               <td>访问量</td>
               <td>投票状态</td>
             </tr>
-            <tr ng-repeat="vote in votes">
+            <tr ng-repeat="vote in votes|orderBy:'id':true">
               <td><a href="/vote/#?id={{vote.id}}" class="btn-primary btn">{{vote.status=== '正在进行'? '参与投票': '查看结果'}}</a></td>
               <td>{{vote.title}}</td>
               <td>{{vote.startTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -256,7 +256,7 @@
               <td>访问量</td>
               <td>疯抢状态</td>
             </tr>
-            <tr ng-repeat="seckill in seckills">
+            <tr ng-repeat="seckill in seckills|orderBy:'id':true">
               <td><a href="/seckill/#?id={{seckill.id}}" class="btn-primary btn"
                      ng-disabled="seckill.status !== '正在进行'">参与疯抢</a></td>
               <td>{{seckill.title}}</td>
