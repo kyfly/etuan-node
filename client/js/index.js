@@ -59,7 +59,7 @@ function getActivityData ($http, scope, types, result, limit, school) {
     .success(function (res) {
       if (result === 'olts') {
         scope[result] = JSON.parse(res.orgs);
-      } else if (result === 'slts') {
+      } else if (result === 'skls') {
         scope[result] = res;
         StatusFun (scope[result],1);
       } else {
@@ -70,7 +70,7 @@ function getActivityData ($http, scope, types, result, limit, school) {
 }
 function Activity ($http, $scope, school) {
   var Apis = ['Activities', 'Forms', 'Votes', 'Seckills','OrganizationUsers/list'];
-  var result = ['alts','flts','vlts','slts','olts'];
+  var result = ['alts','flts','vlts','skls','olts'];
   var types = ['activity', 'form', 'vote', 'seckill','organization'];
   if (/\/(.+)List\.html/.exec(location.pathname)){
     var accessPage = /\/(.+)List\.html/.exec(location.pathname)[1];

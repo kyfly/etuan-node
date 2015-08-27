@@ -8,10 +8,6 @@
       "type": [
         "number"
       ]
-    },
-    "messages": {
-      "type": ["object"],
-      "comments": "给用户的信息" 
     }
   },
   "validations": [],

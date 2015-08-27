@@ -47,7 +47,13 @@ module.exports = function(Seckill) {
     req.socket.remoteAddress ||
     req.connection.socket.remoteAddress;
   }
-
+  Seckill.beforeRemote('prototype.__updateById__results', function(ctx, instance,next) {
+    if (ctx.req.body.from === 'createRM'){
+      ctx.args.data = ctx.req.body.data;
+      next();
+      return;
+    }
+  });
   Seckill.observe('after save', function(ctx, next) {
     if (ctx.instance)
     {

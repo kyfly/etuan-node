@@ -63,9 +63,13 @@
                 <tr>
                   <th>备注</th>
                   <th>
-                  <span style="margin: 2px;background-color: #337ab7;border-radius: 2px;color:#black;padding: 3px" ng-repeat="value in result[result.length-2]">
-                  {{value.createAt | date : "M-dd HH:mm:ss"}} 添加 <b style="color: white">{{value.remark}}</b>
-                  </span>
+                  <div ng-repeat="value in result[result.length-2]">
+                    <span style="margin: 2px;color:rgba(239, 11, 11, 0.51);padding: 3px">
+                    {{value.createAt | date : "M-dd HH:mm:ss"}} 添加 <b style="color: black">{{value.remark}}</b>
+                    </span>
+                  <br>
+                  </div>
+                 
                   <textarea class="form-control" style="margin-top: 10px;" ng-model="re.remark">
                   </textarea>
                   </th>
@@ -73,9 +77,13 @@
                 <tr>
                   <th>通知</th>
                   <th>
-                  <span style="margin: 2px;background-color: #337ab7;border-radius: 2px;color:#black;padding: 3px" ng-repeat="value in result[result.length-1]">
-                  {{value.createAt | date : "M-dd HH:mm:ss"}} 添加 <b style="color:white">{{value.messages}}</b>
-                  </span>
+                  <div ng-repeat="value in result[result.length-1]">
+                    <span style="margin: 2px;color:rgba(239, 11, 11, 0.51);padding: 3px">
+                    {{value.createAt | date : "M-dd HH:mm:ss"}} 添加 <b style="color:black">{{value.messages}}</b>
+                    </span>
+                    <br>
+                  </div>
+                  
                   <textarea class="form-control" style="margin-top: 10px;" ng-model="re.messages">
                   </textarea>
                   </th>

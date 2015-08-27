@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link href="/lib/bootstrap/css/etuan.css" rel="stylesheet">
+  <script src="/js/school/hdu.js"></script>
   <style>
     body {
       font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
@@ -211,6 +212,7 @@
       if (!($scope.school && $scope.studentId && $scope.studentPassword)) {
         return false;
       }
+      $scope.studentPassword = $scope.school === '杭州电子科技大学'? hex_md5($scope.studentPassword) : $scope.studentPassword;
       $http.put('/api/WeChatUsers/' + userId + "?access_token=" + accessToken, {
         studentId: $scope.studentId,
         password: $scope.studentPassword,
@@ -223,7 +225,7 @@
           window.localStorage.removeItem('d2VjaGF0');
           window.localStorage.setItem('d2VjaGF0', JSON.stringify(d2VjaGF0));
           alert("绑定成功！");
-          window.location = (getQueryString() + window.location.hash);
+          window.location = getQueryString() + window.location.hash === 'undefined' ? '/': getQueryString() + window.location.hash;
         }
       }).error(function () {
         alert("连接出错啦！");

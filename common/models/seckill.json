@@ -1,6 +1,7 @@
 {
   "name": "Seckill",
   "base": "BaseItem",
+  "strict": true,
   "idInjection": true,
   "properties": {},
   "validations": [],
@@ -19,6 +20,18 @@
       }
     }
   },
-  "acls": [],
+  "acls": [
+  {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__updateById__results"
+  },
+  {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY",
+      "property": "__updateById__results"
+  }],
   "methods": []
 }
