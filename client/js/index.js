@@ -6,6 +6,7 @@ app.controller('headCtrl', ['$scope', '$http', function ($scope, $http) {
   $http.get('api/Universities?filter=%7B%22fields%22%3A%7B%22name%22%3Atrue%7D%7D').success(function (res) {
     $scope.university = res;
   });
+  $scope.schoolSelect = '全部学校';
   $scope.changeSchool = function () {
     Activity($http, $scope.$$nextSibling, this.u.name);
     this.$parent.schoolSelect = this.u.name;
@@ -46,7 +47,7 @@ function StatusFun(ActType, flag) {
 }
 function getActivityData ($http, scope, types, result, limit, school) {
     $http.get('/api/'+ types,
-    { 
+    {
       params:{
         filter:{
           order: 'updatedAt desc',
@@ -82,11 +83,11 @@ function Activity ($http, $scope, school) {
   }
   if (accessPage === 'all') {
     for (var i = 0; i < Apis.length-1; i++) {
-      getActivityData ($http, $scope, Apis[i], result[i], limit, undefined);  
+      getActivityData ($http, $scope, Apis[i], result[i], limit, undefined);
     }
   }
   else
-    getActivityData ($http, $scope, Apis[typeIndex], result[typeIndex], limit, school);  
+    getActivityData ($http, $scope, Apis[typeIndex], result[typeIndex], limit, school);
 }
 app.controller('contentCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
   var d2VjaGF0 = JSON.parse(window.localStorage.getItem('d2VjaGF0'));

@@ -18,7 +18,7 @@
   (function() {
     var hm = document.createElement("script");
     hm.src = "//hm.baidu.com/hm.js?76a5edb5c9902d7c2e38f7a723060cff";
-    var s = document.getElementsByTagName("script")[0]; 
+    var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
   })();
   </script>
@@ -26,7 +26,7 @@
 <body>
 <!--头部-->
 <header id="nav" ng-controller="headCtrl">
-  <nav class="navbar navbar-default" role="navigation">
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -42,9 +42,29 @@
             </a>
           </h5>
         </div>
+
+        <div class="dropdown navbar-btn hidden-xs" style="float: left;margin-left: 15px">
+          <button class="btn btn-info dropdown-toggle" type="button"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            {{schoolSelect}}
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li ng-repeat="u in university" ng-click="changeSchool()"><a href="#">{{u.name}}</a></li>
+          </ul>
+        </div>
+        <button class="btn btn-info dropdown-toggle btn-block  navbar-btn visible-xs" type="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          {{schoolSelect}}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" style="width: 50%;margin-left: 25%">
+          <li ng-repeat="u in university" ng-click="changeSchool()"><a href="#">{{u.name}}</a></li>
+        </ul>
+
         <div collapse="isCollapsed" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active">
+            <li>
               <a href="/index.html">首页</a>
             </li>
             <li>
@@ -59,16 +79,8 @@
             <li>
               <a href="/seckillList.html">疯抢</a>
             </li>
-            <li>
+            <li class="active">
               <a href="/voteList.html">投票</a>
-            </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" 
-                  role="button" aria-haspopup="true" aria-expanded="false" ng-init="schoolSelect = '全部学校'">{{schoolSelect}} 
-              <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li ng-repeat="u in university" ng-click="changeSchool()"><a href="#">{{u.name}}</a></li>
-              </ul>
             </li>
             <li>
               <a href="/admin">管理后台</a>

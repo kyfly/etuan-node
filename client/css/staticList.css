@@ -123,3 +123,9 @@ a:link {
     margin-top: 50px;
   }
 }
+
+@media screen and (max-width: 768px) {
+  #mainHeight {
+    margin-top: 100px;
+  }
+}
