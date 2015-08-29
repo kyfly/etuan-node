@@ -868,10 +868,9 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     }
     var tem = {};
     for (var it in $scope.re) {
-      tem[it] = {
-        [it] : $scope.re[it],
-        'createAt' : new Date()
-      };
+      tem[it] = {};
+      tem[it][it] = $scope.re[it]
+      tem[it]['createAt'] = new Date();
     }
     var post = {
       data: {'$push': tem},
@@ -918,7 +917,7 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
   }
 
   $scope.isRM = function (v) {
-    return toString.apply(v) === '[object Array]';
+    return (v instanceof Array);
   }
   /* 结果下载页面的获取区
    * 在这个区域中包括了pdf下载和excel下载。
