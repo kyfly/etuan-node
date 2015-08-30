@@ -163,3 +163,15 @@ a:link {
   }
 
 }
+
+@media screen and (max-width: 1000px) {
+  .navbar-btn {
+    width: 45%;
+  }
+
+  .etuanLogo {
+    height: 18px;
+    margin-top: 6px;
+  }
+
+}
