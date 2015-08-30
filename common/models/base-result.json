@@ -9,6 +9,16 @@
     },
     "studentId": {
       "type": "string"
+    },
+    "messages": {
+      "type": ["object"],
+      "default": [],
+      "comments": "给用户的信息" 
+    },
+    "remark": {
+      "type": ["object"],
+      "comments": "备注意见",
+      "default": []
     }
   },
   "validations": [],

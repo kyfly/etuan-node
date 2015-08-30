@@ -12,7 +12,29 @@ module.exports = function(Seckill) {
       cb(null);
     });
   };
-
+  Seckill.remoteMethod('rest', {
+    accepts: {arg: 'id', type: 'string'},
+    returns: {arg: 'count', type: 'number'},
+    http: {verb: 'GET', path: '/rest/:id'}
+  });
+  Seckill.rest = function (id, cb) {
+    Seckill.findById(id, function (err, instance) {
+      if (err) {
+        cb (err.message)
+      } else {
+        var total = 0;
+        for (var i = 0; i < instance.seckillArrangements.length; i++) {
+          total += instance.seckillArrangements[i].total;
+        };
+        instance.results.count(function (err, count) {
+          if (err)
+            cb(err.message);
+          else
+            cb(null,total - count);
+        });
+      }
+    })
+  }
   //创建抢票结果之前写入ip
   Seckill.beforeRemote('prototype.__create__results', function(ctx, instance, next) {
     ctx.req.body.ip = getClientIp(ctx.req);

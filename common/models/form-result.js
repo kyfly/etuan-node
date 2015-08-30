@@ -1,9 +1,13 @@
-module.exports = function(FormResult) {	
-
+module.exports = function(FormResult) {
 	//form-result检查１．微信绑定 ２．已经报名 3.开始时间结束时间
 	FormResult.observe('before save', function(ctx, next) {
 		var Form = FormResult.app.models.Form;
 		var WeChatUser = FormResult.app.models.WeChatUser;
+		if (!ctx.instance && ctx.data.from === 'createRM'){
+			ctx.data = ctx.data.data;
+			next();
+			return;
+		}
 		FormResult.findOne({ where: { formId: ctx.instance.formId, weChatUid: ctx.instance.weChatUid }}, function(err, formResult) {
 			if(formResult === null) {
 				Form.findOne({ where: { id: ctx.instance.formId }}, function(err, form) {

@@ -119,6 +119,9 @@ Verify.prototype.getStudentId = function (token, cb) {
 Verify.prototype.getUserId = function (token, cb) {
   if (!token)  cb("token can't be null");
   tokenModel.findOne({where: {id: token}}, function (err, tokenData) {
-    cb(err, tokenData.userId)
+    if (err)
+      cb(err)
+    else
+      cb(null, tokenData.userId)
   })
 };

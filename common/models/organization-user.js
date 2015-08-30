@@ -36,18 +36,85 @@ module.exports = function(OrganizationUser) {
 				cb('请检查邮箱是否正确');
 		});
 	}
+	OrganizationUser.remoteMethod('getactivities', {
+		accepts: {arg: 'id', type: 'string'},
+		returns: {arg: 'list', type: 'object'},
+		http: {verb: 'get', path: '/:id/getactivities'}
+	});
 	OrganizationUser.remoteMethod('confirmCode', {
 		accepts: {arg: 'email', type: 'string'},
 		returns: {arg: 'code', type: 'string'},
 		http: {verb: 'get', path: '/confirmcode'}
 	});
+	OrganizationUser.remoteMethod('getvotes', {
+		accepts: {arg: 'id', type: 'string'},
+		returns: {arg: 'list', type: 'object'},
+		http: {verb: 'get', path: '/:id/getvotes'}
+	});
+	OrganizationUser.remoteMethod('getforms', {
+		accepts: {arg: 'id', type: 'string'},
+		returns: {arg: 'list', type: 'object'},
+		http: {verb: 'get', path: '/:id/getforms'}
+	});
+	OrganizationUser.remoteMethod('getseckills', {
+		accepts: {arg: 'id', type: 'string'},
+		returns: {arg: 'list', type: 'object'},
+		http: {verb: 'get', path: '/:id/getseckills'}
+	});
+	OrganizationUser.beforeRemote ('getforms', function (ctx, instance, next) {
+		var Form = OrganizationUser.app.models.Form;
+		Form.find(
+			{where: {organizationUid: ctx.req.params.id},
+			fields: {id: true, title: true, startTime: true, stopTime: true,viewCount: true}
+		}, function (err, ins) {
+			if (err)
+				ctx.res.send({err: err.message});
+			else
+				ctx.res.send({list: ins});
+		});
+	});
+	OrganizationUser.beforeRemote ('getactivities', function (ctx, instance, next) {
+		var Activity = OrganizationUser.app.models.Activity;
+		Activity.find({
+			where: {organizationUid: ctx.req.params.id},
+			fields: {id: true, title: true, startTime: true, stopTime: true,viewCount: true}
+		}, function (err, ins) {
+			if (err)
+				ctx.res.send({err: err.message});
+			else
+				ctx.res.send({list: ins})
+		});
+	});
+	OrganizationUser.beforeRemote ('getseckills', function (ctx, instance, next) {
+		var Seckill = OrganizationUser.app.models.Seckill;
+		Seckill.find({where: {organizationUid: ctx.req.params.id},
+		fields: {id: true, title: true, seckillArrangements: true,viewCount: true}
+	}, function (err, ins) {
+			if (err)
+				ctx.res.send({err: err.message});
+			else
+				ctx.res.send({list: ins})
+		});
+	});
+	OrganizationUser.beforeRemote ('getvotes', function (ctx, instance, next) {
+		var Vote = OrganizationUser.app.models.Vote;
+		Vote.find({
+			where: {organizationUid: ctx.req.params.id},
+			fields: {id: true, title: true, startTime: true, stopTime: true,viewCount: true}
+		}, function (err, ins) {
+			if (err)
+				ctx.res.send({err: err.message});
+			else
+				ctx.res.send({list: ins})
+		});
+	});
 	//正在进行活动
 	OrganizationUser.actCount = function(token, cb) {
+		var Form = OrganizationUser.app.models.Form;
+		var Vote = OrganizationUser.app.models.Vote;
+		var Seckill = OrganizationUser.app.models.Seckill;
+		var Activity = OrganizationUser.app.models.Activity;
 		accessTokenCheck(token, cb, function(organizationUser) {
-			var Form = OrganizationUser.app.models.Form;
-			var Vote = OrganizationUser.app.models.Vote;
-			var Seckill = OrganizationUser.app.models.Seckill;
-			var Activity = OrganizationUser.app.models.Activity;
 			var actCount = 0;
 			Form.find({where: {organizationUid: organizationUser.id, startTime: {lt: Date.now()}, stopTime: {gt: Date.now()}}}, {id: 1}, function(err, forms) {
 				actCount += forms.length;
@@ -73,11 +140,11 @@ module.exports = function(OrganizationUser) {
 
 	//浏览人数
 	OrganizationUser.viewCount = function(token, cb) {
+		var Form = OrganizationUser.app.models.Form;
+		var Vote = OrganizationUser.app.models.Vote;
+		var Seckill = OrganizationUser.app.models.Seckill;
+		var Activity = OrganizationUser.app.models.Activity;
 		accessTokenCheck(token, cb, function(organizationUser) {
-			var Form = OrganizationUser.app.models.Form;
-			var Vote = OrganizationUser.app.models.Vote;
-			var Seckill = OrganizationUser.app.models.Seckill;
-			var Activity = OrganizationUser.app.models.Activity;
 			Form.find({where:{organizationUid: organizationUser.id}}, function(err, forms) {
 				var viewCount = 0;
 				forms.forEach(function(form){
@@ -113,10 +180,10 @@ module.exports = function(OrganizationUser) {
 	OrganizationUser.parCount = function(token, cb) {
 		accessTokenCheck(token, cb, function(organizationUser) {
 			var Form = OrganizationUser.app.models.Form;
-			var FormResult = OrganizationUser.app.models.FormResult;
 			var Vote = OrganizationUser.app.models.Vote;
-			var VoteResult = OrganizationUser.app.models.VoteResult;
 			var Seckill = OrganizationUser.app.models.Seckill;
+			var FormResult = OrganizationUser.app.models.FormResult;
+			var VoteResult = OrganizationUser.app.models.VoteResult;
 			var SeckillResult = OrganizationUser.app.models.SeckillResult;
 			Form.find({where:{organizationUid: organizationUser.id}}, function(err, forms) {
 				var parCount = 0;
@@ -158,7 +225,7 @@ module.exports = function(OrganizationUser) {
 
 	//获取组织列表，返回特定的字段，防止敏感信息外泄
 	OrganizationUser.list = function(cb) {
-		OrganizationUser.find({ fields: {id:1, name: 1, logoUrl: 1, type: 1, school: 1, internalOrder: 1} }, function(err, orgs) {
+		OrganizationUser.find({ fields: {id:1, name: 1, logoUrl: 1, type: 1, university: 1,school: 1, internalOrder: 1} }, function(err, orgs) {
 			if(err)
 				cb(null, '获取组织列表失败');
 			else
