@@ -16,6 +16,7 @@
     "loopback-connector-mongodb": "^1.8.0",
     "loopback-datasource-juggler": "^2.7.0",
     "mongodb": "^1.4.29",
+    "node-rsa": "^0.2.25",
     "node-xlsx": "^0.5.1",
     "nodemailer": "^1.4.0",
     "pdfkit": "^0.7.1",
