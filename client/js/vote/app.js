@@ -25,7 +25,7 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
         $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
       }
 
-     function loadContent(url, i) {
+      function loadContent(url, i) {
         var http = new XMLHttpRequest();
         http.onreadystatechange = function () {
           if (http.readyState == 4 && http.status == 200) {
@@ -71,25 +71,30 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
         resultTmp.push(i);
       }
     }
-    VoteResult.save({
-        'voteId': voteUrlSearchObj.id,
-        'results': resultTmp
-      },
-      function () {
-        alert("投票成功");
-        $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
-      },
-      function (res) {
-        alert(res.data.error.message);
-        if (res.data.error.message === "需要绑定学号") {
-          window.location = "../student.html?referer=" + newReferer
-        } else if (res.data.error.message === "已经投过票了") {
+    if (resultTmp.length != 0) {
+      VoteResult.save({
+          'voteId': voteUrlSearchObj.id,
+          'results': resultTmp
+        },
+        function () {
+          alert("投票成功");
           $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
-        } else if (res.data.error.message === "已经结束") {
-          $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
+        },
+        function (res) {
+          alert(res.data.error.message);
+          if (res.data.error.message === "需要绑定学号") {
+            window.location = "../student.html?referer=" + newReferer
+          } else if (res.data.error.message === "已经投过票了") {
+            $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
+          } else if (res.data.error.message === "已经结束") {
+            $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
+          }
         }
-      }
-    );
+      );
+    } else {
+      alert("请至少选择一项");
+    }
+
   };
 
 }
