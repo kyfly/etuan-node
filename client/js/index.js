@@ -45,11 +45,11 @@ function StatusFun(ActType, flag) {
     }
   }
 }
-function getActivityData ($http, scope, types, result, limit, school) {
-    $http.get('/api/'+ types,
+function getActivityData($http, scope, types, result, limit, school) {
+  $http.get('/api/' + types,
     {
-      params:{
-        filter:{
+      params: {
+        filter: {
           order: 'updatedAt desc',
           where: {"university": school},
           limit: limit
@@ -61,44 +61,44 @@ function getActivityData ($http, scope, types, result, limit, school) {
         scope[result] = JSON.parse(res.orgs);
       } else if (result === 'skls') {
         scope[result] = res;
-        StatusFun (scope[result],1);
+        StatusFun(scope[result], 1);
       } else {
         scope[result] = res;
-        StatusFun (scope[result],0);
+        StatusFun(scope[result], 0);
       }
     });
 }
-function Activity ($http, $scope, school) {
-  var Apis = ['Activities', 'Forms', 'Votes', 'Seckills','OrganizationUsers/list'];
-  var result = ['alts','flts','vlts','skls','olts'];
-  var types = ['activity', 'form', 'vote', 'seckill','organization'];
-  if (/\/(.+)List\.html/.exec(location.pathname)){
+function Activity($http, $scope, school) {
+  var Apis = ['Activities', 'Forms', 'Votes', 'Seckills', 'OrganizationUsers/list'];
+  var result = ['alts', 'flts', 'vlts', 'skls', 'olts'];
+  var types = ['activity', 'form', 'vote', 'seckill', 'organization'];
+  if (/\/(.+)List\.html/.exec(location.pathname)) {
     var accessPage = /\/(.+)List\.html/.exec(location.pathname)[1];
     var typeIndex = types.indexOf(accessPage);
     var limit = undefined;
   }
-  else{
+  else {
     var accessPage = 'all';
     var limit = 4;
   }
   if (accessPage === 'all') {
-    for (var i = 0; i < Apis.length-1; i++) {
-      getActivityData ($http, $scope, Apis[i], result[i], limit, undefined);
+    for (var i = 0; i < Apis.length - 1; i++) {
+      getActivityData($http, $scope, Apis[i], result[i], limit, undefined);
     }
   }
   else
-    getActivityData ($http, $scope, Apis[typeIndex], result[typeIndex], limit, school);
+    getActivityData($http, $scope, Apis[typeIndex], result[typeIndex], limit, school);
 }
 app.controller('contentCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
   var d2VjaGF0 = JSON.parse(window.localStorage.getItem('d2VjaGF0'));
   var school = window.localStorage.getItem('pc');
-  if (!d2VjaGF0){
+  if (!d2VjaGF0) {
     d2VjaGF0 = {};
     d2VjaGF0.school = undefined;
   } else if (d2VjaGF0.school === '没绑定学校') {
     d2VjaGF0.school = undefined;
   }
   $scope.$$prevSibling.schoolSelect = school || d2VjaGF0.school || '杭州电子科技大学';
-  school = school ? school : d2VjaGF0.school? d2VjaGF0.school : $scope.$$prevSibling.schoolSelect;
-  Activity ($http, $scope, school);
+  school = school ? school : d2VjaGF0.school ? d2VjaGF0.school : $scope.$$prevSibling.schoolSelect;
+  Activity($http, $scope, school);
 }]);
