@@ -50,7 +50,7 @@ function getActivityData ($http, scope, types, result, limit, school) {
     {
       params:{
         filter:{
-          order: 'updatedAt desc',
+          order: 'id desc',
           where: {"university": school},
           limit: limit
         }
