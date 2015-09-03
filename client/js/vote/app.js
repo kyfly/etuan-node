@@ -6,8 +6,20 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
   var VoteResult = $resource('/api/WeChatUsers/:id/voteResults', {
     id: JSON.parse($window.localStorage.getItem('d2VjaGF0')).userId
   });
+
+  if(JSON.parse($window.localStorage.getItem('d2VjaGF0')).studentId === undefined){
+    window.location = "../student.html?referer=" + newReferer
+  }
+
+  $http.get('/api/WeChatUsers/' + JSON.parse($window.localStorage.getItem('d2VjaGF0')).userId + '/voteResults?filter=%7B%22where%22%3A%7B%22voteId%22%3A%22' + voteUrlSearchObj.id + '%22%7D%7D&access_token=' + JSON.parse($window.localStorage.getItem('d2VjaGF0')).accessToken).success(function (res) {
+    if(res != ''){
+      $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
+    }
+  });
+
   $scope.answer = [];
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
+
   Vote.get({
       "id": voteUrlSearchObj.id
     },
@@ -25,7 +37,7 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
         $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
       }
 
-     function loadContent(url, i) {
+      function loadContent(url, i) {
         var http = new XMLHttpRequest();
         http.onreadystatechange = function () {
           if (http.readyState == 4 && http.status == 200) {
@@ -71,25 +83,30 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
         resultTmp.push(i);
       }
     }
-    VoteResult.save({
-        'voteId': voteUrlSearchObj.id,
-        'results': resultTmp
-      },
-      function () {
-        alert("投票成功");
-        $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
-      },
-      function (res) {
-        alert(res.data.error.message);
-        if (res.data.error.message === "需要绑定学号") {
-          window.location = "../student.html?referer=" + newReferer
-        } else if (res.data.error.message === "已经投过票了") {
+    if (resultTmp.length != 0) {
+      VoteResult.save({
+          'voteId': voteUrlSearchObj.id,
+          'results': resultTmp
+        },
+        function () {
+          alert("投票成功");
           $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
-        } else if (res.data.error.message === "已经结束") {
-          $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
+        },
+        function (res) {
+          alert(res.data.error.message);
+          if (res.data.error.message === "需要绑定学号") {
+            window.location = "../student.html?referer=" + newReferer
+          } else if (res.data.error.message === "已经投过票了") {
+            $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
+          } else if (res.data.error.message === "已经结束") {
+            $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
+          }
         }
-      }
-    );
+      );
+    } else {
+      alert("请至少选择一项");
+    }
+
   };
 
 }

@@ -6,6 +6,11 @@ function FormCtrl($scope, $resource, $location, $window, $http) {
   var FormResult = $resource('/api/WeChatUsers/:id/formResults', {
     id: JSON.parse($window.localStorage.getItem('d2VjaGF0')).userId
   });
+
+  if (JSON.parse($window.localStorage.getItem('d2VjaGF0')).studentId === undefined) {
+    window.location = "../student.html?referer=" + newReferer
+  }
+
   $scope.answer = [];
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
   Form.get({
@@ -13,7 +18,7 @@ function FormCtrl($scope, $resource, $location, $window, $http) {
     },
     function (res) {
       var accessToken = window.localStorage.swagger_accessToken;
-       var fltView = function (id) {
+      var fltView = function (id) {
         $http.get('/api/Forms/view/' + id + '?access_token=' + accessToken)
       };
       fltView(res.id);
@@ -59,9 +64,9 @@ function FormCtrl($scope, $resource, $location, $window, $http) {
         $window.location = '../';
       },
       function (res) {
-        if(res.status === 400){
+        if (res.status === 400) {
           alert(res.data.error.message);
-          if(res.data.error.message === "需要绑定学号") {
+          if (res.data.error.message === "需要绑定学号") {
             window.location = "../student.html?referer=" + newReferer;
           }
         }

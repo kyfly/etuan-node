@@ -139,7 +139,8 @@
     </div>
 
     <div class="description">
-      <h2>简介<a ng-if="userDefineDesc" target="_blank" href="{{userDefineDesc}}" style="float: right" class="btn btn-warning">查看组织官方介绍</a></h2>
+      <h2>简介<a ng-if="userDefineDesc" target="_blank" href="{{userDefineDesc}}" style="float: right"
+               class="btn btn-warning">查看组织官方介绍</a></h2>
       <hr>
 
       <p ng-bind="description"></p>
@@ -154,7 +155,8 @@
         <div class="panel-heading" ng-click="tableCollapsed1 = !tableCollapsed1">
           <h4>活动
             <small>共{{activities.length}}个活动</small>
-            <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': !tableCollapsed1, 'glyphicon-chevron-right': tableCollapsed1}"></i>
+            <i class="pull-right glyphicon"
+               ng-class="{'glyphicon-chevron-down': !tableCollapsed1, 'glyphicon-chevron-right': tableCollapsed1}"></i>
           </h4>
         </div>
         <div class="table-responsive">
@@ -184,7 +186,8 @@
         <div class="panel-heading" ng-click="tableCollapsed2 = !tableCollapsed2">
           <h4>表单
             <small>共{{forms.length}}个表单</small>
-            <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': !tableCollapsed2, 'glyphicon-chevron-right': tableCollapsed2}"></i>
+            <i class="pull-right glyphicon"
+               ng-class="{'glyphicon-chevron-down': !tableCollapsed2, 'glyphicon-chevron-right': tableCollapsed2}"></i>
           </h4>
         </div>
         <div class="table-responsive">
@@ -198,7 +201,8 @@
               <td>表单状态</td>
             </tr>
             <tr ng-repeat="form in forms| orderBy: 'id':true">
-              <td><a href="/form/#?id={{form.id}}" class="btn-primary btn" ng-disabled="form.status !== '正在进行'">参与填表</a></td>
+              <td><a href="/form/#?id={{form.id}}" class="btn-primary btn" ng-disabled="form.status !== '正在进行'">参与填表</a>
+              </td>
               <td>{{form.title}}</td>
               <td>{{form.startTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
               <td>{{form.stopTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -213,7 +217,8 @@
         <div class="panel-heading" ng-click="tableCollapsed3 = !tableCollapsed3">
           <h4>投票
             <small>共{{votes.length}}个投票</small>
-            <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': !tableCollapsed3, 'glyphicon-chevron-right': tableCollapsed3}"></i>
+            <i class="pull-right glyphicon"
+               ng-class="{'glyphicon-chevron-down': !tableCollapsed3, 'glyphicon-chevron-right': tableCollapsed3}"></i>
           </h4>
         </div>
         <div class="table-responsive">
@@ -227,7 +232,8 @@
               <td>投票状态</td>
             </tr>
             <tr ng-repeat="vote in votes|orderBy:'id':true">
-              <td><a href="/vote/#?id={{vote.id}}" class="btn-primary btn">{{vote.status=== '正在进行'? '参与投票': '查看结果'}}</a></td>
+              <td><a href="/vote/#?id={{vote.id}}" class="btn-primary btn">{{vote.status=== '正在进行'? '参与投票': '查看结果'}}</a>
+              </td>
               <td>{{vote.title}}</td>
               <td>{{vote.startTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
               <td>{{vote.stopTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -242,7 +248,8 @@
         <div class="panel-heading" ng-click="tableCollapsed4 = !tableCollapsed4">
           <h4>疯抢
             <small>共{{seckills.length}}个疯抢</small>
-            <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': !tableCollapsed4, 'glyphicon-chevron-right': tableCollapsed4}"></i>
+            <i class="pull-right glyphicon"
+               ng-class="{'glyphicon-chevron-down': !tableCollapsed4, 'glyphicon-chevron-right': tableCollapsed4}"></i>
           </h4>
         </div>
         <div class="table-responsive">
