@@ -101,7 +101,7 @@
       <tab heading="正在进行">
 
         <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="vlt in vlts | filter:{activityStatus: '正在进行'}">
-          <a ng-href="/vote/#?id={{vlt.id}}" tooltip="由{{vlt.organizationName}}创建">
+          <a ng-href="/vote/#?id={{vlt.id}}">
             <div class="thumbnail borderDiv">
               <p class="listhead">
               <nobr>{{vlt.title}}</nobr>
@@ -118,7 +118,7 @@
       <tab heading="即将开始" ng-click="newvlts = vlts">
 
         <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="vlt in newvlts | filter:{activityStatus: '即将开始'}">
-          <a ng-href="/vote/#?id={{vlt.id}}" tooltip="由{{vlt.organizationName}}创建">
+          <a ng-href="/vote/#?id={{vlt.id}}">
             <div class="thumbnail borderDiv">
               <p class="listhead">
               <nobr>{{vlt.title}}</nobr>
@@ -135,7 +135,7 @@
       <tab heading="已经结束" ng-click="oldvlts = vlts">
 
         <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="vlt in oldvlts | filter:{activityStatus: '已经结束'}">
-          <a ng-href="/vote/#?id={{vlt.id}}" tooltip="由{{vlt.organizationName}}创建">
+          <a ng-href="/vote/#?id={{vlt.id}}">
             <div class="thumbnail borderDiv">
               <p class="listhead">
               <nobr>{{vlt.title}}</nobr>
@@ -151,7 +151,7 @@
       <tab heading="全部投票" ng-click="allvlts = vlts">
 
         <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="vlt in allvlts">
-          <a ng-href="/vote/#?id={{vlt.id}}" tooltip="由{{vlt.organizationName}}创建">
+          <a ng-href="/vote/#?id={{vlt.id}}">
             <div class="thumbnail borderDiv">
               <p class="listhead">
               <nobr>{{vlt.title}}</nobr>
