@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>关于团团一家</title>
+  <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css"/>
+</head>
+<style type="text/css">
+  .bg {
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 2;
+    padding: 0 0 100px 0;
+  }
+  .bg figure{
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-position: center bottom;
+    background-size: cover;
+    background-image: url('/img/etuan-group.jpg');
+  }
+  .bg figure figcaption{
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1160px;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    color: #fff;
+    text-align: center;
+  }
+  .bg figure figcaption h1{
+    font-size: 80px;
+    font-weight: 600;
+  }
+  .bg figure figcaption h1{
+    font-size: 40px;
+  }
+  .scrollOver{
+    width: 100%;
+    position: relative;
+    z-index: 5;
+    float: left;
+    display: block;
+    padding: 100vh 0 0 0;
+  }
+  .scrollDown{
+    display: block;
+    width: 100%;
+    height: 100px;
+    line-height: 98px;
+    text-align: center;
+    color: #384452;
+    background: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: "museo-sans",sans-serif;
+    text-transform: uppercase;
+    position: absolute;
+    z-index: 3;
+    top: -100px;
+  }
+  .icon{
+    border-radius: 40px;
+    width: 40px;
+    height: 40px;
+    line-height: 36px;
+    font-size: 20px;
+    display: inline-block;
+    border: 2px solid #ccc;
+    margin: 0 10px 0 0;
+    position: relative;
+    top: 4px;
+    -webkit-transition: all 0.25s 0s ease;
+    transition: all 0.25s 0s ease;
+  }
+  .form{
+
+  }
+  .baseitem{
+    float: left;
+    width: 100%;
+    position: relative;
+    height: 100vh;
+  }
+  .baseitem div{
+    z-index: 333;
+    width: 100%;
+    position: relative;
+    padding: 0 20px;
+  }
+  .baseitem div p{
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+    margin: 10vh 0;
+  }
+  .baseitem div div img{
+    width: 100%;
+    max-height: 50vh;
+    margin-top: 10vh;
+    margin: auto 0;
+  }
+  .newway{
+    background: #ff7a8f;
+    
+    /*background-image: -webkit-linear-gradient(270deg, #272F38 0%, #384452 84%, #272F38 100%);
+    background-image: linear-gradient(-180deg, #272F38 0%, #384452 84%, #272F38 100%);*/
+  }
+  .activity{
+    background-color: #66ccff;
+  }
+  .allterminal{
+    background-color: #00FFCC;
+  }
+  .newtechniques{
+    background-color: #99CCFF;
+  }
+  .wechat{
+    background-color: #CC66FF;
+  }
+  .navbar-fixed-top, .navbar-fixed-bottom{
+    position: relative; 
+     right: 0; 
+     left: 0; 
+     z-index: 1030; 
+  }
+  footer{
+    width: 100%;
+    float: left;
+    clear: both;
+    background: #fff;
+    -webkit-transition: all 0.5s 0s ease;
+    transition: all 0.5s 0s ease;
+    position: relative;
+    z-index: 1000;
+    padding: 20px;
+  }
+  .etuan{
+    float: left;
+    width: 40vw;
+  }
+  .partner{
+    float: right;
+    width: 55vw;
+  }
+</style>
+<body>
+<header id="nav">
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button class="navbar-toggle" type="button">
+            <span class="sr-only">导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <h5>
+            <a href="index.html">
+              <img src="http://static.etuan.org/common/logo/etuan-logo-word.png@60h.png" height="30px" alt="团团一家LOGO">
+            </a>
+          </h5>
+        </div>
+
+        <div collapse="isCollapsed" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active">
+              <a href="/index.html">首页</a>
+            </li>
+            <li>
+              <a href="/organizationList.html">组织</a>
+            </li>
+            <li>
+              <a href="/activityList.html">活动</a>
+            </li>
+            <li>
+              <a href="/formList.html">表单</a>
+            </li>
+            <li>
+              <a href="/seckillList.html">疯抢</a>
+            </li>
+            <li>
+              <a href="/voteList.html">投票</a>
+            </li>
+            <li>
+              <a href="/admin">管理后台</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="bg">
+  <figure >
+    <figcaption>
+      <h1>团团一家</h1>
+      <h3>简单、高效、易用的校园活动平台</h3>
+    </figcaption>
+  </figure>
+</div>
+<section class="scrollOver">
+  <section class="newway baseitem"  id="打破传统">
+    <a href="#打破传统" class="scrollDown">
+      <i class="icon glyphicon glyphicon-chevron-down"></i>打破传统
+    </a>
+    <div>
+        <p>从低效率的线下机械劳动到全新简易的云计算平台多种活动功能</p>
+        <div>
+          <img src="http://images.apple.com/v/mac/home/r/home/images/macbook_lockup_large.png"></img>
+        </div>
+    </div>
+  </section>
+  <section class="baseitem activity" id="多种活动支持">
+    <a href="#多种活动支持" class="scrollDown" id="article">
+      <i class="icon glyphicon glyphicon-chevron-down"></i>多种活动支持
+    </a>
+    <div>
+      <p>简单活动发布，校园招新报名，活动调卷问查，活动抢票投票。通过几步简单操作自由地创建活动，并分享给用户使用。功能都具有极强的抽象性和可扩充性，未来可以推出更多的活动并且无缝对接到系统中</p>
+        <div>
+          <img src="http://images.apple.com/v/mac/home/r/home/images/macbook_lockup_large.png"></img>
+        </div>
+    </div>
+  </section>
+  <section class="baseitem allterminal" id="全终端覆盖">
+    <a href="#全终端覆盖" class="scrollDown" id="article">
+      <i class="icon glyphicon glyphicon-chevron-down"></i>全终端覆盖
+    </a>
+      <div>
+        <p>所有页面UI设计均对手机等小尺寸屏幕进行优化，并且保持统一的设计风格</p>
+        <div>
+          <img src="http://images.apple.com/v/mac/home/r/home/images/macbook_lockup_large.png"></img>
+        </div>
+      </div>
+  </section>
+  <section class="baseitem wechat" id="以微信为入口">
+    <a href="#以微信为入口" class="scrollDown" id="article">
+      <i class="icon glyphicon glyphicon-chevron-down"></i>以微信为入口
+    </a>
+      <div>
+        <p>利用微信的通讯便捷性和用户普及的优势，将微信作为本平台的主要推广入口和信息分发渠道。普通用户无需注册，直接用微信扫描二维码，通过OAuth2.0登录。</p>
+        <div>
+          <img src="http://images.apple.com/v/mac/home/r/home/images/macbook_lockup_large.png"></img>
+        </div>
+      </div>
+  </section>
+  <section class="baseitem newtechniques" id="使用web新技术">
+    <a href="#使用web新技术" class="scrollDown" id="article">
+      <i class="icon glyphicon glyphicon-chevron-down"></i>使用web新技术
+    </a>
+      <div>
+        <p>前端使用AngularJS的数据绑定、基本模板标识符、表单验证、路由、深度链接、组件重用、依赖注入等弥补HTML在动态网页上的不足。后端使用node高效的平台，他的RESTfulAPI结合我们使用的后端框架StrongLoop与前端框架angularJS结合使编程变得轻松，单线程非常适合我们的应用。</p>
+        <div>
+          <img src="http://images.apple.com/v/mac/home/r/home/images/macbook_lockup_large.png"></img>
+        </div>
+      </div>
+  </section>
+  <footer>
+    <div class="col-sm-4">
+      <h1>团团一家</h1>
+      <hr>
+      <img src="/img/full-logo.png" height="50px" alt="团团一家LOGO"><br>
+      <img src="/img/etuan_wechat_qrcode.jpg" width="200px">
+      <p style="font-size: 16px;">团团一家——杭电活动服务平台，来自杭电计算机学院认知与智能计算研究所。我们致力于提供便捷的活动报名、投票、抢票等服务，推进以互联网方式举办活动。</p>
+    </div>
+    <div class="col-sm-offset-1 col-sm-6">
+      <h1>合作伙伴</h1>
+      <hr>
+      <img src="/img/redhome.png" height="50px" alt="红色家园LOGO"><br>
+      <img src="/img/i-hduhdu.png" width="200px">
+    </div>
+    <div style="clear:both;text-align: center;padding: 10px;background-color: #666;">
+      <a href="http://www.miibeian.gov.cn/" style="color: rgb(51, 51, 51);font-size: 15px;text-align: center;color:#fff">浙ICP备14023518号-1</a>
+    </div>
+  </footer>
+</section>
+</body>
+</html>
