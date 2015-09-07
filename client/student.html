@@ -63,7 +63,7 @@
   (function() {
     var hm = document.createElement("script");
     hm.src = "//hm.baidu.com/hm.js?76a5edb5c9902d7c2e38f7a723060cff";
-    var s = document.getElementsByTagName("script")[0]; 
+    var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
   })();
   </script>
@@ -190,7 +190,7 @@
           alert(res.err);
         } else {
           alert("绑定成功！");
-          window.location = (getQueryString() + window.location.hash);
+          window.location = window.localStorage.next;
         }
       }).error(function () {
         alert("连接出错啦！");

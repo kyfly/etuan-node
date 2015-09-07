@@ -9,7 +9,7 @@ function browserRedirect() {
     var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
     var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
     var bIsWX = sUserAgent.match(/MicroMessenger/i) == "micromessenger";
-    
+
     if (bIsWX) {
         return "wechat";
     } else if(bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
@@ -28,14 +28,14 @@ function loginCheck(t) {
   ) {
     var url = window.location.href;
     window.localStorage.removeItem(t);
-    window.localStorage.setItem('next', url);
+    window.localStorage.next = url;
     switch (t) {
       case 'b3JnYW5p':
         window.location = '/login';
         break;
       case 'd2VjaGF0':
         if (bower === 'pc')//直接跳转到二维码登录页面，登录页面的serch属性应该加登陆后应该到的地址
-          window.location = '/wlogin?next=' + url;
+          window.location = '/wlogin';
         else if (bower === 'wechat') {
           window.location = '/api/WechatUsers/fromWechat';
         }
