@@ -34,15 +34,14 @@ if (status === "success") {
   window.localStorage.setItem('d2VjaGF0',JSON.stringify(lsTmp));
 
   $("h2 b").html("登陆成功，即将跳转");
-
   if (user.studentId)
     window.location = window.localStorage.next || '/' ;
   else {
-    var Stu = new XMLHttpRequest();
     var rhtoken = localStorage.redHomeToken;
-    if (!rtoken)
+    var Stu = new XMLHttpRequest();
+    if (!rhtoken)
       window.location = '/student.html';
-    if (rtoken){
+    if (rhtoken){
       Stu.open('GET', '/api/WeChatUsers/stuInfoFromRH?id='+ token.userId +'&token=' + rhtoken);
       Stu.send();
       Stu.onreadystatechange = function () {
@@ -58,8 +57,8 @@ if (status === "success") {
           }
         }
       }
-    }
-  }
+    }  
+  } 
 }
 </script>
 </body>
