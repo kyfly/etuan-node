@@ -29,7 +29,8 @@ if (status === "success") {
     userId:token.userId,
     loginTime:token.created,
     ttl:token.ttl,
-    school: user.university || '没绑定学校'
+    school: user.university || '没绑定学校',
+    studentId: user.studentId
   };
   window.localStorage.setItem('d2VjaGF0',JSON.stringify(lsTmp));
 
@@ -57,8 +58,8 @@ if (status === "success") {
           }
         }
       }
-    }  
-  } 
+    }
+  }
 }
 </script>
 </body>
