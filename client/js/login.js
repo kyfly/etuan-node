@@ -18,7 +18,15 @@ function browserRedirect() {
       return "pc";
     }
 }
-
+var app = angular.module('app', ['ui.bootstrap']);
+app.controller('contentCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+  function setRHToken() {
+    var search = $location.search();
+    if (search['from'] === 'redhome' && search['token'])
+      localStorage.redHomeToken = search['token'];
+  }
+  setRHToken();
+}]);
 function loginCheck(t) {
   var tmpInfo = JSON.parse(window.localStorage.getItem(t));
   var bower = browserRedirect();

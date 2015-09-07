@@ -15,6 +15,7 @@ app.controller('headCtrl', ['$scope', '$http', function ($scope, $http) {
 }]);
 
 
+
 function StatusFun(ActType, flag) {
   for (var i = 0; i < ActType.length; i++) {
     if (!new Date(ActType[i].startTime).getTime() && !flag) {
@@ -90,6 +91,12 @@ function Activity($http, $scope, school) {
     getActivityData($http, $scope, Apis[typeIndex], result[typeIndex], limit, school);
 }
 app.controller('contentCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+  function setRHToken() {
+    var search = $location.search();
+    if (search['from'] === 'redhome' && search['token'])
+      localStorage.redHomeToken = search['token'];
+  }
+  setRHToken();
   var d2VjaGF0 = JSON.parse(window.localStorage.getItem('d2VjaGF0'));
   var school = window.localStorage.getItem('pc');
   if (!d2VjaGF0) {

@@ -41,6 +41,62 @@ module.exports = function (WeChatUser) {
       description: "微信登录验证,手机,PC端都用这个接口验证",
       http: {path: "/confirm", verb: 'get'}
     });
+  WeChatUser.remoteMethod('stuInfoFromRH',
+    {
+      accepts: [
+        {arg: 'id', type: 'string'},
+        {arg: 'token', type: 'object'}
+      ],
+      description: "红家学号获取",
+      returns: {arg:"data",type:'string'},
+      http: {path: "/stuInfoFromRH", verb: 'get'}
+    });
+  WeChatUser.stuInfoFromRH = function (id, token, cb) {
+    var http = require('http');
+    var req = http.request({
+      host: 'wechat.redhome.cc',
+      port: '80',
+      path: '/web/thirdpart/',
+      method: 'POST'
+    },function(response){
+      var body = [];
+      var headers = response.headers;
+      response.on('data', function (chunk) {
+        body.push(chunk);
+      });
+      response.on('end', function () {
+        body = Buffer.concat(body);
+        var rh = JSON.parse(body.toString());
+        if(rh.error)
+        {
+          cb(null, 0);
+        } else {
+          //获取的学号
+          var stuInfo = {
+            studentId: rh.studentId,
+            studentName: rh.name,
+            university: '杭州电子科技大学'
+          };
+          WeChatUser.updateAll({
+              id: id
+            }, stuInfo,
+            function(err, count){
+              if (err)
+                cb(err);
+              else
+                cb(null,stuInfo);
+            });
+        }
+      });
+    });
+    data = JSON.stringify({
+      method:"getStudent",
+      token: token,
+      thirdpart: "etuan"
+    });
+    req.write(data);
+    req.end();
+  }
   WeChatUser.reLoadLogin = function (openid, fn) {
     WeChatUser.login({
       email: openid + "@etuan.org",
@@ -107,7 +163,7 @@ module.exports = function (WeChatUser) {
       if (num === 0)
       {
         getWechatInfoByCode(code, function (err, wechatUserInfo) {
-          if (err || !wechatUserInfo) 
+          if (err || !wechatUserInfo)
             return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "获取微信信息失败", "token":{}, "userInfo": {}});
           else
             createWechatUser(wechatUserInfo, function (err, user) {
@@ -118,7 +174,7 @@ module.exports = function (WeChatUser) {
                 WeChatUser.reLoadLogin(user.openid, function (err, token) {
                   if (err)
                     return ctx.res.render("phone-login.ejs", {'status': "fail", 'msg': "登录失败", "token":{}, "userInfo": {}});
-                  else 
+                  else
                     return ctx.res.render("phone-login.ejs", {'status': "success",'msg': "获取微信信息成功", 'token': token, "userInfo": user});
                 });
               }
@@ -139,7 +195,7 @@ module.exports = function (WeChatUser) {
           else
             return cb(null,0);
         });
-      } 
+      }
       else
       {
         return cb(null, 1);
@@ -151,7 +207,7 @@ module.exports = function (WeChatUser) {
   }
   function getWechatInfoByCode (code, cb) {
     client.getUserByCode(code, function (err, user) {
-      if (err) 
+      if (err)
         cb(err);
       else
       {
@@ -164,7 +220,7 @@ module.exports = function (WeChatUser) {
 
   function createWechatUser (user, cb) {
     wechatUserIsInDB(user.openid, function (err, oldUser) {
-     if (err) 
+     if (err)
         cb("服务器错误，请重试");
       else if (!oldUser)
       {
@@ -176,7 +232,7 @@ module.exports = function (WeChatUser) {
       {
         user.password=oldUser.password;
         WeChatUser.updateAll({openid:oldUser.openid}, user, function (err, count) {
-         if (err) 
+         if (err)
             cb("服务器错误，请重试");
           else
             cb(null, oldUser);
@@ -201,7 +257,7 @@ module.exports = function (WeChatUser) {
       else if (num === 0)
       {
         getWechatInfoByCode(code, function (err, wechatUserInfo) {
-          if (err || !wechatUserInfo) 
+          if (err || !wechatUserInfo)
             ctx.res.render("phone.ejs", {'status': "fail", 'msg': "获取微信信息失败,请刷新二维码重试", "state": state});
           else
             createWechatUser(wechatUserInfo, function (err, user) {
@@ -213,9 +269,9 @@ module.exports = function (WeChatUser) {
                   isConfirm: 1,
                   userId: user.id
                 },function (err, count){
-              if(err) 
+              if(err)
                     ctx.res.render("phone.ejs",{"status": "fail","msg": "出错了,请刷新后登陆-", "state": state});
-                  else 
+                  else
                     ctx.res.render("phone.ejs", {"status": "success", "msg": "获取微信信息成功", "state": state});
                 });
               }
