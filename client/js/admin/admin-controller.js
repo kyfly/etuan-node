@@ -536,7 +536,7 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
    * 在完成提交后，将转跳至列表页面list.html
    */
   $scope.submit = function () {
-    if($scope.verifyRule === undefined && $routeParams.type != 'activity'){
+    if ($scope.verifyRule === undefined && $routeParams.type != 'activity') {
       alert('请选择验证规则');
       return false;
     }
@@ -787,7 +787,6 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
           else
             seckillResultTmp.push('');
           $scope.results.push(seckillResultTmp);
-          $scope.results.push(seckillResultTmp);
         }
 
         break;
@@ -797,20 +796,10 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
           voteResultTmp.push(res[i].id);
           voteResultTmp.push(res[i].name);
           voteResultTmp.push(res[i].count);
-          if (res[i].remark)
-            voteResultTmp.push(res[i].remark);
-          else
-            voteResultTmp.push('');
-          if (res[i].messages)
-            voteResultTmp.push(res[i].messages);
-          else
-            voteResultTmp.push('');
-          $scope.results.push(voteResultTmp);
           $scope.results.push(voteResultTmp);
         }
         break;
     }
-    console.log($scope.results);
   };
   var infoProcess = function (res) {
     switch ($routeParams.type) {
@@ -846,8 +835,6 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         $scope.resultHeaders.push('序号');
         $scope.resultHeaders.push('名称');
         $scope.resultHeaders.push('数量');
-        $scope.resultHeaders.push('备注');
-        $scope.resultHeaders.push('通知');
         break;
     }
   };
@@ -879,42 +866,28 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
       document.getElementById('fUserInfo').style.display = 'none';
       return;
     }
-    if ($scope.re.messages)
-      $scope.re.messages = {
-        messages: $scope.re.messages,
-        createAt: new Date()
-      };
-    else
-      $scope.re.messages = undefined;
-
-    if ($scope.re.remark)
-      $scope.re.remark = {
-        remark: $scope.re.remark,
-        createAt: new Date()
-      };
-    else
-      $scope.re.remark = undefined;
-
+    var tem = {};
+    for (var it in $scope.re) {
+      tem[it] = {};
+      tem[it][it] = $scope.re[it]
+      tem[it]['createAt'] = new Date();
+    }
     var post = {
-      data: {'$push': $scope.re},
+      data: {'$push': tem},
       from: "createRM"
     };
     var userResult = $resource(
-      '/api/Forms/:id/results/:fk',
+      etuanAdmin.item.resultUpdateProperty[$routeParams.type],
       {
         id: $routeParams.id, 
         fk: $scope.result[0],
         access_token: JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken
-      },
-      {
-        sendReMeg : {
-          method :"PUT"
-        }
       }
     );
-    userResult.sendReMeg(post,function (res) {
-      $scope.result[$scope.result.length-2].push($scope.re.remark);
-      $scope.result[$scope.result.length-1].push($scope.re.messages);
+    userResult.update(post,function (res) {
+      console.log($scope);
+      $scope.result[$scope.result.length-2].push(tem['remark']);
+      $scope.result[$scope.result.length-1].push(tem['messages']);
       $scope.re = undefined;
       document.getElementById('fUserInfo').style.display = 'none';
     });
@@ -941,10 +914,10 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     }
     $scope.result = this.result;
     $scope.resultseries = resultseries;
-    console.log($scope.result, resultseries);
   }
+
   $scope.isRM = function (v) {
-    return toString.apply(v) === '[object Array]';
+    return (v instanceof Array);
   }
   /* 结果下载页面的获取区
    * 在这个区域中包括了pdf下载和excel下载。
@@ -960,19 +933,7 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
 
 function HomeCtrl($scope, $resource) {
   //这里写着所有的通知通告，别忘了上面的三个数字的实现也要写在这一块地方
-  $scope.notices = [
-    {
-      'title': '团团一家社团服务平台上线啦',
-      'time': '2015年8月10日',
-      'content': '团团一家新的后台系统上线啦，更简洁更美更方便，让你的社团招新工作不再有烦恼！',
-      'detailUrl': 'http://v.xiumi.us/board/v3/24dWu/2582852'
-    }, {
-      'title': '关于浏览器兼容性的说明',
-      'time': '2015年8月13日',
-      'content': '团团一家新的后台系统需要IE9以上的版本支持。推荐使用谷歌Chrome浏览器，尽量不要使用360浏览器。',
-      'detailUrl': ''
-    }
-  ];
+  $scope.notices = notices;
   //获得接口并进行显示
   var token = JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken;
   $resource("/api/OrganizationUsers/actCount?token=" + token + "&access_token=" + token).get({}, function (res) {
@@ -1063,7 +1024,8 @@ function SettingCtrl($scope, $resource, etuanAdmin, $http, $window) {
         school: $scope.infos[0].school,
         university: $scope.infos[0].university,
         weChat: $scope.infos[0].weChat,
-        phone: $scope.infos[0].phone
+        phone: $scope.infos[0].phone,
+        userDefineDesc: $scope.infos[0].userDefineDesc
       },
       function () {
       },

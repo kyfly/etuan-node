@@ -3,7 +3,7 @@ module.exports = function(FormResult) {
 	FormResult.observe('before save', function(ctx, next) {
 		var Form = FormResult.app.models.Form;
 		var WeChatUser = FormResult.app.models.WeChatUser;
-		if (!ctx.instance && ctx.data.from === 'createRM'){
+        if (ctx.data){
 			ctx.data = ctx.data.data;
 			next();
 			return;

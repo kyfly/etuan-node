@@ -6,17 +6,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="keywords" content="杭州电子科技大学,杭电,团团一家,杭电报名招新,杭电抢票,杭电投票,社团服务">
   <meta name="description" content=" 一票在手，天下我有！妈妈再也不用担心我投票啦！">
+  <meta name="renderer" content="webkit">
   <title>投票中心 - 团团一家</title>
   <link rel="icon" href="img/etuan_logo.ico" type="image/x-icon">
   <link rel="shortcut icon" href="img/etuan_logo.ico" type="image/x-icon">
   <link href="http://static.etuan.org/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
   <link href="css/staticList.css" rel="stylesheet">
+  <script src="/lib/jquery/jquery.min.js"></script>
+  <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
   <script>
   var _hmt = _hmt || [];
   (function() {
     var hm = document.createElement("script");
     hm.src = "//hm.baidu.com/hm.js?76a5edb5c9902d7c2e38f7a723060cff";
-    var s = document.getElementsByTagName("script")[0]; 
+    var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
   })();
   </script>
@@ -24,7 +27,7 @@
 <body>
 <!--头部-->
 <header id="nav" ng-controller="headCtrl">
-  <nav class="navbar navbar-default" role="navigation">
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -34,34 +37,46 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <h5>
+          <h5 style="float: left">
             <a href="index.html">
-              <img src="http://static.etuan.org/common/logo/etuan-logo-word.png@60h.png" height="30px" alt="团团一家LOGO">
+              <img class="etuanLogo" src="http://static.etuan.org/common/logo/etuan-logo-word.png@60h.png" alt="团团一家LOGO">
             </a>
           </h5>
+          <div class="dropdown navbar-btn" style="float: left;margin-left: 10px;margin-top: 8px">
+            <button style="text-overflow: ellipsis;
+  overflow: hidden;" class="btn btn-default dropdown-toggle" type="button"
+                    data-toggle="dropdown">
+              {{schoolSelect}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li ng-repeat="u in university" ng-click="changeSchool()"><a href="#">{{u.name}}</a></li>
+            </ul>
+          </div>
         </div>
+
         <div collapse="isCollapsed" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="index.html">首页</a>
+              <a href="/index.html">首页</a>
             </li>
             <li>
-              <a href="organizationList.html">组织</a>
+              <a href="/organizationList.html">组织</a>
             </li>
             <li>
-              <a href="activityList.html">活动</a>
+              <a href="/activityList.html">活动</a>
             </li>
             <li>
-              <a href="formList.html">表单</a>
+              <a href="/formList.html">表单</a>
             </li>
             <li>
-              <a href="seckillList.html">疯抢</a>
+              <a href="/seckillList.html">疯抢</a>
             </li>
             <li class="active">
-              <a href="voteList.html">投票</a>
+              <a href="/voteList.html">投票</a>
             </li>
             <li>
-              <a href="admin">管理后台</a>
+              <a href="/admin">管理后台</a>
             </li>
           </ul>
         </div>
@@ -86,7 +101,7 @@
       <tab heading="正在进行">
 
         <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="vlt in vlts | filter:{activityStatus: '正在进行'}">
-          <a ng-href="/vote/#?id={{vlt.id}}" tooltip="由{{vlt.organizationName}}创建">
+          <a ng-href="/vote/#?id={{vlt.id}}">
             <div class="thumbnail borderDiv">
               <p class="listhead">
               <nobr>{{vlt.title}}</nobr>
@@ -103,7 +118,7 @@
       <tab heading="即将开始" ng-click="newvlts = vlts">
 
         <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="vlt in newvlts | filter:{activityStatus: '即将开始'}">
-          <a ng-href="/vote/#?id={{vlt.id}}" tooltip="由{{vlt.organizationName}}创建">
+          <a ng-href="/vote/#?id={{vlt.id}}">
             <div class="thumbnail borderDiv">
               <p class="listhead">
               <nobr>{{vlt.title}}</nobr>
@@ -120,7 +135,7 @@
       <tab heading="已经结束" ng-click="oldvlts = vlts">
 
         <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="vlt in oldvlts | filter:{activityStatus: '已经结束'}">
-          <a ng-href="/vote/#?id={{vlt.id}}" tooltip="由{{vlt.organizationName}}创建">
+          <a ng-href="/vote/#?id={{vlt.id}}">
             <div class="thumbnail borderDiv">
               <p class="listhead">
               <nobr>{{vlt.title}}</nobr>
@@ -136,7 +151,7 @@
       <tab heading="全部投票" ng-click="allvlts = vlts">
 
         <div class="col-xs-12 col-sm-4 col-md-3 mainBox" ng-repeat="vlt in allvlts">
-          <a ng-href="/vote/#?id={{vlt.id}}" tooltip="由{{vlt.organizationName}}创建">
+          <a ng-href="/vote/#?id={{vlt.id}}">
             <div class="thumbnail borderDiv">
               <p class="listhead">
               <nobr>{{vlt.title}}</nobr>

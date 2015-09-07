@@ -20,7 +20,6 @@ body {
 .loginPanel {
   position: absolute;
   left: 400px;
-  width: 500px;
   height: 380px;
   border: 1px solid #ddd;
   border-radius: 4px;

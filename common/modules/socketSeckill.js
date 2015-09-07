@@ -63,6 +63,7 @@ SocketSeckill.prototype.onConnection = function (socket) {
 };
 
 function onAddKiller(socket, verifyId) {
+  var handshakeQuery = socket.handshake.query;
   var seckillId = socket.handshake.query.id;
   var cache = seckillCache[seckillId];
   if (socket.handshake.query.verifyId)
@@ -71,62 +72,70 @@ function onAddKiller(socket, verifyId) {
     socket.emit('killFail', 'verifyId wrong');
     return;
   }
-  SeckillResult.findOne({
-      where: {and: [{verifyId: verifyId}, {seckillId: seckillId}, {isGet: true}]},
-      fields: {verifyId: true}
-    },
-    function (err, result) {
-      if (result)
-      //error: 已经抢过票了
-        socket.emit('killFail', 'already gotten');
-      else
-        Seckill.findOne({
-          where: {id: seckillId},
-          fields: {seckillArrangements: true}
-        }, function (err, info) {
-          var arrangements = info.seckillArrangements;
-          if (new Date().getTime() <= new Date(arrangements[cache.current].startTime).getTime())
-          //error: 还没有开始
-            socket.emit('killFail', 'not started');
-          else if (cache.remain <= 0) {
-            //error: 没有余量了
-            socket.emit('killFail', 'no enough');
-            //没有抢到的也写入数据库，作为记录和分析
-            SeckillResult.upsert({
-              seckillId: seckillId,
-              arrangementId: cache.current,
-              verifyId: verifyId,
-              ip: socket.handshake.address,
-              isGet: false  //没有抢到
-            }, function (err) {
-            });
-          }
-          else {
-            cache.remain--;
-            SeckillResult.upsert({
-              seckillId: seckillId,
-              arrangementId: cache.current,
-              verifyId: verifyId,
-              ip: socket.handshake.address,
-              isGet: true  //抢到了
-            }, function (err) {
-              if (err) {
-                cache.remain++;
-                //error: 写入数据库出错
-                socket.emit('killFail', 'database error');
-              }
-              else {
-                if (cache.remain <= 0 && cache.current < arrangements.length - 1) {
-                  cache.current++;
-                  cache.remain = arrangements[cache.current].total;
+  cache.verify.getUserId(handshakeQuery.accessToken, function (err, userId) {
+    if (err) {
+      socket.emit('killFail', 'database error');
+    } else {
+      SeckillResult.findOne({
+        where: {and: [{verifyId: verifyId}, {seckillId: seckillId}, {isGet: true}]},
+        fields: {verifyId: true}
+      },
+      function (err, result) {
+        if (result)
+        //error: 已经抢过票了
+          socket.emit('killFail', 'already gotten');
+        else
+          Seckill.findOne({
+            where: {id: seckillId},
+            fields: {seckillArrangements: true}
+          }, function (err, info) {
+            var arrangements = info.seckillArrangements;
+            if (new Date().getTime() <= new Date(arrangements[cache.current].startTime).getTime())
+            //error: 还没有开始
+              socket.emit('killFail', 'not started');
+            else if (cache.remain <= 0) {
+              //error: 没有余量了
+              socket.emit('killFail', 'no enough');
+              //没有抢到的也写入数据库，作为记录和分析
+              SeckillResult.upsert({
+                seckillId: seckillId,
+                arrangementId: cache.current,
+                verifyId: verifyId,
+                ip: socket.handshake.address,
+                weChatUid : userId,
+                isGet: false  //没有抢到
+              }, function (err) {
+              });
+            }
+            else {
+              cache.remain--;
+              SeckillResult.upsert({
+                seckillId: seckillId,
+                arrangementId: cache.current,
+                verifyId: verifyId,
+                ip: socket.handshake.address,
+                weChatUid : userId,
+                isGet: true  //抢到了
+              }, function (err, instance) {
+                if (err) {
+                  cache.remain++;
+                  //error: 写入数据库出错
+                  socket.emit('killFail', 'database error');
                 }
-                socket.emit('killSuccess');
-                socket.broadcast.to(seckillId).emit('addResult', cache.verify.idMask(verifyId))
-              }
-            });
-          }
-        });
-    });
+                else {
+                  if (cache.remain <= 0 && cache.current < arrangements.length - 1) {
+                    cache.current++;
+                    cache.remain = arrangements[cache.current].total;
+                  }
+                  socket.emit('killSuccess');
+                  socket.broadcast.to(seckillId).emit('addResult', cache.verify.idMask(verifyId))
+                }
+              });
+            }
+          });
+      });
+      }
+  })
 }
 
 SocketSeckill.prototype.updateCache = function (seckillId, cb) {

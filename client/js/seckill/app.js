@@ -111,6 +111,10 @@ function SeckillCtrl($scope, $location, $window, $http) {
       case "no enough":
         alert("已经被抢完啦！");
         break;
+      case "not bind":
+        alert("请先绑定微信号！");
+        window.location = "/etuanWx.html";
+        break;
       case "database error":
         alert("写入数据库出错！");
         break;

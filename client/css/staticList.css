@@ -123,3 +123,55 @@ a:link {
     margin-top: 50px;
   }
 }
+
+.etuanLogo {
+  height: 30px;
+}
+
+#mainHeight {
+  margin-top: 50px;
+}
+
+@media screen and (max-width: 450px) {
+
+  .navbar-btn {
+    width: 44%;
+  }
+
+  .navbar-btn > button {
+    width: 100%;
+  }
+
+  .etuanLogo {
+    height: 21px;
+    margin-top: 4px;
+  }
+
+  .navbar-toggle {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .navbar-btn {
+    width: 45%;
+  }
+
+  .etuanLogo {
+    height: 18px;
+    margin-top: 6px;
+  }
+
+}
+
+@media screen and (max-width: 1000px) {
+  .navbar-btn {
+    width: 45%;
+  }
+
+  .etuanLogo {
+    height: 18px;
+    margin-top: 6px;
+  }
+
+}

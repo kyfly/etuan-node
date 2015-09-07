@@ -6,11 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="keywords" content="杭州电子科技大学,杭电,团团一家,杭电报名招新,杭电抢票,杭电投票,社团服务">
-  <meta name="description" content="团团一家——杭电活动服务平台，这里有最全的组织招新报名、最新的组织活动入口、最新的组织投票入口，还有令全校沸腾的疯抢活动！关注团团一家，更快融入精彩校园生活！ （本平台由麒飞软件团队开发，来自杭州电子科技大学认知与智能计算研究所。)">
+  <meta name="renderer" content="webkit">
+  <meta name="description"
+        content="团团一家——杭电活动服务平台，这里有最全的组织招新报名、最新的组织活动入口、最新的组织投票入口，还有令全校沸腾的疯抢活动！关注团团一家，更快融入精彩校园生活！ （本平台由麒飞软件团队开发，来自杭州电子科技大学认知与智能计算研究所。)">
   <title>首页 - 团团一家</title>
   <link rel="icon" href="img/etuan_logo.ico" type="image/x-icon">
   <link rel="shortcut icon" href="img/etuan_logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="/lib/bootstrap/css/etuan.css">
+
+  <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css"/>
+  <script src="/lib/jquery/jquery.min.js"></script>
+  <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
   <style>
     body {
       font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
@@ -19,6 +25,10 @@
 
     header {
       margin-bottom: -20px;
+    }
+
+    .navbar-default {
+      background-color: #ffffff;
     }
 
     .listHead {
@@ -90,21 +100,29 @@
       -moz-transform: scale(1.05, 1.05);
     }
 
+    .navbar-nav > li:hover {
+      background-color: #EEEEEE;
+    }
+
+    .mainPic {
+      margin-top: 70px;
+    }
+
   </style>
   <script>
-  var _hmt = _hmt || [];
-  (function() {
-    var hm = document.createElement("script");
-    hm.src = "//hm.baidu.com/hm.js?76a5edb5c9902d7c2e38f7a723060cff";
-    var s = document.getElementsByTagName("script")[0]; 
-    s.parentNode.insertBefore(hm, s);
-  })();
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?76a5edb5c9902d7c2e38f7a723060cff";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
   </script>
 </head>
 <body>
 <!--头部-->
 <header id="nav" ng-controller="headCtrl">
-  <nav class="navbar navbar-default" role="navigation">
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -120,28 +138,29 @@
             </a>
           </h5>
         </div>
+
         <div collapse="isCollapsed" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
             <li class="active">
-              <a href="index.html">首页</a>
+              <a href="/index.html">首页</a>
             </li>
             <li>
-              <a href="organizationList.html">组织</a>
+              <a href="/organizationList.html">组织</a>
             </li>
             <li>
-              <a href="activityList.html">活动</a>
+              <a href="/activityList.html">活动</a>
             </li>
             <li>
-              <a href="formList.html">表单</a>
+              <a href="/formList.html">表单</a>
             </li>
             <li>
-              <a href="seckillList.html">疯抢</a>
+              <a href="/seckillList.html">疯抢</a>
             </li>
             <li>
-              <a href="voteList.html">投票</a>
+              <a href="/voteList.html">投票</a>
             </li>
             <li>
-              <a href="admin">管理后台</a>
+              <a href="/admin">管理后台</a>
             </li>
           </ul>
         </div>
@@ -149,9 +168,10 @@
     </div>
   </nav>
 </header>
-
-<img class="hidden-xs" src="img/bg.png" style="width: 100%">
-<img class="visible-xs" src="img/bg2.png" style="width: 100%">
+<div class="mainPic">
+  <img class="hidden-xs" src="img/bg.jpg" style="width: 100%">
+  <img class="visible-xs" src="img/bg2.jpg" style="width: 100%">
+</div>
 
 <div class="container" ng-controller="contentCtrl">
 
@@ -161,7 +181,7 @@
   </div>
   <div class="contentRow col-xs-12">
     <div ng-repeat="alt in alts.slice(0,4)" class="col-sm-6 col-md-3 mainBox">
-      <a ng-href="/activity/#?id={{alt.id}}" tooltip="由{{alt.organizationName}}创建">
+      <a ng-href="/activity/#?id={{alt.id}}">
         <div class="thumbnail">
           <div class="text-center">
             <h4 class="listName">
@@ -182,7 +202,7 @@
   </div>
   <div class="contentRow col-xs-12">
     <div ng-repeat="flt in flts.slice(0,4)" class="col-sm-6 col-md-3 mainBox">
-      <a tooltip="由{{flt.organizationName}}创建" ng-href="/form/#?id={{flt.id}}" tooltip-class="tooltipClass">
+      <a ng-href="/form/#?id={{flt.id}}">
         <div class="thumbnail">
           <div class="text-center">
             <h4 class="listName">
@@ -203,7 +223,7 @@
   </div>
   <div class="contentRow col-xs-12">
     <div class="col-sm-6 col-md-3 mainBox" ng-repeat="skl in skls.slice(0,4)">
-      <a tooltip="由{{skl.organizationName}}创建" ng-href="/seckill/#?id={{skl.id}}" tooltip-class="tooltipClass">
+      <a ng-href="/seckill/#?id={{skl.id}}">
         <div class="thumbnail">
           <div class="text-center">
             <h4 class="listName">
@@ -225,7 +245,7 @@
   <div class="contentRow col-xs-12">
 
     <div ng-repeat="vlt in vlts.slice(0,4)" class="col-sm-6 col-md-3 mainBox">
-      <a tooltip="由{{vlt.organizationName}}创建" ng-href="/vote/#?id={{vlt.id}}" tooltip-class="tooltipClass">
+      <a ng-href="/vote/#?id={{vlt.id}}">
         <div class="thumbnail">
           <div class="text-center">
             <h4 class="listName">
@@ -243,7 +263,9 @@
 
   <hr>
   <div class="text-center footer">
-    <img src="/img/full-logo.png" height="25px" alt="团团一家LOGO">&nbsp;出品<br>
+    <img src="/img/full-logo.png" height="25px" alt="团团一家LOGO">&nbsp;倾情打造<span class="hidden-xs">&nbsp;</span><br
+    class="visible-xs">
+    <img src="/img/redhome.png" height="50px" alt="红色家园LOGO">&nbsp;鼎力支持<br>
     <a href="http://www.miibeian.gov.cn/" style="color: rgb(51, 51, 51);font-size: 15px">浙ICP备14023518号-1</a>
   </div>
 

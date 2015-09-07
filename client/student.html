@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link href="/lib/bootstrap/css/etuan.css" rel="stylesheet">
+  <script src="/js/school/hdu.js"></script>
   <style>
     body {
       font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
@@ -56,6 +57,18 @@
 
     .img-md {
       margin-top: 30px;
+    }
+    select.ng-invalid {
+      border: 1px solid rgba(228, 36, 174, 0.68);
+    }
+    input.ng-invalid {
+      border: 1px solid rgba(228, 36, 174, 0.68);
+    }
+    select.ng-valid {
+      border: 1px solid green;
+    }
+    input.ng-valid {
+      border: 1px solid green;
     }
   </style>
   <script>
@@ -122,29 +135,38 @@
 
       <h2 class="col-sm-offset-2 col-sm-10 bindingTitle">绑定教务系统</h2>
 
-      <form class="form-horizontal" role="form" method="post">
+      <form class="form-horizontal" role="form" method="post" ng-submit="bindstudentID()">
         <div class="form-group">
-          <label for="inputSno" class="col-sm-2 control-label hidden-xs">学号</label>
+          <label for="inputSu" class="col-sm-2 control-label hidden-xs">学校</label>
 
           <div class="col-sm-10">
-            <input type="text" ng-model="studentId" class="form-control" id="inputSno" name="stu_id"
-                   placeholder="请输入您的学号">
+            <select  ng-model="school" class="form-control" id="inputSu" name="stu_u" required>
+              <option ng-repeat="u in university">{{u.name}}</option>
+            </select>
           </div>
         </div>
         <div class="form-group">
-          <label for="inputPassword" class="col-sm-2 control-label hidden-xs">密码</label>
+          <label for="inputSno" class="col-sm-2 control-label hidden-xs" >学号</label>
 
           <div class="col-sm-10">
-            <input type="password" ng-model="studentPassword" class="form-control" id="inputPassword" name="stu_name"
-                   placeholder="请输入您的教务系统密码">
+            <input type="number" ng-model="studentId" class="form-control" id="inputSno" name="stu_id"
+                   placeholder="请输入您的学号" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword" class="col-sm-2 control-label hidden-xs" ng-init="pon = '姓名'">{{school === "杭州电子科技大学"? pon="教务系统密码":pon='姓名'}}</label>
+
+          <div class="col-sm-10">
+            <input type="{{pon === '姓名'? 'text':'password'}}" ng-model="studentPassword" class="form-control" id="inputPassword" name="stu_name"
+                   placeholder="请输入您的{{pon}}" required>
           </div>
         </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10 hidden-xs">
-            <button ng-click="bindstudentID()" class="btn btn-primary btn-lg">绑定</button>
+            <button type="submit" class="btn btn-primary btn-lg">绑定</button>
           </div>
           <div class="col-sm-offset-2 col-sm-10 visible-xs">
-            <button ng-click="bindstudentID()" class="btn btn-primary btn-block">绑定</button>
+            <button type="submit" class="btn btn-primary btn-block">绑定</button>
           </div>
         </div>
         <div class="form-group">
@@ -169,26 +191,40 @@
   });
 
   app.controller('loginCtrl', ['$scope', '$http', function ($scope, $http) {
-    var userId = JSON.parse(window.localStorage.getItem('d2VjaGF0')).userId;
-    var accessToken = JSON.parse(window.localStorage.getItem('d2VjaGF0')).accessToken;
+    var d2VjaGF0 = JSON.parse(window.localStorage.getItem('d2VjaGF0'));
+
+    var userId = d2VjaGF0.userId;
+    var accessToken = d2VjaGF0.accessToken;
 
     function getQueryString() {
       var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+      if (!result) return;
       for (var i = 0; i < result.length; i++) {
         result[i] = result[i].substring(1);
       }
       result = result.toString().substr(8);
       return result;
     }
-
+    $http.get('api/Universities?filter=%7B%22fields%22%3A%7B%22name%22%3Atrue%7D%7D').success(function (res) {
+      $scope.university = res;
+    });
     $scope.bindstudentID = function () {
+      if (!($scope.school && $scope.studentId && $scope.studentPassword)) {
+        return false;
+      }
+      $scope.studentPassword = $scope.school === '杭州电子科技大学'? hex_md5($scope.studentPassword) : $scope.studentPassword;
       $http.put('/api/WeChatUsers/' + userId + "?access_token=" + accessToken, {
         studentId: $scope.studentId,
-        password: $scope.studentPassword
+        password: $scope.studentPassword,
+        university: $scope.school
       }).success(function (res) {
         if (res.err) {
           alert(res.err);
         } else {
+          d2VjaGF0.school = res.university;
+          d2VjaGF0.studentId= $scope.studentId;
+          window.localStorage.removeItem('d2VjaGF0');
+          window.localStorage.setItem('d2VjaGF0', JSON.stringify(d2VjaGF0));
           alert("绑定成功！");
           window.location = window.localStorage.next;
         }

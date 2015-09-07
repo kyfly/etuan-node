@@ -169,11 +169,20 @@ app.controller('main', ['$scope', '$http', '$resource', function ($scope, $http,
     $scope.user.confirmCode = $scope.user.code = undefined;
   };
   $scope.register = function () {
+
     if($scope.user.confirmCode === undefined){
       alert('请先填写第一页的验证码');
       return false;
     }
-
+    if (this.validateForm.$error.required) {
+      alert('你有必填项没填');
+      return false;
+    }
+    var RSA = new RSAKey();
+    var n = 'CABFB6D38FE0CBCA762762F573FAABE16B576658D961253D263A9C8455E1A4138A77E9A232B73FFB64D8B239266482D10821A04055B6881647B59AFA51EF7B389F9268C4712989F993C669B183BC9A24B651DBA3D8C7288A9F5A94B4463E4F589338101A75560360A78646ED1553D9D02D4FF99D1FD948D61363D561666395C1';
+    var e = '10001';
+    RSA.setPublic(n,e);
+    $scope.user.password = RSA.encrypt($scope.user.password);
     for (var i = 0; i < $scope.user.organizationUserDepartments.length; i++) {
       $scope.user.organizationUserDepartments[i].id = i;
     }

@@ -29,24 +29,24 @@
     </thead>
     <tbody>
     <tr ng-repeat="result in results track by $index">
-      <td ng-click="onLine(result, $index+1)" data-toggle="modal" data-target="#fUserInfo">{{$index+1}}</td>
+      <td style="cursor: pointer" ng-click="onLine(result, $index+1)" data-toggle="modal" data-target="#fUserInfo">{{$index+1}}</td>
       <td ng-repeat="resultDetail in result track by $index" ng-show="$index !== 0" ng-if="!isRM(resultDetail)">{{resultDetail}}</td>
       <td ng-repeat="resultDetail in result track by $index" ng-if="isRM(resultDetail)">
       <span style="margin: 2px;background-color: #337ab7;border-radius: 2px;color:#fff;padding: 3px" ng-repeat="value in resultDetail">
       <b >{{value.remark || value.messages}}</b>
-      </span>   
+      </span>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
 <div style="position: fixed;top:20px" >
-  <div class="modal fade" id="fUserInfo" tabindex="-1" role="dialog" 
+  <div class="modal fade" id="fUserInfo" tabindex="-1" role="dialog"
    aria-labelledby="onLine" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content" style="top: 20px;">
          <div class="modal-header">
-            <button type="button" class="close" 
+            <button type="button" class="close"
                data-dismiss="modal" aria-hidden="true">
                   &times;
             </button>
@@ -63,9 +63,13 @@
                 <tr>
                   <th>备注</th>
                   <th>
-                  <span style="margin: 2px;background-color: #337ab7;border-radius: 2px;color:#black;padding: 3px" ng-repeat="value in result[result.length-2]">
-                  {{value.createAt | date : "M-dd HH:mm:ss"}} 添加 <b style="color: white">{{value.remark}}</b>
-                  </span>
+                  <div ng-repeat="value in result[result.length-2]">
+                    <span style="margin: 2px;color:rgba(239, 11, 11, 0.51);padding: 3px">
+                    {{value.createAt | date : "M-dd HH:mm:ss"}} 添加 <b style="color: black">{{value.remark}}</b>
+                    </span>
+                  <br>
+                  </div>
+                 
                   <textarea class="form-control" style="margin-top: 10px;" ng-model="re.remark">
                   </textarea>
                   </th>
@@ -73,9 +77,13 @@
                 <tr>
                   <th>通知</th>
                   <th>
-                  <span style="margin: 2px;background-color: #337ab7;border-radius: 2px;color:#black;padding: 3px" ng-repeat="value in result[result.length-1]">
-                  {{value.createAt | date : "M-dd HH:mm:ss"}} 添加 <b style="color:white">{{value.messages}}</b>
-                  </span>
+                  <div ng-repeat="value in result[result.length-1]">
+                    <span style="margin: 2px;color:rgba(239, 11, 11, 0.51);padding: 3px">
+                    {{value.createAt | date : "M-dd HH:mm:ss"}} 添加 <b style="color:black">{{value.messages}}</b>
+                    </span>
+                    <br>
+                  </div>
+                  
                   <textarea class="form-control" style="margin-top: 10px;" ng-model="re.messages">
                   </textarea>
                   </th>
@@ -84,7 +92,7 @@
             </table>
          </div>
          <div class="modal-footer">
-            <button type="button" class="btn btn-default" 
+            <button type="button" class="btn btn-default"
                data-dismiss="modal">关闭
             </button>
             <button type="button" class="btn btn-primary" ng-click="putRemarkMeg()">

@@ -32,8 +32,10 @@ function wechatLogin() {
               accessToken: data.token.id,
               userId: data.token.userId,
               loginTime: data.token.created,
-              ttl: data.token.ttl
-            };
+              ttl: data.token.ttl,
+              school: data.userInfo.university || '没绑定学校',
+              studentId: data.userInfo.studentId
+          };
             window.localStorage.setItem('d2VjaGF0', JSON.stringify(lsTmp));
             //这里跳转到应该跳转的页面
 
@@ -43,9 +45,7 @@ function wechatLogin() {
           else if (ajax.status === 200 || ajax.status === 304) {
             document.getElementById('logstatus').innerHTML = data.msg;
           }
-          ;
         }
-        ;
       };
     }, 4000);
     setInterval(function () {

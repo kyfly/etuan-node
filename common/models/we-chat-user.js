@@ -233,6 +233,15 @@ module.exports = function (WeChatUser) {
   WeChatUser.beforeRemote("prototype.updateAttributes", function (ctx, instance, next) {
     var data = ctx.req.body;
     var userId = ctx.req.query.userId;
+    if (data.university !== '杭州电子科技大学')
+    {
+      data.updatedAt = new Date();
+      data.studentName = data.password;
+      data.password = undefined;
+      data.verifiedDate = new Date();
+      next();
+      return;
+    }
     if (data.studentId === undefined || data.password === undefined)
       ctx.res.send({"err": "密码学号都不能为空"});
     else {
@@ -253,7 +262,7 @@ module.exports = function (WeChatUser) {
   WeChatUser.afterRemote("prototype.updateAttributes", function (ctx, instance, next) {
     var history = {
       "studentName" : instance.studentName,
-      "university" : '杭州电子科技大学',
+      "university" : instance.university,
       "updatedAt" : new Date(),
       "verifiedDate" : instance.verifiedDate,
       "studentId" : instance.studentId,
@@ -262,7 +271,7 @@ module.exports = function (WeChatUser) {
     instance.histories.create(history, function (err, history) {
       if (err)
         return next(err);
-      next();
+      ctx.res.send({university: instance.university});
     });
   });
   //保存更新时间

@@ -72,6 +72,12 @@ app.service('etuanAdmin', function () {
         seckill: '/api/Seckills/:id/results',
         vote: '/api/Votes/:id/subitems'
       },
+      resultUpdateProperty: {
+        activity: '',
+        form: '/api/Forms/:id/results/:fk',
+        seckill: '/api/Seckills/:id/results/:fk',
+        vote: '/api/Votes/:id/results/:fk'
+      },
       resultDownloadType: {
         activity: {
           downloadAsExcel: false,
@@ -82,7 +88,7 @@ app.service('etuanAdmin', function () {
           downloadAsPdf: true
         },
         seckill: {
-          downloadAsExcel: true,
+          downloadAsExcel: false,
           downloadAsPdf: false
         },
         vote: {

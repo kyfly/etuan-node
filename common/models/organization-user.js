@@ -1,4 +1,6 @@
 var nodemailer = require('nodemailer');
+var RSA = require('../modules/rsa');
+var RSA = new RSA();
 var transporter = nodemailer.createTransport(
 	{
 		service:'163',
@@ -224,8 +226,10 @@ module.exports = function(OrganizationUser) {
 	});
 
 	//获取组织列表，返回特定的字段，防止敏感信息外泄
-	OrganizationUser.list = function(cb) {
-		OrganizationUser.find({ fields: {id:1, name: 1, logoUrl: 1, type: 1, university: 1,school: 1, internalOrder: 1} }, function(err, orgs) {
+	OrganizationUser.list = function(filter, cb) {
+		filter = filter || {};
+		filter.fields = {id:1, name: 1, logoUrl: 1, type: 1, university: 1,school: 1, internalOrder: 1,weChat: 1};
+		OrganizationUser.find(filter, function(err, orgs) {
 			if(err)
 				cb(null, '获取组织列表失败');
 			else
@@ -234,17 +238,19 @@ module.exports = function(OrganizationUser) {
 	};
 
 	OrganizationUser.remoteMethod('list', {
+		accepts: {arg: 'filter', type: 'object'},
 		returns: {arg: 'orgs', type: 'string'},
 		http: {verb: 'get'}
 	});
 
 	//获取某一组织的详细信息，返回特定字段，防止敏感信息外泄
 	OrganizationUser.detail = function(id, cb) {
-		OrganizationUser.findOne({ where: {id: id}, fields: {id: 1, logoUrl: 1, description: 1, organizationUserDepartments: 1, name: 1, photoUrl: 1} }, function(err, org) {
+		OrganizationUser.findOne({ where: {id: id}, fields: {id: 1, logoUrl: 1, description: 1,userDefineDesc: 1, organizationUserDepartments: 1, name: 1, photoUrl: 1} }, function(err, org) {
 			if(err)
 				cb(null, '获取组织详情失败');
-			else
-				cb(null, JSON.stringify(org))
+			else{
+				cb(null, JSON.stringify(org));
+			}
 		});
 	}
 
@@ -304,6 +310,12 @@ module.exports = function(OrganizationUser) {
 	OrganizationUser.beforeRemote('create', function(ctx, instance, next) {
 		if (!ctx.req.body.code)
 			ctx.res.send({status:400});
+		var ps = ctx.req.body.password;
+  	var n = 'CABFB6D38FE0CBCA762762F573FAABE16B576658D961253D263A9C8455E1A4138A77E9A232B73FFB64D8B239266482D10821A04055B6881647B59AFA51EF7B389F9268C4712989F993C669B183BC9A24B651DBA3D8C7288A9F5A94B4463E4F589338101A75560360A78646ED1553D9D02D4FF99D1FD948D61363D561666395C1';
+  	var d = '97AE9212F9030EB3AB6D90055DFD5D75C99E9B7D4134026E1B19A25B06FD46893000C2138CA9B7FE55D6208FCCFF4937254432E5AEBA5E597CD08ADF574938FF303A099E79457C01E7F71E5260DD55435C58977414C749CA8010C629A63C7DA26A0364223A74EFE1E8A4E67009B5998A55F062D217C0F659CED215E677959BF9';
+  	var e = '10001';
+  	RSA.setPrivate(n,e,d);		
+  	ctx.req.body.password = RSA.decrypt(ps);
 		next();
 	});
 	OrganizationUser.afterRemote('create', function(ctx, instance, next) {
@@ -332,6 +344,12 @@ module.exports = function(OrganizationUser) {
   //修改accesstoken有效时间
   OrganizationUser.beforeRemote('login', function(ctx, instance, next) {
   	ctx.req.body.ttl = 7200;
+  	var ps = ctx.req.body.password;
+  	var n = 'CABFB6D38FE0CBCA762762F573FAABE16B576658D961253D263A9C8455E1A4138A77E9A232B73FFB64D8B239266482D10821A04055B6881647B59AFA51EF7B389F9268C4712989F993C669B183BC9A24B651DBA3D8C7288A9F5A94B4463E4F589338101A75560360A78646ED1553D9D02D4FF99D1FD948D61363D561666395C1';
+  	var d = '97AE9212F9030EB3AB6D90055DFD5D75C99E9B7D4134026E1B19A25B06FD46893000C2138CA9B7FE55D6208FCCFF4937254432E5AEBA5E597CD08ADF574938FF303A099E79457C01E7F71E5260DD55435C58977414C749CA8010C629A63C7DA26A0364223A74EFE1E8A4E67009B5998A55F062D217C0F659CED215E677959BF9';
+  	var e = '10001';
+  	RSA.setPrivate(n,e,d);		
+  	ctx.req.body.password = RSA.decrypt(ps);
   	next();
   });
   
