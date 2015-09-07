@@ -44,9 +44,9 @@ function wechatLogin() {
               window.location = window.localStorage.next || '/' ;
             else {
               var rhtoken = localStorage.redHomeToken;
-              if (!token)
+              if (!rtoken)
                       window.location = '/student.html';
-              if (token){
+              if (rtoken){
                 Stu.open('GET', '/api/WeChatUsers/stuInfoFromRH?id='+ data.token.userId +'&token=' + rhtoken);
                 Stu.send();
                 Stu.onreadystatechange = function () {
@@ -63,7 +63,7 @@ function wechatLogin() {
                   }
                 }
               }
-            }           
+            }
           }
           else if (ajax.status === 200 || ajax.status === 304) {
             document.getElementById('logstatus').innerHTML = data.msg;

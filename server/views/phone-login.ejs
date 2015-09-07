@@ -38,10 +38,11 @@ if (status === "success") {
   if (user.studentId)
     window.location = window.localStorage.next || '/' ;
   else {
+    var Stu = new XMLHttpRequest();
     var rhtoken = localStorage.redHomeToken;
-    if (!token)
+    if (!rtoken)
       window.location = '/student.html';
-    if (token){
+    if (rtoken){
       Stu.open('GET', '/api/WeChatUsers/stuInfoFromRH?id='+ token.userId +'&token=' + rhtoken);
       Stu.send();
       Stu.onreadystatechange = function () {
