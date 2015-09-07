@@ -45,19 +45,29 @@ module.exports = function (WeChatUser) {
     {
       accepts: [
         {arg: 'id', type: 'string'},
-        {arg: 'token', type: 'object'}
+        {arg: 'token', type: 'string'}
       ],
       description: "红家学号获取",
-      returns: {arg:"data",type:'string'},
+      returns: {arg:"data",type:'object'},
       http: {path: "/stuInfoFromRH", verb: 'get'}
     });
   WeChatUser.stuInfoFromRH = function (id, token, cb) {
     var http = require('http');
+    var qs = require('querystring');
+    var string = qs.stringify({
+      method:"getStudent",
+      token: token,
+      thirdpart: "etuan"
+    });
     var req = http.request({
       host: 'wechat.redhome.cc',
       port: '80',
       path: '/web/thirdpart/',
-      method: 'POST'
+      method: 'POST',
+      headers: {
+        "Content-Type":"application/x-www-form-urlencoded",
+        "Content-Length":string.length  
+      }
     },function(response){
       var body = [];
       var headers = response.headers;
@@ -69,11 +79,11 @@ module.exports = function (WeChatUser) {
         var rh = JSON.parse(body.toString());
         if(rh.error)
         {
-          cb(null, 0);
+          cb(rh, 0);
         } else {
           //获取的学号
           var stuInfo = {
-            studentId: rh.studentId,
+            studentId: rh.studentID,
             studentName: rh.name,
             university: '杭州电子科技大学'
           };
@@ -81,20 +91,15 @@ module.exports = function (WeChatUser) {
               id: id
             }, stuInfo,
             function(err, count){
-              if (err)
+            if (err)
                 cb(err);
               else
-                cb(null,stuInfo);
+               cb(null,stuInfo);
             });
         }
       });
     });
-    data = JSON.stringify({
-      method:"getStudent",
-      token: token,
-      thirdpart: "etuan"
-    });
-    req.write(data);
+    req.write(string);
     req.end();
   }
   WeChatUser.reLoadLogin = function (openid, fn) {

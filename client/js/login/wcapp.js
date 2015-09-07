@@ -40,29 +40,30 @@ function wechatLogin() {
             window.localStorage.setItem('d2VjaGF0', JSON.stringify(lsTmp));
             //这里跳转到应该跳转的页面
 
-            data.userInfo.studentId ? window.location = window.localStorage.next || '/' :
-            function () {
-              var token = localStorage.redHomeToken;
+            if (data.userInfo.studentId)
+              window.location = window.localStorage.next || '/' ;
+            else {
+              var rhtoken = localStorage.redHomeToken;
+              if (!token)
+                      window.location = '/student.html';
               if (token){
-                Stu.open('GET', '/api/WeChatUsers/stuInfoFromRH?id='+ data.token.userId +'&token=' + token);
+                Stu.open('GET', '/api/WeChatUsers/stuInfoFromRH?id='+ data.token.userId +'&token=' + rhtoken);
                 Stu.send();
                 Stu.onreadystatechange = function () {
-                  if (ajax.readyState === 4) {
-                    var data = JSON.parse(ajax.responseText);
-                    if (data.data === 0 && ajax.status === 200) {
+                  if (Stu.readyState === 4) {
+                    var sdata = JSON.parse(Stu.responseText);
+                    if (sdata.data === 0 && Stu.status === 200) {
                       window.location = '/student.html';
-                    } else if (data.data && ajax.status === 200) {
+                    } else if (sdata.data && Stu.status === 200) {
                       lsTmp.school = '杭州电子科技大学';
-                      lsTmp.studentId = data.studentId;
-                      localStorage.d2VjaGF0 = lsTmp;
+                      lsTmp.studentId = sdata.data.studentId;
+                      localStorage.d2VjaGF0 = JSON.stringify(lsTmp);
                       window.location = window.localStorage.next || '/';
                     }
                   }
                 }
-              } else{
-                window.location = '/student.html';
               }
-            }
+            }           
           }
           else if (ajax.status === 200 || ajax.status === 304) {
             document.getElementById('logstatus').innerHTML = data.msg;

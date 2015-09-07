@@ -97,7 +97,9 @@ app.controller('contentCtrl', ['$scope', '$http', '$location', function ($scope,
       localStorage.redHomeToken = search['token'];
   }
   setRHToken();
-  var d2VjaGF0 = JSON.parse(window.localStorage.getItem('d2VjaGF0'));
+  var d2VjaGF0 = window.localStorage.getItem('d2VjaGF0');
+  if (d2VjaGF0 && d2VjaGF0.length > 0)
+     var d2VjaGF0 = JSON.parse(d2VjaGF0);
   var school = window.localStorage.getItem('pc');
   if (!d2VjaGF0) {
     d2VjaGF0 = {};
