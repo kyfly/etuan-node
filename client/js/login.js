@@ -23,19 +23,23 @@ app.controller('smCtrl', ['$scope', '$http', '$location', function ($scope, $htt
   function setRHToken() {
     var search = $location.search();
     if (search['from'] === 'redhome' && search['token'])
-      sessionStorage.redHomeToken = search['token'];
+      window.sessionStorage.redHomeToken = search['token'];
   }
   setRHToken();
 }]);
 function loginCheck(t) {
-  var tmpInfo = JSON.parse(window.sessionStorage[t]);
+var info = window.sessionStorage.getItem(t);
+if (info)
+  var tmpInfo = JSON.parse(window.sessionStorage.getItem(t));
+else
+ var tmpInfo = info;
   var bower = browserRedirect();
   if (!tmpInfo || !tmpInfo.accessToken || !tmpInfo.userId
     || !tmpInfo.loginTime || !tmpInfo.ttl
     || (new Date() - new Date(tmpInfo.loginTime) > tmpInfo.ttl * 1000)
   ) {
     var url = window.location.href;
-    window.sessionStorage[t] = null;
+   // window.sessionStorage.removeItem(t) = null;
     window.sessionStorage.next = url;
     switch (t) {
       case 'b3JnYW5p':

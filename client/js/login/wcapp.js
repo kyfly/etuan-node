@@ -37,7 +37,7 @@ function wechatLogin() {
               school: data.userInfo.university || '没绑定学校',
               studentId: data.userInfo.studentId
             };
-            window.sessionStorage.d2VjaGF0JSON.stringify(lsTmp);
+            window.sessionStorage.d2VjaGF0 = JSON.stringify(lsTmp);
             //这里跳转到应该跳转的页面
 
             if (data.userInfo.studentId)

@@ -191,7 +191,7 @@
   });
 
   app.controller('loginCtrl', ['$scope', '$http', function ($scope, $http) {
-    var d2VjaGF0 = JSON.parse(window.localStorage.getItem('d2VjaGF0'));
+    var d2VjaGF0 = JSON.parse(window.sessionStorage.getItem('d2VjaGF0'));
 
     var userId = d2VjaGF0.userId;
     var accessToken = d2VjaGF0.accessToken;
@@ -223,10 +223,10 @@
         } else {
           d2VjaGF0.school = res.university;
           d2VjaGF0.studentId= $scope.studentId;
-          window.localStorage.removeItem('d2VjaGF0');
-          window.localStorage.setItem('d2VjaGF0', JSON.stringify(d2VjaGF0));
+         // window.localStorage.removeItem('d2VjaGF0');
+          window.sessionStorage.setItem('d2VjaGF0', JSON.stringify(d2VjaGF0));
           alert("绑定成功！");
-          window.location = window.localStorage.next;
+          window.location = window.sessionStorage.next;
         }
       }).error(function () {
         alert("连接出错啦！");
