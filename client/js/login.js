@@ -28,11 +28,10 @@ app.controller('smCtrl', ['$scope', '$http', '$location', function ($scope, $htt
   setRHToken();
 }]);
 function loginCheck(t) {
-var info = window.sessionStorage.getItem(t);
-if (info)
-  var tmpInfo = JSON.parse(window.sessionStorage.getItem(t));
+if (t === 'b3JnYW5p')
+    var tmpInfo = JSON.parse(window.localStorage.getItem(t));
 else
- var tmpInfo = info;
+  var tmpInfo = JSON.parse(window.sessionStorage.getItem(t));
   var bower = browserRedirect();
   if (!tmpInfo || !tmpInfo.accessToken || !tmpInfo.userId
     || !tmpInfo.loginTime || !tmpInfo.ttl
@@ -57,3 +56,4 @@ else
     }
   }
 }
+
