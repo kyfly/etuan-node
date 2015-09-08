@@ -37,13 +37,13 @@ function wechatLogin() {
               school: data.userInfo.university || '没绑定学校',
               studentId: data.userInfo.studentId
             };
-            window.localStorage.setItem('d2VjaGF0', JSON.stringify(lsTmp));
+            window.sessionStorage.d2VjaGF0JSON.stringify(lsTmp);
             //这里跳转到应该跳转的页面
 
             if (data.userInfo.studentId)
-              window.location = window.localStorage.next || '/' ;
+              window.location = window.sessionStorage.next || '/' ;
             else {
-              var rhtoken = localStorage.redHomeToken;
+              var rhtoken = sessionStorage.redHomeToken;
               if (!rtoken)
                       window.location = '/student.html';
               if (rtoken){
@@ -57,8 +57,8 @@ function wechatLogin() {
                     } else if (sdata.data && Stu.status === 200) {
                       lsTmp.school = '杭州电子科技大学';
                       lsTmp.studentId = sdata.data.studentId;
-                      localStorage.d2VjaGF0 = JSON.stringify(lsTmp);
-                      window.location = window.localStorage.next || '/';
+                      sessionStorage.d2VjaGF0 = JSON.stringify(lsTmp);
+                      window.location = window.sessionStorage.next || '/';
                     }
                   }
                 }

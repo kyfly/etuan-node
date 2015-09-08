@@ -23,20 +23,20 @@ app.controller('contentCtrl', ['$scope', '$http', '$location', function ($scope,
   function setRHToken() {
     var search = $location.search();
     if (search['from'] === 'redhome' && search['token'])
-      localStorage.redHomeToken = search['token'];
+      sessionStorage.redHomeToken = search['token'];
   }
   setRHToken();
 }]);
 function loginCheck(t) {
-  var tmpInfo = JSON.parse(window.localStorage.getItem(t));
+  var tmpInfo = JSON.parse(window.sessionStorage[t]);
   var bower = browserRedirect();
   if (!tmpInfo || !tmpInfo.accessToken || !tmpInfo.userId
     || !tmpInfo.loginTime || !tmpInfo.ttl
     || (new Date() - new Date(tmpInfo.loginTime) > tmpInfo.ttl * 1000)
   ) {
     var url = window.location.href;
-    window.localStorage.removeItem(t);
-    window.localStorage.next = url;
+    window.sessionStorage[t] = null;
+    window.sessionStorage.next = url;
     switch (t) {
       case 'b3JnYW5p':
         window.location = '/login';

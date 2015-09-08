@@ -4,14 +4,14 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
   var newReferer = "index.html";
   $scope.title = '投票';
   var VoteResult = $resource('/api/WeChatUsers/:id/voteResults', {
-    id: JSON.parse($window.localStorage.getItem('d2VjaGF0')).userId
+    id: JSON.parse(window.sessionStorage.d2VjaGF0).userId
   });
 
-  if(JSON.parse($window.localStorage.getItem('d2VjaGF0')).studentId === undefined){
+  if(JSON.parse(window.sessionStorage.d2VjaGF0).studentId === undefined){
     window.location = "../student.html?referer=" + newReferer
   }
 
-  $http.get('/api/WeChatUsers/' + JSON.parse($window.localStorage.getItem('d2VjaGF0')).userId + '/voteResults?filter=%7B%22where%22%3A%7B%22voteId%22%3A%22' + voteUrlSearchObj.id + '%22%7D%7D&access_token=' + JSON.parse($window.localStorage.getItem('d2VjaGF0')).accessToken).success(function (res) {
+  $http.get('/api/WeChatUsers/' + JSON.parse(window.sessionStorage.d2VjaGF0).userId + '/voteResults?filter=%7B%22where%22%3A%7B%22voteId%22%3A%22' + voteUrlSearchObj.id + '%22%7D%7D&access_token=' + JSON.parse($window.localStorage.getItem('d2VjaGF0')).accessToken).success(function (res) {
     if(res != ''){
       $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
     }
@@ -24,7 +24,7 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
       "id": voteUrlSearchObj.id
     },
     function (res) {
-      var accessToken = window.localStorage.swagger_accessToken;
+      var accessToken = JSON.parse(window.sessionStorage.d2VjaGF0).accessToken;
       var vltView = function (id) {
         $http.get('/api/Votes/view/' + id + '?access_token=' + accessToken)
       };
@@ -114,7 +114,7 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
 
 function RewriteResourceActions($resourceProvider) {
   var commonHeaders = {
-    Authorization: JSON.parse(window.localStorage.getItem('d2VjaGF0')).accessToken
+    Authorization: JSON.parse(window.sessionStorage.d2VjaGF0).accessToken
   };
   $resourceProvider.defaults.actions = {
     'get': {
