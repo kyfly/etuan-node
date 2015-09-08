@@ -19,7 +19,7 @@ function browserRedirect() {
     }
 }
 var app = angular.module('app', ['ui.bootstrap']);
-app.controller('contentCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+app.controller('smCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
   function setRHToken() {
     var search = $location.search();
     if (search['from'] === 'redhome' && search['token'])
