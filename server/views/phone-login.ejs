@@ -36,7 +36,7 @@ if (status === "success") {
 
   $("h2 b").html("登陆成功，即将跳转");
   if (user.studentId)
-    window.location = window.localStorage.next || '/' ;
+    window.location = window.sessionStorage.next || '/' ;
   else {
     var rhtoken = sessionStorage.redHomeToken;
     var Stu = new XMLHttpRequest();
