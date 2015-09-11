@@ -6,6 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link href="/lib/bootstrap/css/etuan.css" rel="stylesheet">
+  <script src="http://static.etuan.org/lib/angular/angular.min.js"></script>
+  <script src="/js/login.js"></script>
+  <script type="text/javascript">
+    loginCheck('d2VjaGF0');
+  </script>
   <script src="/js/school/hdu.js"></script>
   <style>
     body {
@@ -161,6 +166,11 @@
                    placeholder="请输入您的{{pon}}" required>
           </div>
         </div>
+        <div style="text-align: center;color: #37963C;font-size: 16px;">
+          <h4>请使用通知书号绑定</h4>
+          <h5 style="color:#f00;font-size:20px">学号为通知书号，密码为通知书号后四位</h5>
+          <h5>（使用能登陆教务系统的账号绑定）</h5>
+        </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10 hidden-xs">
             <button type="submit" class="btn btn-primary btn-lg">绑定</button>
@@ -191,7 +201,7 @@
   });
 
   app.controller('loginCtrl', ['$scope', '$http', function ($scope, $http) {
-    var d2VjaGF0 = JSON.parse(window.localStorage.getItem('d2VjaGF0'));
+    var d2VjaGF0 = JSON.parse(window.sessionStorage.getItem('d2VjaGF0'));
 
     var userId = d2VjaGF0.userId;
     var accessToken = d2VjaGF0.accessToken;
@@ -223,10 +233,10 @@
         } else {
           d2VjaGF0.school = res.university;
           d2VjaGF0.studentId= $scope.studentId;
-          window.localStorage.removeItem('d2VjaGF0');
-          window.localStorage.setItem('d2VjaGF0', JSON.stringify(d2VjaGF0));
+         // window.localStorage.removeItem('d2VjaGF0');
+          window.sessionStorage.setItem('d2VjaGF0', JSON.stringify(d2VjaGF0));
           alert("绑定成功！");
-          window.location = window.localStorage.next;
+          window.location = window.sessionStorage.next;
         }
       }).error(function () {
         alert("连接出错啦！");

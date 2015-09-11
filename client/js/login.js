@@ -18,17 +18,28 @@ function browserRedirect() {
       return "pc";
     }
 }
-
+var app = angular.module('app', ['ui.bootstrap']);
+app.controller('smCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+  function setRHToken() {
+    var search = $location.search();
+    if (search['from'] === 'redhome' && search['token'])
+      window.sessionStorage.redHomeToken = search['token'];
+  }
+  setRHToken();
+}]);
 function loginCheck(t) {
-  var tmpInfo = JSON.parse(window.localStorage.getItem(t));
+if (t === 'b3JnYW5p')
+    var tmpInfo = JSON.parse(window.localStorage.getItem(t));
+else
+  var tmpInfo = JSON.parse(window.sessionStorage.getItem(t));
   var bower = browserRedirect();
   if (!tmpInfo || !tmpInfo.accessToken || !tmpInfo.userId
     || !tmpInfo.loginTime || !tmpInfo.ttl
     || (new Date() - new Date(tmpInfo.loginTime) > tmpInfo.ttl * 1000)
   ) {
     var url = window.location.href;
-    window.localStorage.removeItem(t);
-    window.localStorage.next = url;
+   // window.sessionStorage.removeItem(t) = null;
+    window.sessionStorage.next = url;
     switch (t) {
       case 'b3JnYW5p':
         window.location = '/login';
@@ -45,3 +56,4 @@ function loginCheck(t) {
     }
   }
 }
+

@@ -4,10 +4,10 @@ function FormCtrl($scope, $resource, $location, $window, $http) {
   var formUrlSearchObj = $location.search();
   var Form = $resource('/api/forms/:id');
   var FormResult = $resource('/api/WeChatUsers/:id/formResults', {
-    id: JSON.parse($window.localStorage.getItem('d2VjaGF0')).userId
+    id: JSON.parse(window.sessionStorage.d2VjaGF0).userId
   });
 
-  if (JSON.parse($window.localStorage.getItem('d2VjaGF0')).studentId === undefined) {
+  if (JSON.parse(window.sessionStorage.d2VjaGF0).studentId === undefined) {
     window.location = "../student.html?referer=" + newReferer
   }
 
@@ -17,7 +17,7 @@ function FormCtrl($scope, $resource, $location, $window, $http) {
       "id": formUrlSearchObj.id
     },
     function (res) {
-      var accessToken = window.localStorage.swagger_accessToken;
+      var accessToken = JSON.parse($window.sessionStorage.d2VjaGF0).accessToken;
       var fltView = function (id) {
         $http.get('/api/Forms/view/' + id + '?access_token=' + accessToken)
       };
@@ -77,7 +77,7 @@ function FormCtrl($scope, $resource, $location, $window, $http) {
 
 function RewriteResourceActions($resourceProvider) {
   var commonHeaders = {
-    Authorization: JSON.parse(window.localStorage.getItem('d2VjaGF0')).accessToken
+    Authorization: JSON.parse(window.sessionStorage.d2VjaGF0).accessToken
   };
   $resourceProvider.defaults.actions = {
     'get': {

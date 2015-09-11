@@ -8,7 +8,7 @@ function SeckillCtrl($scope, $location, $window, $http) {
 
   var socket = io(
     window.location.host + "/socket/seckill", {
-      query: 'accessToken=' + JSON.parse($window.localStorage.getItem('d2VjaGF0')).accessToken + "&id=" + seckillUrlSearchObj.id
+      query: 'accessToken=' + JSON.parse($window.sessionStorage.d2VjaGF0).accessToken + "&id=" + seckillUrlSearchObj.id
     }
   );
   var start = new Date();     //秒杀开始时间
@@ -27,7 +27,7 @@ function SeckillCtrl($scope, $location, $window, $http) {
   });
 
   socket.once('initSeckill', function (info, result, status) {
-    var accessToken = JSON.parse($window.localStorage.getItem('d2VjaGF0')).accessToken;
+    var accessToken = JSON.parse($window.sessionStorage.d2VjaGF0).accessToken;
     var sklView = function (id) {
       $http.get('/api/Seckills/view/' + id + '?access_token=' + accessToken)
     };
