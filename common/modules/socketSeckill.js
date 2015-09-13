@@ -1,6 +1,8 @@
 module.exports = SocketSeckill;
 
 var Verify = require('./verify');
+var tplMsg = require('./templateMsg');
+var TplMsg = new tplMsg();
 var app, Seckill, SeckillResult;
 var seckillCache = {};
 
@@ -72,7 +74,7 @@ function onAddKiller(socket, verifyId) {
     socket.emit('killFail', 'verifyId wrong');
     return;
   }
-  cache.verify.getUserId(handshakeQuery.accessToken, function (err, userId) {
+  cache.verify.getUser(handshakeQuery.accessToken, function (err, User) {
     if (err) {
       socket.emit('killFail', 'database error');
     } else {
@@ -87,8 +89,9 @@ function onAddKiller(socket, verifyId) {
         else
           Seckill.findOne({
             where: {id: seckillId},
-            fields: {seckillArrangements: true}
+            fields: {seckillArrangements: true, title: true, organizationName: true}
           }, function (err, info) {
+            cache.info = info;
             var arrangements = info.seckillArrangements;
             if (new Date().getTime() <= new Date(arrangements[cache.current].startTime).getTime())
             //error: 还没有开始
@@ -102,7 +105,7 @@ function onAddKiller(socket, verifyId) {
                 arrangementId: cache.current,
                 verifyId: verifyId,
                 ip: socket.handshake.address,
-                weChatUid : userId,
+                weChatUid : User.id,
                 isGet: false  //没有抢到
               }, function (err) {
               });
@@ -114,7 +117,7 @@ function onAddKiller(socket, verifyId) {
                 arrangementId: cache.current,
                 verifyId: verifyId,
                 ip: socket.handshake.address,
-                weChatUid : userId,
+                weChatUid : User.id,
                 isGet: true  //抢到了
               }, function (err, instance) {
                 if (err) {
@@ -128,7 +131,36 @@ function onAddKiller(socket, verifyId) {
                     cache.remain = arrangements[cache.current].total;
                   }
                   socket.emit('killSuccess');
-                  socket.broadcast.to(seckillId).emit('addResult', cache.verify.idMask(verifyId))
+                  socket.broadcast.to(seckillId).emit('addResult', cache.verify.idMask(verifyId));
+                  //{{first.DATA}}
+                  //
+                  //服务类型：{{HandleType.DATA}}
+                  //处理状态：{{Status.DATA}}
+                  //提交时间：{{RowCreateDate.DATA}}
+                  //当前进度：{{LogType.DATA}}
+                  //{{remark.DATA}}
+
+                  var data = {
+                    first: {
+                      value: "恭喜你，在抢到票了"
+                    },
+                    HandleType: {
+                      value: "抢票"
+                    },
+                    Status: {
+                      value: "成功"
+                    },
+                    RowCreateDate: {
+                      value: new Date().toLocaleDateString()
+                    },
+                    LogType: {
+                      value: "参与"+ cache.info.organizationName +"举办的抢票活动 " +cache.info.title+" 成功"
+                    },
+                    remark: {
+                      value: "此消息来自团团一家"
+                    }
+                  }
+                  TplMsg.activity(User.openid, null, data,  function(){})
                 }
               });
             }

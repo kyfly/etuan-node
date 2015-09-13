@@ -170,6 +170,12 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "stuInfoFromRH"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "msgRe"
     }
   ],
   "methods": []

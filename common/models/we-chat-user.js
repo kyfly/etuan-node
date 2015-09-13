@@ -51,6 +51,31 @@ module.exports = function (WeChatUser) {
       returns: {arg:"data",type:'object'},
       http: {path: "/stuInfoFromRH", verb: 'get'}
     });
+
+  WeChatUser.remoteMethod('msgRe', {
+    accepts: [
+      {arg: 'msgId', type: 'number'},
+      {arg: 'resultId', type: 'string'}
+    ],
+    returns:{arg:'status',type: "number"},
+    http: {verb: 'GET', path: '/:id/msgRe'}
+  });
+
+  WeChatUser.msgRe = function(msgId, resultId, cb) {
+
+    WeChatUser.app.models.FormResult.findOne({where:{id: resultId,'messages.messageId':msgId}}, function(err, result) {
+      if (err || !result)
+        cb(null, 500);
+      else {
+        for (var i in result.messages) if (result.messages[i].messageId === msgId) {
+          result.messages[i].messageId = -1;
+          break;
+        }
+        result.save();
+        cb(null, 200);
+      }
+    });
+  }
   WeChatUser.stuInfoFromRH = function (id, token, cb) {
     var http = require('http');
     var qs = require('querystring');
@@ -66,7 +91,7 @@ module.exports = function (WeChatUser) {
       method: 'POST',
       headers: {
         "Content-Type":"application/x-www-form-urlencoded",
-        "Content-Length":string.length  
+        "Content-Length":string.length
       }
     },function(response){
       var body = [];

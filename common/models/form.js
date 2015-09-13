@@ -7,14 +7,24 @@ module.exports = function(Form) {
   Form.remoteMethod('view', {
     accepts: {arg: 'id', type: 'string'},
     http: {verb: 'GET', path: '/view/:id'}
-  });  
+  });
 
   Form.view = function(id, cb) {
     Form.update({id: id}, {$inc: {viewCount: 1}}, function(err, result) {
       cb(null);
-    });       
-  } 
+    });
+  }
 
+  Form.beforeRemote('prototype.__updateById__results', function(ctx, instance,next) {
+    if (ctx.req.body.from === 'createRM'){
+      ctx.args.data = ctx.req.body.data;
+      ctx.args.from = 'createRM';
+      next();
+    } else {
+      ctx.args.data = null;
+      console.log('1');
+    }
+  });
 
 	Form.pdf = function(id, cb){
 		cb(null);

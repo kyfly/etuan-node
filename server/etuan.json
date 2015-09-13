@@ -4,6 +4,10 @@
     "appsecret": "cceb290d7b8fea3dbc7289963b189d05",
     "redrectUrl": "http://www.etuan.org"
   },
+  "wechatTplIds": {
+    "activityId": "7QZVeshu66g0RxOLaTv5AYv64hicQQ2r6-P_qmCuMjE",
+    "openid": "oe615jkEzJXBW3FMDgXXpFlbtD74"
+  },
   "oss": {
     "accessKeyId": "ILhh2EX7UnN2UI1t",
     "secretAccessKey": "L46bpHJOvK4BRxgvWf7RnllvaOq1sq",
