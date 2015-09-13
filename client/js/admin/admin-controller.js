@@ -121,6 +121,7 @@ function SidebarCtrl($scope, $window) {
 }
 
 function ListCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
+  $scope.deleteConfirm = false;
   //项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的item.infoProperty属性
   var List = $resource(
     etuanAdmin.item.infoProperty[$routeParams.type] + "?filter[order]=id%20DESC", {
@@ -861,7 +862,7 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
    */
   $scope.putRemark = function () {
     if (!$scope.re.remark) {
-      document.getElementById('fUserInfo').style.display = 'none';
+      $('#fUserInfo').modal('toggle');
       return;
     }
     var remark = {
@@ -869,7 +870,7 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         remark: $scope.re.remark,
         createAt: new Date()
       }
-    }
+    };
     var post = {
       data: {
         '$push': remark
@@ -884,24 +885,24 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         access_token: JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken
       }
     );
-    userResult.update(post,function (res) {
-      $scope.result[$scope.result.length-2].push(remark.remark);
+    userResult.update(post, function (res) {
+      $scope.result[$scope.result.length - 2].push(remark.remark);
       $scope.re = undefined;
-      document.getElementById('fUserInfo').style.display = 'none';
+      $('#fUserInfo').modal('toggle');
     });
-  }
+  };
   $scope.sendMsg = function () {
     if (!$scope.re.message) {
-      document.getElementById('message').style.display = 'none';
+      $('#message').modal('toggle');
       return;
     }
     var message = {
       "messages": {
         message: $scope.re.message,
-        messageId: $scope.result[$scope.result.length-1].length,
+        messageId: $scope.result[$scope.result.length - 1].length,
         createAt: new Date()
       }
-    }
+    };
     var post = {
       data: {
         '$push': message
@@ -916,12 +917,12 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         access_token: JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken
       }
     );
-    userResult.update(post,function (res) {
-      $scope.result[$scope.result.length-1].push(message.messages);
+    userResult.update(post, function (res) {
+      $scope.result[$scope.result.length - 1].push(message.messages);
       $scope.re = undefined;
-      document.getElementById('message').style.display = 'none';
+      $('#message').modal('toggle');
     });
-  }
+  };
   /**
    * 格式化报名用户信息
    * @param  {[type]} result [description]
@@ -944,11 +945,11 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     }
     $scope.result = this.result;
     $scope.resultseries = resultseries;
-  }
+  };
 
   $scope.isRM = function (v) {
     return (v instanceof Array);
-  }
+  };
   /* 结果下载页面的获取区
    * 在这个区域中包括了pdf下载和excel下载。
    */
