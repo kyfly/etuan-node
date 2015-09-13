@@ -1,4 +1,4 @@
-function SubmitCtrl($scope, $resource, $timeout, $window) {
+function SubmitCtrl($scope, $resource, $window) {
   var Submit = $resource('/api/WeChatUsers/login');
   $scope.submitBtn = function () {
     Submit.save(
@@ -14,13 +14,10 @@ function SubmitCtrl($scope, $resource, $timeout, $window) {
           ttl: res.ttl
         };
         $window.sessionStorage.setItem('d2VjaGF0', JSON.stringify(lsTmp));
-        alert('模拟注册成功，1秒后跳至首页!');
-        $timeout(function () {
-          $window.location = '/index.html'
-        }, 1000);
+        $window.location = '/index.html';
       },
-      function (res) {
-        alert('模拟注册失败!');
+      function () {
+        alert('登陆失败!');
       }
     );
   };
