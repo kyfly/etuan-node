@@ -24,6 +24,11 @@ function msgReCtrl($scope, $resource, $location, $window, $http) {
       if(res.status === 500){
         $scope.btnMsg = '信息确认失败';
         $scope.confirmFail = true;
+      } else if (res.status === 400) {
+        $scope.btnMsg = '不存在该信息';
+        $scope.confirmFail = true;
+      } else if (res.status === 200){ 
+         $scope.btnMsg = '确认成功,随便看看吧';
       }
     });
   };
