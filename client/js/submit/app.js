@@ -1,4 +1,4 @@
-function SubmitCtrl($scope, $resource, $window) {
+function SubmitCtrl($scope, $resource, $timeout, $window) {
   var Submit = $resource('/api/WeChatUsers/login');
   $scope.submitBtn = function () {
     Submit.save(
@@ -14,7 +14,9 @@ function SubmitCtrl($scope, $resource, $window) {
           ttl: res.ttl
         };
         $window.sessionStorage.setItem('d2VjaGF0', JSON.stringify(lsTmp));
-        $window.location = '/index.html';
+        $timeout(function () {
+          $window.location = '/index.html'
+        }, 1000);
       },
       function () {
         alert('登陆失败!');
