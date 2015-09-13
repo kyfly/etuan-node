@@ -718,6 +718,8 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
 }
 
 function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
+  $scope.msgShow = false;
+  $scope.remarkShow = false;
   /* 结果页面配置区
    * 用于设置结果页面的各项显示上的差异化配置。
    */
@@ -816,7 +818,6 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         for (var i = 0; i < res.formQuestions.length; i++) {
           $scope.resultHeaders.push(res.formQuestions[i].label);
         }
-        $scope.resultHeaders.push('备注');
         break;
       case 'seckill':
         $scope.title = res.title;
@@ -824,7 +825,6 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         $scope.stopTime = res.seckillArrangements[res.seckillArrangements.length - 1].startTime;
         $scope.resultHeaders.push('序号');
         $scope.resultHeaders.push('学号');
-        $scope.resultHeaders.push('备注');
         break;
       case 'vote':
         $scope.title = res.title;

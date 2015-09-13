@@ -1,25 +1,32 @@
 function msgReCtrl($scope, $resource, $location, $window, $http) {
+  $scope.btnMsg = '确认收到消息';
   var search = $location.search();
   var msgId = Number(search.msgId),
-      resultId = search.resultId,
-      type = search.type;
+    resultId = search.resultId,
+    type = search.type;
   if (type && resultId && (msgId || msgId === 0)) {
     switch (type) {
       case 'form':
         var Result = $resource('/api/WeChatUsers/:id/msgRe', {
           id: JSON.parse(window.sessionStorage.d2VjaGF0).userId
         });
-            break;
+        break;
     }
-    Result.get({
-      resultId: resultId,
-      msgId :msgId
-    }, function(res) {
-      console.log(res);
-    });
   } else {
     alert('非法请求');
   }
+  $scope.msgConfirm = function () {
+    Result.get({
+      resultId: resultId,
+      msgId: msgId
+    }, function (res) {
+      $scope.confirmFail = false;
+      if(res.status === 500){
+        $scope.btnMsg = '信息确认失败';
+        $scope.confirmFail = true;
+      }
+    });
+  };
 }
 
 function RewriteResourceActions($resourceProvider) {
@@ -57,6 +64,6 @@ function RewriteResourceActions($resourceProvider) {
 var app = angular.module('app', ['ngResource', 'ui.bootstrap']);
 app.controller('msgReCtrl', ['$scope', '$resource', '$location', '$window', '$http', msgReCtrl]);
 app.config(['$resourceProvider', RewriteResourceActions]);
-//app.controller('headCtrl', function ($scope) {
-//  $scope.isCollapsed = true;
-//});
+app.controller('headCtrl', function ($scope) {
+  $scope.isCollapsed = true;
+});

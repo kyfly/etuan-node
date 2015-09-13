@@ -18,52 +18,78 @@
 
   <p>参加人数：{{results.length}}</p>
 
-  <p style="color:red">*注：点击序号可以可以在线备注信息,点击通知可以直接发送信息</p>
+  <alert type="warning">
+    <p>*点击“通知”按钮即可给该同学发送信息（通过微信团团一家公众号发送）</p>
+
+    <p>*点击“备注”按钮即可给该同学备注信息。</p>
+
+    <p>*鼠标放在“通知”、“备注”按钮上即可显示已经通知或者备注的信息。</p>
+  </alert>
+
+
 </div>
 <div class="table-responsive">
-  <table class="table table-striped table-hover">
+  <table class="table table-striped table-hover table-bordered">
     <thead>
     <tr>
       <th>通知</th>
-      <th ng-repeat="resultHeader in resultHeaders track by $index">{{resultHeader}}</th>
+      <th>备注</th>
+      <th ng-repeat="resultHeader in resultHeaders track by $index">
+        <nobr>{{resultHeader}}</nobr>
+      </th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="result in results track by $index">
-      <td style="
-        color: #FFF;
-        background-color: #B85C79;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 1.42857;
-        white-space: nowrap;
-        width: 150px;
-        cursor: pointer;
-        -moz-user-select: none;
-        border: 1px solid transparent;
-        border-radius: 4px;">
-        <span  ng-click="onLine(result, $index+1)" data-toggle="modal" data-target="#message">通知他</span>
-        <span style="color: rgb(255, 0, 0); font-size: 16px; padding-left: 10px;">信息</span>
-        <div ng-show="result[result.length-1].length" style="position: absolute; width: 400px; min-height: 100px; background:  #414B59 none repeat scroll 0% 0%;">
+      <td>
+        <button ng-mouseenter="msgShow = true" ng-mouseleave="msgShow = false" class="btn btn-default"
+                ng-click="onLine(result, $index+1)" data-toggle="modal" data-target="#message">通知他
+        </button>
+        <alert ng-show="msgShow && result[result.length-1].length"
+               style="position: absolute; min-width: 400px; min-height: 100px;margin-top: 5px"
+               type="success">
           <ul>
             <li ng-repeat="message in result[result.length-1]">
-              <p>你 <span ng-bind="message.createAt | date:'M-dd HH:mm:ss'"></span> 发送发送的消息 [<span ng-bind="message.message"></span>]<span ng-if="message.messageId===-1">对方以确认收到</span></p>
+              <p><span ng-bind="message.createAt | date:'M-dd HH:mm:ss'"></span>&nbsp;发送&nbsp;[<span
+                ng-bind="message.message"></span>]&nbsp;<span style="color: #FF6C60" ng-if="message.messageId === -1">对方已确认收到</span>
+              </p>
             </li>
           </ul>
-        </div>
+        </alert>
       </td>
-      <td style="cursor: pointer;background-color:#00ff00" ng-click="onLine(result, $index+1)" data-toggle="modal" data-target="#fUserInfo">{{$index+1}}</td>
-      <td ng-repeat="resultDetail in result track by $index" ng-show="$index !== 0" ng-if="!isRM(resultDetail)">{{resultDetail}}</td>
-      <td ng-repeat="resultDetail in result track by $index" ng-show="resultDetail.remark" ng-if="isRM(resultDetail)">
-      <span style="margin: 2px;background-color: #337ab7;border-radius: 2px;color:#fff;padding: 3px" ng-repeat="value in resultDetail">
-      <b >{{value.remark || value.messages}}</b>
-      </span>
+
+      <td>
+        <button ng-mouseenter="remarkShow = true" ng-mouseleave="remarkShow = false" type="button"
+                class="btn btn-default" ng-click="onLine(result, $index+1)"
+                data-toggle="modal"
+                data-target="#fUserInfo">备注
+        </button>
+        <alert ng-show="remarkShow && result[result.length-2].length"
+               style="position: absolute; min-width: 400px; min-height: 100px;margin-top: 5px"
+               type="success">
+          <ul>
+            <li ng-repeat="remark in result[result.length-2]">
+              <p><span ng-bind="remark.createAt | date:'M-dd HH:mm:ss'"></span>&nbsp;备注&nbsp;[<span
+                ng-bind="remark.remark"></span>]
+              </p>
+            </li>
+          </ul>
+        </alert>
+      </td>
+
+      <td>{{$index+1}}</td>
+      <td ng-repeat="resultDetail in result track by $index" ng-show="$index !== 0" ng-if="!isRM(resultDetail)">
+        <nobr>{{resultDetail}}</nobr>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
-<div style="position: fixed;top:20px" >
+
+<!--两个模态框-->
+<div style="position: fixed;top:20px">
+
+  <!--在线通知模态框-->
   <div class="modal fade" id="message" tabindex="-1" role="dialog"
        aria-labelledby="msg" aria-hidden="true">
     <div class="modal-dialog">
@@ -85,56 +111,59 @@
                   data-dismiss="modal">关闭
           </button>
           <button type="button" class="btn btn-primary" ng-click="sendMsg()">
-            提交更改
+            发送通知
           </button>
         </div>
       </div>
     </div>
   </div>
+
+  <!--审核的模态框-->
   <div class="modal fade" id="fUserInfo" tabindex="-1" role="dialog"
-   aria-labelledby="online" aria-hidden="true">
+       aria-labelledby="online" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content" style="top: 20px;">
-         <div class="modal-header">
-            <button type="button" class="close"
-               data-dismiss="modal" aria-hidden="true">
-                  &times;
-            </button>
-            <h4 class="modal-title" id="online">
-               在线审核
-            </h4>
-         </div>
-         <div class="modal-body">
-            <table class="table table-striped table-hover">
-              <thead>
-                <tr ng-repeat="result in resultseries" ng-if="!isRM(result.answer)">
-                  <th>{{result.question}}</th><th>{{result.answer.toString()}}</th>
-                </tr>
-                <tr>
-                  <th>备注</th>
-                  <th>
-                  <div ng-repeat="value in result[result.length-2]">
+        <div class="modal-header">
+          <button type="button" class="close"
+                  data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          <h4 class="modal-title" id="online">
+            在线审核
+          </h4>
+        </div>
+        <div class="modal-body">
+          <table class="table table-striped table-hover">
+            <thead>
+            <tr ng-repeat="result in resultseries" ng-if="!isRM(result.answer)">
+              <th>{{result.question}}</th>
+              <th>{{result.answer.toString()}}</th>
+            </tr>
+            <tr>
+              <th>备注</th>
+              <th>
+                <div ng-repeat="value in result[result.length-2]">
                     <span style="margin: 2px;color:rgba(239, 11, 11, 0.51);padding: 3px">
                     {{value.createAt | date : "M-dd HH:mm:ss"}} 添加 <b style="color: black">{{value.remark}}</b>
                     </span>
                   <br>
-                  </div>
+                </div>
 
                   <textarea class="form-control" style="margin-top: 10px;" ng-model="re.remark">
                   </textarea>
-                  </th>
-                </tr>
-              </thead>
-            </table>
-         </div>
-         <div class="modal-footer">
-            <button type="button" class="btn btn-default"
-               data-dismiss="modal">关闭
-            </button>
-            <button type="button" class="btn btn-primary" ng-click="putRemark()">
-               提交更改
-            </button>
-         </div>
+              </th>
+            </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default"
+                  data-dismiss="modal">关闭
+          </button>
+          <button type="button" class="btn btn-primary" ng-click="putRemark()">
+            提交更改
+          </button>
+        </div>
       </div>
     </div>
   </div>
