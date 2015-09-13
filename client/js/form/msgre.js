@@ -20,15 +20,15 @@ function msgReCtrl($scope, $resource, $location, $window, $http) {
       resultId: resultId,
       msgId: msgId
     }, function (res) {
-      $scope.confirmFail = false;
       if(res.status === 500){
         $scope.btnMsg = '信息确认失败';
         $scope.confirmFail = true;
       } else if (res.status === 400) {
-        $scope.btnMsg = '不存在该信息';
+        $scope.btnMsg = '已经确认过了';
         $scope.confirmFail = true;
-      } else if (res.status === 200){ 
+      } else if (res.status === 200){
          $scope.btnMsg = '确认成功,随便看看吧';
+        $scope.confirmFail = false;
       }
     });
   };
