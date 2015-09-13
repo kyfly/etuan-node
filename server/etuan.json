@@ -1,13 +1,13 @@
 {
   "wechat": {
-  "appid": "wx5d92b3c192f993e7",
+  "appid": "wx809e719f43b30edf",
 
-    "appsecret": "ec1fde1a2cac7b6d6cced695df6e5e92",
+    "appsecret": "cceb290d7b8fea3dbc7289963b189d05",
 
-    "redrectUrl": "http://beta.etuan.org"    
-  },
+    "redrectUrl": "http://www.etuan.org"
+},
   "wechatTplIds": {
-    "activityId": "97peK32E9pFAwdMxjRgaxcTGCPdrdBvGmC7Cnp9mWvs",
+    "activityId": "7QZVeshu66g0RxOLaTv5AYv64hicQQ2r6-P_qmCuMjE",
     "openid": "oe615jkEzJXBW3FMDgXXpFlbtD74"
   },
   "oss": {
