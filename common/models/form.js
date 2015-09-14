@@ -57,7 +57,7 @@ module.exports = function(Form) {
                var formResult = formResults[i];
                for(var j=0; j<formResult.formResultAnswers.length; j++) {
                  var formResultAnswer = formResult.formResultAnswers[j];
-                 doc.font('./../client/fonts/msyh.ttf').text(form.formQuestions[j].label+' : '+formResultAnswer.content);
+                 doc.font('./../client/fonts/wryh.ttf').text(form.formQuestions[j].label+' : '+formResultAnswer.content);
                  doc.moveDown();
                }
              }
