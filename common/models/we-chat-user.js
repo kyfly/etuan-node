@@ -65,14 +65,18 @@ module.exports = function (WeChatUser) {
 
     WeChatUser.app.models.FormResult.findOne({where:{id: resultId,'messages.messageId':msgId}}, function(err, result) {
       if (err || !result)
-        cb(null, 500);
+        cb(null, 400);
       else {
         for (var i in result.messages) if (result.messages[i].messageId === msgId) {
           result.messages[i].messageId = -1;
           break;
         }
-        result.save();
-        cb(null, 200);
+        WeChatUser.app.models.FormResult.updateAll({id: resultId,'messages.messageId':msgId},{messages: result.messages},function (err, instance) {
+            if (err)           
+               cb(null,500);
+            else
+               cb(null,200);
+        });
       }
     });
   }

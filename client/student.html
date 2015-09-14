@@ -63,27 +63,23 @@
     .img-md {
       margin-top: 30px;
     }
-    select.ng-invalid {
-      border: 1px solid rgba(228, 36, 174, 0.68);
-    }
-    input.ng-invalid {
-      border: 1px solid rgba(228, 36, 174, 0.68);
-    }
+
     select.ng-valid {
       border: 1px solid green;
     }
+
     input.ng-valid {
       border: 1px solid green;
     }
   </style>
   <script>
-  var _hmt = _hmt || [];
-  (function() {
-    var hm = document.createElement("script");
-    hm.src = "//hm.baidu.com/hm.js?76a5edb5c9902d7c2e38f7a723060cff";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(hm, s);
-  })();
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?76a5edb5c9902d7c2e38f7a723060cff";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
   </script>
 </head>
 <body ng-app="app">
@@ -145,13 +141,13 @@
           <label for="inputSu" class="col-sm-2 control-label hidden-xs">学校</label>
 
           <div class="col-sm-10">
-            <select  ng-model="school" class="form-control" id="inputSu" name="stu_u" required>
+            <select ng-model="school" class="form-control" id="inputSu" name="stu_u" required>
               <option ng-repeat="u in university">{{u.name}}</option>
             </select>
           </div>
         </div>
         <div class="form-group">
-          <label for="inputSno" class="col-sm-2 control-label hidden-xs" >学号</label>
+          <label for="inputSno" class="col-sm-2 control-label hidden-xs">学号</label>
 
           <div class="col-sm-10">
             <input type="number" ng-model="studentId" class="form-control" id="inputSno" name="stu_id"
@@ -159,26 +155,32 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="inputPassword" class="col-sm-2 control-label hidden-xs" ng-init="pon = '姓名'">{{school === "杭州电子科技大学"? pon="教务系统密码":pon='姓名'}}</label>
+          <label for="inputPassword" class="col-sm-2 control-label hidden-xs" ng-init="pon = '姓名'">{{school ===
+            "杭州电子科技大学"? pon="教务系统密码":pon='姓名'}}</label>
 
           <div class="col-sm-10">
-            <input type="{{pon === '姓名'? 'text':'password'}}" ng-model="studentPassword" class="form-control" id="inputPassword" name="stu_name"
+            <input type="{{pon === '姓名'? 'text':'password'}}" ng-model="studentPassword" class="form-control"
+                   id="inputPassword" name="stu_name"
                    placeholder="请输入您的{{pon}}" required>
           </div>
         </div>
-        <div style="text-align: center;color: #37963C;font-size: 16px;">
-          <h4>请使用通知书号绑定</h4>
-          <h5 style="color:#f00;font-size:20px">学号为通知书号，密码为通知书号后四位</h5>
-          <h5>（使用能登陆教务系统的账号绑定）</h5>
-        </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10 hidden-xs">
-            <button type="submit" class="btn btn-primary btn-lg">绑定</button>
+            <button type="submit" class="btn btn-primary btn-block">绑定</button>
           </div>
           <div class="col-sm-offset-2 col-sm-10 visible-xs">
             <button type="submit" class="btn btn-primary btn-block">绑定</button>
           </div>
         </div>
+        <div class="form-group">
+          <div ng-show="school ==='杭州电子科技大学'" class="col-sm-offset-2 col-sm-10">
+            <alert type="warning" style="text-align: center;">
+              <h4>新生密码为“Hdu1”+"身份证号后六位"</h4>
+              <h5>（使用能登陆教务系统的账号绑定）</h5>
+            </alert>
+          </div>
+        </div>
+
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
             <p class="help-block">
@@ -191,7 +193,6 @@
   </div>
 </div>
 
-<script src="http://static.etuan.org/lib/angular/angular.js"></script>
 <script src="http://static.etuan.org/lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
 <script>
   var app = angular.module('app', ['ui.bootstrap']);
@@ -215,6 +216,7 @@
       result = result.toString().substr(8);
       return result;
     }
+
     $http.get('api/Universities?filter=%7B%22fields%22%3A%7B%22name%22%3Atrue%7D%7D').success(function (res) {
       $scope.university = res;
     });
@@ -222,7 +224,7 @@
       if (!($scope.school && $scope.studentId && $scope.studentPassword)) {
         return false;
       }
-      $scope.studentPassword = $scope.school === '杭州电子科技大学'? hex_md5($scope.studentPassword) : $scope.studentPassword;
+      $scope.studentPassword = $scope.school === '杭州电子科技大学' ? hex_md5($scope.studentPassword) : $scope.studentPassword;
       $http.put('/api/WeChatUsers/' + userId + "?access_token=" + accessToken, {
         studentId: $scope.studentId,
         password: $scope.studentPassword,
@@ -232,8 +234,8 @@
           alert(res.err);
         } else {
           d2VjaGF0.school = res.university;
-          d2VjaGF0.studentId= $scope.studentId;
-         // window.localStorage.removeItem('d2VjaGF0');
+          d2VjaGF0.studentId = $scope.studentId;
+          // window.localStorage.removeItem('d2VjaGF0');
           window.sessionStorage.setItem('d2VjaGF0', JSON.stringify(d2VjaGF0));
           alert("绑定成功！");
           window.location = window.sessionStorage.next;

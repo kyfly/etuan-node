@@ -121,6 +121,7 @@ function SidebarCtrl($scope, $window) {
 }
 
 function ListCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
+  $scope.deleteConfirm = false;
   //项目的具体接口（resource格式），如需添加新的项目，请修改admin-service文件中的item.infoProperty属性
   var List = $resource(
     etuanAdmin.item.infoProperty[$routeParams.type] + "?filter[order]=id%20DESC", {
@@ -718,6 +719,8 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
 }
 
 function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
+  $scope.msgShow = false;
+  $scope.remarkShow = false;
   /* 结果页面配置区
    * 用于设置结果页面的各项显示上的差异化配置。
    */
@@ -816,7 +819,6 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         for (var i = 0; i < res.formQuestions.length; i++) {
           $scope.resultHeaders.push(res.formQuestions[i].label);
         }
-        $scope.resultHeaders.push('备注');
         break;
       case 'seckill':
         $scope.title = res.title;
@@ -824,7 +826,6 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         $scope.stopTime = res.seckillArrangements[res.seckillArrangements.length - 1].startTime;
         $scope.resultHeaders.push('序号');
         $scope.resultHeaders.push('学号');
-        $scope.resultHeaders.push('备注');
         break;
       case 'vote':
         $scope.title = res.title;
@@ -861,7 +862,7 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
    */
   $scope.putRemark = function () {
     if (!$scope.re.remark) {
-      document.getElementById('fUserInfo').style.display = 'none';
+      $('#fUserInfo').modal('toggle');
       return;
     }
     var remark = {
@@ -869,7 +870,7 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         remark: $scope.re.remark,
         createAt: new Date()
       }
-    }
+    };
     var post = {
       data: {
         '$push': remark
@@ -884,24 +885,24 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         access_token: JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken
       }
     );
-    userResult.update(post,function (res) {
-      $scope.result[$scope.result.length-2].push(remark.remark);
+    userResult.update(post, function (res) {
+      $scope.result[$scope.result.length - 2].push(remark.remark);
       $scope.re = undefined;
-      document.getElementById('fUserInfo').style.display = 'none';
+      $('#fUserInfo').modal('toggle');
     });
-  }
+  };
   $scope.sendMsg = function () {
     if (!$scope.re.message) {
-      document.getElementById('message').style.display = 'none';
+      $('#message').modal('toggle');
       return;
     }
     var message = {
       "messages": {
         message: $scope.re.message,
-        messageId: $scope.result[$scope.result.length-1].length,
+        messageId: $scope.result[$scope.result.length - 1].length,
         createAt: new Date()
       }
-    }
+    };
     var post = {
       data: {
         '$push': message
@@ -916,12 +917,12 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         access_token: JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken
       }
     );
-    userResult.update(post,function (res) {
-      $scope.result[$scope.result.length-1].push(message.messages);
+    userResult.update(post, function (res) {
+      $scope.result[$scope.result.length - 1].push(message.messages);
       $scope.re = undefined;
-      document.getElementById('message').style.display = 'none';
+      $('#message').modal('toggle');
     });
-  }
+  };
   /**
    * 格式化报名用户信息
    * @param  {[type]} result [description]
@@ -944,11 +945,11 @@ function ResultCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     }
     $scope.result = this.result;
     $scope.resultseries = resultseries;
-  }
+  };
 
   $scope.isRM = function (v) {
     return (v instanceof Array);
-  }
+  };
   /* 结果下载页面的获取区
    * 在这个区域中包括了pdf下载和excel下载。
    */

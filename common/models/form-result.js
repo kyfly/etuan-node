@@ -33,7 +33,7 @@ module.exports = function(FormResult) {
             value: "此消息来自团团一家，点击【详情】可回复信息"
           }
         }
-        var url = 'http://www.etuan.org/form/re.html?msgId=' + messageData.messageId + '&resultId='+ Instance.id +"&type=form";
+        var url = 'www.etuan.org/form/re.html#?msgId=' + messageData.messageId + '&resultId='+ Instance.id +"&type=form";
         TplMsg.activity(ins.openid, url, data,  function(){})
       });
     });
