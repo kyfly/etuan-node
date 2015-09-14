@@ -31,7 +31,7 @@ node_modules
 .idea
 
 # ignore font files, they are too big
-client/fonts
+#client/fonts
 
 # ignore robots.txt
 client/robots.txt
