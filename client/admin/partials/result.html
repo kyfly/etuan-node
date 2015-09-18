@@ -23,7 +23,7 @@
 
     <p>*点击“备注”按钮即可给该同学备注信息。</p>
 
-    <p>*鼠标放在“通知”、“备注”按钮上即可显示已经通知或者备注的信息。</p>
+    <p>*鼠标放在“通知”、“备注”按钮上即可显示已经通知或者备注的信息。通知或备注后按钮会变蓝色。</p>
   </alert>
 
 
@@ -42,7 +42,7 @@
     <tbody>
     <tr ng-repeat="result in results track by $index">
       <td>
-        <button ng-mouseenter="msgShow = true" ng-mouseleave="msgShow = false" class="btn btn-default"
+        <button ng-class="{'btn-default':!result[result.length-1].length,'btn-info':result[result.length-1].length}" ng-mouseenter="msgShow = true" ng-mouseleave="msgShow = false" class="btn btn-default"
                 ng-click="onLine(result, $index+1)" data-toggle="modal" data-target="#message">通知他
         </button>
         <alert ng-show="msgShow && result[result.length-1].length"
@@ -59,8 +59,8 @@
       </td>
 
       <td>
-        <button ng-mouseenter="remarkShow = true" ng-mouseleave="remarkShow = false" type="button"
-                class="btn btn-default" ng-click="onLine(result, $index+1)"
+        <button ng-class="{'btn-default':!result[result.length-2].length,'btn-info':result[result.length-2].length}" ng-mouseenter="remarkShow = true" ng-mouseleave="remarkShow = false" type="button"
+                class="btn" ng-click="onLine(result, $index+1)"
                 data-toggle="modal"
                 data-target="#fUserInfo">备注
         </button>
