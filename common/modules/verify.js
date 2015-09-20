@@ -125,3 +125,12 @@ Verify.prototype.getUserId = function (token, cb) {
       cb(null, tokenData.userId)
   })
 };
+Verify.prototype.getUser = function (token, cb) {
+  if (!token)  cb("token can't be null");
+  tokenModel.findOne({where: {id: token}, fields: {userId: true}}, function (err, tokenData) {
+    userModel.findOne({where: {id: tokenData.userId}},
+      function (err, userData) {
+        cb(err, userData);
+      });
+  })
+};

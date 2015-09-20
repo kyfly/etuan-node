@@ -63,3 +63,10 @@ app.use(loopback.static('../client'));
 var socket = require('../common/modules/websocket.js')(app, server);
 socket.start();
 
+/*
+
+{
+"email":"oe615jkEzJXBW3FMDgXXpFlbtD74@etuan.org",
+"password":"oe615jkEzJXBW3FMDgXXpFlbtD74"
+}
+*/
