@@ -30,6 +30,9 @@
     "magor": {
       "type": "string"
     },
+    "school": {
+      "type": "string"
+    },
     "description": {
       "type": "string",
       "required": true
@@ -46,6 +49,24 @@
       "foreignKey": ""
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "getUserInfo"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "getOwnerOrgMenbers"
+    }],
   "methods": {}
 }

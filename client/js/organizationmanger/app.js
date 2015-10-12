@@ -5,10 +5,11 @@ app.controller('headCtrl', ['$scope', '$http', function ($scope, $http) {
 app.controller('infoCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
     var id = $location.search().id;
     var access_token = JSON.parse(sessionStorage.d2VjaGF0).accessToken;
+    var userId = JSON.parse(sessionStorage.d2VjaGF0).userId;
     $http.get('/api/Universities', {filter: {where: {name: '杭州电子科技大学'}}}).success(function (data) {
         $scope.magors = data[0].types[3].schools;
     });
-    $http.get('/api/OrganizationMenbers/uinfo').success(function (res) {
+    $http.get('/api/OrganizationMenbers/uinfo?id=' + userId + '&access_token=' + access_token).success(function (res) {
         $scope.user = res.info;
     });
     $http.get('/api/OrganizationUsers/' + id + '/departments')
@@ -51,6 +52,7 @@ app.controller('infoCtrl', ['$scope', '$http', '$location', function ($scope, $h
             alert('部门必选');
             return;
         }
+        $scope.user.wechatUserId = userId;
         $scope.user.department = $scope.user.department.name;
 
         $http.post('/api/OrganizationUsers/' + id + '/menbers?access_token=' + access_token, $scope.user).success(function (res) {
