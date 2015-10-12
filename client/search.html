@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>组织页面</title>
+  <link rel="stylesheet" href="./dist/css/boot_darkly.css"/>
+  <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+  <script src="./dist/js/bootstrap.js"></script>
+  <script src="./js/angular.js"></script>
+  <style>
+    body {
+      padding-buttom: 40px;
+    }
+  </style>
+</head>
+<body>
+<!-- Navbar Fixed-->
+<div class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container-fluid">
+    <!-- 1-->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navgation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
+      <a href="#" class="navbar-brand">Search</a>
+    </div>
+    <!-- 2-->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Link <span class="sr-only">STH1</span></a></li>
+        <li class="dropup">
+          <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="false">Dropup to More</a>
+          <ul class="dropdown-menu" role="menu"><!--Need Change-->
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Action2</a></li>
+            <li><a href="#">Action3</a></li>
+            <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+      <!-- 3-->
+      <form action="" class="navbar-form" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" style="display:none;"/>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
