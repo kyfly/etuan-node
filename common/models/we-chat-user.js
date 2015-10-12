@@ -61,6 +61,7 @@ module.exports = function (WeChatUser) {
     http: {verb: 'GET', path: '/:id/msgRe'}
   });
 
+
   WeChatUser.msgRe = function(msgId, resultId, cb) {
 
     WeChatUser.app.models.FormResult.findOne({where:{id: resultId,'messages.messageId':msgId}}, function(err, result) {

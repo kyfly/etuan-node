@@ -1,0 +1,51 @@
+{
+  "name": "OrganizationMenber",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "studentId": {
+      "type": "string"
+    },
+    "headImg": {
+      "type": "string",
+      "required": true
+    },
+    "phone": {
+      "type": "number",
+      "required": true
+    },
+    "email": {
+      "type": "string"
+    },
+    "department": {
+      "type": "string"
+    },
+    "magor": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "required": true
+    },
+    "wechatUserId": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "organizationUser": {
+      "type": "belongsTo",
+      "model": "OrganizationUser",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

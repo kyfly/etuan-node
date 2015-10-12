@@ -1,0 +1,27 @@
+<div>
+    <span   id="invite"></span>
+    <a ng-href="{{inviteurl}}">邀请团员</a>
+    <div>
+        <ul>
+            <li ng-repeat="menber in menbers track by $index">
+                <table>
+                    <tr>
+                        <td rowspan="4">
+                            <img ng-src="{{menber.headImg}}" style="max-height: 70px">
+                        </td>
+                        <td>{{menber.name}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{menber.phone}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{menber.department}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{menber.magor}}</td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+    </div>
+</div>

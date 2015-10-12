@@ -11,12 +11,16 @@
       "type": "string"
     },
     "messages": {
-      "type": ["object"],
+      "type": [
+        "object"
+      ],
       "default": [],
-      "comments": "给用户的信息" 
+      "comments": "给用户的信息"
     },
     "remark": {
-      "type": ["object"],
+      "type": [
+        "object"
+      ],
       "comments": "备注意见",
       "default": []
     }
@@ -36,5 +40,5 @@
       "permission": "DENY"
     }
   ],
-  "methods": []
+  "methods": {}
 }

@@ -89,6 +89,11 @@
       "type": "hasMany",
       "model": "WeChatMP",
       "foreignKey": "organizationUid"
+    },
+    "menbers": {
+      "type": "hasMany",
+      "model": "OrganizationMenber",
+      "foreignKey": ""
     }
   },
   "acls": [
@@ -109,6 +114,24 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "__destroyById__forms"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__menbers"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "__create__menbers"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__get__departments"
     },
     {
       "principalType": "ROLE",
@@ -363,5 +386,5 @@
       "property": "getactivities"
     }
   ],
-  "methods": []
+  "methods": {}
 }

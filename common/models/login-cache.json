@@ -15,15 +15,15 @@
     "isConfirm": {
       "type": "number"
     },
-    "referer":{
+    "referer": {
       "type": "string"
     },
-    "rerequest":{
+    "rerequest": {
       "type": "number"
     }
   },
   "validations": [],
   "relations": {},
   "acls": [],
-  "methods": []
+  "methods": {}
 }

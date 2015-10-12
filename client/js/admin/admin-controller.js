@@ -74,6 +74,12 @@ function SidebarCtrl($scope, $window) {
       'active': sidebarItemChosen('home')
     },
     {
+      'id': 'sidebarHome',
+      'display_name': '成员',
+      'url': '#/menber',
+      'active': sidebarItemChosen('menber')
+    },
+    {
       'id': 'sidebarForm',
       'display_name': '活动',
       'url': '#/activity/list',
@@ -979,6 +985,35 @@ function HomeCtrl($scope, $resource) {
     $scope.parCount = res.parCount.parCount;
   }, function () {
   });
+}
+
+function menberCtrl($scope, $resource, etuanAdmin) {
+  var Menber = $resource(
+      '/api/OrganizationUsers/:userId/menbers' + '?access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, {
+        userId: etuanAdmin.cache.userId
+      },{
+        query:{
+          method:'GET',
+          isArray: true
+        }
+      }
+  );
+  Menber.query({}, function (res) {
+    $scope.menbers = res;
+    console.log(res);
+  }, function (res) {
+
+  });
+  function  getQRcode() {
+    var url = 'http://' + window.location.host + '/organizationmanger/#?id=' + etuanAdmin.cache.userId;
+    var qr = qrcode(4, 'L');
+    qr.addData(url);
+    qr.make();
+    document.getElementById('invite').innerHTML = '<br>' + '分享二维码邀请成员' + '<br>' + '<br>' + qr.createImgTag(4, 12);
+  }
+  $scope.inviteurl = 'http://' + window.location.host + '/organizationmanger/#?id=' + etuanAdmin.cache.userId;
+  getQRcode();
+
 }
 
 function SettingCtrl($scope, $resource, etuanAdmin, $http, $window) {
