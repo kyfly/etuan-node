@@ -142,7 +142,7 @@ var _hmt = _hmt || [];
       </thead>
       <tbody>
       <tr ng-repeat="sa in seckillArrangements track by $index">
-        <td ng-bind-template="第{{sa.id}}场"></td>
+        <td ng-bind-template="第{{sa.id + 1}}场"></td>
         <td ng-bind="sa.startTime | date: cnFormat"></td>
         <td ng-bind="sa.total"></td>
       </tr>
