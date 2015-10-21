@@ -134,7 +134,7 @@ function SeckillCtrl($scope, $location, $window, $http) {
   socket.on('addResult', function (verifyId) {
     $scope.remain--;
     $scope.resultList.push(verifyId);
-    if ($scope.remain = 0)
+    if ($scope.remain === 0)
       $scope.status = '已经结束';
     $scope.$apply();
   });
