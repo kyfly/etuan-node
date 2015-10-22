@@ -39,31 +39,7 @@ function wechatLogin() {
             };
             window.sessionStorage.d2VjaGF0 = JSON.stringify(lsTmp);
             //这里跳转到应该跳转的页面
-
-            if (data.userInfo.studentId)
-              window.location = window.sessionStorage.next || '/' ;
-            else {
-              var rhtoken = sessionStorage.redHomeToken;
-              if (!rtoken)
-                      window.location = '/student.html';
-              if (rtoken){
-                Stu.open('GET', '/api/WeChatUsers/stuInfoFromRH?id='+ data.token.userId +'&token=' + rhtoken);
-                Stu.send();
-                Stu.onreadystatechange = function () {
-                  if (Stu.readyState === 4) {
-                    var sdata = JSON.parse(Stu.responseText);
-                    if (sdata.data === 0 && Stu.status === 200) {
-                      window.location = '/student.html';
-                    } else if (sdata.data && Stu.status === 200) {
-                      lsTmp.school = '杭州电子科技大学';
-                      lsTmp.studentId = sdata.data.studentId;
-                      sessionStorage.d2VjaGF0 = JSON.stringify(lsTmp);
-                      window.location = window.sessionStorage.next || '/';
-                    }
-                  }
-                }
-              }
-            }
+            window.location = window.sessionStorage.next || '/' ;
           }
           else if (ajax.status === 200 || ajax.status === 304) {
             document.getElementById('logstatus').innerHTML = data.msg;

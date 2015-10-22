@@ -1,15 +1,12 @@
 function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
   var voteUrlSearchObj = $location.search();
   var Vote = $resource('/api/votes/:id');
-  var newReferer = "index.html";
   $scope.title = '投票';
   var VoteResult = $resource('/api/WeChatUsers/:id/voteResults', {
     id: JSON.parse(window.sessionStorage.d2VjaGF0).userId
   });
 
-  if(JSON.parse(window.sessionStorage.d2VjaGF0).studentId === undefined){
-    window.location = "../student.html?referer=" + newReferer
-  }
+  
  var info = JSON.parse(window.sessionStorage.d2VjaGF0);
   $http.get('/api/WeChatUsers/' + info.userId + '/voteResults?filter=%7B%22where%22%3A%7B%22voteId%22%3A%22' + voteUrlSearchObj.id + '%22%7D%7D&access_token=' + info.accessToken).success(function (res) {
     if(res != ''){
@@ -29,6 +26,9 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
         $http.get('/api/Votes/view/' + id + '?access_token=' + accessToken)
       };
       vltView(res.id);
+      if (res.verifyRule === "studentId") {
+        window.location = "../student.html";
+      }
       $scope.vote = res;
       $scope.title = res.title || '投票';
       $scope.startTime = new Date($scope.vote.startTime);

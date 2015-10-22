@@ -16,11 +16,9 @@ function SeckillCtrl($scope, $location, $window, $http) {
   var countdownTimer;       //倒计时定时器
   var countdownSec;        //用秒表示的倒计时
   var resultList = [];
-  var newReferer = "index.html";
-
   socket.on('error', function (err) {
     if (err === "104") {
-      window.location = "../student.html?referer=" + newReferer
+      window.location = "../student.html";
     } else {
       alert("对不起，身份验证失败，错误代码：" + err);
     }

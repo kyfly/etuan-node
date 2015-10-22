@@ -1,15 +1,10 @@
 function FormCtrl($scope, $resource, $location, $window, $http) {
-  var newReferer = "index.html";
   $scope.title = '表单';
   var formUrlSearchObj = $location.search();
   var Form = $resource('/api/forms/:id');
   var FormResult = $resource('/api/WeChatUsers/:id/formResults', {
     id: JSON.parse(window.sessionStorage.d2VjaGF0).userId
   });
-
-  if (JSON.parse(window.sessionStorage.d2VjaGF0).studentId === undefined) {
-    window.location = "../student.html?referer=" + newReferer
-  }
 
   $scope.answer = [];
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
@@ -22,6 +17,9 @@ function FormCtrl($scope, $resource, $location, $window, $http) {
         $http.get('/api/Forms/view/' + id + '?access_token=' + accessToken)
       };
       fltView(res.id);
+      if (res.verifyRule === "studentId") {
+        window.location = "../student.html" ;
+      }
       $scope.form = res;
       for (var i = 0; i < res.formQuestions.length; i++) {
         $scope.answer[i] = '';
