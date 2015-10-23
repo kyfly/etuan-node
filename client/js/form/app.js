@@ -18,7 +18,7 @@ function FormCtrl($scope, $resource, $location, $window, $http) {
         $http.get('/api/Forms/view/' + id + '?access_token=' + accessToken)
       };
       fltView(res.id);
-      if (res.verifyRule === "studentId") {
+      if (res.verifyRule === "studentId" && !JSON.parse($window.sessionStorage.d2VjaGF0).studentId) {
         window.location = "../student.html" ;
       }
       $scope.form = res;

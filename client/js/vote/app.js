@@ -27,7 +27,7 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
         $http.get('/api/Votes/view/' + id + '?access_token=' + accessToken)
       };
       vltView(res.id);
-      if (res.verifyRule === "studentId") {
+      if (res.verifyRule === "studentId" && !info.studentId) {
         window.location = "../student.html";
       }
       $scope.vote = res;
