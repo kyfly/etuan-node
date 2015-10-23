@@ -73,12 +73,12 @@ function SidebarCtrl($scope, $window) {
       'url': '#/home',
       'active': sidebarItemChosen('home')
     },
-    {
-      'id': 'sidebarHome',
-      'display_name': '成员',
-      'url': '#/menber',
-      'active': sidebarItemChosen('menber')
-    },
+    // {
+    //   'id': 'sidebarHome',
+    //   'display_name': '成员',
+    //   'url': '#/menber',
+    //   'active': sidebarItemChosen('menber')
+    // },
     {
       'id': 'sidebarForm',
       'display_name': '活动',

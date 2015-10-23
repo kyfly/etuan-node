@@ -4,10 +4,10 @@ function RouteConfigure($routeProvider) {
       templateUrl: '/admin/partials/home.html',
       controller: ['$scope', '$resource', HomeCtrl]
     })
-    .when('/menber', {
-      templateUrl: '/admin/partials/menber.html',
-      controller: ['$scope', '$resource', 'etuanAdmin', menberCtrl]
-    })
+    // .when('/menber', {
+    //   templateUrl: '/admin/partials/menber.html',
+    //   controller: ['$scope', '$resource', 'etuanAdmin', menberCtrl]
+    // })
     .when('/setting', {
       templateUrl: '/admin/partials/setting.html',
       controller: ['$scope', '$resource', 'etuanAdmin', '$http', '$window', SettingCtrl]
