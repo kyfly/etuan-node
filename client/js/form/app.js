@@ -5,7 +5,8 @@ function FormCtrl($scope, $resource, $location, $window, $http) {
   var FormResult = $resource('/api/WeChatUsers/:id/formResults', {
     id: JSON.parse(window.sessionStorage.d2VjaGF0).userId
   });
-
+  var url = window.location.href;
+  window.sessionStorage.next = url;
   $scope.answer = [];
   $scope.cnFormat = "yyyy'年'MM'月'dd'日 'HH'时'mm'分'";
   Form.get({

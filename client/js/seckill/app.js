@@ -5,7 +5,8 @@ function SeckillCtrl($scope, $location, $window, $http) {
   var seckillUrlSearchObj = $location.search();
   $scope.cnFormat = 'yyyy-MM-dd HH:mm';
   $scope.title = '疯抢';
-
+  var url = window.location.href;
+  window.sessionStorage.next = url;
   var socket = io(
     window.location.host + "/socket/seckill", {
       query: 'accessToken=' + JSON.parse($window.sessionStorage.d2VjaGF0).accessToken + "&id=" + seckillUrlSearchObj.id
