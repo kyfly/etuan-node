@@ -10,6 +10,9 @@
     "studentId": {
       "type": "string"
     },
+    "verifyResult": {
+      "type": "string"
+    },
     "messages": {
       "type": [
         "object"

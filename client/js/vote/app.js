@@ -30,6 +30,20 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
       if (res.verifyRule === "studentId" && !info.studentId) {
         window.location = "../student.html";
       }
+      switch(res.verifyRule) {
+        case 'studentId': 
+          $scope.verifyResult = info.studentId;
+          $scope.verifyRule = "学号";
+          break;
+        case "phone":
+          $scope.verifyResult = null;
+          $scope.verifyRule = "手机号";
+          break;
+        case "name":
+          $scope.verifyResult = null;
+          $scope.verifyRule = "姓名";
+          break;
+      }
       $scope.vote = res;
       $scope.title = res.title || '投票';
       $scope.startTime = new Date($scope.vote.startTime);
@@ -87,7 +101,8 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
     if (resultTmp.length != 0) {
       VoteResult.save({
           'voteId': voteUrlSearchObj.id,
-          'results': resultTmp
+          'results': resultTmp,
+          "verifyResult": $scope.verifyResult
         },
         function () {
           alert("投票成功");

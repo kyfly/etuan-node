@@ -13,6 +13,9 @@
     "count": {
       "type": "number",
       "default": 0
+    },
+    "imgUrl": {
+      "type": "string"
     }
   },
   "validations": [],

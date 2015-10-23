@@ -43,6 +43,11 @@
     "school": {
       "type": "string"
     },
+    "template": {
+      "type": "number",
+      "default": 1,
+      "commit": "主题"
+    },
     "organizationName": {
       "type": "string"
     }
