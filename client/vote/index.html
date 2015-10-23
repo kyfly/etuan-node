@@ -50,15 +50,15 @@
       color: #0000CC;
     }
   </style>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?76a5edb5c9902d7c2e38f7a723060cff";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?76a5edb5c9902d7c2e38f7a723060cff";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 </head>
 <body>
 <!--头部-->
@@ -111,6 +111,9 @@ var _hmt = _hmt || [];
 <div class="container bg_white">
   <div class="col-md-8 col-md-offset-2">
     <h1>{{vote.title}}</h1>
+
+    <img ng-src="{{logoUrl}}" height="150px" width="150px">
+
     <p style="text-indent: 2em;">{{vote.description}}</p>
 
     <p>最大投票数：{{vote.maxVote}}</p>
