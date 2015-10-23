@@ -1,0 +1,122 @@
+<!doctype html>
+<html ng-app="app" ng-controller="VoteCtrl">
+<head>
+  <title>{{title}} - 团团一家</title>
+  <link rel="icon" href="/img/etuan_logo.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/img/etuan_logo.ico" type="image/x-icon">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta name="renderer" content="webkit">
+  <script src="http://static.etuan.org/lib/angular/angular.min.js"></script>
+  <!--<script src="/js/login.js"></script>-->
+  <!--<script type="text/javascript">-->
+    <!--loginCheck('d2VjaGF0');-->
+  <!--</script>-->
+  <link rel="stylesheet" href="/lib/bootstrap/css/etuan.css"/>
+  <link rel="stylesheet" href="/css/vote_image-text.css">
+  <script src="http://static.etuan.org/lib/angular-components/angular-sanitize.min.js"></script>
+  <script src="http://static.etuan.org/lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
+  <script src="http://static.etuan.org/lib/angular-components/angular-resource.min.js"></script>
+  <script src="/js/vote/app2.js"></script>
+</head>
+<body>
+<!--头部-->
+<header id="nav" ng-controller="headCtrl">
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button class="navbar-toggle" ng-click="isCollapsed = !isCollapsed" type="button">
+            <span class="sr-only">导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <h5>
+            <a href="/index.html">
+              <img src="http://static.etuan.org/common/logo/etuan-logo-word.png@60h.png" height="30px" alt="团团一家LOGO">
+            </a>
+          </h5>
+        </div>
+        <div collapse="isCollapsed" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/index.html">首页</a>
+            </li>
+            <li>
+              <a href="/organizationList.html">组织</a>
+            </li>
+            <li>
+              <a href="/activityList.html">活动</a>
+            </li>
+            <li>
+              <a href="/formList.html">表单</a>
+            </li>
+            <li>
+              <a href="/seckillList.html">疯抢</a>
+            </li>
+            <li>
+              <a href="/voteList.html">投票</a>
+            </li>
+            <li>
+              <a href="/admin">管理后台</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<!--head-->
+<div class="text-center well well-sm">
+  <div class="text-center">
+    <img class="img-thumbnail" ng-src="{{logoUrl}}" height="150px" width="150px">
+  </div>
+  <h3>{{vote.title}}</h3>
+  <p style="text-indent: 2em;">{{vote.description}}</p>
+
+  <p>最大投票数：{{vote.maxVote}}</p>
+
+  <p>开始时间：{{startTime | date:cnFormat}}</p>
+
+  <p>结束时间：{{stopTime | date:cnFormat}}</p>
+</div>
+<!--内容-->
+<div id="main" class="container">
+  <div class="col-xs-6 col-sm-4 col-md-3">
+    <div class="thumbnail" id="box1">
+      <img class="logo_img" src="http://img.kyfly.net/etuan/vote/2/logo/1.png" height="70px" width="70px">
+      <a href="/vote/xianjin/introduce.html#1"><img class="viewintro" alt="查看简介" src="/img/intro.png"></a>
+
+      <p>卓越学院<br>13184211班</p>
+
+      <div class="chosen">
+        <div class="mask"></div>
+        <img class="chooseimg" alt="已选择" src="/img/toupiao/choose.png">
+      </div>
+      <button id="option1" class="btn btn-warning btn-block choosebtn">点击选定</button>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="form-group">
+        <button class="btn btn-primary btn-block" id='submit'>提 交</button>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<div class="col-xs-12">
+  <h4 class="text-center">
+    <a href="http://www.etuan.org/">
+      <img src="http://img.kyfly.net/common/logo/etuan-logo-word.png@40h.png" height="20px">
+    </a>
+    &nbsp;提供技术支持
+  </h4>
+</div>
+</body>
+</html>
