@@ -46,7 +46,7 @@
                current-text="今天" clear-text="清空" required>
       <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="startDateOpen($event)"><i
-          class="glyphicon glyphicon-calendar"></i></button>
+                class="glyphicon glyphicon-calendar"></i></button>
       </span>
       </p>
     </div>
@@ -66,7 +66,7 @@
                current-text="今天" clear-text="清空" required>
         <span class="input-group-btn">
           <button type="button" class="btn btn-default" ng-click="stopDateOpen($event)"><i
-            class="glyphicon glyphicon-calendar"></i></button>
+                  class="glyphicon glyphicon-calendar"></i></button>
         </span>
       </p>
     </div>
@@ -84,6 +84,7 @@
         <option value="studentId">学号</option>
         <option value="name">姓名</option>
         <option value="phone">手机号</option>
+        <option value="null" selected="selected">无</option>
       </select>
     </div>
   </div>
@@ -94,18 +95,6 @@
     </div>
     <div class="col-sm-10">
       <input type="text" class="form-control" ng-model="maxVote" required>
-    </div>
-  </div>
-
-  <div class="form-group" ng-show="contentShow[6]">
-    <div class="col-sm-2">
-      <label class="control-label">投票样式</label>
-    </div>
-    <div class="col-sm-10">
-      <select ng-change="changeTemplate()" class="form-control" ng-model="template">
-        <option value="1">文字+简介</option>
-        <option value="2">图文+简介</option>
-      </select>
     </div>
   </div>
 
@@ -120,14 +109,14 @@
     </div>
   </div>
 
-  <div class="form-group" ng-show="isVote() && template == '1'">
+  <div class="form-group" ng-show="isVote()">
     <div class="col-sm-2">
       <label class="control-label">投票内容</label>
     </div>
     <div class="col-sm-10">
       <div class="well">
         <ol>
-          <li ng-repeat="vote in votes track by $index">
+          <li ng-repeat="vote in votes">
             <div class="form-group">
               <div class="col-sm-10 col-sm-offset-2">
                 <button class="btn btn-primary" type="button" ng-click="moveUpVote($index)">
@@ -160,60 +149,6 @@
         <hr>
         <div class="btn-group">
           <button type="button" class="btn btn-primary" ng-click="addVote()">
-            添加投票项
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group" ng-show="isVote() && template == '2'">
-    <div class="col-sm-2">
-      <label class="control-label">投票内容</label>
-    </div>
-    <div class="col-sm-10">
-      <div class="well">
-        <ol>
-          <li ng-repeat="vote in votes track by $index">
-            <div class="form-group">
-              <div class="col-sm-10 col-sm-offset-2">
-                <button class="btn btn-primary" type="button" ng-click="moveUpVote($index)">
-                  <span class="glyphicon glyphicon-arrow-up"></span> 上移
-                </button>
-                <button class="btn btn-primary" type="button" ng-click="moveDownVote($index)">
-                  <span class="glyphicon glyphicon-arrow-down"></span> 下移
-                </button>
-                <button class="btn btn-danger" type="button" ng-click="removeVote($index)">
-                  <span class="glyphicon glyphicon-remove"></span> 删除
-                </button>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-sm-2">项目名</label>
-
-              <div class="col-sm-10">
-                <input type="text" class="form-control" ng-model="vote.name" placeholder="这是一个投票项">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-sm-2">图片</label>
-
-              <div class="col-sm-10">
-                <input type="file" class="form-control" id="img{{$index}}">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-sm-2">详情介绍</label>
-
-              <div class="col-sm-10">
-                <div class="ueditor" ng-model="vote.voteContent" config="activityConfig"></div>
-              </div>
-            </div>
-          </li>
-        </ol>
-        <hr>
-        <div class="btn-group">
-          <button type="button" class="btn btn-primary" ng-click="addVote(votes.length-1)">
             添加投票项
           </button>
         </div>
@@ -333,7 +268,7 @@
               <label class="control-label col-sm-2">本轮票数</label>
 
               <div class="col-sm-10">
-                <input type="number" class="form-control" ng-model="seckill.total" placeholder="请输入在这一轮的票数">
+                <input type="number" class="form-control" ng-model="seckill.total"  placeholder="请输入在这一轮的票数">
               </div>
             </div>
             <div class="form-group">
@@ -347,7 +282,7 @@
                          current-text="今天" clear-text="清空"/>
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="seckill.seckillStartDateOpen($event)"><i
-                      class="glyphicon glyphicon-calendar"></i></button>
+                            class="glyphicon glyphicon-calendar"></i></button>
                   </span>
                 </p>
               </div>
@@ -374,7 +309,7 @@
     <br class="visible-xs">
 
     <!--<div class="col-sm-2">-->
-    <!--<button class="btn btn-block btn-default" ng-click="preview()">预览</button>-->
+      <!--<button class="btn btn-block btn-default" ng-click="preview()">预览</button>-->
     <!--</div>-->
   </div>
 </form>

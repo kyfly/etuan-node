@@ -197,7 +197,6 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
   $scope.contentShow = etuanAdmin.item.isBasicContent[$routeParams.type];
   var initEdit = function () {
     logoChange = false;
-
     if ($scope.contentShow[2]) {
       $scope.startTime = new Date();
     }
@@ -295,10 +294,8 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
     );
 
   };
-  //改变模版的时候清除votes
-  $scope.changeTemplate = function () {
-    $scope.votes = [];
-  };
+
+
   var initial = function () {
     $routeParams.id === 'create' ? initEdit() : loadEdit();
     $scope.enType = $routeParams.type;
@@ -521,7 +518,7 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
    * 实现了表单项目的CRUD
    */
   $scope.votes = [];
-  $scope.addVote = function (index) {
+  $scope.addVote = function () {
     $scope.votes.push({
       'name': '',
       'detailUrl': ''
@@ -591,33 +588,6 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
       editorXhr.send("content=" + $scope.activityContent);
     };
 
-    //vote中的图片上传
-    var imgUpload = function () {
-      for (var i = 0; i < $scope.votes.length; i++) {
-        var logoFd = new FormData();
-        var logoFile = document.getElementById('img' + i).files[0];
-        if(logoFile){
-          var logoXhr = new XMLHttpRequest();
-          var fileExt = /\.[^\.]+/.exec(document.getElementById('img' + i).value.toLowerCase());
-          if (!((fileExt[0] === '.png') || (fileExt[0] === '.jpg') || (fileExt[0] === '.jpeg') || (fileExt[0] === '.gif'))) {
-            alert('请确认您上传的logo文件格式是jpg、png、gif或jpeg');
-            return false;
-          }
-          var logoReadyHandle = function () {
-            if (logoXhr.readyState === 4) {
-              if (logoXhr.status === 200) {
-                $scope.votes[i].imgUrl = JSON.parse(logoXhr.responseText).url;
-              }
-            }
-          };
-          logoFd.append('logo', logoFile);
-          logoXhr.onreadystatechange = logoReadyHandle;
-          logoXhr.open('POST', '/ue/uploads?action=uploadimage&dir=logo&access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, false);
-          logoXhr.send(logoFd);
-        }
-      }
-    };
-
     //上传vote的editor内容
     var voteEditorUpload = function () {
       for (var i = 0; i < $scope.votes.length; i++) {
@@ -638,9 +608,6 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
 
     if ($routeParams.type === "vote") {
       voteEditorUpload();
-      if ($scope.template == '2') {
-        imgUpload();
-      }
     }
 
     if ($routeParams.type === "activity") {
@@ -649,7 +616,6 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
 
     if ($routeParams.id === 'create') {
       logoUpload();
-
     }
     else {
       if (logoChange === true) {
@@ -674,7 +640,6 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
       uploadParameters.verifyRule = $scope.verifyRule;
     }
     if ($scope.contentShow[6]) {
-      uploadParameters.template = $scope.template;
       uploadParameters.maxVote = $scope.maxVote;
     }
 
@@ -725,28 +690,14 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         break;
       case 'vote':
         var voteSubitemsTmp = [];
-        var voteSubitem;
-        if ($scope.template == '1') {
-          for (var i = 0; i < $scope.votes.length; i++) {
-            voteSubitem = {
-              'id': i,
-              'name': $scope.votes[i].name,
-              'detailUrl': $scope.votes[i].detailUrl,
-              'count': $scope.votes[i].count
-            };
-            voteSubitemsTmp.push(voteSubitem);
-          }
-        } else if ($scope.template == '2') {
-          for (var i = 0; i < $scope.votes.length; i++) {
-            voteSubitem = {
-              'id': i,
-              'name': $scope.votes[i].name,
-              'detailUrl': $scope.votes[i].detailUrl,
-              'count': $scope.votes[i].count,
-              'imgUrl': $scope.votes[i].imgUrl
-            };
-            voteSubitemsTmp.push(voteSubitem);
-          }
+        for (var i = 0; i < $scope.votes.length; i++) {
+          var voteSubitem = {
+            'id': i,
+            'name': $scope.votes[i].name,
+            'detailUrl': $scope.votes[i].detailUrl,
+            'count': $scope.votes[i].count
+          };
+          voteSubitemsTmp.push(voteSubitem);
         }
         uploadParameters.voteSubitems = voteSubitemsTmp;
         break;
@@ -1038,14 +989,14 @@ function HomeCtrl($scope, $resource) {
 
 function menberCtrl($scope, $resource, etuanAdmin) {
   var Menber = $resource(
-    '/api/OrganizationUsers/:userId/menbers' + '?access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, {
-      userId: etuanAdmin.cache.userId
-    }, {
-      query: {
-        method: 'GET',
-        isArray: true
+      '/api/OrganizationUsers/:userId/menbers' + '?access_token=' + JSON.parse(window.localStorage.getItem('b3JnYW5p')).accessToken, {
+        userId: etuanAdmin.cache.userId
+      },{
+        query:{
+          method:'GET',
+          isArray: true
+        }
       }
-    }
   );
   Menber.query({}, function (res) {
     $scope.menbers = res;
@@ -1053,14 +1004,13 @@ function menberCtrl($scope, $resource, etuanAdmin) {
   }, function (res) {
 
   });
-  function getQRcode() {
+  function  getQRcode() {
     var url = 'http://' + window.location.host + '/organizationmanger/#?id=' + etuanAdmin.cache.userId;
     var qr = qrcode(4, 'L');
     qr.addData(url);
     qr.make();
     document.getElementById('invite').innerHTML = '<br>' + '分享二维码邀请成员' + '<br>' + '<br>' + qr.createImgTag(4, 12);
   }
-
   $scope.inviteurl = 'http://' + window.location.host + '/organizationmanger/#?id=' + etuanAdmin.cache.userId;
   getQRcode();
 
