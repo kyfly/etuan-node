@@ -15,6 +15,7 @@
     "loopback-boot": "^2.4.0",
     "loopback-connector-mongodb": "^1.8.0",
     "loopback-datasource-juggler": "^2.7.0",
+    "lx-pdf": "^0.1.2",
     "mongodb": "^1.4.29",
     "node-rsa": "^0.2.25",
     "node-xlsx": "^0.5.1",

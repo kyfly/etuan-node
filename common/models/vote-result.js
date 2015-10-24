@@ -46,7 +46,7 @@ module.exports = function(VoteResult) {
                     }
                     break;
                 default:
-                    next();
+                    return findOne(VoteResult, {where: {weChatUid: ctx.instance.weChatUid, verifyResult: ctx.instance.verifyResult}});
                     break;
             }
         })
