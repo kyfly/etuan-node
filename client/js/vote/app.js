@@ -1,14 +1,14 @@
 function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
+  $scope.title = '投票';
   var voteUrlSearchObj = $location.search();
   var Vote = $resource('/api/votes/:id');
-  $scope.title = '投票';
   var VoteResult = $resource('/api/WeChatUsers/:id/voteResults', {
     id: JSON.parse(window.sessionStorage.d2VjaGF0).userId
   });
   var url = window.location.href;
   window.sessionStorage.next = url;
-  
- var info = JSON.parse(window.sessionStorage.d2VjaGF0);
+
+  var info = JSON.parse(window.sessionStorage.d2VjaGF0);
   $http.get('/api/WeChatUsers/' + info.userId + '/voteResults?filter=%7B%22where%22%3A%7B%22voteId%22%3A%22' + voteUrlSearchObj.id + '%22%7D%7D&access_token=' + info.accessToken).success(function (res) {
     if(res != ''){
       $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
@@ -22,6 +22,10 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
       "id": voteUrlSearchObj.id
     },
     function (res) {
+      console.log(res.template);
+      for(i = 0;i < res.voteSubitems.length;i++){
+        $scope.answer[i] = false;
+      }
       var accessToken = JSON.parse(window.sessionStorage.d2VjaGF0).accessToken;
       var vltView = function (id) {
         $http.get('/api/Votes/view/' + id + '?access_token=' + accessToken)
@@ -31,7 +35,7 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
         window.location = "../student.html";
       }
       switch(res.verifyRule) {
-        case 'studentId': 
+        case 'studentId':
           $scope.verifyResult = info.studentId;
           $scope.verifyRule = "学号";
           break;
@@ -92,6 +96,9 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
     return questionType === showType;
   };
   $scope.submit = function () {
+    if($scope.verifyResult === null){
+      alert("请先输入" + $scope.verifyRule)
+    }
     var resultTmp = [];
     for (var i = 0; i < $scope.answer.length; i++) {
       if ($scope.answer[i] === true) {
@@ -122,11 +129,12 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
     } else {
       alert("请至少选择一项");
     }
-
   };
-
 }
 
+function HeadCtrl($scope){
+  $scope.isCollapsed = true;
+}
 
 function RewriteResourceActions($resourceProvider) {
   var commonHeaders = {
@@ -160,15 +168,15 @@ function RewriteResourceActions($resourceProvider) {
     }
   };
 }
+
 var app = angular.module('app', ['ngResource', 'ui.bootstrap', 'ngSanitize']);
-app.controller('VoteCtrl', ['$scope', '$resource', '$location', '$window', '$modal', '$http', VoteCtrl]);
 app.config(['$resourceProvider', RewriteResourceActions]);
+app.controller('VoteCtrl', ['$scope', '$resource', '$location', '$window', '$modal', '$http', VoteCtrl]);
+app.controller('HeadCtrl', ['$scope', HeadCtrl]);
 app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, voteInfo) {
   $scope.content = voteInfo;
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
 });
-app.controller('headCtrl', function ($scope) {
-  $scope.isCollapsed = true;
-});
+
