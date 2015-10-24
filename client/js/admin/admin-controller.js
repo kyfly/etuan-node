@@ -235,6 +235,7 @@ function EditCtrl($scope, $routeParams, $resource, $window, etuanAdmin) {
         }
         if ($scope.contentShow[6]) {
           $scope.maxVote = res.maxVote;
+          $scope.template = res.template;
         }
         switch ($routeParams.type) {
           case 'activity':

@@ -110,18 +110,20 @@
 </header>
 <div class="container bg_white">
   <div class="col-md-8 col-md-offset-2">
-    <h1>{{vote.title}}</h1>
+    <div class="text-center">
+      <h1>{{vote.title}}</h1>
 
-    <img ng-src="{{logoUrl}}" height="150px" width="150px">
+      <img ng-src="{{vote.logoUrl}}" height="150px" width="150px">
 
-    <p style="text-indent: 2em;">{{vote.description}}</p>
+      <p style="text-indent: 2em;">{{vote.description}}</p>
 
-    <p>最大投票数：{{vote.maxVote}}</p>
+      <p>最大投票数：{{vote.maxVote}}</p>
 
-    <p>开始时间：{{startTime | date:cnFormat}}</p>
+      <p>开始时间：{{startTime | date:cnFormat}}</p>
 
-    <p>结束时间：{{stopTime | date:cnFormat}}</p>
-    <hr>
+      <p>结束时间：{{stopTime | date:cnFormat}}</p>
+      <hr>
+    </div>
     <form class="form-horizontal">
       <div class="form-group" ng-repeat="vsb in vote.voteSubitems">
         <div class="checkbox">
