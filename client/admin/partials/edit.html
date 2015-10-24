@@ -120,7 +120,8 @@
     </div>
   </div>
 
-  <div class="form-group" ng-show="isVote() && template == '1'">
+  
+  <div class="form-group" ng-show="isVote()">
     <div class="col-sm-2">
       <label class="control-label">投票内容</label>
     </div>
@@ -148,60 +149,14 @@
                 <input type="text" class="form-control" ng-model="vote.name" placeholder="这是一个投票项">
               </div>
             </div>
-            <div class="form-group">
-              <label class="control-label col-sm-2">详情介绍</label>
-
-              <div class="col-sm-10">
-                <div class="ueditor" ng-model="vote.voteContent" config="activityConfig"></div>
-              </div>
-            </div>
-          </li>
-        </ol>
-        <hr>
-        <div class="btn-group">
-          <button type="button" class="btn btn-primary" ng-click="addVote()">
-            添加投票项
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group" ng-show="isVote() && template == '2'">
-    <div class="col-sm-2">
-      <label class="control-label">投票内容</label>
-    </div>
-    <div class="col-sm-10">
-      <div class="well">
-        <ol>
-          <li ng-repeat="vote in votes track by $index">
-            <div class="form-group">
-              <div class="col-sm-10 col-sm-offset-2">
-                <button class="btn btn-primary" type="button" ng-click="moveUpVote($index)">
-                  <span class="glyphicon glyphicon-arrow-up"></span> 上移
-                </button>
-                <button class="btn btn-primary" type="button" ng-click="moveDownVote($index)">
-                  <span class="glyphicon glyphicon-arrow-down"></span> 下移
-                </button>
-                <button class="btn btn-danger" type="button" ng-click="removeVote($index)">
-                  <span class="glyphicon glyphicon-remove"></span> 删除
-                </button>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-sm-2">项目名</label>
-
-              <div class="col-sm-10">
-                <input type="text" class="form-control" ng-model="vote.name" placeholder="这是一个投票项">
-              </div>
-            </div>
-            <div class="form-group">
+            <div class="form-group" ng-show="template == '2'">
               <label class="control-label col-sm-2">图片</label>
 
               <div class="col-sm-10">
                 <input type="file" class="form-control" id="img{{$index}}">
               </div>
             </div>
+
             <div class="form-group">
               <label class="control-label col-sm-2">详情介绍</label>
 
