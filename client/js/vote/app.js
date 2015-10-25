@@ -96,7 +96,8 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
   };
   $scope.submit = function () {
     if($scope.verifyResult === null){
-      alert("请先输入" + $scope.verifyRule)
+      alert("请先输入" + $scope.verifyRule);
+      return false;
     }
     var resultTmp = [];
     for (var i = 0; i < $scope.answer.length; i++) {
@@ -104,6 +105,7 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
         resultTmp.push(i);
       }
     }
+
     if (resultTmp.length != 0) {
       VoteResult.save({
           'voteId': voteUrlSearchObj.id,

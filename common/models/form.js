@@ -1,4 +1,4 @@
-var PDFDocument = require('lx-pdf')('/var/www/etuan-node/common/modules/template.json');
+//var PDFDocument = require('lx-pdf')();
 var xlsx = require('node-xlsx');
 var streamifier = require('streamifier');
 
@@ -38,44 +38,44 @@ module.exports = function(Form) {
 		}
 	);
 
-	Form.afterRemote('pdf',function(ctx,instance,next){
-    var FormResult = Form.app.models.FormResult;
-    var content = '';
-    ctx.res.setHeader('Content-disposition', 'attachment; filename=' + ctx.req.params.id + '.pdf');
-    try {
-       FormResult.find({where:{formId:ctx.req.params.id}}, function(err, formResults){
-         Form.findOne({where:{id:ctx.req.params.id}}, function(err, form){
-           if(err){
-             next(err);
-           }else{
-             for(var i=0; i<formResults.length; i++){
-               var formResult = formResults[i];
-               for(var j=0; j<formResult.formResultAnswers.length; j++) {
-                 var formResultAnswer = formResult.formResultAnswers[j];
-                 content = form.formQuestions[j].label+' : '+formResultAnswer.content;
-                 //PDFDocument.addContent('content',content);
-                 for (var x=0; x < parseInt(content.length/50 +1); x++) {
-                   PDFDocument.addContent('content', content.substr(x*50,50));
-                 }
-                 PDFDocument.addContent('content','\n');
-               }
-               PDFDocument.resetDocumentIndices();
-             }
-             PDFDocument.print(function (data, err) {
-               if (err) {
-                  console.log(err);
-               } else {
-                 ctx.res.send(data);
-               }
-             });
-           }
-         });
-       });
-    }
-    catch(e) {
-       //异常处理
-    }
-	});
+	// Form.afterRemote('pdf',function(ctx,instance,next){
+ //    var FormResult = Form.app.models.FormResult;
+ //    var content = '';
+ //    ctx.res.setHeader('Content-disposition', 'attachment; filename=' + ctx.req.params.id + '.pdf');
+ //    try {
+ //       FormResult.find({where:{formId:ctx.req.params.id}}, function(err, formResults){
+ //         Form.findOne({where:{id:ctx.req.params.id}}, function(err, form){
+ //           if(err){
+ //             next(err);
+ //           }else{
+ //             for(var i=0; i<formResults.length; i++){
+ //               var formResult = formResults[i];
+ //               for(var j=0; j<formResult.formResultAnswers.length; j++) {
+ //                 var formResultAnswer = formResult.formResultAnswers[j];
+ //                 content = form.formQuestions[j].label+' : '+formResultAnswer.content;
+ //                 //PDFDocument.addContent('content',content);
+ //                 for (var x=0; x < parseInt(content.length/50 +1); x++) {
+ //                   PDFDocument.addContent('content', content.substr(x*50,50));
+ //                 }
+ //                 PDFDocument.addContent('content','\n');
+ //               }
+ //               PDFDocument.resetDocumentIndices();
+ //             }
+ //             PDFDocument.print(function (data, err) {
+ //               if (err) {
+ //                  console.log(err);
+ //               } else {
+ //                 ctx.res.send(data);
+ //               }
+ //             });
+ //           }
+ //         });
+ //       });
+ //    }
+ //    catch(e) {
+ //       //异常处理
+ //    }
+	// });
 
   Form.excel = function(id, cb){
     cb(null);
