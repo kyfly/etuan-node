@@ -150,22 +150,23 @@
     </form>
 
     <div ng-show="vote.template === 2">
-      <div class="col-xs-6 col-sm-6 col-md-4" ng-repeat="vsb in vote.voteSubitems">
-        <div class="thumbnail" id="box1">
-          <img class="logo_img" ng-src="{{vsb.imgUrl}}" style="height: 130px;width: 130px" height="150px" width="150px">
-          <a href="" ng-click="open($index)"><img class="viewintro" alt="查看简介" src="/img/intro.png"></a>
+      <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="vsb in vote.voteSubitems">
+        <div class="thumbnail">
+          <div class="text-center" ng-click="open($index)" style="cursor: pointer">
+            <img class="logo_img" ng-src="{{vsb.imgUrl}}" style="height: 130px;width: 130px" height="150px" width="150px">
+            <a><img class="viewintro" alt="查看简介" src="/img/intro.png"></a>
+            <p>{{$index+1}}.&nbsp;{{vsb.name}}</p>
 
-          <p>{{$index+1}}.&nbsp;{{vsb.name}}</p>
-
-          <div class="chosen" style="display: block" ng-show="answer[$index] === true">
-            <div class="mask"></div>
-            <img class="chooseimg" alt="已选择" src="/img/choose.png">
+            <div class="chosen" style="display: block" ng-show="answer[$index] === true">
+              <div class="mask"></div>
+              <img class="chooseimg" alt="已选择" src="/img/choose.png">
+            </div>
           </div>
           <button ng-click="answer[$index] = !answer[$index]" class="btn btn-warning btn-block choosebtn">点击<span ng-show="answer[$index] === true">取消</span>选定</button>
         </div>
       </div>
     </div>
-
+    <div class="clearfix"></div>
     <div class="form-group" style="margin-top: 50px">
       <div class="col-sm-12 text-center submitBtn">
         <input class="form-control text-center" type="text" ng-model="verifyResult"
