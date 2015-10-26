@@ -22,7 +22,6 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
       "id": voteUrlSearchObj.id
     },
     function (res) {
-      console.log(res.template);
       for(i = 0;i < res.voteSubitems.length;i++){
         $scope.answer[i] = false;
       }
@@ -76,7 +75,7 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
       //模态框
       $scope.open = function (num) {
         $modal.open({
-          animation: true,
+          animation: false,
           templateUrl: 'myModalContent.html',
           controller: 'ModalInstanceCtrl',
           size: 'lg',

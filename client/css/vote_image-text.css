@@ -12,29 +12,13 @@ body {
   transition: all 0.1s ease-in-out !important;
 }
 
-.thumbnail > p {
-  text-align: center;
+.thumbnail > div > p {
   color: #666;
   margin: 5px;
 }
 
 .logo_img {
   margin: 15px 5px 5px 5px;
-}
-
-.backtop {
-  cursor: pointer;
-  border: 0px;
-  bottom: 80px;
-  min-width: 40px;
-  height: 40px;
-  margin: 0px;
-  padding: 0px;
-  position: fixed;
-  right: 40px;
-  border-radius: 0;
-  line-height: 16px;
-  color: #fff;
 }
 
 .mask {
@@ -99,10 +83,10 @@ body {
 @media screen and (max-width: 450px) {
   .viewintro {
     position: absolute;
-    right: -4%;
-    top: -4%;
-    width: 55%;
-    height: 55%;
+    right: -2.5%;
+    top: -4.3%;
+    width: 40%;
+    height: 40%;
   }
 
   .chooseimg {
