@@ -120,7 +120,7 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
         function (res) {
           alert(res.data.error.message);
           if (res.data.error.message === "需要绑定学号") {
-            window.location = "../student.html?referer=" + newReferer
+            window.location = "../student.html";
           } else if (res.data.error.message === "已经投过票了") {
             $window.location = 'result.html' + '#?id=' + voteUrlSearchObj.id;
           } else if (res.data.error.message === "已经结束") {

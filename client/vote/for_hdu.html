@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-controller="VoteCtrl">
+<head>
+  <title>{{title}} - 团团一家</title>
+  <link rel="icon" href="/img/etuan_logo.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/img/etuan_logo.ico" type="image/x-icon">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta name="renderer" content="webkit">
+  <script src="http://static.etuan.org/lib/angular/angular.min.js"></script>
+  <script src="/js/login.js"></script>
+  <link rel="stylesheet" href="/lib/bootstrap/css/etuan.css">
+  <link rel="stylesheet" href="/css/vote_image-text.css">
+  <script src="http://static.etuan.org/lib/angular-components/angular-sanitize.min.js"></script>
+  <script src="http://static.etuan.org/lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
+  <script src="http://static.etuan.org/lib/angular-components/angular-resource.min.js"></script>
+  <script src="/js/vote/vote_for_hdu.js"></script>
+  <script src="/js/school/hdu.js"></script>
+  <style>
+    html {
+      min-height: 100%;
+      height: 100%;
+    }
+
+    /*body {
+      font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
+      background-color: #66ccff;
+      min-height: 100%;
+      height: 100%;
+    }*/
+
+    .bg_white {
+      background-color: #ffffff;
+      min-height: 100%;
+    }
+
+    .footer {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .checkbox {
+      text-decoration: none;
+    }
+
+    .detailOpen {
+      margin-top: -8px;
+      color: #0000CC;
+    }
+
+    .submitBtn > input {
+      border-radius: 4px 4px 0 0;
+    }
+
+    .submitBtn > button {
+      border-radius: 0 0 4px 4px;
+    }
+  </style>
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?76a5edb5c9902d7c2e38f7a723060cff";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</head>
+<body>
+<header class="container">
+  <div class="col-md-2" >
+    <img src="/img/hdlogo.jpg">
+  </div>
+  <div class="col-md-8">
+    <small>杭电第10086届校友投票</small>
+  </div>
+</header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div ng-show="true" class="text-center">
+        <b>微信投票</b>
+        <br>
+        <img src="/img/hdu_vote.gif" height="150px" width="150px">
+      </div>
+      <p>最大投票数：{{vote.maxVote}}</p>
+
+      <p>开始时间：{{startTime | date:cnFormat}}</p>
+
+      <p>结束时间：{{stopTime | date:cnFormat}}</p>
+    </div>
+    <div class="col-md-9">
+      <h1>投票要求</h1>
+      <textarea disabled="disabled" ng-bind="vote.description" class="form-control"></textarea>
+    </div>
+  </div>
+  <div class="col-md-12" >
+    <div class="col-xs-6 col-sm-6 col-md-4" ng-repeat="vsb in vote.voteSubitems" ng-click="isAuthed()">
+      <div class="thumbnail" id="box1">
+        <img class="logo_img" ng-src="{{vsb.imgUrl}}" style="height: 130px;width: 130px" height="150px" width="150px">
+        <a href="" ng-click="open($index)">
+          <img class="viewintro" alt="查看简介" src="/img/intro.png">
+        </a>
+
+        <p>{{$index+1}}.&nbsp;{{vsb.name}}</p>
+
+        <div class="chosen" style="display: block" ng-show="answer[$index] === true">
+          <div class="mask"></div>
+          <img class="chooseimg" alt="已选择" src="/img/choose.png">
+        </div>
+        <button ng-show="answer[$index] === false" ng-click="cAuth($index, 1)" class="btn btn-warning btn-block choosebtn">
+          点击选定
+        </button>
+        <button ng-show="answer[$index] === true" ng-click="cAuth($index, 0)" class="btn btn-warning btn-block choosebtn">
+          点击取消选定
+        </button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="form-group">
+        <label for="verifyRule" class="col-sm-2 col-md-2 control-label">参与者身份选择</label>
+        <div class="col-sm-10 col-md-10">
+          <select class="form-control" id="verifyRule" ng-model="cRule" ng-change="ruleChange()" required>
+            <option value="name">校友</option>
+            <option value="studentId">教职工</option>
+            <option value="studentId">学生</option>
+          </select>
+        </div>
+      </div>
+      <br>
+      <div class="col-sm-12 col-md-12">
+        <input class="form-control text-center" type="text" ng-model="verifyResult"
+               placeholder="请输入{{verifyRule}}" ng-disabled="cRule === 'studentId'" required>
+      </div>
+      <br>
+      <button class="btn btn-block btn-success col-sm-2 col-md-2" ng-click="submit()">提交</button>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <script type="text/ng-template" id="detailModal">
+    <div class="modal-header">
+      <h3 class="modal-title">简介</h3>
+    </div>
+    <div class="modal-body">
+      <div ng-bind-html="content" style="width: 100%;overflow: auto"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-warning" ng-click="cancel()">关闭</button>
+    </div>
+  </script>
+
+  <script type="text/ng-template" id="studentModal">
+    <div class="modal-header">
+      <h3 class="modal-title">教务系统绑定</h3>
+    </div>
+    <div class="modal-body">
+       <input class="form-control" type="text" ng-model="hduId" placeholder="请输入您的职工号">
+       <input class="form-control" type="password" ng-model="hduPwd" placeholder="请输入您的教务密码">
+       <span ng-show="error" class="error">两项都是必填哦</span>
+       <button class="btn btn-primary btn-block" ng-click="bindID()">OK</button>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-warning" ng-click="cancel()">关闭</button>
+    </div>
+  </script>
+
+</div>
+<div class="text-center footer">
+  <img src="/img/full-logo.png" height="25px" alt="团团一家LOGO">&nbsp;提供技术支持
+</div>
+</body>
+</html>
