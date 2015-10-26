@@ -14,7 +14,6 @@ function VoteCtrl($scope, $resource, $location, $window, $modal) {
       $scope.title = res.title || '投票';
       $scope.startTime = new Date($scope.vote.startTime);
       $scope.stopTime = new Date($scope.vote.stopTime);
-
     },
     function (res) {
     }
