@@ -1,6 +1,5 @@
-function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
+function VoteCtrl($scope, $location, $window, $modal, $http) {
   $scope.title = '投票';
-  var Vote = $resource('/api/votes/:id');
   var url = window.location.href;
   window.sessionStorage.next = url;
   $scope.cnFormat = "yy'/'MM'/'dd' 'HH':'mm'";
@@ -90,9 +89,12 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
   $scope.cAuth = function (index, act) {
     loginCheck('d2VjaGF0');
     if (act === 1) {
-      $scope.choosed === $scope.vote.maxVote ? 
-      alert("只可以选择" + $scope.vote.maxVote + '项')
-       : $scope.choosed ++;
+      if ($scope.choosed === $scope.vote.maxVote) {
+        alert("只可以选择" + $scope.vote.maxVote + '项');
+        return;
+      } else {
+        $scope.choosed ++;
+      }
     } else {
       $scope.choosed --;
     }
@@ -139,8 +141,8 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
 
 
 
-var app = angular.module('app', ['ngResource', 'ui.bootstrap', 'ngSanitize']);
-app.controller('VoteCtrl', ['$scope', '$resource', '$location', '$window', '$modal', '$http', VoteCtrl]);
+var app = angular.module('app', ['ui.bootstrap']);
+app.controller('VoteCtrl', ['$scope', '$location', '$window', '$modal', '$http', VoteCtrl]);
 app.controller('DetailModaltrl', function ($scope, $modalInstance, voteInfo) {
   $scope.content = voteInfo;
   $scope.cancel = function () {
