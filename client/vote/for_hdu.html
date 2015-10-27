@@ -146,15 +146,21 @@
   <div class="largeBox" style="box-shadow: 5px 5px 10px #6BA1C4;">
     <div style="border: 4px solid #37A4E9;min-height: 300px;padding: 10px;background-color: #F1FAFF;box-shadow: 1px 1px 5px #888888 inset;">
       <div class="col-md-3 col-md-offset-1">
-        <div style="border: 2px solid #e3e3e3;background-color: #ffffff;margin-top: 20px;padding: 10px;" ng-show="true"
-             class="text-center boxShadow">
-          <img src="/img/hdu_vote.gif" height="150px" width="150px">
+        <div style="border: 2px solid #e3e3e3;background-color: #ffffff;margin-top: 20px;padding: 5px;" ng-show="true"
+             class="text-center boxShadow hidden-xs hidden-sm">
+          <img src="/img/hdu_vote.gif" height="170px" width="170px">
 
-          <p>微信投票</p>
+          <p>微信扫一扫投票</p>
         </div>
       </div>
-      <div class="col-md-6 col-md-offset-1">
-        <div class="col-xs-12 text-center">
+      <div class="col-md-7 col-md-offset-1">
+        <div class="col-md-5 col-md-offset-1 hidden-xs hidden-sm">
+          <img class="boxShadow" src="/img/word_bg.png" style="width: 200px;margin-top: 10px">
+        </div>
+        <div class="col-md-6">
+          <button style="margin-top: 15px;font-size: 15px" type="button" class="btn btn-danger btn-lg btn-block">点击进入卓越教学名师评选</button>
+        </div>
+        <div class="visible-xs visible-sm text-center">
           <img class="boxShadow" src="/img/word_bg.png" style="width: 200px;margin-top: 10px">
         </div>
         <div class="clearfix"></div>
@@ -172,7 +178,7 @@
     </div>
     <div class="clearfix"></div>
     <div class="col-md-12 voteLargeBox">
-      <div class="col-md-offset-3 col-md-6">
+      <div class="col-md-offset-4 col-md-4">
         <div class="input-group boxShadow">
           <span class="input-group-addon" style="background-color: #F0AD4E;color: #ffffff">参与者身份选择</span>
           <select class="form-control" id="verifyRule" ng-model="cRule" ng-change="ruleChange()" required>
@@ -180,6 +186,12 @@
             <option value="studentId">教职工/学生</option>
           </select>
         </div>
+      </div>
+      <div class="col-md-4 hidden-xs">
+        <p style="line-height: 40px;margin: 0"><span style="color: #4EA0D2" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> {{vote.voteSubitems.length}}位候选人不分先后，按姓氏拼音排列</p>
+      </div>
+      <div class="text-center visible-xs col-xs-12">
+        <p style="line-height: 40px;margin: 0"><span style="color: #4EA0D2" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> {{vote.voteSubitems.length}}位候选人不分先后，按姓氏拼音排列</p>
       </div>
       <div class="clearfix"></div>
       <hr>
