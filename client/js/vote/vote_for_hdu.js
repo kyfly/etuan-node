@@ -41,7 +41,6 @@ function VoteCtrl($scope, $window, $modal, $http) {
   $http.get('/api/Votes/'+ id + '/subitems').success(function (res) {
     $scope.counts = res;
   });
-  console.log($scope.counts);
 
   //投票项详细信息模态框
   $scope.open = function (num) {
@@ -99,7 +98,9 @@ function VoteCtrl($scope, $window, $modal, $http) {
       alert("请先选择你的身份再投票");
       return;
     }
-    isAuthed();
+    if($scope.cRule === "studentId"){
+      isAuthed();
+    }
     if (act === 1) {
       if ($scope.choosed === $scope.vote.maxVote) {
         alert("只可以选择" + $scope.vote.maxVote + '项');

@@ -73,6 +73,10 @@
       background-color: #F1FAFF;
     }
 
+    .boxShadow {
+      box-shadow: 5px 5px 10px #888888;
+    }
+
     @media screen and (max-width: 767px) {
       .largeBox {
         padding: 0 0 10px 0;
@@ -121,11 +125,11 @@
     <img ng-show="vote.title === '2015年校卓越教学名师评选'" src="/img/title2.png">
   </div>
 
-  <div class="largeBox">
+  <div class="largeBox boxShadow">
     <div style="border: 4px solid #37A4E9;min-height: 300px;padding: 10px;background-color: #F1FAFF">
       <div class="col-md-3 col-md-offset-1">
-        <div style="border: 2px solid #e3e3e3;background-color: #ffffff;margin-top: 20px;padding: 10px" ng-show="true"
-             class="text-center">
+        <div style="border: 2px solid #e3e3e3;background-color: #ffffff;margin-top: 20px;padding: 10px;" ng-show="true"
+             class="text-center boxShadow">
           <img src="/img/hdu_vote.gif" height="150px" width="150px">
 
           <p>微信投票</p>
@@ -133,8 +137,9 @@
       </div>
       <div class="col-md-6 col-md-offset-1">
         <div class="col-xs-12 text-center">
-          <img src="/img/word_bg.png" style="width: 200px">
+          <img class="boxShadow" src="/img/word_bg.png" style="width: 200px;margin-top: 10px">
         </div>
+        <div class="clearfix"></div>
         <div>
           <hr>
           <p>最大投票数：{{vote.maxVote}}</p>
@@ -150,7 +155,7 @@
     <div class="clearfix"></div>
     <div class="col-md-12 voteLargeBox">
       <div class="col-md-offset-3 col-md-6">
-        <div class="input-group">
+        <div class="input-group boxShadow">
           <span class="input-group-addon" style="background-color: #F0AD4E;color: #ffffff">参与者身份选择</span>
           <select class="form-control" id="verifyRule" ng-model="cRule" ng-change="ruleChange()" required>
             <option value="name">校友</option>
@@ -162,7 +167,7 @@
       <div class="clearfix"></div>
       <hr>
       <div class="voteBox col-xs-6 col-sm-6 col-md-4" ng-repeat="vsb in vote.voteSubitems" ng-click="isAuthed()">
-        <div class="thumbnail text-center">
+        <div class="thumbnail text-center boxShadow">
           <div style="cursor: pointer" ng-click="open($index)">
             <img class="logo_img" ng-src="{{vsb.imgUrl}}" style="height: 130px;width: 130px" height="150px"
                  width="150px">
@@ -191,9 +196,9 @@
       <hr>
       <div class="submitBtn col-md-6 col-md-offset-3">
         <p>已选择：<b>{{choosed}}</b>个。 最多能选择：<b>{{vote.maxVote}}</b>个</p>
-        <input class="form-control text-center" type="text" ng-model="verifyResult"
+        <input class="form-control text-center boxShadow" type="text" ng-model="verifyResult"
                placeholder="请输入您的{{verifyRule}}" ng-disabled="cRule === 'studentId'" required>
-        <button class="btn btn-block btn-success col-sm-2 col-md-2" ng-click="submit()">提交</button>
+        <button class="btn btn-block btn-success col-sm-2 col-md-2 boxShadow" ng-click="submit()">提交</button>
       </div>
     </div>
 
