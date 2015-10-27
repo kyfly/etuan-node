@@ -1,4 +1,4 @@
-function VoteCtrl($scope, $location, $modal, $http) {
+function VoteCtrl($scope, $location, $modal, $http, $sce) {
   $scope.title = '投票';
   var url = window.location.href;
   window.sessionStorage.next = url;
@@ -12,6 +12,7 @@ function VoteCtrl($scope, $location, $modal, $http) {
     for (i = 0; i < res.voteSubitems.length; i++) {
       $scope.answer[i] = false;
     }
+    res.description = $sce.trustAsHtml(res.description);
     $scope.vote = res;
     $scope.title = res.title || '投票';
     $scope.startTime = new Date($scope.vote.startTime);
@@ -36,10 +37,6 @@ function VoteCtrl($scope, $location, $modal, $http) {
       http.send();
     }
 
-  });
-
-  $http.get('/api/Votes/'+ id + '/subitems').success(function (res) {
-    $scope.counts = res;
   });
 
   //投票项详细信息模态框
@@ -136,15 +133,15 @@ function VoteCtrl($scope, $location, $modal, $http) {
           "verifyResult": $scope.verifyResult
         }).success(function () {
           alert("投票成功");
-          $window.location.reload();
+          history.go(0);
         }).error(function (res) {
           alert(res.error.message);
           if (res.error.message === "需要绑定学号") {
             isAuthed();
           } else if (res.error.message === "已经投过票了") {
-            $window.location.reload();
+            history.go(0);
           } else if (res.error.message === "已经结束") {
-            $window.location.reload();
+            history.go(0);
           }
         }
       );
@@ -157,7 +154,7 @@ function VoteCtrl($scope, $location, $modal, $http) {
 
 
 var app = angular.module('app', ['ui.bootstrap']);
-app.controller('VoteCtrl', ['$scope', '$location', '$modal', '$http', VoteCtrl]);
+app.controller('VoteCtrl', ['$scope', '$location', '$modal', '$http', '$sce', VoteCtrl]);
 app.controller('DetailModaltrl', function ($scope, $modalInstance, voteInfo, $sce) {
   $scope.content = $sce.trustAsHtml(voteInfo);
   $scope.cancel = function () {

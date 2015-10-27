@@ -39,14 +39,14 @@ module.exports = function(VoteResult) {
             switch(vote.verifyRule){
                 case 'studentId':
                     if(weChatUser.studentId) {
-                        return findOne(VoteResult, {where: {weChatUid: ctx.instance.weChatUid, studentId: weChatUser.studentId}});
+                        return findOne(VoteResult, {where: {weChatUid: ctx.instance.weChatUid, studentId: weChatUser.studentId, voteId: ctx.instance.voteId}});
                     }
                     else {
                         next({'status': '400', 'message': '需要绑定学号'});
                     }
                     break;
                 default:
-                    return findOne(VoteResult, {where: {weChatUid: ctx.instance.weChatUid, verifyResult: ctx.instance.verifyResult}});
+                    return findOne(VoteResult, {where: {weChatUid: ctx.instance.weChatUid, verifyResult: ctx.instance.verifyResult, voteId: ctx.instance.voteId}});
                     break;
             }
         })
