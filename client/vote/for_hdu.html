@@ -166,7 +166,7 @@
 
           <p>结束时间：{{stopTime | date:cnFormat}}</p>
 
-          <p ng-bind="vote.description"></p>
+          <p ng-bind-html="vote.description"></p>
         </div>
       </div>
     </div>
@@ -194,7 +194,7 @@
             </a>
 
             <p>{{$index+1}}号&nbsp;{{vsb.name}}</p>
-            <p>票数：<span style="color: #B20000">{{counts[$index].count}}</span></p>
+            <p>票数：<span style="color: #B20000">{{vsb.count}}</span></p>
           </div>
           <div class="chosen" style="display: block" ng-show="answer[$index] === true">
             <div class="mask"></div>
@@ -215,8 +215,8 @@
       <div class="submitBtn col-md-6 col-md-offset-3">
         <p>已选择：<b>{{choosed}}</b>个。 最多能选择：<b>{{vote.maxVote}}</b>个</p>
         <input class="form-control text-center boxShadow" type="text" ng-model="verifyResult"
-               placeholder="请输入您的{{verifyRule}}" ng-disabled="cRule === 'studentId'" required>
-        <button class="btn btn-block btn-success col-sm-2 col-md-2 boxShadow" ng-click="submit()">投票！</button>
+               placeholder="请输入您的{{verifyRule}}" ng-disabled="cRule === 'studentId'" ng-disabled="!cRule" required>
+        <button class="btn btn-block btn-success col-sm-2 col-md-2 boxShadow" ng-disabled="!Authed" ng-click="submit()">投票！</button>
       </div>
       <div class="clearfix"></div>
     </div>
@@ -249,8 +249,7 @@
           </div>
           <span ng-show="error" class="error">两项都是必填哦</span>
         </form>
-
-        <button class="btn btn-primary btn-block" ng-click="bindID()">登陆</button>
+        <button class="btn btn-primary btn-block" ng-click="bindID()">确认验证</button>
       </div>
       <div class="modal-footer">
         <button class="btn btn-warning" ng-click="cancel()">关闭</button>
@@ -260,7 +259,7 @@
 
     <div class="clearfix"></div>
     <div class="text-center footer" style="margin: 10px;font-family:'Microsoft YaHei', '微软雅黑'">
-      <img src="/img/full-logo.png" height="25px" alt="团团一家LOGO">&nbsp;提供技术支持
+      <a href="/"><img src="/img/full-logo.png" height="25px" alt="团团一家LOGO">&nbsp;提供技术支持</a>
     </div>
     <div class="clearfix"></div>
   </div>

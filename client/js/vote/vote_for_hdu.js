@@ -1,9 +1,9 @@
-function VoteCtrl($scope, $window, $modal, $http) {
+function VoteCtrl($scope, $location, $modal, $http, $sce) {
   $scope.title = '投票';
   var url = window.location.href;
   window.sessionStorage.next = url;
   $scope.cnFormat = "yy'/'MM'/'dd' 'HH':'mm'";
-  var id = "562b545f52f1e2c4696e8fa7";
+  var id = $location.search().id;
   //已选投票项
   $scope.choosed = 0;
   //初始化投票系统
@@ -12,6 +12,7 @@ function VoteCtrl($scope, $window, $modal, $http) {
     for (i = 0; i < res.voteSubitems.length; i++) {
       $scope.answer[i] = false;
     }
+    res.description = $sce.trustAsHtml(res.description);
     $scope.vote = res;
     $scope.title = res.title || '投票';
     $scope.startTime = new Date($scope.vote.startTime);
@@ -36,10 +37,6 @@ function VoteCtrl($scope, $window, $modal, $http) {
       http.send();
     }
 
-  });
-
-  $http.get('/api/Votes/'+ id + '/subitems').success(function (res) {
-    $scope.counts = res;
   });
 
   //投票项详细信息模态框
@@ -71,15 +68,18 @@ function VoteCtrl($scope, $window, $modal, $http) {
       $scope.verifyResult = null;
       $scope.verifyRule = "姓名";
     }
+    $scope.Authed = true;
   };
   //检查教职工，学生是否绑定数字杭电
-  function isAuthed() {
+  function isAuthed () {
     loginCheck('d2VjaGF0');
-    if (JSON.parse(window.sessionStorage.d2VjaGF0).studentId) {
+    if(JSON.parse(window.sessionStorage.d2VjaGF0).studentId) {
       return JSON.parse(window.sessionStorage.d2VjaGF0).studentId;
     } else {
+      $scope.cRule =null;
+      $scope.verifyRule = null;
       $modal.open({
-        animation: false,
+        animation: true,
         templateUrl: 'studentModal',
         controller: 'StudentModalCtrl',
         size: 'lg',
@@ -104,11 +104,10 @@ function VoteCtrl($scope, $window, $modal, $http) {
     }
     if (act === 1) {
       if ($scope.choosed === $scope.vote.maxVote) {
-        alert("只可以选择" + $scope.vote.maxVote + '项');
+        alert("只可以选择" + $scope.vote.maxVote + '项')
         return;
-      } else {
-        $scope.choosed++;
       }
+      $scope.choosed ++;
     } else {
       $scope.choosed--;
     }
@@ -128,35 +127,34 @@ function VoteCtrl($scope, $window, $modal, $http) {
     }
     var d2VjaGF0 = JSON.parse(window.sessionStorage.d2VjaGF0);
     if (resultTmp.length != 0) {
-      $http.post('/api/WeChatUsers/' + d2VjaGF0.userId + "/voteResults?access_token=" + d2VjaGF0.accessToken, {
-        'voteId': id,
-        'results': resultTmp,
-        "verifyResult": $scope.verifyResult
-      }).success(function () {
-        alert("投票成功");
-        $window.location = 'result.html' + '#?id=' + id;
-      }).error(function (res) {
+      $http.post('/api/WeChatUsers/'+ d2VjaGF0.userId +"/voteResults?access_token=" + d2VjaGF0.accessToken,{
+          'voteId': id,
+          'results': resultTmp,
+          "verifyResult": $scope.verifyResult
+        }).success(function () {
+          alert("投票成功");
+          history.go(0);
+        }).error(function (res) {
           alert(res.error.message);
           if (res.error.message === "需要绑定学号") {
-            if($scope.cRule === "studentId"){
-              isAuthed();
-            }
+            isAuthed();
           } else if (res.error.message === "已经投过票了") {
-            //$window.location = 'result.html' + '#?id=' + id;
+            history.go(0);
           } else if (res.error.message === "已经结束") {
-            //$window.location = 'result.html' + '#?id=' + id;
+            history.go(0);
           }
         }
       );
     } else {
       alert("请至少选择一项");
     }
-  }
+  };
 }
 
 
+
 var app = angular.module('app', ['ui.bootstrap']);
-app.controller('VoteCtrl', ['$scope', '$window', '$modal', '$http', VoteCtrl]);
+app.controller('VoteCtrl', ['$scope', '$location', '$modal', '$http', '$sce', VoteCtrl]);
 app.controller('DetailModaltrl', function ($scope, $modalInstance, voteInfo, $sce) {
   $scope.content = $sce.trustAsHtml(voteInfo);
   $scope.cancel = function () {
@@ -175,6 +173,7 @@ app.controller('StudentModalCtrl', function ($http, $scope, $modalInstance, vote
         if (res.err) {
           alert(res.err);
         } else {
+          voteScope.cRule = "studentId";
           voteScope.verifyResult = $scope.hduId;
           d2VjaGF0.school = res.university;
           d2VjaGF0.studentId = $scope.hduId;
