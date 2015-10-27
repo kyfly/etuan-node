@@ -12,6 +12,7 @@
   <script src="/js/login.js"></script>
   <link rel="stylesheet" href="/lib/bootstrap/css/etuan.css">
   <link rel="stylesheet" href="/css/vote_image-text.css">
+  <script src="http://static.etuan.org/lib/angular-components/angular-sanitize.min.js"></script>
   <script src="http://static.etuan.org/lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
   <script src="/js/vote/vote_for_hdu.js"></script>
   <script src="/js/school/hdu.js"></script>
@@ -90,7 +91,7 @@
     </div>
     <div class="col-md-9">
       <h1>投票要求</h1>
-      <textarea disabled="disabled" ng-bind="vote.description" class="form-control"></textarea>
+      <p ng-bind-html="vote.description"></p>
     </div>
   </div>
   <div class="col-md-12" >
@@ -131,7 +132,7 @@
       <br>
       <div class="col-sm-12 col-md-12">
         <input class="form-control text-center" type="text" ng-model="verifyResult"
-               placeholder="请输入{{verifyRule}}" ng-disabled="cRule === 'studentId'" required>
+               placeholder="请输入{{verifyRule}}" ng-disabled="!cRule" ng-disable="cRule === 'studentId'" required>
       </div>
       <br>
       <button class="btn btn-block btn-success col-sm-2 col-md-2" ng-click="submit()">提交</button>
@@ -168,7 +169,7 @@
 
 </div>
 <div class="text-center footer">
-  <img src="/img/full-logo.png" height="25px" alt="团团一家LOGO">&nbsp;提供技术支持
+  <a href="/"><img src="/img/full-logo.png" height="25px" alt="团团一家LOGO">&nbsp;提供技术支持</a>
 </div>
 </body>
 </html>

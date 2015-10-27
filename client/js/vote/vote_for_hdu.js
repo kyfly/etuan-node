@@ -3,7 +3,7 @@ function VoteCtrl($scope, $location, $window, $modal, $http) {
   var url = window.location.href;
   window.sessionStorage.next = url;
   $scope.cnFormat = "yy'/'MM'/'dd' 'HH':'mm'";
-  var id = "562dcda2127cd5041ea7d6a5";
+  var id = $location.search().id;
   //已选投票项
   $scope.choosed = 0;
   //初始化投票系统
@@ -71,6 +71,8 @@ function VoteCtrl($scope, $location, $window, $modal, $http) {
       if(JSON.parse(window.sessionStorage.d2VjaGF0).studentId) {
         return JSON.parse(window.sessionStorage.d2VjaGF0).studentId;
       } else {
+        $scope.cRule =null;
+        $scope.verifyRule = null;
         $modal.open({
           animation: true,
           templateUrl: 'studentModal',
@@ -90,11 +92,10 @@ function VoteCtrl($scope, $location, $window, $modal, $http) {
     loginCheck('d2VjaGF0');
     if (act === 1) {
       if ($scope.choosed === $scope.vote.maxVote) {
-        alert("只可以选择" + $scope.vote.maxVote + '项');
+        alert("只可以选择" + $scope.vote.maxVote + '项')
         return;
-      } else {
-        $scope.choosed ++;
       }
+      $scope.choosed ++;
     } else {
       $scope.choosed --;
     }
@@ -120,15 +121,15 @@ function VoteCtrl($scope, $location, $window, $modal, $http) {
           "verifyResult": $scope.verifyResult
         }).success(function () {
           alert("投票成功");
-          $window.location = 'result.html' + '#?id=' + id;
+          $window.location.reload();
         }).error(function (res) {
           alert(res.error.message);
           if (res.error.message === "需要绑定学号") {
-            window.location = "../student.html";
+            isAuthed();
           } else if (res.error.message === "已经投过票了") {
-            $window.location = 'result.html' + '#?id=' + id;
+            $window.location.reload();
           } else if (res.error.message === "已经结束") {
-            $window.location = 'result.html' + '#?id=' + id;
+            $window.location.reload();
           }
         }
       );
@@ -141,7 +142,7 @@ function VoteCtrl($scope, $location, $window, $modal, $http) {
 
 
 
-var app = angular.module('app', ['ui.bootstrap']);
+var app = angular.module('app', ['ui.bootstrap', 'ngSanitize']);
 app.controller('VoteCtrl', ['$scope', '$location', '$window', '$modal', '$http', VoteCtrl]);
 app.controller('DetailModaltrl', function ($scope, $modalInstance, voteInfo) {
   $scope.content = voteInfo;
@@ -151,7 +152,6 @@ app.controller('DetailModaltrl', function ($scope, $modalInstance, voteInfo) {
 });
 app.controller('StudentModalCtrl', function ($http, $scope, $modalInstance, voteScope) {
   $scope.bindID = function () {
-    console.log($scope.hduId , $scope.hduPwd);
     if ($scope.hduId && $scope.hduPwd) {
       var d2VjaGF0 = JSON.parse(window.sessionStorage.d2VjaGF0);
       $http.put('/api/WeChatUsers/' + d2VjaGF0.userId + "?access_token=" + d2VjaGF0.accessToken, {
@@ -162,6 +162,7 @@ app.controller('StudentModalCtrl', function ($http, $scope, $modalInstance, vote
         if (res.err) {
           alert(res.err);
         } else {
+          voteScope.cRule = "studentId";
           voteScope.verifyResult = $scope.hduId;
           d2VjaGF0.school = res.university;
           d2VjaGF0.studentId = $scope.hduId;
