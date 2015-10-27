@@ -78,7 +78,7 @@ function VoteCtrl($scope, $window, $modal, $http) {
       return JSON.parse(window.sessionStorage.d2VjaGF0).studentId;
     } else {
       $modal.open({
-        animation: true,
+        animation: false,
         templateUrl: 'studentModal',
         controller: 'StudentModalCtrl',
         size: 'lg',
