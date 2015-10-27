@@ -16,9 +16,9 @@ function VoteCtrl($scope, $window, $modal, $http) {
     $scope.title = res.title || '投票';
     $scope.startTime = new Date($scope.vote.startTime);
     $scope.stopTime = new Date($scope.vote.stopTime);
-    if (new Date($scope.vote.stopTime).getTime() < new Date().getTime()) {
-      $window.location = 'result.html' + '#?id=' + id;
-    }
+    //if (new Date($scope.vote.stopTime).getTime() < new Date().getTime()) {
+    //  $window.location = 'result.html' + '#?id=' + id;
+    //}
     var voteInfo = res.voteSubitems;
     $scope.voteInfo = voteInfo;
     for (var i = 0; i < voteInfo.length; i++) {
@@ -59,6 +59,7 @@ function VoteCtrl($scope, $window, $modal, $http) {
   //身份发生改变时检查权限
   $scope.ruleChange = function () {
     if ($scope.cRule === "studentId") {
+      $scope.verifyRule = null;
       loginCheck('d2VjaGF0');
       var studentId = isAuthed();
       if (studentId) {
@@ -137,11 +138,13 @@ function VoteCtrl($scope, $window, $modal, $http) {
       }).error(function (res) {
           alert(res.error.message);
           if (res.error.message === "需要绑定学号") {
-            window.location = "../student.html";
+            if($scope.cRule === "studentId"){
+              isAuthed();
+            }
           } else if (res.error.message === "已经投过票了") {
-            $window.location = 'result.html' + '#?id=' + id;
+            //$window.location = 'result.html' + '#?id=' + id;
           } else if (res.error.message === "已经结束") {
-            $window.location = 'result.html' + '#?id=' + id;
+            //$window.location = 'result.html' + '#?id=' + id;
           }
         }
       );

@@ -22,7 +22,7 @@
     }
 
     body {
-      font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
+      font-family: "Hiragino Sans GB", tahoma, arial, simsun, "宋体";
       min-height: 100%;
       height: 100%;
       background-color: #246db2;
@@ -71,6 +71,7 @@
       border: 4px solid #37A4E9;
       padding: 10px;
       background-color: #F1FAFF;
+      box-shadow: 1px 1px 5px #888888 inset;
     }
 
     .boxShadow {
@@ -120,13 +121,13 @@
 <body>
 <div class="container">
   <div class="text-center" style="margin: 50px">
-    <img src="/img/hdubadge.png" style="width: 160px;height: 160px">
+    <img src="/img/hdubadge.png" style="width: 150px;height: 150px">
     <img ng-show="vote.title === '2015年青年教学新秀评选'" src="/img/title1.png">
     <img ng-show="vote.title === '2015年校卓越教学名师评选'" src="/img/title2.png">
   </div>
 
-  <div class="largeBox boxShadow">
-    <div style="border: 4px solid #37A4E9;min-height: 300px;padding: 10px;background-color: #F1FAFF">
+  <div class="largeBox" style="box-shadow: 5px 5px 10px #6BA1C4;">
+    <div style="border: 4px solid #37A4E9;min-height: 300px;padding: 10px;background-color: #F1FAFF;box-shadow: 1px 1px 5px #888888 inset;">
       <div class="col-md-3 col-md-offset-1">
         <div style="border: 2px solid #e3e3e3;background-color: #ffffff;margin-top: 20px;padding: 10px;" ng-show="true"
              class="text-center boxShadow">
@@ -184,11 +185,11 @@
           </div>
           <button ng-show="answer[$index] === false" ng-click="cAuth($index, 1)"
                   class="btn btn-primary btn-block choosebtn">
-            点击选定
+            点击选择
           </button>
           <button ng-show="answer[$index] === true" ng-click="cAuth($index, 0)"
                   class="btn btn-primary btn-block choosebtn">
-            点击取消选定
+            点击取消选择
           </button>
         </div>
       </div>
@@ -198,7 +199,7 @@
         <p>已选择：<b>{{choosed}}</b>个。 最多能选择：<b>{{vote.maxVote}}</b>个</p>
         <input class="form-control text-center boxShadow" type="text" ng-model="verifyResult"
                placeholder="请输入您的{{verifyRule}}" ng-disabled="cRule === 'studentId'" required>
-        <button class="btn btn-block btn-success col-sm-2 col-md-2 boxShadow" ng-click="submit()">提交</button>
+        <button class="btn btn-block btn-success col-sm-2 col-md-2 boxShadow" ng-click="submit()">投票！</button>
       </div>
     </div>
 
@@ -240,7 +241,7 @@
     <br>
 
     <div class="clearfix"></div>
-    <div class="text-center footer" style="margin: 10px">
+    <div class="text-center footer" style="margin: 10px;font-family:'Microsoft YaHei', '微软雅黑'">
       <img src="/img/full-logo.png" height="25px" alt="团团一家LOGO">&nbsp;提供技术支持
     </div>
     <div class="clearfix"></div>
