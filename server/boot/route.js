@@ -37,6 +37,8 @@ app.use("/ue/uploads", upload(function(req, res, next) {
         res.up_text('html/' + path);break;
       case 'listimage':
         res.image_list('images/'+userId);
+      case "uploadfile":
+        res.up_img('files/'+userId);
       }
   });
 }));

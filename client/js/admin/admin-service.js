@@ -28,7 +28,7 @@ app.service('etuanAdmin', function () {
           'fullscreen', 'source', '|', 'undo', 'redo', '|',
           'bold', 'italic', 'underline', 'fontborder', 'strikethrough', '|',
           'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
-          'simpleupload', 'insertimage'
+          'simpleupload', 'insertimage','attachment'
         ]],
         initialFrameHeight: 300,
         //关闭字数统计

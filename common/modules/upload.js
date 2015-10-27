@@ -20,9 +20,7 @@ function MathRand(n)
 } 
 
 function __img(req,res,next,callback){
-  var busboy = new Busboy({
-        headers: req.headers
-      });
+  var busboy = new Busboy({headers: req.headers});
   busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
     res.up_img = function(img_url) {
       var tmpdir = Path.join(os.tmpDir(), Path.basename(filename));
@@ -66,7 +64,7 @@ function __oss(path,data,type,cb){
 }
 function upload(callback) {
   return function(req, res, next) {
-    if (req.query.action === 'uploadimage') {
+    if (req.query.action === 'uploadimage' || req.query.action === 'uploadfile') {
       __img(req,res,next,callback);
       return;
     }else if (req.query.action === 'config') {
@@ -119,4 +117,5 @@ function upload(callback) {
     }
   };
 };
+
 module.exports = upload;
