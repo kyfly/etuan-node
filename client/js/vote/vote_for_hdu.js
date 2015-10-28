@@ -49,6 +49,7 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
     } else {
       location.href = '/vote/for_hdu.html#?id=562f105237d1e9ab13ff4362';
     }
+    location.reload(true);
   }
   //投票项详细信息模态框
   $scope.open = function (num) {
