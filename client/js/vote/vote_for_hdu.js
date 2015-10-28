@@ -44,7 +44,11 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
 
   });
   $scope.refresh = function () {
-    location.reload(true);
+    if ($scope.vote.title === '2015年青年教学新秀评选') {
+      location.href = '/vote/for_hdu.html#?id=56305c16c7691f1a2108a8d5';
+    } else {
+      location.href = '/vote/for_hdu.html#?id=562f105237d1e9ab13ff4362';
+    }
   }
   //投票项详细信息模态框
   $scope.open = function (num) {
