@@ -104,7 +104,15 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
     }
     return null;
   }
-
+  var cName = function (name, cb) {
+    $http.get('/api/Xyoukus/findOne?filter=%7B%22where%22%3A%7B%22name%22%3A%20%22' + name + '%22%7D%7D')
+    .success(function (res) {
+      cb(null, true);
+    })
+    .error(function (res) {
+      cb(true);
+    });
+  }
   //用户进行选择投票项时检查是否登录
   $scope.cAuth = function (index, act) {
     if($scope.cRule === undefined){
@@ -131,31 +139,38 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
       alert("请先输入" + $scope.verifyRule);
       return false;
     }
-    var resultTmp = [];
-    for (var i = 0; i < $scope.answer.length; i++) {
-      if ($scope.answer[i] === true) {
-        resultTmp.push(i);
-      }
-    }
-    var d2VjaGF0 = JSON.parse(window.sessionStorage.d2VjaGF0);
-    if (resultTmp.length != 0) {
-      $http.post('/api/WeChatUsers/'+ d2VjaGF0.userId +"/voteResults?access_token=" + d2VjaGF0.accessToken,{
-          'voteId': id,
-          'results': resultTmp,
-          "verifyResult": $scope.verifyResult
-        }).success(function () {
-          alert("投票成功");
-          location.reload(true);
-        }).error(function (res) {
-          alert(res.error.message);
-          if (res.error.message === "需要绑定学号") {
-            isAuthed();
+    cName($scope.verifyResult, function (err, re) {
+      if (err) {
+        alert('校友库没查到你的姓名');
+        return;
+      } else {
+        var resultTmp = [];
+        for (var i = 0; i < $scope.answer.length; i++) {
+          if ($scope.answer[i] === true) {
+            resultTmp.push(i);
           }
         }
-      );
-    } else {
-      alert("请至少选择一项");
-    }
+        var d2VjaGF0 = JSON.parse(window.sessionStorage.d2VjaGF0);
+        if (resultTmp.length != 0) {
+          $http.post('/api/WeChatUsers/'+ d2VjaGF0.userId +"/voteResults?access_token=" + d2VjaGF0.accessToken,{
+              'voteId': id,
+              'results': resultTmp,
+              "verifyResult": $scope.verifyResult
+            }).success(function () {
+              alert("投票成功");
+              location.reload(true);
+            }).error(function (res) {
+              alert(res.error.message);
+              if (res.error.message === "需要绑定学号") {
+                isAuthed();
+              }
+            }
+          );
+        } else {
+          alert("请至少选择一项");
+        }
+      }
+    })
   };
 }
 
