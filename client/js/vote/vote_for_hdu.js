@@ -6,6 +6,7 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
   var id = $location.search().id;
   var url = window.location;
   var qr = qrcode(4, 'L');
+  console.log(url);
   qr.addData(url);
   qr.make();
   document.getElementById('qrcode').innerHTML = '<br>' + '分享二维码' + '<br>' + qr.createImgTag(4, 12) + '<br>';
