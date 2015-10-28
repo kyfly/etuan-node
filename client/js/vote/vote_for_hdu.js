@@ -4,9 +4,8 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
   window.sessionStorage.next = url;
   $scope.cnFormat = "yy'/'MM'/'dd' 'HH':'mm'";
   var id = $location.search().id;
-  var url = window.location;
+  var url = window.location.href;
   var qr = qrcode(4, 'L');
-  console.log(url);
   qr.addData(url);
   qr.make();
   document.getElementById('qrcode').innerHTML = '<br>' + '分享二维码' + '<br>' + qr.createImgTag(4, 12) + '<br>';
@@ -44,7 +43,9 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
     }
 
   });
-
+  $scope.refresh = function () {
+    location.reload(true);
+  }
   //投票项详细信息模态框
   $scope.open = function (num) {
     $modal.open({
@@ -139,15 +140,11 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
           "verifyResult": $scope.verifyResult
         }).success(function () {
           alert("投票成功");
-          history.go(0);
+          location.reload(true);
         }).error(function (res) {
           alert(res.error.message);
           if (res.error.message === "需要绑定学号") {
             isAuthed();
-          } else if (res.error.message === "已经投过票了") {
-            history.go(0);
-          } else if (res.error.message === "已经结束") {
-            history.go(0);
           }
         }
       );
