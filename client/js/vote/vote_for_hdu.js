@@ -4,6 +4,11 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
   window.sessionStorage.next = url;
   $scope.cnFormat = "yy'/'MM'/'dd' 'HH':'mm'";
   var id = $location.search().id;
+  var url = window.location;
+  var qr = qrcode(4, 'L');
+  qr.addData(url);
+  qr.make();
+  document.getElementById('qrcode').innerHTML = '<br>' + '分享二维码' + '<br>' + qr.createImgTag(4, 12) + '<br>';
   //已选投票项
   $scope.choosed = 0;
   //初始化投票系统

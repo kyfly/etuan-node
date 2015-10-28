@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="/css/vote_image-text.css">
   <script src="http://static.etuan.org/lib/angular-ui-bootstrap/etuan-ui-bootstrap.js"></script>
   <script src="/js/vote/vote_for_hdu.js"></script>
+  <script src="/js/qrcode.min.js"></script>
   <script src="/js/school/hdu.js"></script>
   <style>
     html {
@@ -146,16 +147,13 @@
   <div class="largeBox" style="box-shadow: 5px 5px 10px #6BA1C4;">
     <div style="border: 4px solid #37A4E9;min-height: 300px;padding: 10px;background-color: #F1FAFF;box-shadow: 1px 1px 5px #888888 inset;">
       <div class="col-md-3 col-md-offset-1">
-        <div style="border: 2px solid #e3e3e3;background-color: #ffffff;margin-top: 20px;padding: 5px;" ng-show="true"
-             class="text-center boxShadow hidden-xs hidden-sm">
-          <img src="/img/hdu_vote.gif" height="170px" width="170px">
-
-          <p>微信扫一扫投票</p>
+        <div style="border: 2px solid #e3e3e3;background-color: #ffffff;margin-top: 20px;padding: 5px;"
+             class="text-center boxShadow hidden-xs hidden-sm qrcode" id="qrcode">
         </div>
       </div>
       <div class="col-md-7 col-md-offset-1">
-        <div class="col-md-5 col-md-offset-1 hidden-xs hidden-sm">
-          <img class="boxShadow" src="/img/word_bg.png" style="width: 200px;margin-top: 10px">
+        <div class="col-md-5 col-md-offset-1 hidden-xs hidden-sm" >
+          <img class="boxShadow" src="/img/word_bg.png" style="width:200px;margin-top:10px">
         </div>
         <div class="col-md-6">
           <button style="margin-top: 15px;font-size: 15px" type="button" class="btn btn-danger btn-lg btn-block">点击进入卓越教学名师评选</button>
