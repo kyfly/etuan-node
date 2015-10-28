@@ -103,6 +103,10 @@
     "dataSource": "db",
     "public": true
   },
+  "Xyouku": {
+    "dataSource": "db",
+    "public": true
+  },
   "OrganizationMenber": {
     "dataSource": "db",
     "public": true
