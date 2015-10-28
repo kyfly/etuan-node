@@ -4,7 +4,7 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
   window.sessionStorage.next = url;
   $scope.cnFormat = "yy'/'MM'/'dd' 'HH':'mm'";
   var id = $location.search().id;
-  var url = window.location;
+  var url = window.location.href;
   var qr = qrcode(4, 'L');
   qr.addData(url);
   qr.make();
