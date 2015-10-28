@@ -44,7 +44,7 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
 
   });
   $scope.refresh = function () {
-    if ($scope.vote.title === '2015年青年教学新秀评选') {
+    if ($scope.vote.title === '2015年校卓越教学名师评选') {
       location.href = '/vote/for_hdu.html#?id=56305c16c7691f1a2108a8d5';
     } else {
       location.href = '/vote/for_hdu.html#?id=562f105237d1e9ab13ff4362';
