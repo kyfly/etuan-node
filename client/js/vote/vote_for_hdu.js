@@ -4,7 +4,6 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
   window.sessionStorage.next = url;
   $scope.cnFormat = "yy'/'MM'/'dd' 'HH':'mm'";
   var id = $location.search().id;
-  var url = window.location.href;
   var qr = qrcode(4, 'L');
   qr.addData(url);
   qr.make();
@@ -50,7 +49,7 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
       location.href = '/vote/for_hdu.html#?id=562f105237d1e9ab13ff4362';
     }
     location.reload(true);
-  }
+  };
   //投票项详细信息模态框
   $scope.open = function (num) {
     $modal.open({
@@ -65,6 +64,7 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
       }
     });
   };
+
   //身份发生改变时检查权限
   $scope.ruleChange = function () {
     if ($scope.cRule === "studentId") {
@@ -82,6 +82,7 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
     }
     $scope.Authed = true;
   };
+
   //检查教职工，学生是否绑定数字杭电
   function isAuthed () {
     loginCheck('d2VjaGF0');
@@ -104,6 +105,14 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
     }
     return null;
   }
+
+  $scope.isChosenType = function() {
+    if($scope.cRule === undefined){
+      alert("请先选择你的身份再输入");
+      return false;
+    }
+  };
+
   var cName = function (name, cb) {
     $http.get('/api/Xyoukus/findOne?filter=%7B%22where%22%3A%7B%22name%22%3A%20%22' + name + '%22%7D%7D')
     .success(function (res) {
@@ -112,7 +121,7 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
     .error(function (res) {
       cb(true);
     });
-  }
+  };
   //用户进行选择投票项时检查是否登录
   $scope.cAuth = function (index, act) {
     if($scope.cRule === undefined){
@@ -124,7 +133,7 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
     }
     if (act === 1) {
       if ($scope.choosed === $scope.vote.maxVote) {
-        alert("只可以选择" + $scope.vote.maxVote + '项')
+        alert("只可以选择" + $scope.vote.maxVote + '项');
         return;
       }
       $scope.choosed ++;
@@ -135,6 +144,7 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
   };
   //提交投票内容
   $scope.submit = function () {
+    loginCheck('d2VjaGF0');
     if ($scope.verifyResult === null) {
       alert("请先输入" + $scope.verifyRule);
       return false;
@@ -143,10 +153,10 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
       sub();
       return;
     }
-    cName($scope.verifyResult, function (err, re) {
+    cName($scope.verifyResult, function (err) {
       if (err) {
         alert('校友库没查到你的姓名');
-        return;
+        return false;
       } else {
         sub();
       }
@@ -215,7 +225,7 @@ app.controller('StudentModalCtrl', function ($http, $scope, $modalInstance, vote
       });
     } else {
       $scope.error = true;
-      return;
+      return false;
     }
   };
 

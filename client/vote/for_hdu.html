@@ -80,11 +80,14 @@
     }
 
     .hduLogo {
-      width: 150px;height: 150px
+      width: 150px;
+      height: 150px
     }
+
     .modal-open {
       overflow: initial !important;
     }
+
     @media screen and (max-width: 767px) {
       .largeBox {
         padding: 0 0 10px 0;
@@ -137,33 +140,45 @@
       <img class="hduLogo" src="/img/hdubadge.png">
     </div>
     <br><br>
+
     <div class="col-md-8">
       <img style="width: 100%" class="hidden-xs" ng-show="vote.title === '2015年青年教学新秀评选'" src="/img/title1.png">
       <img style="width: 100%" class="hidden-xs" ng-show="vote.title === '2015年校卓越教学名师评选'" src="/img/title2.png">
       <img style="width: 100%" class="visible-xs" ng-show="vote.title === '2015年青年教学新秀评选'" src="/img/title1_mobile.png">
-      <img style="width: 100%" class="visible-xs" ng-show="vote.title === '2015年校卓越教学名师评选'" src="/img/title2_mobile.png">
+      <img style="width: 100%" class="visible-xs" ng-show="vote.title === '2015年校卓越教学名师评选'"
+           src="/img/title2_mobile.png">
     </div>
     <div class="clearfix"></div>
   </div>
 
   <div class="largeBox" style="box-shadow: 5px 5px 10px #6BA1C4;">
-    <div style="border: 4px solid #37A4E9;min-height: 300px;padding: 10px;background-color: #F1FAFF;box-shadow: 1px 1px 5px #888888 inset;">
+    <div
+      style="border: 4px solid #37A4E9;min-height: 300px;padding: 10px;background-color: #F1FAFF;box-shadow: 1px 1px 5px #888888 inset;">
       <div class="col-md-3 col-md-offset-1">
         <div style="border: 2px solid #e3e3e3;background-color: #ffffff;margin-top: 20px;padding: 5px;"
              class="text-center boxShadow hidden-xs hidden-sm qrcode" id="qrcode">
         </div>
       </div>
       <div class="col-md-7 col-md-offset-1">
-        <a href="" style="margin-top: 15px;font-size: 15px" type="button" class="btn btn-danger btn-lg btn-block visible-xs visible-sm" ng-click="refresh()" ng-show="vote.title === '2015年青年教学新秀评选'">点击进入校卓越教学名师评选</a>
-          
-        <a href="" style="margin-top: 15px;font-size: 15px" type="button" class="btn btn-danger btn-lg btn-block visible-xs visible-sm" ng-click="refresh()" ng-show="vote.title === '2015年校卓越教学名师评选'">点击进入青年教学新秀评选</a>
-        <div class="col-md-5 col-md-offset-1 hidden-xs hidden-sm" >
+        <a href="" style="margin-top: 15px;font-size: 15px" type="button"
+           class="btn btn-danger btn-lg btn-block visible-xs visible-sm" ng-click="refresh()"
+           ng-show="vote.title === '2015年青年教学新秀评选'">点击进入校卓越教学名师评选</a>
+
+        <a href="" style="margin-top: 15px;font-size: 15px" type="button"
+           class="btn btn-danger btn-lg btn-block visible-xs visible-sm" ng-click="refresh()"
+           ng-show="vote.title === '2015年校卓越教学名师评选'">点击进入青年教学新秀评选</a>
+
+        <div class="col-md-5 col-md-offset-1 hidden-xs hidden-sm">
           <img class="boxShadow" src="/img/word_bg.png" style="width:200px;margin-top:10px">
         </div>
         <div class="col-md-6">
-          <a href="/vote/for_hdu.html#?id=562f105237d1e9ab13ff4362" style="margin-top: 15px;font-size: 15px" type="button" class="btn btn-danger btn-lg btn-block hidden-xs hidden-sm" ng-click="refresh()" ng-show="vote.title === '2015年青年教学新秀评选'">点击进入校卓越教学名师评选</a>
-          <a href="/vote/for_hdu.html#?id=56305c16c7691f1a2108a8d5" style="margin-top: 15px;font-size: 15px" type="button" class="btn btn-danger btn-lg btn-block hidden-xs hidden-sm" ng-click="refresh()" ng-show="vote.title === '2015年校卓越教学名师评选'">点击进入青年教学新秀评选</a>
-          
+          <a href="/vote/for_hdu.html#?id=562f105237d1e9ab13ff4362" style="margin-top: 15px;font-size: 15px"
+             type="button" class="btn btn-danger btn-lg btn-block hidden-xs hidden-sm" ng-click="refresh()"
+             ng-show="vote.title === '2015年青年教学新秀评选'">点击进入校卓越教学名师评选</a>
+          <a href="/vote/for_hdu.html#?id=56305c16c7691f1a2108a8d5" style="margin-top: 15px;font-size: 15px"
+             type="button" class="btn btn-danger btn-lg btn-block hidden-xs hidden-sm" ng-click="refresh()"
+             ng-show="vote.title === '2015年校卓越教学名师评选'">点击进入青年教学新秀评选</a>
+
         </div>
         <div class="visible-xs visible-sm text-center">
           <img class="boxShadow" src="/img/word_bg.png" style="width: 200px;margin-top: 10px">
@@ -193,10 +208,14 @@
         </div>
       </div>
       <div class="col-md-4 hidden-xs">
-        <p style="line-height: 40px;margin: 0"><span style="color: #4EA0D2" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> {{vote.voteSubitems.length}}位候选人不分先后，按姓氏拼音排列</p>
+        <p style="line-height: 40px;margin: 0"><span style="color: #4EA0D2" class="glyphicon glyphicon-info-sign"
+                                                     aria-hidden="true"></span>
+          {{vote.voteSubitems.length}}位候选人不分先后，按姓氏拼音排列</p>
       </div>
       <div class="text-center visible-xs col-xs-12">
-        <p style="line-height: 40px;margin: 0"><span style="color: #4EA0D2" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> {{vote.voteSubitems.length}}位候选人不分先后，按姓氏拼音排列</p>
+        <p style="line-height: 40px;margin: 0"><span style="color: #4EA0D2" class="glyphicon glyphicon-info-sign"
+                                                     aria-hidden="true"></span>
+          {{vote.voteSubitems.length}}位候选人不分先后，按姓氏拼音排列</p>
       </div>
       <div class="clearfix"></div>
       <hr>
@@ -210,6 +229,7 @@
             </a>
 
             <p>{{$index+1}}号&nbsp;{{vsb.name}}</p>
+
             <p>票数：<span style="color: #B20000">{{vsb.count}}</span></p>
           </div>
           <div class="chosen" style="display: block" ng-show="answer[$index] === true">
@@ -230,9 +250,12 @@
       <hr>
       <div class="submitBtn col-md-6 col-md-offset-3">
         <p>已选择：<b>{{choosed}}</b>个。 最多能选择：<b>{{vote.maxVote}}</b>个</p>
-        <input class="form-control text-center boxShadow" type="text" ng-model="verifyResult"
+        <input ng-change="isChosenType()" ng-click="isChosenType()" class="form-control text-center boxShadow"
+               type="text" ng-model="verifyResult"
                placeholder="请输入您的{{verifyRule}}" ng-disabled="cRule === 'studentId'" ng-disabled="!cRule" required>
-        <button class="btn btn-block btn-success col-sm-2 col-md-2 boxShadow" ng-disabled="!Authed" ng-click="submit()">投票！</button>
+        <button class="btn btn-block btn-success col-sm-2 col-md-2 boxShadow" ng-disabled="!Authed" ng-click="submit()">
+          投票！
+        </button>
       </div>
       <div class="clearfix"></div>
     </div>
