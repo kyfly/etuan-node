@@ -139,38 +139,45 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
       alert("请先输入" + $scope.verifyRule);
       return false;
     }
+    if ($scope.cRule === "studentId") {
+      sub();
+      return;
+    }
     cName($scope.verifyResult, function (err, re) {
       if (err) {
         alert('校友库没查到你的姓名');
         return;
       } else {
-        var resultTmp = [];
-        for (var i = 0; i < $scope.answer.length; i++) {
-          if ($scope.answer[i] === true) {
-            resultTmp.push(i);
-          }
-        }
-        var d2VjaGF0 = JSON.parse(window.sessionStorage.d2VjaGF0);
-        if (resultTmp.length != 0) {
-          $http.post('/api/WeChatUsers/'+ d2VjaGF0.userId +"/voteResults?access_token=" + d2VjaGF0.accessToken,{
-              'voteId': id,
-              'results': resultTmp,
-              "verifyResult": $scope.verifyResult
-            }).success(function () {
-              alert("投票成功");
-              location.reload(true);
-            }).error(function (res) {
-              alert(res.error.message);
-              if (res.error.message === "需要绑定学号") {
-                isAuthed();
-              }
-            }
-          );
-        } else {
-          alert("请至少选择一项");
+        sub();
+      }
+    });
+    function sub() {
+      var resultTmp = [];
+      for (var i = 0; i < $scope.answer.length; i++) {
+        if ($scope.answer[i] === true) {
+          resultTmp.push(i);
         }
       }
-    })
+      var d2VjaGF0 = JSON.parse(window.sessionStorage.d2VjaGF0);
+      if (resultTmp.length != 0) {
+        $http.post('/api/WeChatUsers/'+ d2VjaGF0.userId +"/voteResults?access_token=" + d2VjaGF0.accessToken,{
+            'voteId': id,
+            'results': resultTmp,
+            "verifyResult": $scope.verifyResult
+          }).success(function () {
+            alert("投票成功");
+            location.reload(true);
+          }).error(function (res) {
+            alert(res.error.message);
+            if (res.error.message === "需要绑定学号") {
+              isAuthed();
+            }
+          }
+        );
+      } else {
+        alert("请至少选择一项");
+      }
+    }
   };
 }
 
