@@ -12,6 +12,8 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
     location.href = '/vote/for_hdu.html#?id=562f105237d1e9ab13ff4362';
   }else if(voteUrlSearchObj.id ==='56305c16c7691f1a2108a8d5'){
     location.href = '/vote/for_hdu.html#?id=56305c16c7691f1a2108a8d5';
+  } else {
+    loginCheck('d2VjaGF0');
   }
 
   var info = JSON.parse(window.sessionStorage.d2VjaGF0);
