@@ -1,10 +1,10 @@
 function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
   $scope.title = '投票';
   var voteUrlSearchObj = $location.search();
-  if(voteUrlSearchObj.id ==='562f105237d1e9ab13ff4362'){
-    location.href = '/vote/for_hdu.html#?id=562f105237d1e9ab13ff4362';
-  }else if(voteUrlSearchObj.id ==='56305c16c7691f1a2108a8d5'){
-    location.href = '/vote/for_hdu.html#?id=56305c16c7691f1a2108a8d5';
+  if(voteUrlSearchObj.id ==='56321159d74e34af2bc8efe8'){
+    location.href = '/vote/for_hdu.html#?id=56321159d74e34af2bc8efe8';
+  }else if(voteUrlSearchObj.id ==='563211dbd74e34af2bc8efe9'){
+    location.href = '/vote/for_hdu.html#?id=563211dbd74e34af2bc8efe9';
   } else {
     loginCheck('d2VjaGF0');
   }

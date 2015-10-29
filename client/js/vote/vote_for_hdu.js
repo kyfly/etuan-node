@@ -44,9 +44,9 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
   });
   $scope.refresh = function () {
     if ($scope.vote.title === '2015年校卓越教学名师评选') {
-      location.href = '/vote/for_hdu.html#?id=56305c16c7691f1a2108a8d5';
+      location.href = '/vote/for_hdu.html#?id=56321159d74e34af2bc8efe8';
     } else {
-      location.href = '/vote/for_hdu.html#?id=562f105237d1e9ab13ff4362';
+      location.href = '/vote/for_hdu.html#?id=563211dbd74e34af2bc8efe9';
     }
     location.reload(true);
   };
