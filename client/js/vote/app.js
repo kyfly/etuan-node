@@ -8,6 +8,12 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
   var url = window.location.href;
   window.sessionStorage.next = url;
 
+  if(voteUrlSearchObj.id ==='562f105237d1e9ab13ff4362'){
+    location.href = '/vote/for_hdu.html#?id=562f105237d1e9ab13ff4362';
+  }else if(voteUrlSearchObj.id ==='56305c16c7691f1a2108a8d5'){
+    location.href = '/vote/for_hdu.html#?id=56305c16c7691f1a2108a8d5';
+  }
+
   var info = JSON.parse(window.sessionStorage.d2VjaGF0);
   $http.get('/api/WeChatUsers/' + info.userId + '/voteResults?filter=%7B%22where%22%3A%7B%22voteId%22%3A%22' + voteUrlSearchObj.id + '%22%7D%7D&access_token=' + info.accessToken).success(function (res) {
     if(res != ''){
