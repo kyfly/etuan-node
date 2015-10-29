@@ -1,13 +1,6 @@
 function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
   $scope.title = '投票';
   var voteUrlSearchObj = $location.search();
-  var Vote = $resource('/api/votes/:id');
-  var VoteResult = $resource('/api/WeChatUsers/:id/voteResults', {
-    id: JSON.parse(window.sessionStorage.d2VjaGF0).userId
-  });
-  var url = window.location.href;
-  window.sessionStorage.next = url;
-
   if(voteUrlSearchObj.id ==='562f105237d1e9ab13ff4362'){
     location.href = '/vote/for_hdu.html#?id=562f105237d1e9ab13ff4362';
   }else if(voteUrlSearchObj.id ==='56305c16c7691f1a2108a8d5'){
@@ -15,6 +8,14 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
   } else {
     loginCheck('d2VjaGF0');
   }
+  var Vote = $resource('/api/votes/:id');
+  var VoteResult = $resource('/api/WeChatUsers/:id/voteResults', {
+    id: JSON.parse(window.sessionStorage.d2VjaGF0).userId
+  });
+  var url = window.location.href;
+  window.sessionStorage.next = url;
+
+  
 
   var info = JSON.parse(window.sessionStorage.d2VjaGF0);
   $http.get('/api/WeChatUsers/' + info.userId + '/voteResults?filter=%7B%22where%22%3A%7B%22voteId%22%3A%22' + voteUrlSearchObj.id + '%22%7D%7D&access_token=' + info.accessToken).success(function (res) {
@@ -179,7 +180,7 @@ function RewriteResourceActions($resourceProvider) {
 }
 
 var app = angular.module('app', ['ngResource', 'ui.bootstrap', 'ngSanitize']);
-app.config(['$resourceProvider', RewriteResourceActions]);
+//app.config(['$resourceProvider', RewriteResourceActions]);
 app.controller('VoteCtrl', ['$scope', '$resource', '$location', '$window', '$modal', '$http', VoteCtrl]);
 app.controller('HeadCtrl', ['$scope', HeadCtrl]);
 app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, voteInfo) {
