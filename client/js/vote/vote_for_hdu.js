@@ -44,9 +44,9 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
   });
   $scope.refresh = function () {
     if ($scope.vote.title === '2015年校卓越教学名师评选') {
-      location.href = '/vote/for_hdu.html#?id=56305c16c7691f1a2108a8d5';
+      location.href = '/vote/for_hdu.html#?id=563211dbd74e34af2bc8efe9';
     } else {
-      location.href = '/vote/for_hdu.html#?id=562f105237d1e9ab13ff4362';
+      location.href = '/vote/for_hdu.html#?id=56321159d74e34af2bc8efe8';
     }
     location.reload(true);
   };
@@ -218,6 +218,7 @@ app.controller('StudentModalCtrl', function ($http, $scope, $modalInstance, vote
           d2VjaGF0.school = res.university;
           d2VjaGF0.studentId = $scope.hduId;
           window.sessionStorage.setItem('d2VjaGF0', JSON.stringify(d2VjaGF0));
+          alert("绑定成功！");
           $modalInstance.dismiss('cancel');
         }
       }).error(function () {
