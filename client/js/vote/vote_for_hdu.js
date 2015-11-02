@@ -1,5 +1,6 @@
 function VoteCtrl($scope, $location, $modal, $http, $sce) {
   $scope.title = '投票';
+  var maxVote;
   var url = window.location.href;
   window.sessionStorage.next = url;
   $scope.cnFormat = "yy'/'MM'/'dd' 'HH':'mm'";
@@ -18,6 +19,7 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
     }
     res.description = $sce.trustAsHtml(res.description);
     $scope.vote = res;
+    maxVote = res.maxVote;
     $scope.title = res.title || '投票';
     $scope.startTime = new Date($scope.vote.startTime);
     $scope.stopTime = new Date($scope.vote.stopTime);
@@ -169,7 +171,7 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
         }
       }
       var d2VjaGF0 = JSON.parse(window.sessionStorage.d2VjaGF0);
-      if (resultTmp.length != 0) {
+      if (resultTmp.length === maxVote) {
         $http.post('/api/WeChatUsers/'+ d2VjaGF0.userId +"/voteResults?access_token=" + d2VjaGF0.accessToken,{
             'voteId': id,
             'results': resultTmp,
@@ -185,7 +187,7 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
           }
         );
       } else {
-        alert("请至少选择一项");
+        alert("请选择" + maxVote + "项再提交");
       }
     }
   };
