@@ -3,7 +3,8 @@ function VoteCtrl($scope, $location, $modal, $http, $sce) {
   var url = window.location.href;
   window.sessionStorage.next = url;
   $scope.cnFormat = "yy'/'MM'/'dd' 'HH':'mm'";
-  var id = $location.search().id;
+  var id = $location.search().id || url.match(/#\?id=(.+)/)[1];
+  url = window.location.host +'/vote/for_hdu.html#?id=' + id;
   var qr = qrcode(4, 'L');
   qr.addData(url);
   qr.make();
