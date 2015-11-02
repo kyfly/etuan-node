@@ -2,9 +2,10 @@ module.exports = SocketSeckill;
 
 var Verify = require('./verify');
 var tplMsg = require('./templateMsg');
+var Q = require('./Promise');
 var TplMsg = new tplMsg();
 var app, Seckill, SeckillResult;
-var seckillCache = {};
+var seckillCache = [];
 
 function SocketSeckill(application) {
   if (!(this instanceof SocketSeckill))
@@ -14,26 +15,33 @@ function SocketSeckill(application) {
   SeckillResult = app.models.SeckillResult;
   SocketSeckill.prototype.updateAllCache();
 }
-
+//join room and auth
 SocketSeckill.prototype.handshake = function (socket, next) {
   var handshakeQuery = socket.handshake.query;
-  if (!seckillCache[handshakeQuery.id])
-    next(new Error("404"));  //Invalid seckill id
-  else {
-    socket.join(handshakeQuery.id);
-    seckillCache[handshakeQuery.id].verify.checkToken(handshakeQuery.accessToken,
-      function (err, pass, studentId) {
-        if (pass) {
-          if (studentId)
-            handshakeQuery.verifyId = studentId;
-          next();
-        }
-        else
-          next(new Error(err || "Authentication failed"));
-      });
-  }
-};
+  Q.all([
+    Q.findById(app.models.AccessToken, handshakeQuery.accessToken), 
+    Q.findById(Seckill, handshakeQuery.id)
+  ])
+  .then(function (data) {
+    console.log(data);
+    
+  }, function () {
 
+  });
+ 
+    // socket.join(handshakeQuery.id);
+    // seckillCache[handshakeQuery.id].verify.checkToken(handshakeQuery.accessToken,
+    //   function (err, pass, studentId) {
+    //     if (pass) {
+    //       if (studentId)
+    //         handshakeQuery.verifyId = studentId;
+    //       next(null, true);
+    //     }
+    //     else
+    //       next(new Error(err || "Authentication failed"));
+    //   });
+};
+//
 SocketSeckill.prototype.onConnection = function (socket) {
   var seckillId = socket.handshake.query.id;
   var cache = seckillCache[seckillId];
@@ -197,6 +205,7 @@ SocketSeckill.prototype.updateCache = function (seckillId, cb) {
 };
 
 SocketSeckill.prototype.updateAllCache = function () {
+  console.log('s');
   Seckill.find({field: {id: true}}, function (err, allSeckill) {
     allSeckill.forEach(function (seckill) {
       SocketSeckill.prototype.updateCache(seckill.id);

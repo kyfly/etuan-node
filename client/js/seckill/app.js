@@ -3,15 +3,40 @@ app.controller('SeckillCtrl', ['$scope', '$location', '$window', '$http', Seckil
 
 function SeckillCtrl($scope, $location, $window, $http) {
   var seckillUrlSearchObj = $location.search();
-  $scope.cnFormat = 'yyyy-MM-dd HH:mm';
-  $scope.title = '疯抢';
+  var id = seckillUrlSearchObj.id || url.match(/#\?id=(.+)/)[1];
   var url = window.location.href;
   window.sessionStorage.next = url;
-  var socket = io(
-    window.location.host + "/socket/seckill", {
-      query: 'accessToken=' + JSON.parse($window.sessionStorage.d2VjaGF0).accessToken + "&id=" + seckillUrlSearchObj.id
+
+  $scope.cnFormat = 'yyyy-MM-dd HH:mm';
+  $scope.title = '疯抢';
+
+  function isAuthed() {
+    var d2VjaGF0 = $window.sessionStorage.d2VjaGF0;
+    if (d2VjaGF0 && JSON.parse($window.sessionStorage.d2VjaGF0).accessToken) {
+      return true;
+    } else  {
+      return false;
     }
-  );
+  }
+
+  if (isAuthed()) {
+    var d2VjaGF0 = JSON.parse($window.sessionStorage.d2VjaGF0);
+    var socket = io(window.location.host + "/socket/seckill", {
+      query:{'accessToken': d2VjaGF0.accessToken,
+              "id": seckillUrlSearchObj.id
+            }
+    });
+
+  } else {
+    $scope.notAuth = true;
+    $scope.timer = 5;
+    // setInterval(function () {
+    //   $scope.timer = $scope.timer--;
+    //   $scope.$apply();
+    // },1000);
+  }
+  return;
+  
   var start = new Date();     //秒杀开始时间
   var deltaTime = 0;         //与服务器的时间差，用于精准计算
   var countdownTimer;       //倒计时定时器

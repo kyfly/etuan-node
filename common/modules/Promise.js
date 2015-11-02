@@ -22,6 +22,7 @@ var PromiseFunction = {
 				}
 			});
 		});
-	}
+	},
+	all: Q.all
 }
 module.exports = PromiseFunction;

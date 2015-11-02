@@ -54,19 +54,4 @@ module.exports = function(Seckill) {
       return;
     }
   });
-  Seckill.observe('after save', function(ctx, next) {
-    if (ctx.instance)
-    {
-      Seckill.app.socketSeckill.updateCache(ctx.instance.id);
-      next();
-    }
-  });
-
-  Seckill.observe('after delete', function(ctx, next) {
-    if (ctx.instance)
-    {
-      Seckill.app.socketSeckill.deleteCache(ctx.instance.id);
-      next();
-    }
-  });
 };
