@@ -84,7 +84,7 @@ Verify.prototype.checkToken = function (token, cb) {
  */
 
 Verify.prototype.checkId = function (id) {
-  if (verifyRule == 'studentId')
+  if (verifyRule === 'studentId')
     return true;
   if (verifyIdRegular.hasOwnProperty(verifyRule)) {
     var reg = new RegExp(verifyIdRegular[verifyRule]);

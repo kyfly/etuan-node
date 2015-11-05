@@ -3,7 +3,13 @@
   "base": "BaseItem",
   "strict": true,
   "idInjection": true,
-  "properties": {},
+  "properties": {
+    "limit": {
+      "type": "number",
+      "default": 1,
+      "commit": "一场抢票中用户可获得票数"
+    }
+  },
   "validations": [],
   "relations": {
     "results": {

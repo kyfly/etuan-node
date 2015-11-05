@@ -1,4 +1,5 @@
 var Q = require('q');
+
 var PromiseFunction = {
 	findOne:function(model, condition) {
         return Q.Promise(function(resolve, reject, notify) {
@@ -22,6 +23,20 @@ var PromiseFunction = {
 				}
 			});
 		});
+	},
+	find: function (model, condition) {
+		return Q.Promise(function(resolve, reject, notify) {
+            model.find(condition, function(err, obj) {
+                if(err) {
+                    reject(err);
+                }else {
+                    resolve(obj);
+                }
+            });
+    	});
+	},
+	fun: function () {
+
 	},
 	all: Q.all
 }
