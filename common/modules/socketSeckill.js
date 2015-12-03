@@ -175,6 +175,27 @@ function onAddKiller(socket, verifyId) {
               console.log(cache);
               socket.emit('killSuccess');
               socket.broadcast.to(seckillId).emit('addResult', cache.verify.idMask(verifyId), cache.current);
+              var data = {
+                    first: {
+                      value: "恭喜你，在抢到票了"
+                    },
+                    HandleType: {
+                      value: "抢票"
+                    },
+                    Status: {
+                      value: "成功"
+                    },
+                    RowCreateDate: {
+                      value: new Date().toLocaleDateString()
+                    },
+                    LogType: {
+                      value: "参与"+ seckill.organizationName +"举办的抢票活动 " + seckill.title +" 成功"
+                    },
+                    remark: {
+                      value: "此消息来自团团一家"
+                    }
+                  }
+              TplMsg.activity(User.openid, null, data,  function(){});
             }
           });
         }
