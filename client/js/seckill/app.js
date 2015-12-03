@@ -190,10 +190,12 @@ function SeckillCtrl($scope, $location, $window, $http) {
   } else {
     $scope.notAuth = true;
     $scope.timer = 5;
-    // setInterval(function () {
-    //   $scope.timer = $scope.timer--;
-    //   $scope.$apply();
-    // },1000);
+    setInterval(function () {
+      $scope.timer = $scope.timer--;
+      $scope.$apply();
+      if($scope.timer === 0)
+        loginCheck('d2VjaGF0');
+    },1000);
   }
 }
 
