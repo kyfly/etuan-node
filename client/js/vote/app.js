@@ -11,12 +11,10 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
   var Vote = $resource('/api/votes/:id');
   var VoteResult = $resource('/api/WeChatUsers/:id/voteResults', {
     id: JSON.parse(window.sessionStorage.d2VjaGF0).userId,
-    access_token: JSON.parse(window.sessionStorage.d2VjaGF0).id
+    access_token: JSON.parse(window.sessionStorage.d2VjaGF0).accessToken
   });
   var url = window.location.href;
   window.sessionStorage.next = url;
-
-
 
   var info = JSON.parse(window.sessionStorage.d2VjaGF0);
   $http.get('/api/WeChatUsers/' + info.userId + '/voteResults?filter=%7B%22where%22%3A%7B%22voteId%22%3A%22' + voteUrlSearchObj.id + '%22%7D%7D&access_token=' + info.accessToken).success(function (res) {
