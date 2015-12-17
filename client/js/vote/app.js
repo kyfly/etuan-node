@@ -11,7 +11,7 @@ function VoteCtrl($scope, $resource, $location, $window, $modal, $http) {
   var Vote = $resource('/api/votes/:id');
   var VoteResult = $resource('/api/WeChatUsers/:id/voteResults', {
     id: JSON.parse(window.sessionStorage.d2VjaGF0).userId,
-    access_token: JSON.parse(window.sessionStorage.d2VjaGF0).id
+    access_token: JSON.parse(window.sessionStorage.d2VjaGF0).accessToken
   });
   var url = window.location.href;
   window.sessionStorage.next = url;
